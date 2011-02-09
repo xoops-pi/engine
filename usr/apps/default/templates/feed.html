@@ -1,0 +1,19 @@
+<{_ text="Feed List"}>
+
+<ul>
+<{foreach item=list key=dirname from=$feeds}>
+    <li><{$modules[$dirname]}>
+        <ul>
+        <{foreach item=feed from=$list}>
+            <li><{$feed.title}>
+                <{foreach item=link key=type from=$feed.url}>
+                    <a href="<{$link}>" title="<{$type}>">
+                        <img src="<{imgUrl path="images/feed-icon-12x12-$type.png"}>" alt="<{$type}>" />
+                    </a>
+                <{/foreach}>
+            </li>
+        <{/foreach}>
+        </ul>
+    </li>
+<{/foreach}>
+</ul>

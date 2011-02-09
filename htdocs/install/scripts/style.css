@@ -1,0 +1,454 @@
+/* ----- Main layout ----- */
+html {
+    margin:             0;
+    padding:            0;
+    height:             100%;
+}
+body {
+    margin:             0;
+    padding:            0;
+    min-height:         100%;
+    border-left:        10px solid #000;
+    border-right:       10px solid #000;
+    background:         #fcfcfc url(../images/background.png) repeat-x 0 85px;
+    color:              #000;
+    font:               10pt tahoma, osaka,taipei,verdana, arial, helvetica, sans-serif;
+}
+* html body {
+    height:             100%;
+}
+
+img {
+    border:             none;
+}
+
+/* header */
+#xo-header {
+    background:         url(../images/banner_bg.png) repeat-x left;
+    height:             70px;
+}
+#xo-main-logo {
+    float:              left;
+    margin:             5px 10px;
+    color:              #09f;
+    width:              300px;
+}
+#xo-main-logo .project {
+    font:               800 28pt bold Georgia, serif;
+}
+#xo-main-logo .description {
+    font:               16pt small-caps Georgia, serif;
+    font-variant:       small-caps;
+    margin-left:        180px;
+}
+
+#xo-support {
+    float:              right;
+    margin-top:         40px;
+    margin-right:       60px;
+    vertical-align:     middle;
+    font:               1em Georgia, serif;
+    color:              #09f;
+}
+
+#xo-support a {
+    color:              #09f;
+}
+
+#xo-globalnav {
+    margin:             0;
+    padding:            0;
+    height:             9px;
+    background:         url(../images/bg-globalnav.png) repeat-x left top;
+
+}
+#xo-content {
+    clear:              left;
+    text-align:         center;
+    padding:            2em 3em;
+}
+
+/* ----- Wizard layout ----- */
+#wizard {
+    margin:             0 auto;
+    padding:            .5em;
+    text-align:         left;
+    background:         #f0f0f0 url(../images/wizard_bg.png) no-repeat 0 90px;
+    border-top:         1px solid #e3e3e3;
+    border-left:        1px solid #fff;
+}
+#pageslist {
+    float:              left;
+    width:              250px;
+    margin:             0;
+    padding:            .5em;
+    border-right:       1px solid #e4e4e4;
+    list-style-type:    none;
+    min-height:         350px;
+
+}
+.page {
+    min-height:         350px;
+    margin-left:        260px;
+    padding:            .5em;
+    background-color:   transparent;
+}
+* html .page {
+    height:             350px;
+}
+
+#header {
+    margin:             0;
+    padding:            0;
+    color:              #fff;
+    font-family:        "Lucida Grande", "Trebuchet MS", sans-serif;
+    font-size:          1.5em;
+    height:             40px;
+}
+
+#title-before {
+    float:              left;
+    width:              11px;
+    height:             40px;
+    background:         url(../images/title-before.png) no-repeat;
+}
+
+#title-after {
+    float:              right;
+    width:              11px;
+    height:             40px;
+    background:         url(../images/title-after.png) no-repeat;
+}
+
+#title {
+    margin:             0 11px;
+    width:              auto;
+    background:         url(../images/title.png) repeat-x;
+    height:             40px;
+    padding:            5px 0 0 0;
+}
+#step {
+    float:              right;
+}
+
+ul, ol {
+    margin:             0;
+    padding:            0 20px;
+}
+
+/* ----- Styling ----- */
+
+#pageslist li {
+    padding-left:       15px;
+    padding-top:        1px;
+    padding-bottom:     2px;
+    background:         url(../images/bullet.png) no-repeat left center;
+}
+#pageslist li.current {
+    background-image:   url(../images/bullet-current.png);
+}
+#pageslist li.disabled {
+    background-image:   url(../images/bullet-disabled.png);
+}
+
+
+#buttons {
+    clear:              both;
+    text-align:         right;
+    padding:            .5em;
+}
+
+form {
+    margin:             0;
+}
+
+h1, h2 {
+    font-family:        "Lucida Grande", "Trebuchet MS", sans-serif;
+}
+h2 {
+    margin-top:         0;
+    border-bottom:      1px solid #ccc;
+    padding-left:       .5em;
+    text-align:         left;
+}
+h3 {
+    font-size:          1.1em;
+    font-weight:        bold;
+    margin:             1em .5em .5em;
+}
+p {
+    margin:             .5em;
+}
+
+a {
+    text-decoration:    none;
+    color:              #666;
+    font-weight:        bold;
+    background-color:   transparent;
+}
+
+a:hover {
+    text-decoration:    none;
+    color:              #ff9966;
+    font-weight:        bold;
+    background-color:   transparent;
+}
+
+table {
+    width:              99%;
+    border-spacing:     0;
+    border-collapse:    collapse;
+    margin-bottom:      1em;
+}
+
+caption, .caption {
+    background:         #fff url(../images/table-caption-grey.png) repeat-x;
+    padding:            2px .25em;
+    color:              #000;
+    font-size:          1.1em;
+    font-weight:        bold;
+    font-variant:       small-caps;
+    text-align:         center;
+}
+
+table thead th {
+    background-color:   #f4f4f4;
+}
+
+td, th {
+    padding:            2px .25em;
+    background-color:   #fcfcfc;
+    border:             1px solid #efefef;
+}
+
+fieldset {
+    margin:             1em;
+    border:             0 none transparent;
+    border:             1px solid #999;
+    padding:            .5em 1em;
+}
+legend {
+    margin:             0;
+    padding:            0 10px;
+    font-size:          1.1em;
+    font-weight:        bold;
+}
+
+label {
+    clear:              both;
+    display:            block;
+    padding:            1em 0 0.5em 0;
+    font-weight:        bold;
+}
+
+label.center {
+    clear:              both;
+    text-align:         center;
+    display:            block;
+    padding:            .5em 0;
+}
+
+#help_button {
+    float:              right;
+    cursor:             help;
+}
+
+.xoform-help {
+    display:            none;
+    margin:             0;
+    padding:            0;
+    font-size:          85%;
+}
+body.show-help .xoform-help {
+    display:            block;
+}
+
+ul.diags, ul.log {
+    overflow:           auto;
+    padding:            5px;
+    margin:             0px;
+    border:             1px solid #d0d0d0;
+    list-style-type:    none;
+}
+
+ul.log {
+    height:             300px;
+}
+ul.diags li, ul.log li {
+    color:              #000;
+    padding-left:       20px;
+}
+ul.diags li.success, ul.log li.success {
+    background-image:   url(../images/yes.png);
+}
+ul.diags li.failure, ul.log li.failure {
+    background-image:   url(../images/no.png);
+    font-weight:        bold;
+    color:              #f66;
+}
+
+/* ------------------------ Shadow effect ------------------------ */
+
+html>body .tagsoup1 {
+    display:            block;
+    position:           relative;
+    margin:             12px -12px -12px 12px;
+    background:         url(../images/shadow.png) repeat-x right bottom !important;
+}
+
+/* shadow corners */
+
+html>body .tagsoup1:before,
+html>body .tagsoup1:after {
+    content:            " ";
+    display:            block;
+    width:              12px;
+    height:             12px;
+    background:         inherit;
+}
+
+html>body .tagsoup1:before {
+    position:               absolute;
+    top:                    0;
+    right:                  0;
+    margin:                 -12px 0 0 auto;
+    background-position:    right top;
+}
+
+html>body .tagsoup1:after {
+    margin:                 -12px 0 0 -12px;
+    background-position:    left bottom;
+}
+
+html>body .tagsoup1 .tagsoup2 {
+    display:                block;
+    position:               relative;
+    overflow:               hidden; /* prevents margin leakage from child elements */
+    left:                   -12px;
+    top:                    -12px;
+    margin:                 0;
+}
+
+em {
+    font-weight:            bold;
+}
+
+/* ===== messages ===== */
+.pathmessage {
+    clear:                  both;
+}
+.pathmessage span{
+    position:               absolute;
+    margin-left:            5px;
+}
+.pathmessage span.error{
+    color:                  #D12F19;
+}
+.pathmessage span.success{
+    color:                  #529214;
+}
+.error, .warning, .failure {
+    background-image:       url(../images/no.png);
+    background-repeat:      no-repeat;
+    padding-left:           20px;
+}
+.success {
+    background-image:       url(../images/yes.png);
+    background-repeat:      no-repeat;
+    padding-left:           20px;
+}
+.warning {
+    color:                  #ff0000;
+    background-color:       transparent;
+}
+
+.errorMsg, .confirmMsg, .successMsg {
+    margin:                 5px 2px;
+    padding:                5px;
+    border:                 1px solid #ccc;
+}
+.confirmMsg {
+    background-color:       #FFF6BF;
+    color:                  #817134;
+    border-color:           #FFD324;
+    list-style-type:        none;
+}
+.successMsg {
+    background-color:       #E6EFC2;
+    color:                  #529214;
+    border-color:           #C6D880;
+}
+.errorMsg a {
+    background-color:       transparent;
+    color:                  #D12F19;
+}
+.confirmMsg a {
+    background-color:       transparent;
+    color:                  #817134;
+}
+.successMsg a {
+    background-color:       transparent;
+    color:                  #529214;
+}
+.errorMsg {
+    background-color:       #FBE3E4;
+    background-repeat:      no-repeat;
+    background-position:    10px;
+    color:                  #D12F19;
+    border-color:           #FBC2C4;
+}
+
+/* Form element */
+input[type=text], input[type=password] {
+    width:                  60%;
+    margin-bottom:          .25em;
+    background:             #fff url(../images/form-input.png) no-repeat left top;
+    padding:                1px .25em;
+    border-bottom:          1px solid #aaa;
+    border-right:           1px solid #aaa;
+}
+
+input {
+    width:                  expression(this.type=='text'?'60%':'auto');
+}
+
+input[name=root], input[name=data], input[name=lib] {
+}
+
+input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
+    margin-left:            .5em;
+    background-color:       #D3D2D6;
+    color:                  #405A80;
+    font-weight:            bold;
+    border:                 1px solid #ccc;
+    cursor:                 pointer;
+    vertical-align:         top;
+}
+input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,.xo-formbuttons:hover, .formButton:hover, button:hover {
+    background-color:       #E6EBFF;
+    color:                  #333;
+    cursor:                 pointer;
+}
+
+select {
+    width:                  200px;
+    border-right:           #000 1px solid;
+    border-top:             #000 1px solid;
+    background-color:       #f7f7f7;
+    font:                   1em verdana, arial, helvetica;
+    border-left:            #000 1px solid;
+    color:                  #000;
+    border-bottom:          #000 1px solid
+}
+select[name=lang] {
+    min-width:              10em
+}
+.option {
+    padding-left:           27px;
+    font-size:              1.1em;
+    margin:                 2px 0;
+}
+
+textarea {
+    width:                  95%;
+}

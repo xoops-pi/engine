@@ -1,0 +1,16 @@
+<?php
+define("_USER_MI_NAME", "User");
+define("_USER_MI_DESC", "User gateway");
+
+define("_USER_MI_BLOCK_LOGIN", "Login block");
+define("_USER_MI_BLOCK_LOGIN_DESC", "");
+
+define("_USER_MI_BLOCK_USER", "User quick links");
+define("_USER_MI_BLOCK_USER_DESC", "");
+
+define("_USER_MI_BLOCK_ACCOUNT", "User widget");
+define("_USER_MI_BLOCK_ACCOUNT_DESC", "");
+
+define("_USER_MI_DISCLAIM_CONTENT", "PLEASE CHANGE THIS TEXT TO CREATE PROPER DISCLAIM FOR THE WEBSITE.");
+
+//define("_USER_MI_WELCOME_CONTENT", "PLEASE CHANGE THIS TEXT TO CREATE PROPER WELCOME MESSAGE TO NEW USERS.");

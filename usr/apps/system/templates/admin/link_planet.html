@@ -1,0 +1,14 @@
+
+<h2><{_ text="Planet News:"}></h2>
+<{foreach item=newsList from=$news}>
+<h3><a href="<{$newsList.link}>" rel="external"><{$newsList.title}></a></h3>
+<p><{$newsList.description}></p>
+<ul>
+<{foreach item=item from=$newsList.items}>
+    <li style="padding: 5px 0;">
+        <a href="<{$item.link}>" title="<{$item.title}>" rel="external"><{$item.title}></a>
+        <p><{$item.description}>
+    </li>
+<{/foreach}>
+</ul>
+<{/foreach}>

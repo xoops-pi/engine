@@ -1,0 +1,27 @@
+
+<h2><{_ text=Updates}></h2>
+
+<table>
+    <tr>
+        <td><{_ text=Status}></td>
+        <td><{_ text=Name}></td>
+        <td><{_ text=Dirname}></td>
+        <td><{_ text="Installed version"}></td>
+        <td><{_ text="Release version"}></td>
+        <td><{_ text="Release date"}></td>
+        <td><{_ text="Changelog"}></td>
+        <td><{_ text="Download URL"}></td>
+    </tr>
+<{foreach item=module key=dirname from=$modules}>
+    <tr>
+        <td><{if $module.status}>!<{else}><{_ text=OK}><{/if}></td>
+        <td><{$module.name}></td>
+        <td><{$dirname}></td>
+        <td><{$module.version}></td>
+        <td><{$module.release.version}></td>
+        <td><{$module.release.date}></td>
+        <td><{$module.release.changelog}></td>
+        <td><a href="<{$module.release.url|default:'http://sf.net/projects/xoops'}>" rel="external" title="<{_ text=Download}>"><{_ text=Download}></a></td>
+    </tr>
+<{/foreach}>
+</table>

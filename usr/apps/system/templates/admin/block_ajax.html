@@ -1,0 +1,5 @@
+<ul class="xo-block-list" id="draggable">
+	<{foreach item=item from=$blocks}>
+		<li data="<{$item.id}>"><span onclick="javascript:rmBlock(this);">X</span><{$item.title}><em></em></li>
+	<{/foreach}>
+</ul>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+        <dashboard>
+            <label>Dashboard</label>
+            <route>admin</route>
+            <module />
+            <controller>dashboard</controller>
+            <order>-100</order>
+            <resource>
+                <resource>system-admin</resource>
+            </resource>
+        </dashboard>
+        
+        <module>
+            <label>[Module Placeholder]</label>
+            <name>module</name>
+        </module>
+        
+        <spec>
+            <label>Module Specs</label>
+            <route>admin</route>
+            <module />
+            <!-- For navigation highlight -->
+            <params>
+                <admin />
+            </params>
+            <order>80</order>
+
+            <pages>
+                <config>
+                    <label>Preference</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>preference</controller>
+                    <action>index</action>
+                </config>
+                <page>
+                    <label>Pages</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>page</controller>
+                    <action>index</action>
+                    <pages>
+                        <add>
+                            <label>Add</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>page</controller>
+                            <action>add</action>
+                            <visible>0</visible>
+                        </add>
+                        <edit>
+                            <label>Edit</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>page</controller>
+                            <action>edit</action>
+                            <visible>0</visible>
+                        </edit>
+                        <block>
+                            <label>Blocks</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>page</controller>
+                            <action>block</action>
+                            <visible>0</visible>
+                        </block>
+                        <insert>
+                            <label>Insert a block</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>page</controller>
+                            <action>insert</action>
+                            <visible>0</visible>
+                        </insert>
+                    </pages>
+                </page>
+                <block>
+                    <label>Blocks</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>block</controller>
+                    <action>index</action>
+                    <pages>
+                        <edit>
+                            <label>Edit</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>block</controller>
+                            <action>edit</action>
+                            <visible>0</visible>
+                        </edit>
+                        <distribute>
+                            <label>Distribute</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>block</controller>
+                            <action>distribute</action>
+                            <visible>0</visible>
+                        </distribute>
+                    </pages>
+                </block>
+                <acl>
+                    <label>Permissions</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>resource</controller>
+                    <action>index</action>
+                    <pages>
+                        <resource>
+                            <label>Resources</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>resource</controller>
+                            <action>index</action>
+                            <visible>0</visible>
+                        </resource>
+                        <rule>
+                            <label>Rules</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>rule</controller>
+                            <action>index</action>
+                            <visible>0</visible>
+                        </rule>
+                        <rule-front>
+                            <label>Rules</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>rule</controller>
+                            <action>front</action>
+                            <visible>0</visible>
+                        </rule-front>
+                        <rule-admin>
+                            <label>Rules</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>rule</controller>
+                            <action>admin</action>
+                            <visible>0</visible>
+                        </rule-admin>
+                        <rule-block>
+                            <label>Rules</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>rule</controller>
+                            <action>block</action>
+                            <visible>0</visible>
+                        </rule-block>
+                        <rule-module>
+                            <label>Rules</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>rule</controller>
+                            <action>module</action>
+                            <visible>0</visible>
+                        </rule-module>
+                    </pages>
+                </acl>
+                <!--
+                <navigation>
+                    <label>Navigations</label>
+                    <module />
+                    <route>admin</route>
+                    <controller>navigation</controller>
+                    <action>index</action>
+                </navigation>
+                -->
+                <event>
+                    <label>Event hook</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>event</controller>
+                    <action>index</action>
+                    <pages>
+                        <observer>
+                            <label>Observers</label>
+                            <route>admin</route>
+                            <module />
+                            <controller>event</controller>
+                            <action>observer</action>
+                            <visible>0</visible>
+                        </observer>
+                    </pages>
+                </event>
+                <comment>
+                    <label>Comments</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>comment</controller>
+                    <action>index</action>
+                </comment>
+                <notification>
+                    <label>Notifications</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>notification</controller>
+                    <action>index</action>
+                </notification>
+                <readme>
+                    <label>Readme</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>readme</controller>
+                    <action>index</action>
+                </readme>
+            </pages>
+        </spec>
+
+        <modules>
+            <label>Module List</label>
+            <name>modules</name>
+            <order>90</order>
+        </modules>
+
+        <link>
+            <label>Links</label>
+            <route>admin</route>
+            <module />
+            <controller>link</controller>
+            <action>index</action>
+            <order>100</order>
+            <pages>
+                <updates>
+                    <label>Check for updates</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>link</controller>
+                    <action>updates</action>
+                </updates>
+                <planet>
+                    <label>Planet news</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>link</controller>
+                    <action>planet</action>
+                </planet>
+                <readme>
+                    <label>Readme</label>
+                    <route>admin</route>
+                    <module />
+                    <controller>link</controller>
+                    <action>readme</action>
+                </readme>
+            </pages>
+        </link>
+</configdata>

@@ -1,0 +1,56 @@
+
+As announced back in August 2010[http://xoops.org/modules/news/article.php?storyid=5675], XOOPS is moving forward with a brand new architecture.
+After some refactoring during the past few months, today we are releasing the XoopsEngine for the public for testing as an official Alpha 1.
+
+XOOPS, or eXtensible Object Oriented Portal System, well known as a leading open source CMS and portal system, now becomes an application engine platform for web and mobile applications.
+XoopsEngine, as the new brand of the XOOPS Project, supports open and extensible engines backboned with its multi-engine architecture. As for now there are three engines available:
+- Xoops: the official engine with new architecture utilized Zend Framework as primary library and Smarty as default view templating engine, as well as some third-party libraries. Demo is hosted on xoopsengine.org;
+- Lite: a lite version of the 'Xoops' Engine with no MySQL required, aimed for high performance scenarios;
+- Legacy: for backward compatibility to support legacy modules and templates.
+During the time of refactoring, the multi-engine mechanism has been examined and proven with a couple of independent engines for different type web applications.
+By taking advantages of PHP frameworks like Yii, more engines will be provided by Xoops Engine development team, and community developers are encouraged to develop their custom engines as well.
+
+Relevant documents are still being prepared, some selected features that are most wanted by community:
+* Built-in cache mechanism for high performance
+* Clear M-V-C with AOP and event hook
+* Extensible URL rewrite for better SEO
+* App/module clone w/o code change
+
+
+And the current Roadmap for Xoops Engine development in 2011:
+
+* Alpha 1 in end January (this release), open to community conrtibution
+* Alpha 2 in middle February, mainly for developers to review code and write most wanted applications
+* Beta 1 in  early April, for end users to start testing
+* RC 1 in June, reasonably stable for production development
+* Final in early December, celebrating XOOPS 10's Anniversary
+
+From now on, based on our experiences with previous Xoops Engine group organized in Googlegroup, we'll be forming five public teams:
+1) Engine development: primary architecture, backend and front-end development
+2) User extension development: application, module and plugin development
+3) Documentation: development tutorials and user guides
+4) Theme and design: prototype design, graphics and front-end coding
+5) Testing: functionality and performance testing
+If you are interested in or available for any of the teams, please feel free to join.
+
+Few important resources, as we go forward:
+
+1) XoopsEngine source code:
+http://p.sf.net/xoops/trunk
+
+2) Nightly builder for testing:
+http://p.sf.net/xoops/nightly
+
+3) Code contribution guide:
+http://p.sf.net/xoops/contribution
+
+4) Xoops Engine teams:
+http://p.sf.net/xoops/team
+
+5) Project wiki:
+http://p.sf.net/xoops/wiki
+
+
+We invite the whole XOOPS community to contribute to this new and exciting chapter of XOOPS!
+
+The XOOPS Development Team

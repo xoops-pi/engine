@@ -1,0 +1,24 @@
+<{headLink href="app/user/resources/scripts/block.css"}>
+<div class="login-form">
+<form name="<{$block.form}>" action="<{$block.action}>" method="post">
+    <{_ text="Username:"}><br />
+    <input type="text" name="identity" size="12" value="" maxlength="25" /><br />
+    <{_ text="Password:"}><br />
+    <input type="password" name="credential" size="12" maxlength="32" /><br />
+    <{if $block.rememberme}>
+        <input type="checkbox" name="rememberme" value="1" /> <{$block.rememberme}><br />
+    <{/if}>
+    <br />
+    <input type="hidden" name="redirect" value="<{$block.redirect}>" />
+    <input type="submit" value="<{_ text=Login}>" /><br />
+</form>
+</div>
+
+<div class="login-message">
+    <span>
+        <a href="<{appUrl route=default module=user controller=password}>" title="<{_ text='Reset password'}>"><{_ text='Reset password'}></a>
+    </span>
+    <span>
+        <a href="<{appUrl route=register}>" title="<{_ text='Register account'}>"><{_ text='Register account'}></a>
+    </span>
+</div>

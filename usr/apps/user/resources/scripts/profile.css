@@ -1,0 +1,51 @@
+/* $Id$ */
+
+.profile
+{
+    clear: both;
+}
+
+.profile .caption {
+    font-weight: bold;
+    font-size: 200%;
+    margin-top: 0.5em;
+}
+
+.profile .detail .category {
+    width: 44%;
+    float: left;
+    display: inline;
+}
+
+.profile .category .title {
+    font-weight: bold;
+    font-size: 150%;
+    margin-top: 0.5em;
+}
+
+.profile .operation span {
+    border: solid 1px;
+    padding: 2px;
+}
+
+.profile .meta {
+    clear: left;
+}
+
+.profile .label {
+    width: 150px;
+    float: left;
+    display: inline;
+    white-space: nowrap;
+}
+
+.profile .text {
+    float: left;
+    margin-left: 1em;
+    padding-left: 1em;
+    display: inline;
+}
+
+#profile-category- .title {
+    color: 999;
+}

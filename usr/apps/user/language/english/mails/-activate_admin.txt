@@ -1,0 +1,9 @@
+New pending acccount:
+
+A new user <{$username}> (<{$email}>) has just registered an account at <{$xoops_sitename}>.
+Clicking on the link below will activate the account of this user:
+<{$activation_url}>
+
+-----------
+<{$xoops_sitename}>
+<{$xoops_url}>

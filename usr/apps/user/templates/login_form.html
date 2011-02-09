@@ -1,0 +1,12 @@
+<{headLink href="app/user/resources/scripts/login.css"}>
+<{headScript src='app/user/resources/scripts/login.js'}>
+
+<h2><{$title}></h2>
+
+<{if !empty($message)}>
+    <div class="login-message">
+    <{$message}>
+    </div>
+<{/if}>
+
+<div class="login-form"><{$xoopsLogin}></div>

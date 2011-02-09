@@ -1,0 +1,14 @@
+<{_ text="Select Section:"}>
+<select name=section onChange="location=this.options[this.selectedIndex].value">
+<{foreach key=name item=sect from=$sections}>
+    <option value="<{$sect.url}>"
+    <{if $name eq $section}>selected<{/if}>
+        ><{$sect.name}></option>
+<{/foreach}>
+</select>
+
+<{include file="app/system/form.html" xoopsForm=$page_form_list}>
+
+<p>
+    <a href="<{adminUrl action=add controller=page module=$dirname section=$section}>" title="<{_ text='Add page'}>"><{_ text='Add page'}></a>
+</p>

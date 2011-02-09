@@ -1,0 +1,17 @@
+<h2><{_ text="Tasks:"}></h2>
+<{foreach item=task from=$tasks}>
+    <div style="padding: 5px 0;">
+        <span style="border: 1px;">
+        <{$task.memo}>
+        </span>
+    </div>
+<{/foreach}>
+
+<h2><{_ text="Shortcuts:"}></h2>
+<ul>
+<{foreach item=link from=$shortcuts}>
+    <li style="padding: 5px 0;">
+        <a href="<{$link.link}>" title="<{$link.title}>"><{$link.title}></a>
+    </li>
+<{/foreach}>
+</ul>

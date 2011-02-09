@@ -1,0 +1,49 @@
+The new Xoops Engine (aka X3) is a "Next Generation" XOOPS, rewritten from scratch using Zend Framework.
+
+Why did we rewrite XOOSPS?
+XOOPS is one of the most successful Open Source CMS solution, constantly placing in top places in various competitions, and receiving various awards. But it is showing signs of aging, that would require major rewrites of the Core. We could do what others projects did, and refactor the core while staying "proprietary", or step back and consider other options, like using a standard, off-the-shelf PHP Framework.
+As a "proprietary" solution, it was clear that we're limiting ourselves, and it's hard for us to take advantage of all the great new developments, as we need to convert them every time into XOOPS environment.
+So we did what so many companies did before - took advantage of standard components. The same as first IBM PC or current Apple computers are based on standard Intel chips, or IBM that started using Linux on their mainframes, we've decided to switch to a standard PHP Framework. By doing so, we can focus our limited resources on aspects that make XOOPS unique and special, while leaving standard functionality to be addressed by an off-the-shelf PHP Framework. This way we can take advantage of latest Web developments and vast resources of the Framework team. It's like getting suddenly a whole new team of some of the best PHP programmers joining XOOPS!
+After much research, we've selected Zend Framework, the best and most popular PHP Framework on the market (http://framework.zend.com/about/overview).
+
+Why did we choose Zend Framework
+* The design and coding is professional and state-of-the-art
+* Fully Object-oriented
+* The documentation is exhaustive, with countless third-party resources available on internet
+* The development is active and sustainable, and its team is backed by PHP development team (Zend)
+* The number of contributors is growing continuously and the user community is very active
+* Strong support from major corporations (Technology partners include IBM, Google, Microsoft, Adobe Systems, and StrikeIron).
+* Use-at-will architecture with loosely coupled components and minimal interdependencies
+* Extensible MVC implementation supporting layouts and PHP-based templates by default
+* Support for multiple database systems and vendors, including MySQL, Oracle, IBM DB2, Microsoft SQL Server, PostgreSQL, SQLite, and Informix Dynamic Server
+* Email composition and delivery, retrieval via mbox, Maildir, POP3 and IMAP4
+* Flexible caching sub-system with support for many types of backends, such as memory or a file system.
+* The components are vast and loosely coupled and potentially compatible with other libraries: on-demand pickup
+* All components are fully object-oriented PHP 5 and are E_STRICT compliant
+* Proven PHPunit integration for unit tests
+* Constantly updated with latest Web development features
+* strictly PHP 5
+
+What do we inherit from XOOPS Legacy
+* Modularization
+* Theme
+* Template
+
+What do we expect to improve in new Xoops Engine
+* Flexible architecture and elegant code and implementation
+* Modern MVC architecture: faster development, state-of-the-art technology
+* Distributed deployment respecting virtual hosts
+* Contributor friendly skeleton: easy to manage
+* SEO capable URL routing
+* Solid and rich libraries and frameworks
+* Ready to implement unit test
+
+
+Challenges
+* Different way of thinking, analyzing, designing and developing
+* Unknown learning curve
+* Migration of existing themes/modules to new architecture
+
+
+Taiwen Jiang
+Xoops Engine Developer

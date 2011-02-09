@@ -1,0 +1,16 @@
+<{headLink href="app/user/resources/scripts/block.css"}>
+
+<div class="account-block">
+<{if !empty($block.user)}>
+    <div class="avatar"><{$block.user.avatar}></div>
+    <div class="user">
+        <div class="name"><a href="<{$block.user.link}>" title="<{$block.user.name}>"><{$block.user.name}></a></div>
+        <div class="action"><a href="<{$block.link_logout}>" title="<{_ text=Logout}>"><{_ text=Logout}></a></div>
+    </div>
+<{else}>
+    <div class="user">
+        <div class="action"><a href="<{$block.link_login}>" title="<{_ text=Login}>"><{_ text=Login}></a></div>
+        <div class="action"><a href="<{$block.link_register}>" title="<{_ text=Register}>"><{_ text=Register}></a></div>
+    </div>
+<{/if}>
+</div>

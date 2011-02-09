@@ -1,0 +1,50 @@
+<{if $themes_install}>
+<h3><{_ text="Themes Available for Installation"}></h3>
+<table>
+    <tr>
+        <th><{_ text=Screenshot}></th>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Parent}></th>
+        <th><{_ text=Upgrade}></th>
+        <th><{_ text=Install}></th>
+    </tr>
+<{foreach key=dirname item=theme from=$themes_install}>
+    <tr>
+        <td><{htmlImage src="usr/themes/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{$theme.name}>
+        <td><{$theme.version}>
+        <td><{$theme.parent}>
+        <td><{if $theme.upgrade}><a href="<{adminUrl module=system controller=theme action=upgrade dirname=$dirname}>" title="<{_ text=Upgrade}>"><{_ text=Upgrade}></a>
+            <{/if}>
+        <td><a href="<{adminUrl module=system controller=theme action=install dirname=$dirname}>" title="<{_ text=Install}>"><{_ text=Install}></a>
+    </tr>
+<{/foreach}>
+</table>
+<{/if}>
+
+<{if $themes_deploy}>
+<h3><{_ text="Available Themes for Deployment"}></h3>
+<table>
+    <tr>
+        <th><{_ text=Screenshot}></th>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Parent}></th>
+        <th><{_ text=Deploy}></th>
+    </tr>
+<{foreach key=dirname item=theme from=$themes_deploy}>
+    <tr>
+        <td><{htmlImage src="usr/themes/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{$theme.name}>
+        <td><{$theme.version}>
+        <td><{$theme.parent}>
+        <td><a href="<{adminUrl module=system controller=theme action=synchronize dirname=$dirname}>" title="<{_ text=Deploy}>"><{_ text=Deploy}></a>
+    </tr>
+<{/foreach}>
+</table>
+<{/if}>
+
+<{if empty($themes_install) AND empty($themes_deploy)}>
+    <{_ text="There is no theme available."}>
+<{/if}>

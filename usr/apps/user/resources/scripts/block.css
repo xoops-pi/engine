@@ -1,0 +1,42 @@
+/* $Id$ */
+
+.login-form {
+    padding: 5px;
+}
+
+.login-message {
+    padding: 10px 0 5px 0;
+}
+
+.account-block {
+    padding: 10px;
+    float: right;
+}
+.account-block .avatar {
+    display: inline;
+    float: left;
+    padding-right: 10px;
+}
+.account-block .user {
+    display: inline;
+    float: right;
+
+}
+.account-block a {
+    white-space: nowrap;
+    color: #ccc;
+    float: right;
+}
+
+.account-block .user .name {
+    padding-bottom: 2em;
+}
+
+.account-block .user .name a {
+    font-weight: normal;
+}
+
+.account-block .action a {
+    color: #aaa;
+    font-weight: normal;
+}

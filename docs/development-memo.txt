@@ -1,0 +1,22 @@
+Known TODO list as of Oct 30th 2010:
+1 Add a service registry factory to manage all registry caches [done]
+2 Add module routes to cover install/uninstall/update [low priority]
+3 Complete user module [done by 80%]
+4 Add comment plugin [done by 50%]
+5 Add notification/message plugin [done by 50%]
+6 Add rating plugin
+7 Add paginator [done]
+8 Finish theme installer following module installer [done]
+9 Create a simple default theme addressing all new features as demo
+10 Form compound [done]
+11 Config refactor [done]
+12 Module clone [done]
+13 Add tag plugin
+14 Adopt Smarty3 [done by 80%]
+15 Add plugin update for module configurations when a plugin is installed/activated
+16 Performance oriented refactor and optimization [done by 80%]
+17 Add assert
+
+Taiwen Jiang
+Xoops Engine Developer
+Nov 30th, 2010

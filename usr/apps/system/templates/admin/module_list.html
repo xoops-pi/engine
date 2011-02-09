@@ -1,0 +1,39 @@
+<{if !empty($modules_active)}>
+<h3><{_ text="Active Modules"}></h3>
+<{$modules_active}>
+<{/if}>
+
+<{if !empty($modules_inactive)}>
+<h3><{_ text="Inactive Modules"}></h3>
+<table>
+    <tr>
+        <th><{_ text=Logo}></th>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Status}></th>
+        <th><{_ text=Synchronize}></th>
+        <th><{_ text=Activate}></th>
+        <th><{_ text=Uninstall}></th>
+        <th><{_ text=Clone}></th>
+    </tr>
+<{foreach key=dirname item=module from=$modules_inactive}>
+    <tr>
+        <td><{htmlImage src=$module.logo alt=$module.name width=120}>
+        <td><{$module.name}>
+        <td><{$module.version}>
+            <{if $module.upgrade > 0}>
+                <br /><a href="<{$module.download}>" rel="external" title="<{_ text=Upgrade}>"><{_ text=Upgrade}></a>
+            <{/if}>
+        <td><{if !empty($module.parent)}><{$module.parent}><br /><{/if}>
+            <{$module.status}>
+        <td><a href="<{adminUrl module=system controller=module action=synchronize dirname=$dirname}>" title="<{_ text=Synchronize}>"><{_ text=Synchronize}></a>
+        <td><a href="<{adminUrl module=system controller=module action=activate dirname=$dirname}>" title="<{_ text=Activate}>"><{_ text=Activate}></a>
+        <td><a href="<{adminUrl module=system controller=module action=uninstall dirname=$dirname}>" title="<{_ text=Uninstall}>"><{_ text=Uninstall}></a>
+        <td>
+            <{if empty($module.parent) AND $module.type == "app"}>
+                <a href="<{adminUrl module=system controller=module action=clone parent=$dirname}>" title="<{_ text=Clone}>"><{_ text=Clone}></a>
+            <{/if}>
+    </tr>
+<{/foreach}>
+</table>
+<{/if}>

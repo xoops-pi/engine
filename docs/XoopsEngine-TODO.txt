@@ -1,0 +1,8 @@
+1 Legacy engine for Xoops 2 modules and themes compatibility, end of March
+2 User module/app, end of March
+3 New theme, April
+4 Essential apps, April
+5 Essential plugins, including comment/notification/tag/rating, April
+6 Backend/administration, May
+7 Online distribution, i.e. server-to-server distribution, June
+6 Useful apps/modules for production sites, November

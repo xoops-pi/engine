@@ -1,0 +1,20 @@
+<{headLink href="app/system/resources/scripts/root.css"}>
+
+<h2><{$title}></h2>
+
+
+<{if isset($root)}>
+<div class="login-hint">
+    You have logged on with root account "<{$root}>".<br />
+    You may <a href="<{appUrl route=root action=logout}>">logout the account</a> or switch to another account with below form.
+</div>
+<{/if}>
+
+<{if !empty($message)}>
+    <div class="login-message">
+    <{$message}>
+    </div>
+<{/if}>
+
+
+<div class="login-form"><{$xoopsRoot}></div>

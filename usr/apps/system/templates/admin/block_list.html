@@ -1,0 +1,10 @@
+<{_ text="Select Module:"}>
+<select name=dirname onChange="location=this.options[this.selectedIndex].value">
+<{foreach key=dir item=module from=$modules}>
+    <option value="<{$module.url}>"
+    <{if $dirname eq $dir}>selected<{/if}>
+        ><{$module.name}></option>
+<{/foreach}>
+</select>
+
+<{include file="app/system/form.html" xoopsForm=$block_form_list}>

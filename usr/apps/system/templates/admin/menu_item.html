@@ -1,0 +1,414 @@
+
+<{* headScript src="img/js/jquery/jquery-1.4.2.min.js" *}>
+<{* headScript src="img/js/jquery/external/jsTree/jquery.tree.js" *}>
+<{* headScript src="img/js/jquery/external/jsTree/plugins/jquery.tree.contextmenu.js" *}>
+<{* headScript src="img/js/jquery/external/simplemodal/jquery.simplemodal-1.3.4.js" *}>
+
+<{jQuery file=["extensions/jsTree/jquery.tree.js","extensions/jsTree/plugins/jquery.tree.contextmenu.js","extensions/simplemodal/jquery.simplemodal-1.3.4.js"]}>
+
+<{headStyle content="
+/* Simple Popup */
+/* Overlay */
+#modalOverlay {background-color:#000; cursor:wait;}
+
+/* Container */
+#modalContainer {width: 300px; height: 200px; margin-left:-170px; left:50%; top:15%; background-color:#fff; border:3px solid #ccc;}
+#modalContainer a.modalCloseImg {background:url(../img/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-18px; cursor:pointer;}
+#modalContainer .modalheader {height:30px; width:100%; background:url(../img/sprite.png) repeat-x 0px 0px; color:#0192BF; font-size:1.1em; font-weight:bold; line-height:30px;}
+#modalContainer .modalheader span {padding-left:8px;}
+#modalContainer .modalbody {padding:15px 5px 15px 5px;}
+#modalContainer .modalbody th {text-align:right;}
+#modalContainer .modalbodysubmitbuttons {text-align:center;}
+
+/* Confirm Popup
+/* Overlay */
+#confirmModalOverlay {background-color:Gray; cursor:wait;}
+
+/* Container */
+#confirmModalContainer {height:140px; width:420px; left:50%; top:15%; margin-left:-210px; font-family:Calibri, Verdana, Arial; font-size:16px; text-align:left; background:#fff; border:4px solid #989898;}
+#confirmModalContainer .confirmheader {height:30px; width:100%; background:url(../img/sprite.png) repeat-x 0px 0px; color:#0192BF; font-size:1.1em; font-weight:bold; line-height:30px;}
+#confirmModalContainer .confirmheader span {padding-left:8px;}
+
+#confirmModalContainer a.modalCloseImg {background:url(../img/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-18px; cursor:pointer;}
+#confirmModalContainer .confirmmessage {color:#333; text-align:center; margin:0; padding:12px 4px; font-size:1em;}
+#confirmModalContainer .confirmbuttons {text-align:center;}
+"}>
+
+<h2><{$title}></h2>
+
+    <div id="tree-list" style="clear:both; min-height: 500px;">
+        <ul>
+            <li class="open root" id="root" rel="root">
+                <a href="#"><ins>&nbsp;</ins><{_ text=Root}></a>
+                <ul>
+                <{$tree}>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/javascript" class="source">
+    var callback = <{$callbacks}>;
+    var modalForm;
+    var treeObj;
+    $(function () {
+        treeObj =
+        $("#tree-list").tree({
+
+            callback: {
+                ondblclk    : function(NODE,TREE_OBJ) { TREE_OBJ.rename(NODE); },
+                onmove      : function(NODE, REF_NODE, TYPE, TREE_OBJ, RB) {
+                    //alert($(NODE).attr("id") + ":" + TYPE + "-" + $(REF_NODE).attr("id"));
+
+                    $.post(
+                        callback.moveCall,
+                        {
+                            id          : $(NODE).attr("id"),
+                            reference   : $(REF_NODE).attr("id"),
+                            type        : TYPE,
+                        },
+                        function (data) {
+                            //alert(data.status);
+                            if (data == null || data.status == "undefined" || data.status != 1) {
+                                $.tree.rollback(RB);
+                            }
+                            return true;
+                        },
+                        "json"
+                    );
+
+                    },
+                onrename    : function(NODE, TREE_OBJ, RB) {
+                    //alert($(NODE).text());
+
+                    $node = $(NODE).children("a:first");
+                    $node.children("ins").remove();
+                    $.post(
+                        callback.renameCall,
+                        {
+                            id      : $(NODE).attr("id"),
+                            label   : $node.text(),
+                        },
+                        function (data) {
+                            //alert(data.status);
+                            if (data == null || data.status == "undefined" || data.status != 1) {
+                                $.tree.rollback(RB);
+                            }
+                            return true;
+                        },
+                        "json"
+                    );
+
+                    },
+            },
+            types   : {
+                "default"  : {
+                    editable    : true, // can be function
+                },
+                "root"  : {
+                    clickable   : true, // can be function
+                    renameable  : false, // can be function
+                    deletable   : false, // can be function
+                    creatable   : true, // can be function
+                    draggable   : false, // can be function
+                    editable    : false, // can be function
+                },
+                "protected"  : {
+                    clickable   : true, // can be function
+                    renameable  : false, // can be function
+                    deletable   : false, // can be function
+                    creatable   : false, // can be function
+                    draggable   : true, // can be function
+                    editable    : false, // can be function
+                },
+            },
+            ui        : {
+                theme_name    : "classic",// if set to false no theme will be loaded
+            },
+            plugins : {
+                contextmenu : {
+                    items : {
+                        create : {
+                            label    : "<{_ text=Add}>",
+                            action    : function (NODE, TREE_OBJ) {
+                                //alert('create');
+                                modalForm =
+                                $("#modal-form").modal({
+                                    overlayId: "modalOverlay",
+                                    containerId: "modalContainer",
+                                    closeClass: "modalClose",
+                                    close: true,
+                                    onOpen: modalOpen,
+                                    //onClose: modalOnClose,
+                                    persist: true,
+                                    containerCss: ({ width: "500px", height: "275px", marginLeft: "-250px" }),
+                                    tree: TREE_OBJ,
+                                    node: NODE
+                                });
+                                //alert(modalForm);
+                                },
+                        },
+                        // edit an item
+                        edit : {
+                            label    : "<{_ text=Edit}>",
+                            icon    : "rename",
+                            visible    : function (NODE, TREE_OBJ) {
+                                if(NODE.length != 1) return false;
+                                return TREE_OBJ.check("editable", NODE);
+                                },
+                            action    : function (NODE, TREE_OBJ) {
+                                modalForm =
+                                $("#modal-form").modal({
+                                    overlayId: "modalOverlay",
+                                    containerId: "modalContainer",
+                                    closeClass: "modalClose",
+                                    close: true,
+                                    onOpen: modalOpen,
+                                    //onClose: modalOnClose,
+                                    persist: true,
+                                    containerCss: ({ width: "500px", height: "275px", marginLeft: "-250px" }),
+                                    tree: TREE_OBJ,
+                                    node: NODE,
+                                    op  : "edit",
+                                });
+
+                                $.get(
+                                    callback.readCall,
+                                    {
+                                        id  : $(NODE).attr("id"),
+                                    },
+                                    function (data) {
+                                        //alert($(node_obj).attr("id"));
+                                        if (data == null || data.status == "undefined" || data.status != 1) {
+                                            return;
+                                        }
+                                        $("#label").attr("value", data.params.label);
+                                        $("#module").attr("value", data.params.module);
+                                        $("#controller").attr("value", data.params.controller);
+                                        $("#action").attr("value", data.params.action);
+                                        $("#params").attr("value", data.params.params);
+                                        $("#route").attr("value", data.params.route);
+                                        $("#uri").attr("value", data.params.uri);
+                                        $("#resource").attr("value", data.params.resource);
+                                        $("#visible").attr("value", data.params.visible);
+                                    },
+                                    "json"
+                                );
+
+                                },
+                        },
+                        rename : false,
+                        remove : {
+                            label    : "<{_ text=Delete}>",
+                            action    : function (NODE, TREE_OBJ) {
+                                modalForm =
+                                $("#modal-confirm").modal({
+
+                                    //close: true,
+                                    overlayId: 'confirmModalOverlay',
+                                    containerId: 'confirmModalContainer',
+                                    closeClass: "modalClose",
+                                    onClose: modalOnClose,
+                                    onShow: modalShow,
+
+                                    tree: TREE_OBJ,
+                                    node: NODE
+                                });
+                                },
+                        },
+                    }
+                }
+            }
+        });
+    });
+
+
+    function modalOpen(dialog) {
+
+        //alert($(node_obj).attr("id"));
+        dialog.overlay.fadeIn("fast", function() {
+            dialog.container.fadeIn("fast", function() {
+                dialog.data.hide().slideDown("fast");
+            });
+        });
+
+        dialog.data.find(".modalheader span").html("<{_ text='Menu item'}>");
+
+        // if the user clicks "yes"
+        dialog.data.find("#ButtonAddSubmit").click(function(ev) {
+            ev.preventDefault();
+            $.modal.close();
+            var node_obj = modalForm.o.node;
+            var tree_obj = modalForm.o.tree;
+            var op = modalForm.o.op != "undefined" ? modalForm.o.op : "add";
+            //alert(callback.add);
+            $.post(
+                op == "edit" ? callback.editCall : callback.addCall,
+                {
+                    id          : $(node_obj).attr("id"),
+                    label       : $("#label").attr("value"),
+                    module      : $("#module").attr("value"),
+                    controller  : $("#controller").attr("value"),
+                    action      : $("#action").attr("value"),
+                    params      : $("#params").attr("value"),
+                    route       : $("#route").attr("value"),
+                    uri         : $("#uri").attr("value"),
+                    resource    : $("#resource").attr("value"),
+                    visible     : $("#visible").attr("value"),
+                    navigation  : "<{$navigation}>",
+                },
+                function (data) {
+                    //alert($(node_obj).attr("id"));
+                    //alert(data.status);
+                    if (data == null || data.status == "undefined" || data.status != 1) {
+                        return;
+                    }
+                    if (op == "edit") {
+                        var obj = $(node_obj).children("a");
+                        var icn = obj.children("ins").clone();
+                        obj.text(data.params.label).prepend(icn);
+                    } else {
+                        var childObj = {};
+                        childObj.attributes = {};
+                        childObj.attributes["id"] = data.params.id;
+                        childObj.data = data.params.label;
+                        tree_obj.create(childObj, tree_obj.get_node(node_obj[0]));
+                    }
+                },
+                "json"
+            );
+            return false;
+        });
+    }
+
+   function modalOnClose(dialog) {
+        $.modal.close(); // must call this to have SimpleModal
+        return;
+    }
+
+    function modalShow(dialog) {
+        dialog.data.find(".confirmmessage").append("<{_ text='Are you sure to delete the node?'}>");
+
+        // Yes button clicked
+        dialog.data.find("#ButtonYes").click(function(ev) {
+            ev.preventDefault();
+            $.modal.close();
+            var node_obj = modalForm.o.node;
+            var tree_obj = modalForm.o.tree;
+            $.post(
+                callback.deleteCall,
+                {
+                    id   : $(node_obj).attr("id"),
+                },
+                function (data) {
+                    if (data == null || data.status == "undefined" || data.status != 1) {
+                        return;
+                    }
+                    $.each(node_obj, function () { tree_obj.remove(this); });
+                    return true;
+                },
+                "json"
+            );
+            return false;
+
+        });
+    }
+
+    </script>
+
+
+
+    <div id="modal-form" style="display: none;">
+        <div class="modalheader"><span></span></div>
+        <div class="modalbody">
+         <table>
+            <tr>
+                <th>
+                    <{_ text=Title}>
+                </th>
+                <td>
+                    <input id="label" name="label" width="250px" MaxLength="64">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=Module}>
+                </th>
+                <td>
+                    <input id="module" name="module" width="250px" MaxLength="64">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=Controller}>
+                </th>
+                <td>
+                    <input id="controller" name="controller" width="250px" MaxLength="64">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=Action}>
+                </th>
+                <td>
+                    <input id="action" name="action" width="250px" MaxLength="64">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=Route}>
+                </th>
+                <td>
+                    <input id="route" name="route" width="250px" MaxLength="64">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=Params}>
+                </th>
+                <td>
+                    <input id="params" name="params" width="250px" MaxLength="255">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=URI}>
+                </th>
+                <td>
+                    <input id="uri" name="uri" width="250px" MaxLength="255">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=Resource}>
+                </th>
+                <td>
+                    <input id="resource" name="resource" width="250px" MaxLength="255">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <{_ text=Visible}>
+                </th>
+                <td>
+                    <input id="visible" name="visible" width="250px" MaxLength="64" value="1">
+                </td>
+            </tr>
+        </table>
+        <div class="modalbodysubmitbuttons">
+            <input id="parent" name="parent" type="hidden" value="" />
+            <input id="navigation" name="navigation" type="hidden" value="<{$navigation}>" />
+            <button id="ButtonAddSubmit" title="<{_ text=Save}>"><{_ text=Save}></button>&nbsp;
+            <button id="ButtonAddCancel" class="modalClose"><{_ text=Cancel}></button>
+        </div>
+        </div>
+    </div>
+
+    <div id="modal-confirm" style="display: none;">
+        <div class="confirmheader"><span><{_ text=Confirm}></span></div>
+            <p class="confirmmessage"></p>
+        <div class="confirmbuttons">
+            <button id="ButtonYes"><{_ text=Yes}></button>&nbsp;
+            <button id="ButtonNo" class="modalClose"><{_ text=No}></button>
+        </div>
+    </div>

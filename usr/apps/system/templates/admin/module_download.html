@@ -1,0 +1,8 @@
+<h2><{$description}></h2>
+<ul>
+<{foreach key=link item=title from=$list}>
+    <li style="padding: 5px 0;">
+        <a href="<{$link}>" title="<{$title}>" rel="external"><{$title}></a>
+    </li>
+<{/foreach}>
+</ul>

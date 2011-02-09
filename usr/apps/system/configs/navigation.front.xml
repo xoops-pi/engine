@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+        <nav-home>
+            <order>-100</order>
+            <label>Home</label>
+            <uri>/</uri>
+        </nav-home>
+
+        <modules>
+            <label>[Modules Placeholder]</label>
+            <name>modules</name>
+            <uri />
+            <order>90</order>
+        </modules>
+        
+        <nav-link>
+            <order>100</order>
+            <label>Links</label>
+            <uri />
+            <pages>
+                <sitemap>
+                    <label>Sitemap</label>
+                    <uri>/sitemap</uri>
+                </sitemap>
+                <aboutus>
+                    <label>About us</label>
+                    <uri>/aboutus</uri>
+                </aboutus>
+                <contact>
+                    <label>Contact</label>
+                    <uri>/contact</uri>
+                </contact>
+            </pages>
+        </nav-link>
+        <nav-feed>
+            <order>900</order>
+            <label>Feeds</label>
+            <uri />
+            <pages>
+                <feeds>
+                    <label>Feed list</label>
+                    <uri>/feed</uri>
+                </feeds>
+                <sitemap>
+                    <label>Sitemap feed</label>
+                    <route>feed</route>
+                    <module>default</module>
+                    <controller>sitemap</controller>
+                </sitemap>
+            </pages>
+        </nav-feed>
+</configdata>

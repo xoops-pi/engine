@@ -1,0 +1,28 @@
+<h2><{_ text=Search}></h2>
+<p><{include file="app/system/form.html" xoopsForm=$xoopsSearch}></p>
+
+<{if $results}>
+<p><{_ text="Search results:"}>
+    <ul>
+    <{foreach item=module key=dirname from=$results}>
+        <li>
+            <ul style="padding: 5 0;">
+                <{$module.name}>
+                <a href="<{$module.url}>"><{_ text=All}></a>
+                <{foreach item=ls from=$module.list}>
+                    <li>
+                        <{$ls.title}>
+                        <{assign var=uid value=$ls.uid}>
+                        <{if $ls.uid AND $users.$uid}><a href="<{$users.$uid.url}>"><{$users.$uid.name}></a><{/if}>
+                        <{if $ls.time}><{$ls.time}><{/if}>
+                        <p>
+                            <{if $ls.content}><{$ls.content}><{/if}>
+                        </p>
+                    </li>
+                <{/foreach}>
+            </ul>
+        </li>
+    <{/foreach}>
+    </ul>
+</p>
+<{/if}>
