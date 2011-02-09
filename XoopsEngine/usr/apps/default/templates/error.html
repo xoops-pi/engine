@@ -1,0 +1,13 @@
+<{headLink href="app/default/resources/scripts/exception.css"}>
+
+<h4><{$error_title}></h4>
+
+<div class="error">
+<{if $message}>
+    <p><{$message}></p>
+<{/if}>
+
+<{if $trace}>
+    <p><pre><{$trace}></pre></p>
+<{/if}>
+</div>

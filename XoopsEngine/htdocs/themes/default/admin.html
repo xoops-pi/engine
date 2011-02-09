@@ -1,0 +1,57 @@
+<{$doctype}>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+<{$headMeta}>
+<{$headTitle}>
+<{$headLink}>
+<{$headScript}>
+<{$headStyle}>
+</head>
+<body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+
+<!-- Start Header -->
+<table cellspacing="0">
+    <tr id="header">
+        <td id="headerlogo"><a href="<{url path='www/'}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='xoops-logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
+        <td id="headerbanner"><{widget key=xoops_banner}></td>
+    </tr>
+    <tr>
+        <td id="headerbar" colspan="2">&nbsp;</td>
+    </tr>
+</table>
+
+<{navigation assign=navigation}>
+
+<{if $navigation}>
+    <{include file="navigation.html"}>
+<{/if}>
+<!-- End header -->
+
+<table cellspacing="0">
+    <tr>
+        <{if isset($side_menu)}>
+        <td id="leftcolumn">
+        <!-- Start left blocks loop -->
+            <{include file="side_menu.html"}>
+        <!-- End left blocks loop -->
+        </td>
+        <{/if}>
+
+        <td id="centercolumn">
+            <!-- Start content module page -->
+            <{if $xoops_contents && ($xoops_contents != ' ')}><div id="content"><{$xoops_contents}></div><{/if}>
+            <!-- End content module -->
+        </td>
+
+    </tr>
+</table>
+
+<!-- Start footer -->
+<table cellspacing="0">
+<tr id="footerbar">
+    <td><{$xoops_footer}></td>
+</tr>
+</table>
+<!-- End footer -->
+</body>
+</html>

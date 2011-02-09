@@ -1,0 +1,31 @@
+<h2><{_ Tasks:}></h2>
+<{foreach item=task from=$tasks}>
+    <div style="padding: 5px 0;">
+        <span style="border: 1px;">
+        <{$task.memo}>
+        </span>
+    </div>
+<{/foreach}>
+
+<h2><{_ Shortcuts:}></h2>
+<ul>
+<{foreach item=link from=$shortcuts}>
+    <li style="padding: 5px 0;">
+        <a href="<{$link.link}>" title="<{$link.title}>"><{$link.title}></a>
+    </li>
+<{/foreach}>
+</ul>
+
+<h2><{_ text="Planet News:"}></h2>
+<{foreach item=newsList from=$news}>
+<h3><a href="<{$newsList.link}>" rel="external"><{$newsList.title}></a></h3>
+<p><{$newsList.description}></p>
+<ul>
+<{foreach item=item from=$newsList.items}>
+    <li style="padding: 5px 0;">
+        <a href="<{$item.link}>" title="<{$item.title}>" rel="external"><{$item.title}></a>
+        <p><{$item.description}>
+    </li>
+<{/foreach}>
+</ul>
+<{/foreach}>

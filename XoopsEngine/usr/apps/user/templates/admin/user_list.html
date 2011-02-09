@@ -1,0 +1,32 @@
+<div><a href="<{$url_adduser}>" title="<{_ text='Add user'}>"><{_ text='Add user'}></a></div>
+
+<table>
+    <tr>
+        <th><{_ text=ID}></th>
+        <th><{_ text=Identity}></th>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Email}></th>
+        <th><{_ text=Role}></th>
+        <th><{_ text=Edit}></th>
+        <th><{_ text=Delete}></th>
+        <th><{_ text=View}></th>
+    </tr>
+    <{foreach item=user key=id from=$users}>
+    <tr>
+        <td><{$user.id}></td>
+        <td><{$user.identity}></td>
+        <td><{$user.name}></td>
+        <td><{$user.email}></td>
+        <td><{$user.role}></td>
+        <td><a href="<{$user.edit}>" title="<{_ text=Edit}>" target="edit"><{_ text=Edit}></a></td>
+        <td><a href="<{$user.delete}>" title="<{_ text=Delete}>" target="delete"><{_ text=Delete}></a></td>
+        <td><a href="<{$user.view}>" title="<{_ text=View}>" target="view"><{_ text=View}></a></td>
+    </tr>
+    <{/foreach}>
+    <tfoot>
+    <{paginator data=$paginator}>
+    </tfoot>
+</table>
+
+
+<div><a href="<{$url_adduser}>" title="<{_ text='Add user'}>"><{_ text='Add user'}></a></div>

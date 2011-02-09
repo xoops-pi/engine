@@ -1,0 +1,11 @@
+Hello <{$user_name}>,
+
+Your account "<{$username}>" at <{$xoops_sitename}> has been activated by the administrator.
+
+You can now login from the following URL with the password you have provided upon registration.
+
+<{$login_url}>
+
+-----------
+<{$xoops_sitename}>
+<{$xoops_url}>

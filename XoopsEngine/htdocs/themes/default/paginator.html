@@ -1,0 +1,52 @@
+      <{if $pageCount > 0}>
+      <div>
+
+      <!-- First page link -->
+      <{if isset($previous)}>
+        <a href="<{$firstUrl}>">
+          <{_ text=First}>
+        </a> |
+      <{else}>
+        <span class="disabled"><{_ text=First}></span> |
+      <{/if}>
+
+      <!-- Previous page link -->
+      <{if isset($previous)}>
+        <a href="<{$previousUrl}>">
+          <{_ text="&lt; Previous"}>
+        </a> |
+      <{else}>
+        <span class="disabled"><{_ text="&lt; Previous"}></span> |
+      <{/if}>
+
+    <!-- Numbered page links -->
+    <{foreach item=page from=$pagesInRange}>
+        <{if $page != $current}>
+            <a href="<{$page.url}>">
+            <{$page.number}>
+            </a> |
+        <{else}>
+            <{$page.number}> |
+        <{/if}>
+    <{/foreach}>
+
+      <!-- Next page link -->
+      <{if isset($next)}>
+        <a href="<{$nextUrl}>">
+          <{_ text="Next &gt;"}>
+        </a> |
+      <{else}>
+        <span class="disabled"><{_ text="Next &gt;"}></span> |
+      <{/if}>
+
+      <!-- Last page link -->
+      <{if isset($next)}>
+        <a href="<{$lastUrl}>">
+          <{_ text=Last}>
+        </a>
+      <{else}>
+        <span class="disabled"><{_ text=Last}></span>
+      <{/if}>
+
+      </div>
+      <{/if}>

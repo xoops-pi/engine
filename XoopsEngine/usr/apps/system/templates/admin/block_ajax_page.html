@@ -1,0 +1,56 @@
+<form id="xo-page-frm" action="<{adminUrl module=system controller=block action=layout}>" method="post" >
+<div class="xo-page">
+	<div class="xo-page-head">
+		Select Page:
+		<select name="module" id="select-black">
+			<option>Select Module</option>
+			<{foreach key=dir item=module from=$modules}>
+			<option value="<{$dir}>"><{$module.name}></option>
+			<{/foreach}>
+		</select>
+		<select name="page" id="select-page">
+			<option>Select Page</option>
+		</select>
+	</div>
+	<div class="xo-page-main" id="xo-page-main">
+		<div class="xo-page-left">
+			<ul id="sortable1" data="0"></ul>
+		</div>
+		<div class="xo-page-center">
+			<div class="xo-page-center-top">
+				<div class="xo-page-center-top-left">
+					<ul id="sortable3" data="2"></ul>
+				</div>
+				<div class="xo-page-center-top-center">
+					<ul id="sortable4" data="3"></ul>
+				</div>
+				<div class="xo-page-center-top-right">
+					<ul id="sortable5" data="4"></ul>
+				</div>
+			</div>
+			
+			<div class="xo-page-center-module">
+				Module content
+			</div>
+			
+			<div class="xo-page-center-bottom">
+				<div class="xo-page-center-bottom-left">
+					<ul id="sortable6" data="5"></ul>
+				</div>
+				<div class="xo-page-center-bottom-center">
+					<ul id="sortable7" data="6"></ul>
+				</div>
+				<div class="xo-page-center-bottom-right">
+					<ul id="sortable8" data="7"></ul>
+				</div>
+			</div>
+			
+		</div>
+		<div class="xo-page-right">
+			<ul id="sortable2" data="1"></ul>
+		</div>
+	</div>
+	
+	<div class="xo-page-btn"><button type="submit">Save Page</button></div>
+</div>
+</form> 

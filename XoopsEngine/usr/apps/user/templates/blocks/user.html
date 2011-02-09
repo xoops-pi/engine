@@ -1,0 +1,11 @@
+<{headLink href="app/user/resources/scripts/block.css"}>
+
+<div class="user-menu">
+    <ul>
+        <{foreach item=item from=$block.list}>
+        <li>
+            <a href="<{$item.link}>" title="<{$item.title}>"><{$item.title}>
+        </li>
+        <{/foreach}>
+    </ul>
+</div>

@@ -1,0 +1,41 @@
+/* $Id$ */
+* {
+    padding: 0 0;
+    margin: 0 0;
+    font-family: Helvetica, sans-serif;
+    }
+.header {
+    background: #FFF;
+    padding: 5px;
+}
+
+.breadcrumbs {
+    background:#EFEFEF;
+    padding-top: 10px;
+    padding: 5px;
+}
+
+.topnav {
+    padding: 5px;
+}
+
+.topnav ul, .topnav ul li {
+    display: inline;
+}
+
+.topnav  ul.navigation li.active {
+    background:#EFEFEF;
+}
+
+.topnav ul li a {
+    color: #00E;
+    text-decoration: none;
+    border-width: 1px 1px 0px 1px;
+    border-color: #000;
+    border-style: solid;
+    padding: 5px;
+}
+
+.topnav ul li a:hover {
+    background: #CCC;
+}

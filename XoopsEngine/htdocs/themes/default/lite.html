@@ -1,0 +1,137 @@
+<!-- DocType -->
+<{$doctype}>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+<{$headMeta}>
+<{$headTitle}>
+<{$headLink}>
+<{$headScript}>
+<{$headStyle}>
+
+<!-- Load theme locale scripts, solely for demonstration -->
+<link type="text/css" rel="stylesheet" media="all" href="<{localeUrl path='locale.css'}>" />
+
+</head>
+<body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+
+<!-- Start Header -->
+<table cellspacing="0">
+    <tr id="header">
+        <td id="header-logo"><a href="<{absUrl path=www}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='xoops-logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
+        <td id="header-banner"><{*widget key=xoops_banner*}></td>
+        <td id="header-account"><{applet key=welcome}></td>
+    </tr>
+    <tr>
+        <td id="header-bar" colspan="3">&nbsp;</td>
+    </tr>
+</table>
+
+<!-- End header -->
+
+<!-- Load blocks -->
+<{blocks assign=xoopsBlocks}>
+<table cellspacing="0">
+    <tr>
+        <!-- Start left blocks loop -->
+        <{if isset($xoopsBlocks.left)}>
+            <td id="leftcolumn">
+            <{foreach item=block from=$xoopsBlocks.left}>
+                <{include file="block-left.html"}>
+            <{/foreach}>
+            </td>
+        <{/if}>
+        <!-- End left blocks loop -->
+
+        <td id="centercolumn">
+            <!-- Display center blocks if any -->
+            <{if isset($xoopsBlocks.topleft) or isset($xoopsBlocks.topcenter) or isset($xoopsBlocks.topright)}>
+                <table cellspacing="0">
+                    <tr>
+                        <td id="centerCcolumn" colspan="2">
+                        <!-- Start center-center blocks loop -->
+                        <{foreach item=block from=$xoopsBlocks.topcenter}>
+                            <{include file="block-top-center.html"}>
+                        <{/foreach}>
+                        <!-- End center-center blocks loop -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="centerLcolumn">
+                        <!-- Start center-left blocks loop -->
+                        <{foreach item=block from=$xoopsBlocks.topleft}>
+                            <{include file="block-top-left.html"}>
+                        <{/foreach}>
+                        <!-- End center-left blocks loop -->
+                        </td>
+                        <td id="centerRcolumn">
+                        <!-- Start center-right blocks loop -->
+                        <{foreach item=block from=$xoopsBlocks.topright}>
+                            <{include file="block-top-right.html"}>
+                        <{/foreach}>
+                        <!-- End center-right blocks loop -->
+                        </td>
+                    </tr>
+                </table>
+            <{/if}>
+            <!-- End center top blocks loop -->
+
+            <!-- Start content module page -->
+            <{if $xoops_contents && ($xoops_contents != ' ')}><div id="content"><{$xoops_contents}></div><{/if}>
+            <!-- End content module -->
+
+            <!-- Start center bottom blocks loop -->
+            <{if isset($xoopsBlocks.bottomleft) or isset($xoopsBlocks.bottomright) or isset($xoopsBlocks.bottomcenter)}>
+                <table cellspacing="0">
+                    <{if isset($xoopsBlocks.bottomcenter)}>
+                        <tr>
+                            <td id="bottomCcolumn" colspan="2">
+                            <{foreach from=$xoopsBlocks.bottomcenter item=block}>
+                                <{include file="block-bottom-center.html"}>
+                            <{/foreach}>
+                            </td>
+                        </tr>
+                    <{/if}>
+
+                    <{if isset($xoopsBlocks.bottomleft) or isset($xoopsBlocks.bottomright)}>
+                        <tr>
+                            <td id="bottomLcolumn">
+                            <{foreach from=$xoopsBlocks.bottomleft item=block}>
+                                <{include file="block-bottom-left.html"}>
+                            <{/foreach}>
+                            </td>
+
+                            <td id="bottomRcolumn">
+                                <{foreach from=$xoopsBlocks.bottomright item=block}>
+                                    <{include file="block-bottom-right.html"}>
+                                <{/foreach}>
+                            </td>
+                        </tr>
+                    <{/if}>
+                </table>
+            <{/if}>
+            <!-- End center bottom blocks loop -->
+             <div class="for-locale-test"><{_ text=$xoops_sitename}></div>
+        </td>
+
+        <{if isset($xoopsBlocks.right)}>
+            <td id="rightcolumn">
+            <!-- Start right blocks loop -->
+            <{foreach item=block from=$xoopsBlocks.right}>
+                <{include file="block-right.html"}>
+            <{/foreach}>
+            <!-- End right blocks loop -->
+            </td>
+        <{/if}>
+    </tr>
+</table>
+
+<!-- Start footer -->
+<table cellspacing="0">
+<tr id="footerbar">
+    <td><{$xoops_footer}></td>
+</tr>
+</table>
+<!-- End footer -->
+
+</body>
+</html>

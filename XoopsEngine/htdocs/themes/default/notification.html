@@ -1,0 +1,19 @@
+<div id="xoops-notification">
+    <div class="notification-bar">
+        <div class="caption"><{$caption}></div>
+        <div class="description"><{$description}></div>
+        <form action="<{$form.action}>" method="<$form.method}>">
+            <ul>
+                <{foreach key=category item=notification from=$list}>
+                    <li>
+                        <input name="<{$form.category.name}>[<{$notification.id}>]" type="checkbox" id="xoopsNotification_<{$notification.id}>" />
+                        <{$notification.title}>
+                        <input name="<{$form.item.name}>[<{$notification.id}>]" type="hidden" value="<{$notification.item}>" />
+                    </li>
+                <{/foreach}>
+            </ul>
+            <input name="<{$form.return.name}>" type="hidden" value="<{currUrl}>" />
+            <input type="submit" value="<{_ text=Submit}>"/>
+        </form>
+    </div>
+</div>

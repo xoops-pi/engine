@@ -1,0 +1,7 @@
+<ul><{_ text=Menus}>
+<{foreach item=menu key=name from=$menus}>
+    <li>
+        <a href="<{$menu.url}>" title="<{$menu.title}>"><{$menu.title}></a>
+    </li>
+<{/foreach}>
+</ul>

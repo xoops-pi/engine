@@ -1,0 +1,15 @@
+<{headLink href="app/user/resources/scripts/login.css"}>
+<{headScript src='app/user/resources/scripts/login.js'}>
+
+<h2><{$title}></h2>
+<{if $message}>
+    <div class="login-message">
+    <{$message}>
+    </div>
+<{/if}>
+
+<div class="login-form"><{$xoopsLogin}></div>
+
+<p>
+    <{_ text="If you don't have an account yet, please register one:"}> <a href="<{appUrl route=register}>"><{_ text=Register}></a>
+</p>

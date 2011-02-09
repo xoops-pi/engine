@@ -1,0 +1,55 @@
+<{if !empty($themes_active)}>
+<h3><{_ text="Active Themes"}></h3>
+<table>
+    <tr>
+        <th><{_ text=Screenshot}></th>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Parent}></th>
+        <th><{_ text=Upgrade}></th>
+        <th><{_ text=Synchronize}></th>
+        <th><{_ text=Update}></th>
+        <th><{_ text=Deactivate}></th>
+    </tr>
+<{foreach key=dirname item=theme from=$themes_active}>
+    <tr>
+        <td><{htmlImage src="theme/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{$theme.name}>
+        <td><{$theme.version}>
+        <td><{$theme.parent}>
+        <td><{if $theme.upgrade}><a href="<{adminUrl module=system controller=theme action=upgrade dirname=$dirname}>" title="<{_ text=Upgrade}>"><{_ text=Upgrade}></a>
+            <{/if}>
+        <td><a href="<{adminUrl module=system controller=theme action=synchronize dirname=$dirname}>" title="<{_ text=Synchronize}>"><{_ text=Synchronize}></a>
+        <td><a href="<{adminUrl module=system controller=theme action=update dirname=$dirname}>" title="<{_ text=Update}>"><{_ text=Update}></a>
+        <td><a href="<{adminUrl module=system controller=theme action=deactivate dirname=$dirname}>" title="<{_ text=Deactivate}>"><{_ text=Deactivate}></a>
+    </tr>
+<{/foreach}>
+</table>
+<{/if}>
+
+<{if !empty($themes_inactive)}>
+<h3><{_ text="Inactive Themes"}></h3>
+<table>
+    <tr>
+        <th><{_ text=Screenshot}></th>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Parent}></th>
+        <th><{_ text=Update}></th>
+        <th><{_ text=Activate}></th>
+        <th><{_ text=Uninstall}></th>
+    </tr>
+<{foreach key=dirname item=theme from=$themes_inactive}>
+    <tr>
+        <td><{htmlImage src="theme/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{$theme.name}>
+        <td><{$theme.version}>
+        <td><{$theme.parent}>
+        <td><{if $theme.upgrade}><a href="<{adminUrl module=system controller=theme action=upgrade dirname=$dirname}>" title="<{_ text=Upgrade}>"><{_ text=Upgrade}></a>
+            <{/if}>
+        <td><a href="<{adminUrl module=system controller=theme action=activate dirname=$dirname}>" title="<{_ text=Activate}>"><{_ text=Activate}></a>
+        <td><a href="<{adminUrl module=system controller=theme action=uninstall dirname=$dirname}>" title="<{_ text=Uninstall}>"><{_ text=Uninstall}></a>
+    </tr>
+<{/foreach}>
+</table>
+<{/if}>

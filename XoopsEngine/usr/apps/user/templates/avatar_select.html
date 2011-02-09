@@ -1,0 +1,21 @@
+<{headLink href="app/user/resources/scripts/profile.css"}>
+
+<div class="profile">
+<div class="caption"><{_ text=Account}></div>
+<div class="account">
+    <div class="avatar">
+        <{$account.avatar}>
+    </div>
+    <div class="items">
+        <span><{$account.id}></span>
+        <span><{$account.identity}></span>
+        <span><{$account.name}></span>
+    </div>
+</div>
+
+<div id="<{$avatarid}>">
+    <{$account.avatar}>
+</div>
+
+<div class="profile-form"><{$xoopsAvatar}></div>
+</div>

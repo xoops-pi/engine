@@ -1,0 +1,16 @@
+jdMenu ChangeLog
+
+1.4.1
+----
+* Fixed a bgiframe issue
+* Now includes an onanimate callback
+
+1.4.0
+----
+* Complete rewrite supporting jQuery 1.2.2 and dimensions 1.2+
+
+1.3
+----
+* Simplified the event binding
+* Added support for vertical menus
+* Expanded Demo file

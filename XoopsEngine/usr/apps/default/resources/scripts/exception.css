@@ -1,0 +1,14 @@
+.error  { 
+    padding:            .8em; 
+    text-align:         left; 
+    margin-bottom:      1em; 
+    border:             2px solid #ddd;
+    background-color:   #FBE3E4; 
+    color:              #D12F19; 
+    border-color:       #FBC2C4;
+}
+.error a { 
+    background-color:   transparent; 
+    color:              #D12F19;
+    text-decoration:    underline;
+}

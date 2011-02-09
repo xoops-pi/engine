@@ -1,0 +1,17 @@
+<ul><{_ text=Navigations}>
+<{foreach item=navigation key=name from=$navigations}>
+    <li>
+        <a href="<{$navigation.url}>" title="<{$navigation.title}>"><{$navigation.title}></a>
+        <{if $navigation.edit}>
+            <a href="<{$navigation.edit}>" title="<{$navigation.title}>"><{_ text=Edit}></a>
+        <{/if}>
+        <{if $navigation.delete}>
+            <a href="<{$navigation.delete}>" title="<{$navigation.title}>"><{_ text=Delete}></a>
+        <{/if}>
+    </li>
+<{/foreach}>
+</ul>
+
+<p>
+    <a href="<{adminUrl action=add controller=navigation module=system}>" title="<{_ text='Add page'}>"><{_ text='Add navigation'}></a>
+</p>

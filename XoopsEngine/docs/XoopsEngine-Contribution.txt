@@ -1,0 +1,37 @@
+Xoops Engine code is hosted on sourceforge git and synchronized automatically to sourceforge svn, googlecode and github.
+
+/XoopsEngine
+The root directory for Xoops Engine code
+
+/XoopsEngine/trunk
+The trunk and working directory, approval for write permission is needed.
+For trunk write permission, please submit request at http://sourceforge.net/projects/xoops/forums/forum/1280117, or send message to phppp@users.sourceforge.net with subject of "Xoops Engine Trunk Request [username]".
+All code must be tested before submitting to trunk and will be reviewed before accepted.
+
+/XoopsEngine/branches
+The branches for developers, no need of write permission approval.
+All code are self organized, no code review.
+All top folder names should be intuitively informative.
+
+/XoopsEngine/releases
+Placeholder for all official releases.
+Maintained by core development team.
+
+/XoopsEngine/usr
+User or community contributed components, including apps/modules, plugins, applets, themes, etc.
+
+/XoopsEngine/usr/apps
+Xoops Engine apps, i.e. applications following new MVC
+
+/XoopsEngine/user/modules
+Non MVC style modules
+
+/XoopsEngine/usr/plugins
+Plugin folders
+
+/XoopsEngine/usr/applets
+Applet folders
+
+/XoopsEngine/usr/themes
+Theme folders
+

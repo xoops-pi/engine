@@ -1,0 +1,8 @@
+<ul><{$cache_list}>
+<{foreach item=cache key=key from=$caches}>
+    <li style="padding: 5px 0;">
+        <{$cache.title}> <a href="<{adminUrl controller=toolkit action=cache op=flush key=$key}>" title="<{$cache.title}>"><{$flush}></a>
+        <p><{$cache.description}></p>
+    </li>
+<{/foreach}>
+</ul>

@@ -1,0 +1,11 @@
+<h4><{__ text=_MD_AM_SITEPREF}></h4>
+<ul>
+<{foreach item=category from=$categories}>
+    <li><div style="padding: 5px 0;">
+            <{__ text="{$category.confcat_name}"}>
+            <a href="<{adminUrl module=system controller=preference action=manage category=`$category.confcat_id`}>" title="<{_ text=Manage}>"><{_ text=Manage}></a>
+            <br /><{__ text="{$category.confcat_desc}"}>
+        </div>
+    </li>
+<{/foreach}>
+</ul>

@@ -1,0 +1,35 @@
+<h1><{$title}></h1>
+<{_ text="Select block:"}>
+<select name=dirname onChange="location=this.options[this.selectedIndex].value">
+<{foreach item=module from=$blockModules}>
+    <option value="<{$module.url}>"
+    <{if $blockModule eq $module.key}>selected<{/if}>
+        ><{$module.name}></option>
+<{/foreach}>
+</select>
+
+<select name=block onChange="location=this.options[this.selectedIndex].value">
+<{foreach item=blk from=$blocks}>
+    <option value="<{$blk.url}>"
+    <{if $blk.id eq $block}>selected<{/if}>
+        ><{$blk.title}></option>
+<{/foreach}>
+</select>
+
+<{if $pageModules}>
+<br />
+<{_ text="Select module:"}>
+<select name=pm onChange="location=this.options[this.selectedIndex].value">
+<{foreach key=dir item=module from=$pageModules}>
+    <option value="<{$module.url}>"
+    <{if $pageModule eq $module.key}>selected<{/if}>
+        ><{$module.name}></option>
+<{/foreach}>
+</select>
+<{/if}>
+
+<{if $block_form_distribute}>
+    <{include file="app/system/form.html" xoopsForm=$block_form_distribute}>
+<{else}>
+    <p><{_ text="No page available"}></p>
+<{/if}>

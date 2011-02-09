@@ -1,0 +1,9 @@
+Coding Standard will be organized soon.
+
+Currently please refer to following references:
+PHP coding standard: http://framework.zend.com/manual/en/coding-standard.html
+JavaScript Code Conventions: http://javascript.crockford.com/code.html
+PHPDocumentor: http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_tags.pkg.html
+
+Taiwen Jiang
+October 30th, 2010

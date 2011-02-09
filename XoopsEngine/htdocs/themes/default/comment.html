@@ -1,0 +1,19 @@
+<div id="xoops-comments">
+    <form action="<{$form.action}>" method="<{$form.method}>">
+    <div class="comment-bar">
+        <span class="stats"><{$total_comments}></span>
+        <span class="reply"><{$submit_comment}></span>
+    </div>
+    <div class="comment-form">
+        <textarea name="<{$form.comment.name}>"><{_ text="Your comments here"}></textarea>
+    </div>
+    <input type="hidden" name="<{$form.item.name}>" value="<{$form.item.value}>" />
+    <input type="submit" value="<{_ text=Comment}>" />
+    </form>
+    <div class="comment-list">
+        <ul><{_ text="Commnets: "}>
+            <li><{_ text="A comment here"}></li>
+            <li><{_ text="Another comment here"}></li>
+        </ul>
+    </div>
+</div>

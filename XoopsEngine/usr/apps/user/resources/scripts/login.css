@@ -1,0 +1,13 @@
+/* $Id$ */
+
+.login-form {
+    margin: 20px 0;
+}
+
+.login-message {
+    padding: 10px;
+}
+
+.login-suspended {
+    color: red;
+}

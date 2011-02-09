@@ -1,0 +1,20 @@
+.xoops-form {
+    margin: 20px 0;
+}
+
+.xoops-form dt {
+    padding: 10px 0 5px 0;
+}
+
+.xoops-form .description {
+    font-size: 80%;
+}
+
+.xoops-form .hint {
+    font-size: 80%;
+    padding-top: 5px;
+}
+
+.xoops-form .errors {
+    font-size: 80%;
+}

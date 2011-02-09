@@ -1,0 +1,30 @@
+<{headLink href="app/user/resources/scripts/profile.css"}>
+
+<div class="profile">
+<div class="caption"><{_ text=Account}></div>
+<div class="account">
+    <div class="avatar">
+        <{$account.avatar}>
+    </div>
+    <div class="items">
+        <div><{$account.id}></div>
+        <div><{$account.identity}></div>
+        <div><{$account.name}></div>
+    </div>
+</div>
+
+
+<div class="caption"><{_ text=Profile}></div>
+<div class="detail">
+    <{foreach item=category from=$profile key=categoryKey}>
+    <div id="profile-category-<{$categoryKey}>" class="category">
+        <div class="title"><{$category.title}></div>
+        <{foreach item=meta from=$category.meta key=metaKey}>
+        <div id="profile-meta-<{$metaKey}>" class="meta">
+            <span class="label"><{$meta.title}></span><span class="text"><{$meta.value}></span>
+        </div>
+        <{/foreach}>
+    </div>
+    <{/foreach}>
+</div>
+</div>

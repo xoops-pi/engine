@@ -1,0 +1,62 @@
+<{if !empty($plugins.active)}>
+<h3><{_ text="Active Plugins"}></h3>
+<form action="<{$form.action}>" method="<{$form.method}>">
+<table>
+    <tr>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Dirname}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Author}></th>
+        <th><{_ text=Official}></th>
+        <th><{_ text=Autoload}></th>
+        <th><{_ text=Order}></th>
+        <th><{_ text=Options}></th>
+        <th><{_ text=Update}></th>
+        <th><{_ text=Deactivate}></th>
+    </tr>
+<{foreach key=dirname item=plugin from=$plugins.active}>
+    <tr>
+        <td><{$plugin.name}>
+        <td><{$dirname}>
+        <td><{$plugin.version}>
+        <td><{$plugin.author}>
+        <td><{if $plugin.official}><{_ text=Yes}><{/if}>
+        <td><{if $plugin.autoload}><{_ text=Yes}><{/if}>
+        <td><input type="text" name="<{$form.param}>[<{$dirname}>]" value="<{$plugin.order|default:0}>" size="5" />
+        <td><a href="<{adminUrl module=system controller=plugin action=option dirname=$dirname}>" title="<{_ text=Options}>"><{_ text=Options}></a>
+        <td><a href="<{adminUrl module=system controller=plugin action=update dirname=$dirname}>" title="<{_ text=Update}>"><{_ text=Update}></a>
+        <td><a href="<{adminUrl module=system controller=plugin action=deactivate dirname=$dirname}>" title="<{_ text=Deactivate}>"><{_ text=Deactivate}></a>
+    </tr>
+<{/foreach}>
+</table>
+<input type="submit" value="<{_ text='Change orders'}>" />
+</form>
+<{/if}>
+
+<{if !empty($plugins.inactive)}>
+<h3><{_ text="Inactive Plugins"}></h3>
+<table>
+    <tr>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Dirname}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Options}></th>
+        <th><{_ text=Activate}></th>
+        <th><{_ text=Uninstall}></th>
+    </tr>
+<{foreach key=dirname item=plugin from=$plugins.inactive}>
+    <tr>
+        <td><{$plugin.name}>
+        <td><{$dirname}>
+        <td><{$plugin.version}>
+        <td><a href="<{adminUrl module=system controller=plugin action=option dirname=$dirname}>" title="<{_ text=Options}>"><{_ text=Options}></a>
+        <td><a href="<{adminUrl module=system controller=plugin action=activate dirname=$dirname}>" title="<{_ text=Activate}>"><{_ text=Activate}></a>
+        <td><a href="<{adminUrl module=system controller=plugin action=uninstall dirname=$dirname}>" title="<{_ text=Uninstall}>"><{_ text=Uninstall}></a>
+    </tr>
+<{/foreach}>
+</table>
+<{/if}>
+
+<{if empty($plugins)}>
+    <{_ text="There is no plugin available."}>
+<{/if}>

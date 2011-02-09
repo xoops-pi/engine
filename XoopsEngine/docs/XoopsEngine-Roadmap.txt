@@ -1,0 +1,9 @@
+Xoops Engine development road map in 2011
+
+* Alpha 1 in middle February, mainly for developers to review code and write most wanted applications
+* Beta 1 in  early April, for end users to start testing
+* RC 1 in June, reasonably stable for production development
+* Final in early December, celebrating XOOPS 10's Anniversary
+
+
+More details will be available soon ...

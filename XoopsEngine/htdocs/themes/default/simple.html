@@ -1,0 +1,22 @@
+<{$doctype}>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+<{$headMeta}>
+<{$headTitle}>
+<{$headLink}>
+<{$headScript}>
+<{$headStyle}>
+
+<!-- customized header contents -->
+<{if isset($xoops_module_header)}>
+    <{$xoops_module_header}>
+<{/if}>
+</head>
+<body>
+
+    <!-- Start content module page -->
+    <{if !empty($xoops_contents)}><div id="content"><{$xoops_contents}></div><{/if}>
+    <!-- End content module -->
+
+</body>
+</html>

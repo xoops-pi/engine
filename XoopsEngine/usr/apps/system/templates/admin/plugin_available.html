@@ -1,0 +1,27 @@
+<{if !empty($plugins)}>
+<h3><{_ text="Plugins available for installation"}></h3>
+<table>
+    <tr>
+        <th><{_ text=Name}></th>
+        <th><{_ text=Dirname}></th>
+        <th><{_ text=Version}></th>
+        <th><{_ text=Author}></th>
+        <th><{_ text=Official}></th>
+        <th><{_ text=Autoload}></th>
+        <th><{_ text=Install}></th>
+    </tr>
+<{foreach key=dirname item=plugin from=$plugins}>
+    <tr>
+        <td><{$plugin.name}>
+        <td><{$dirname}>
+        <td><{$plugin.version}>
+        <td><{$plugin.author}>
+        <td><{if $plugin.official}><{_ text=Yes}><{/if}>
+        <td><{if $plugin.autoload}><{_ text=Yes}><{/if}>
+        <td><a href="<{adminUrl module=system controller=plugin action=install dirname=$dirname}>" title="<{_ text=Install}>"><{_ text=Install}></a>
+    </tr>
+<{/foreach}>
+</table>
+<{else}>
+    <{_ text="There is no plugin available."}>
+<{/if}>

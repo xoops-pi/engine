@@ -1,0 +1,13 @@
+<{headLink href="app/user/resources/scripts/register.css"}>
+
+<h2><{$title}></h2>
+
+<p>
+<{if $status == "success"}>
+    <{_ text="You account has been activated successfully."}><br />
+    <a href="<{appUrl route=login}>"><{_ text="Please login"}></a>
+<{elseif $status == "activated"}>
+    <{_ text="You account has already been activated."}><br />
+    <a href="<{appUrl route=login}>"><{_ text="Please login"}></a>
+<{/if}>
+</p>
