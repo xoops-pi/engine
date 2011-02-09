@@ -1,0 +1,34 @@
+Xoops Engine code without legacy code
+
+/engine
+The root directory for Xoops Engine code
+
+/engine/docs
+Documents
+
+/engine/htdocs
+Web docroot
+
+/engine/lib
+Libraries
+
+/engine/var
+System variable data
+
+/engine/usr
+User or community contributed components, including apps/modules, plugins, applets, themes, etc.
+
+/engine/usr/apps
+Xoops Engine apps, i.e. applications following new MVC
+
+/engine/user/modules
+Non MVC style modules
+
+/engine/usr/plugins
+Plugin folders
+
+/engine/usr/applets
+Applet folders
+
+/engine/usr/themes
+Theme folders
