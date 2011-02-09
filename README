@@ -1,34 +1,34 @@
-Xoops Engine code without legacy code
+Xoops Engine code (no legacy code)
 
-/engine
+/XoopsEngine
 The root directory for Xoops Engine code
 
-/engine/docs
+/XoopsEngine/docs
 Documents
 
-/engine/htdocs
+/XoopsEngine/htdocs
 Web docroot
 
-/engine/lib
+/XoopsEngine/lib
 Libraries
 
-/engine/var
+/XoopsEngine/var
 System variable data
 
-/engine/usr
+/XoopsEngine/usr
 User or community contributed components, including apps/modules, plugins, applets, themes, etc.
 
-/engine/usr/apps
+/XoopsEngine/usr/apps
 Xoops Engine apps, i.e. applications following new MVC
 
-/engine/user/modules
+/XoopsEngine/user/modules
 Non MVC style modules
 
-/engine/usr/plugins
+/XoopsEngine/usr/plugins
 Plugin folders
 
-/engine/usr/applets
+/XoopsEngine/usr/applets
 Applet folders
 
-/engine/usr/themes
+/XoopsEngine/usr/themes
 Theme folders
