@@ -137,11 +137,14 @@ class Xoops_Installer_App
         }
 
         // save module entry into database
+        $model->update($moduleData, array("id = ?" => $module->id));
+        /*
         if (!$model->update($moduleData, array("id = ?" => $module->id))) {
             $return['module']['status'] = false;
             $return['module']['message'] = "Module update failed";
             return $return;
         }
+        */
 
         // process extensions
         $extensions = array();
