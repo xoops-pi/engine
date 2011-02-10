@@ -20,7 +20,6 @@
 class Xoops_Installer
 {
     private static $instance;
-    protected $installer = array();
     private $result;
     public $config;
     public $options;
@@ -40,11 +39,9 @@ class Xoops_Installer
     protected function getInstaller($type = "app")
     {
         $type = ucfirst($type ?: "app");
-        if (!isset($this->installer[$type])) {
-            $class = 'Xoops_Installer_' . $type;
-            $this->installer[$type] = new $class($this);
-        }
-        return $this->installer[$type];
+        $class = ($type == 'Legacy') ? 'Legacy_Installer' : 'Xoops_Installer_' . $type;
+        $installer = new $class($this);
+        return $installer;
     }
 
     public function __call($method, $args)
@@ -76,7 +73,7 @@ class Xoops_Installer
             $content .= "<p>";
             $content .= $action .": " . (($state['status'] === false) ? "failed" : "passed");
             if (!empty($state['message'])) {
-                $content .= "<br />&nbsp;&nbsp;" . implode("<br />&nbsp;&nbsp;", $state['message']);
+                $content .= "<br />&nbsp;&nbsp;" . implode("<br />&nbsp;&nbsp;", (array) $state['message']);
             }
             $content .= "</p>";
         }

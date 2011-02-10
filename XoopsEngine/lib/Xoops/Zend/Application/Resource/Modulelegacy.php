@@ -23,7 +23,7 @@ class Xoops_Zend_Application_Resource_Modulelegacy extends Zend_Application_Reso
 {
     public function init()
     {
-        global $xoopsModule, $xoopsUser, $module_handler;
+        global $xoopsModule, $xoopsUser, $xoopsModuleConfig, $module_handler;
 
         if (file_exists('./xoops_version.php')) {
             $url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'), 4);
@@ -34,6 +34,7 @@ class Xoops_Zend_Application_Resource_Modulelegacy extends Zend_Application_Reso
                 throw new Exception("Module unavailable!", 404);
             }
             Xoops::service('translate')->loadTranslation("main", $dirname);
+            $xoopsModuleConfig = Xoops::service('module')->loadConfig($dirname);
 
             /*
             $moduleperm_handler = xoops_gethandler('groupperm');

@@ -29,7 +29,8 @@ class Xoops_Zend_Application_Resource_Legacy extends Zend_Application_Resource_R
     public function init()
     {
         $bootstrap = $this->getBootstrap();
-        $bootstrap->bootstrap('dblegacy');
+        $bootstrap->bootstrap('db');
+        $bootstrap->bootstrap('config');
 
         define("XOOPS_GROUP_ADMIN", "1");
         define("XOOPS_GROUP_USERS", "2");
@@ -57,14 +58,12 @@ class Xoops_Zend_Application_Resource_Legacy extends Zend_Application_Resource_R
         require XOOPS::path("www") . "/class/module.textsanitizer.php";
         require XOOPS::path("www") . "/include/functions.php";
         require XOOPS::path("www") . "/include/version.php";
-        //require XOOPS::path("www") . "/include/functions.core.php";
-        //require XOOPS::path("www") . "/include/functions.legacy.php";
-        //require XOOPS::path("www") . "/include/functions.utility.php";
         require XOOPS::path("www") . "/class/xoopssecurity.php";
         $GLOBALS['xoopsSecurity'] = new XoopsSecurity();
 
+        $GLOBALS['xoopsDB'] = new Legacy_Db(Xoops::registry('db'));
         $GLOBALS['member_handler'] = XOOPS::getHandler('member');
         $GLOBALS['xoopsLogger'] = XOOPS::service('logger');
-
+        $GLOBALS['xoopsConfig'] = XOOPS::config();
     }
 }

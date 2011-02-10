@@ -47,9 +47,9 @@ class Xoops_Zend_Controller_Plugin_Module extends Zend_Controller_Plugin_Abstrac
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         //global $xoops, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsUserIsAdmin, $module_handler;
-        global $xoopsUser, $xoopsUserIsAdmin;
+        //global $xoopsUser, $xoopsUserIsAdmin;
 
-        $xoopsUserIsAdmin = XOOPS::registry("user")->role == "admin";
+        //$xoopsUserIsAdmin = XOOPS::registry("user")->role == "admin";
         $moduleDirname = $request->getModuleName();
 
         if ($moduleDirname == XOOPS::registry('frontController')->getDefaultModule()) {

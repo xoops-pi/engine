@@ -17,6 +17,9 @@
  * @version         $Id$
  */
 
+/**
+ * Placeholder for xoopsform, you are not supposed to call this class
+ */
 class Xoops_Legacy
 {
     static protected $classMap;
