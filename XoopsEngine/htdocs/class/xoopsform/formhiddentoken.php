@@ -1,5 +1,6 @@
 <?php
-// $Id: formhiddentoken.php 1217 2008-01-01 17:04:41Z phppp $ //  ------------------------------------------------------------------------ //
+// $Id: formhiddentoken.php 1217 2008-01-01 17:04:41Z phppp $
+//  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
 //                       <http://www.xoops.org/>                             //
@@ -21,7 +22,8 @@
 //                                                                           //
 //  You should have received a copy of the GNU General Public License        //
 //  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA // //  ------------------------------------------------------------------------ //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
@@ -39,6 +41,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
  *
  *
  * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright   copyright (c) 2000-2005 XOOPS.org
  */
 class XoopsFormHiddenToken extends XoopsFormHidden {
@@ -51,12 +54,9 @@ class XoopsFormHiddenToken extends XoopsFormHidden {
     function XoopsFormHiddenToken($name = 'XOOPS_FORM_TOKEN', $timeout = 0)
     {
         //$this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
-        if (!isset($GLOBALS['xoopsSecurity'])) {
-            $GLOBALS['xoopsSecurity'] = new XoopsSecurity();
-        }
-        $name = empty($name) ? $this->form->getName() : $name;
-        $token = $GLOBALS['xoopsSecurity']->createToken($timeout, $name);
+        $name = $name ?: $this->form->getName();
+        $token = isset($GLOBALS['xoopsSecurity']) ? $GLOBALS['xoopsSecurity']->createToken($timeout, $name) : "";
+        //$token = $GLOBALS['xoopsSecurity']->createToken($timeout, $name);
         $this->XoopsFormHidden($name, $token);
     }
 }
-?>
