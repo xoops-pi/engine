@@ -388,10 +388,10 @@ class Xoops_Zend_Translate_Adapter_Legacy extends Zend_Translate_Adapter
                 break;
             // Module or application
             case "module":
-                if (Xoops::service('module')->getType($key) == 'legacy') {
-                    $path = "module/" . $key . "/language";
-                } else {
+                if (Xoops::service('module')->getType($key) == 'app') {
                     $path = "app/" . Xoops::service('module')->getDirectory($key) . "/language";
+                } else {
+                    $path = "module/" . $key . "/language";
                 }
                 break;
             case "app":
