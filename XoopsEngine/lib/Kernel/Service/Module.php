@@ -97,7 +97,7 @@ class Module extends ServiceAbstract
             } elseif (is_dir($file = \XOOPS::path('module') . '/' . $module)) {
                 $type = is_file($file . "/xoops_version.php") ? "legacy" : "module";
             } else {
-                $type = "";
+                $type = false;
             }
         } else {
             $type = $this->container["module"][$module]['type'];

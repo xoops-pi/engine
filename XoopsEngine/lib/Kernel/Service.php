@@ -90,7 +90,7 @@ abstract class ServiceAbstract
      * Config file in var/etc/
      * @var string
      */
-    protected $config = "";
+    protected $configFile = "";
 
     /**
      * options
@@ -126,7 +126,7 @@ abstract class ServiceAbstract
     public function setOptions($options = array())
     {
         if (empty($options) || is_string($options)) {
-            $config = $options ?: $this->config;
+            $config = $options ?: $this->configFile;
             if (!empty($config)) {
                 $options = \Xoops::loadConfig('service.' . $config . '.ini');
             }
