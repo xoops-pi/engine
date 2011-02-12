@@ -86,7 +86,7 @@ class Xoops_Zend_Translate extends Zend_Translate
             Zend_Translate_Adapter::setCache($options['cache']);
         }
 
-        $adapter = $options['adapter'] ?: static::DEFAULT_ADAPTER;
+        $adapter = !empty($options['adapter']) ? $options['adapter'] : static::DEFAULT_ADAPTER;
         unset($options['adapter']);
         $adapter = 'Zend_Translate_Adapter_' . ucfirst($adapter);
         if (class_exists('Xoops_' . $adapter)) {
