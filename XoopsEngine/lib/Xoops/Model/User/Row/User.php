@@ -22,25 +22,26 @@ class Xoops_Model_User_Row_User extends Xoops_Model_User_Row_Account
     protected $profile;
     protected static $accountFields;
     protected static $profileFields;
-    
+
     protected function inAccount($col)
     {
         return in_array($col, $this->getAccountFields());
     }
-    
+
     protected function inProfile($col)
     {
         return in_array($col, $this->getProfileFields());
     }
-    
+
     protected function getProfileFields()
     {
         if (!isset(static::$profileFields)) {
-            static::$profileFields = array_keys(XOOPS::service("registry")->user->read());
+            //static::$profileFields = array_keys(XOOPS::service("registry")->user->read());
+            static::$profileFields = XOOPS::getModel("user_profile")->info("cols");
         }
         return static::$profileFields;
     }
-    
+
     protected function getAccountFields()
     {
         if (!isset(static::$accountFields)) {
@@ -48,7 +49,7 @@ class Xoops_Model_User_Row_User extends Xoops_Model_User_Row_Account
         }
         return static::$accountFields;
     }
-    
+
     public function profile()
     {
         if (!isset($this->profile)) {
@@ -60,10 +61,10 @@ class Xoops_Model_User_Row_User extends Xoops_Model_User_Row_Account
                 $this->profile = $table->createRow($primaryKey);
             }
         }
-        
+
         return $this->profile;
     }
-    
+
     public function __get($key)
     {
         if ($this->inAccount($key)) {

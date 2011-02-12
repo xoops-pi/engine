@@ -310,6 +310,7 @@ class Xoops_Installer_Module_User extends Xoops_Installer_Abstract
 
     public static function cleanMetadataCache()
     {
-        XOOPS::getModel("user_profile")->getMetadataCache()->clean('matchingTag', array("model"));
+        //XOOPS::getModel("user_profile")->getMetadataCache()->clean('matchingTag', array("model"));
+        XOOPS::getModel("user_profile")->cleanMetaCache();
     }
 }

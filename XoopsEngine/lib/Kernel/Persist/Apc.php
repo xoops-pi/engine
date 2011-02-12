@@ -69,11 +69,9 @@ class Apc implements PersistInterface
      */
     public function clean($type = "all")
     {
-        $type = (null === $type) ? "all" : $type;
-        if ($type == "all") {
+        if ($type != "user") {
             apc_clear_cache();
-            return apc_clear_cache('user');
         }
-        return apc_clear_cache($type);
+        return apc_clear_cache('user');
     }
 }

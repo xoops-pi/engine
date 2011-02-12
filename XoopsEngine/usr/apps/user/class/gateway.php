@@ -224,12 +224,12 @@ class User_Gateway
                                                 ->join(array("p" => $profileModel->info("name")),
                                                     "p.user = u.id")
                                                 ->where("u.id = ?", $id);
-        $row = $userModel->fetchRow($select);
+        $row = $userModel->getAdapter()->fetchRow($select);
         if (!$row) {
             $message[] = XOOPS::_("No record for user '{$id}' was found.");
         }
 
-        return $row->toArray();
+        return $row;
     }
 
     /**

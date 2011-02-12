@@ -47,5 +47,18 @@ class User_Installer extends Xoops_Installer_Abstract
         foreach ($categoryList as $category) {
             $modelCategory->insert($category);
         }
+
+        if (!User_Gateway::read(1)) {
+            $defaultUser = array(
+                "id"            => 1,
+                "identity"      => "sysop",
+                "credential"    => "sysop",
+                "email"         => "sysop@example.org",
+                "name"          => "SysOp",
+                "active"        => 1,
+                "create_time"   => time(),
+            );
+            User_Gateway::create($defaultUser);
+        }
     }
 }

@@ -35,4 +35,12 @@ class Xoops_Model_User_Profile extends Xoops_Zend_Db_Model
             'refColumns'    => 'id'
         )
     );
+
+    public function cleanMetaCache()
+    {
+        $this->getMetadataCache()->clean();
+        $this->_metadata = array();
+        $this->_cols = null;
+        return $this;
+    }
 }
