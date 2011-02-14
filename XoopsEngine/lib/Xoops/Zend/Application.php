@@ -76,7 +76,7 @@ class Xoops_Zend_Application extends Zend_Application
         if (!empty($options['bootstrap'])) {
             $bootstrap = $options['bootstrap'];
             if (is_string($bootstrap)) {
-                $bootstrap['path'] = XOOPS::path("lib") . "/Xoops/Zend/Application/Bootstrap/" . ucfirst($bootstrap) . ".php";
+                $bootstrap['path'] = __DIR__ . "/Application/Bootstrap/" . ucfirst($bootstrap) . ".php";
                 $bootstrap['class'] = "Xoops_Zend_Application_Bootstrap_" . ucfirst($bootstrap);
             } elseif (is_array($bootstrap)) {
                 if (empty($bootstrap['path']) && !empty($bootstrap['class'])) {
@@ -89,15 +89,15 @@ class Xoops_Zend_Application extends Zend_Application
 
         $options_default = array(
             "bootstrap" => array(
-                "path"  => XOOPS::path("lib") . "/Xoops/Zend/Application/Bootstrap/Bootstrap.php",
+                "path"  => __DIR__ . "/Application/Bootstrap/Bootstrap.php",
                 "class" => "Xoops_Zend_Application_Bootstrap_BootStrap"
             ),
             /*
             "router" => "Xoops_Zend_Controller_Router_Application"
             */
         );
-        $baseUrl = XOOPS::host()->get("baseUrl");
         if (!empty($options['resources']['frontController'])) {
+            $baseUrl = XOOPS::host()->get("baseUrl");
             $options_default['resources']['frontController'] = array(
                 "dispatcher"            => "application",
                 "defaultModule"         => "default",
@@ -125,7 +125,7 @@ class Xoops_Zend_Application extends Zend_Application
      * @param  string   $name   Bootstrap name
      * @return Zend_Application
      */
-    public function loadBootstrap($name = null)
+    public function ____loadBootstrap($name = null)
     {
         if (empty($name)) {
             $class = 'Xoops_Zend_Application_Bootstrap_BootStrap';

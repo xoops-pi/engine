@@ -50,7 +50,6 @@ class Xoops_Zend_Application_Resource_Db extends Zend_Application_Resource_Db
             : 'db';
         XOOPS::registry($key, $db);
 
-        //$GLOBALS['xoopsDB'] = new Xoops_Zend_Db_Legacy($db, $options);
         return $db;
     }
 }

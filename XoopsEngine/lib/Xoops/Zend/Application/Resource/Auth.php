@@ -21,14 +21,11 @@
 
 class Xoops_Zend_Application_Resource_Auth extends Zend_Application_Resource_ResourceAbstract
 {
-    //private static $rememberMe = 0;
-    const DEFAULT_REGISTRY_KEY = 'auth';
-
     /**
-     * Defined by Zend_Application_Resource_Resource
-     *
-     * @return Zend_Db_Adapter_Abstract|null
+     * Resource type
      */
+    protected $_explicitType = "auth";
+
     public function init()
     {
         $options = $this->getOptions();
