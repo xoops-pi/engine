@@ -42,8 +42,6 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
 {
     public function install(&$message)
     {
-        global $xoopsDB;
-
         $dirname = $this->module->dirname;
         $message = $this->message;
         $blocks = $this->config;

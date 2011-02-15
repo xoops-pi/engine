@@ -1,0 +1,42 @@
+<{$doctype}>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+<{$headMeta}>
+<{$headTitle}>
+<{$headLink}>
+<{$headScript}>
+<{$headStyle}>
+<{jQuery file=['extensions/jquery.autoheight.js']}>
+</head>
+<body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+
+<!-- Start Header -->
+<table cellspacing="0">
+    <tr id="header">
+        <td id="headerlogo"><a href="<{url path='www/'}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='xoops-logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
+        <td id="headerbanner"><{widget name=xoops_banner}></td>
+    </tr>
+    <tr>
+        <td id="headerbar" colspan="2">&nbsp;</td>
+    </tr>
+</table>
+
+<{navigation assign=navigation}>
+
+<{if $navigation}>
+    <{include file="navigation.html"}>
+<{/if}>
+<!-- End header -->
+
+
+<iframe id="legacy" name="legacy" class="autoHeight" frameborder="0" width="100%" scrolling="no" src="<{$legacylink}>"></iframe>
+
+<!-- Start footer -->
+<table cellspacing="0">
+<tr id="footerbar">
+    <td><{$xoops_footer}></td>
+</tr>
+</table>
+<!-- End footer -->
+</body>
+</html>

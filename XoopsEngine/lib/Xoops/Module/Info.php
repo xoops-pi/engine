@@ -133,6 +133,10 @@ class Xoops_Module_Info
         }
         // Normalize block configs
         if (!empty($config['blocks'])) {
+            foreach ($config['blocks'] as $key => &$block) {
+                $block['title'] = $block['name'];
+                unset($block['name']);
+            }
             $config['extensions']['block'] = $config['blocks'];
             unset($config['blocks']);
         }
@@ -207,6 +211,7 @@ class Xoops_Module_Info
             $adminmenu = array();
             include XOOPS::path("www") . "/modules/{$module}/{$config['adminmenu']}";
             foreach ($adminmenu as $key => $page) {
+                /*
                 $link = substr($page['link'], 6);
                 if (false !== ($pos = strpos($link, "?"))) {
                     $controller = rtrim(substr($link, 0, $pos), ".php");
@@ -216,11 +221,19 @@ class Xoops_Module_Info
                     $params = array();
                 }
                 $config['extensions']['navigation']['admin'][md5($page['link'])] = array(
-                    "label" => $page['title'],
+                    "label"         => $page['title'],
                     "route"         => "legacy",
                     "controller"    => $controller,
                     "action"        => "admin",
                     "params"        => $params,
+                );
+                */
+                $config['extensions']['navigation']['admin'][md5($page['link'])] = array(
+                    "label"         => $page['title'],
+                    "route"         => "admin",
+                    "controller"    => "legacy",
+                    "action"        => "index",
+                    "params"        => array("link" => urlencode($page['link'])),
                 );
             }
             unset($config['adminmenu']);
