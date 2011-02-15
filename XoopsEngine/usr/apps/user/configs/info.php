@@ -52,9 +52,9 @@ return array(
         'user'      => "user.php",
         'block'     => array(
             array(
-                'key'           => "login",
+                'name'         => "login",
                 'file'          => "blocks.php",
-                'name'          => _USER_MI_BLOCK_LOGIN,
+                'title'         => _USER_MI_BLOCK_LOGIN,
                 'description'   => _USER_MI_BLOCK_LOGIN_DESC,
                 'show_func'     => "user_block_login",
                 'template'      => 'login.html',
@@ -65,9 +65,9 @@ return array(
                 ),
             ),
             array(
-                'key'           => "user",
+                'name'         => "user",
                 'file'          => "blocks.php",
-                'name'          => _USER_MI_BLOCK_USER,
+                'title'         => _USER_MI_BLOCK_USER,
                 'description'   => _USER_MI_BLOCK_USER_DESC,
                 'show_func'     => "user_block_user",
                 'template'      => 'user.html',
@@ -79,9 +79,9 @@ return array(
                 ),
             ),
             array(
-                'key'           => "account",
+                'name'          => "account",
                 'file'          => "blocks.php",
-                'name'          => _USER_MI_BLOCK_ACCOUNT,
+                'title'         => _USER_MI_BLOCK_ACCOUNT,
                 'description'   => _USER_MI_BLOCK_ACCOUNT_DESC,
                 'show_func'     => "user_block_account",
                 'template'      => 'account.html',

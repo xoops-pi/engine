@@ -41,7 +41,7 @@ class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
                 $select->where($model->getAdapter()->quoteIdentifier("id") . " = ?", $block);
                 $block = $model->fetchRow($select);
             } elseif (is_string($block)) {
-                $select->where($model->getAdapter()->quoteIdentifier("key") . " = ?", $block);
+                $select->where($model->getAdapter()->quoteIdentifier("name") . " = ?", $block);
                 $block = $model->fetchRow($select);
             }
         }

@@ -72,7 +72,7 @@ return array(
             array(
                 'key'           => "search",
                 'file'          => "blocks.php",
-                'name'          => _SEARCH_MI_BLOCK,
+                'title'         => _SEARCH_MI_BLOCK,
                 'description'   => _SEARCH_MI_BLOCK_DESC,
                 'show_func'     => "search_block_show",
                 'template'      => 'search.html')),

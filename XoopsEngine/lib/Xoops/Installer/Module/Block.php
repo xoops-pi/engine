@@ -23,8 +23,8 @@
  *
  *  return array(
  *      "blockA" => array(
- *          "key"           => "blockUniqueKey",
- *          "name"          => "Block Title",
+ *          "name"          => "BlockUniqueName",
+ *          "title"         => "Block Title",
  *          "description"   => "Desribing the block",
  *          "file"          => "block_definition_file.php",  // In modules/module/blocks/
  *          "show_func"     => "function_name_to_fetch_display_content", // Defined in above file
@@ -53,9 +53,9 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 continue;
             }
             $blockModel = array(
-                "key"           => isset($block["key"]) ? $block["key"] : $key,
-                "name"          => isset($block["key"]) ? $dirname . "-" . $block["key"] : "",
-                "title"         => $block['name'],
+                "key"           => isset($block["name"]) ? $block["name"] : $key,
+                "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                "title"         => $block['title'],
                 "description"   => isset($block["description"]) ? $block["description"] : "",
                 "module"        => $dirname,
                 "func_file"     => $block['file'],
@@ -98,7 +98,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             }
             $showfuncs[] = $block['show_func'];
             $funcfiles[] = $block['file'];
-            $blockKey = isset($block["key"]) ? $block["key"] : $key;
+            $blockKey = isset($block["name"]) ? $block["name"] : $key;
 
             $select = $model->select()
                             ->where('`key` = ?', $blockKey)
@@ -108,8 +108,8 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             if (empty($blockList)) {
                 $blockModel = array(
                     "key"       => $blockKey,
-                    "name"      => isset($block["key"]) ? $dirname . "-" . $block["key"] : "",
-                    "title"     => $block['name'],
+                    "name"      => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                    "title"     => $block['title'],
                     "module"    => $dirname,
                     "func_file" => $block['file'],
                     "show_func" => $block['show_func'],
@@ -124,7 +124,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             } else {
                 foreach ($blockList as $item) {
                     $data = array(
-                        "name"      => isset($block["key"]) ? $dirname . "-" . $block["key"] : "",
+                        "name"      => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
                         "module"    => $dirname,
                         "edit_func" => isset($block['edit_func']) ? $block['edit_func'] : '',
                         "template"  => isset($block['template']) ? $block['template'] : '',

@@ -21,7 +21,7 @@
  * Inserts an applet
  *
  * <code>
- * <{applet key=appletName var1=val1 var2=val2}>
+ * <{applet name=appletName var1=val1 var2=val2}>
  * </code>
  */
 
@@ -37,21 +37,21 @@ class Smarty_Compiler_Applet  extends Smarty_Internal_CompileBase
     public function compile($args, $compiler)
     {
         $this->compiler = $compiler;
-        $this->required_attributes = array("key");
+        $this->required_attributes = array("name");
         $this->optional_attributes = array("_any");
         $this->option_flags = array();
 
         // check and get attributes
         $_attr = $this->_get_attributes($args);
 
-        $key = $_attr["key"];
-        unset($_attr["key"]);
+        $name = $_attr["name"];
+        unset($_attr["name"]);
 
         $pars = array();
         foreach ($_attr as $k => $v) {
             $pars[] = var_export($k, true) . " => " . (empty($v) ? '""' : $v);
         }
-        $str = "XOOPS::registry(\"view\")->Applet({$key}, ";
+        $str = "XOOPS::registry(\"view\")->Applet({$name}, ";
         $str .= "array(" . implode(", ", $pars) . ")";
         //$str .= var_export($_attr, true);
         $str .= ")";

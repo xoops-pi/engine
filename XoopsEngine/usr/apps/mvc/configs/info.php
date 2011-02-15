@@ -88,7 +88,7 @@ return array(
         'block'     => array(
             array(
                 'file'          => "blocks.php",
-                'name'          => _MVC_MI_BLOCK,
+                'title'         => _MVC_MI_BLOCK,
                 'description'   => _MVC_MI_BLOCK_DESC,
                 'show_func'     => "mvc_block_show",
                 'edit_func'     => "mvc_block_edit",
