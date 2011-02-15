@@ -43,7 +43,7 @@ $GLOBALS['installWizard'] = $wizard;
 // options for mainfile.php
 //$GLOBALS['xoopsOption']["bootstrap"] = false;
 $xoopsOption['nocommon'] = true;
-if (!empty($xoopsOption['hascommon']) || !empty($xoopsOption['checkadmin'])) {
+if (!empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = false;
     //$xoopsOption['bootstrap'] = "setup";
     define('BOOTSTRAP', "setup");

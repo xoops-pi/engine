@@ -33,9 +33,9 @@ class XoopsInstallWizard
             $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
         }
 
-        $this->persistentFile = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . md5($this->baseLocation()) . '.php';
+        //$this->persistentFile = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . md5($this->baseLocation()) . '.php';
         $this->loadPersist();
-        register_shutdown_function(array($this, 'savePersist'));
+        //register_shutdown_function(array($this, 'savePersist'));
 
         // Load the main language file
         $this->setLocale();
@@ -201,8 +201,11 @@ class XoopsInstallWizard
 
     public function loadPersist()
     {
-        //session_start();
-        //$this->persistentData =& $_SESSION[__CLASS__];
+        session_start();
+        $_SESSION[__CLASS__] = isset($_SESSION[__CLASS__]) ? $_SESSION[__CLASS__] : array();
+        $this->persistentData =& $_SESSION[__CLASS__];
+        return;
+
         if (is_readable($this->persistentFile)) {
             $persistentData = include $this->persistentFile;
             $this->persistentData = is_array($persistentData) ? $persistentData : array();
@@ -211,6 +214,9 @@ class XoopsInstallWizard
 
     public function savePersist()
     {
+        session_destroy();
+        return true;
+
         if (!$fp = fopen($this->persistentFile, "w")) {
             return false;
         }
@@ -222,6 +228,8 @@ class XoopsInstallWizard
 
     public function destroyPersist()
     {
+        return true;
+
         unlink($this->persistentFile);
     }
 
