@@ -155,7 +155,8 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         }
 
         static $js_loaded;
-        xoops_loadLanguage("formdhtmltextarea");
+        //xoops_loadLanguage("formdhtmltextarea");
+        Xoops::service('translate')->loadTranslation('formdhtmltextarea');
         $ret = "";
 
         // actions
