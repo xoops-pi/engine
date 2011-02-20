@@ -21,7 +21,10 @@
 
 class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_ResourceAbstract
 {
-    const DEFAULT_REGISTRY_KEY = 'viewRenderer';
+    protected $viewClass            = 'Xoops_Zend_View';
+    protected $viewRendererClass    = 'Xoops_Zend_Controller_Action_Helper_ViewRenderer';
+    protected $layoutClass          = 'Xoops_Zend_Layout';
+
     /**
      * Defined by Zend_Application_Resource_Resource
      *
@@ -76,12 +79,13 @@ class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_Res
 
             if (empty($noViewRenderer)) {
                 // Register view renderer
-                $viewRenderer = new Xoops_Zend_Controller_Action_Helper_ViewRenderer();
+                $class = $this->viewRendererClass;
+                $viewRenderer = new $class();
                 $viewRenderer->setView($view);
                 Xoops_Zend_Controller_Action_HelperBroker::getStack()->offsetSet(-80, $viewRenderer);
                 $key = (isset($options['registry_key']) && !is_numeric($options['registry_key']))
                     ? $options['registry_key']
-                    : self::DEFAULT_REGISTRY_KEY;
+                    : 'viewRenderer';
                 XOOPS::registry($key, $viewRenderer);
             }
         }
@@ -94,9 +98,10 @@ class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_Res
      *
      * @return Xoops_Zend_View
      */
-    private function getView($options)
+    protected function getView($options)
     {
-        $view = new Xoops_Zend_View($options);
+        $class = empty($options['class']) ? $this->viewClass : $options['class'];
+        $view = new $class($options);
         XOOPS::registry('view', $view);
         return $view;
     }
@@ -106,7 +111,7 @@ class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_Res
      *
      * @return Xoops_Zend_Layout
      */
-    private function getLayout($options)
+    protected function getLayout($options)
     {
         // Initialize and register layout
         $options['theme'] = isset($options['theme'])
@@ -118,10 +123,11 @@ class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_Res
             unset($options['initMvc']);
         }
 
+        $class = empty($options['class']) ? $this->layoutClass : $options['class'];
         if ($initMvc) {
-            $layout = Xoops_Zend_Layout::startMvc($options);
+            $layout = $class::startMvc($options);
         } else {
-            $layout = new Xoops_Zend_Layout($options);
+            $layout = new $class($options);
         }
         XOOPS::registry('layout', $layout);
         return $layout;

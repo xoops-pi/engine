@@ -20,10 +20,20 @@
 
 class Xoops_Zend_Controller_Router_Application extends Zend_Controller_Router_Rewrite
 {
-    protected $configs = array();
-    public $section = 'application';
+    //protected $configs = array();
+    //public $section = 'application';
     //protected $route = 'default';
-    public $route = 'application';
+    //public $route = 'application';
+
+    /**
+     * Array of invocation parameters to use when instantiating action
+     * controllers
+     * @var array
+     */
+    protected $_invokeParams = array(
+        'section'   => 'application',
+        'route'     => 'application',
+    );
 
     /**
      * Constructor
@@ -37,7 +47,7 @@ class Xoops_Zend_Controller_Router_Application extends Zend_Controller_Router_Re
 
         // Load routes from ini config file
         // Load configs: filename, all sections, allowModifications
-        $configs = XOOPS::service("registry")->route->read($this->section);
+        $configs = XOOPS::service("registry")->route->read($this->getParam('section'));
         if (!empty($configs)) {
             $configs = new Zend_Config($configs);
             $this->addConfig($configs);
@@ -134,8 +144,7 @@ class Xoops_Zend_Controller_Router_Application extends Zend_Controller_Router_Re
 
         $this->initRoute($name);
         if (!isset($this->_routes[$name]) && !isset($configIsLoaded)) {
-            //$this->addConfig($this->configs->get('application'));
-            $configs = XOOPS::service("registry")->route->read($this->section, $exclude = 1);
+            $configs = XOOPS::service("registry")->route->read($this->getParam('section'), $exclude = 1);
             $configs = new Zend_Config($configs);
             $this->addConfig($configs);
         }
@@ -153,9 +162,9 @@ class Xoops_Zend_Controller_Router_Application extends Zend_Controller_Router_Re
     {
         if (!$request->isDispatched()) {
             // For route-specified routing
-            if (!empty($this->route)) {
-                if (!$this->hasRoute($this->route)) {
-                    $route = $this->loadRoute($this->route);
+            if ($route = $this->getParam('route')) {
+                if (!$this->hasRoute($route)) {
+                    $route = $this->loadRoute($route);
                 }
                 //$routes = $this->getRoutes();
                 //$this->_routes = array($this->route => $this->getRoute($this->route));

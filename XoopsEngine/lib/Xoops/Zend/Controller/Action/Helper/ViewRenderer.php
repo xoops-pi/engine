@@ -72,7 +72,8 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
         if (!$isTranslated) {
             return $this->template;
         }
-        return $this->view->getScriptPath($this->getViewScript());
+        //return $this->view->getScriptPath($this->getViewScript());
+        return $this->getViewScript();
     }
 
     /**
@@ -318,46 +319,6 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
     }
 
     /**
-     * postDispatch - auto render a view
-     *
-     * Only autorenders if:
-     * - _noRender is false
-     * - action controller is present
-     * - request has not been re-dispatched (i.e., _forward() has not been called)
-     * - response is not a redirect
-     *
-     * @return void
-     */
-    public function postDispatch()
-    {
-        // Restore request dispatched status to resume formal helpers and plugins
-        if ($this->isCached()) {
-            $this->getRequest()->setDispatched(true);
-        }
-
-        /*
-        if (empty($this->template) && empty($this->data)) {
-            $this->setNoRender();
-        }
-        */
-        if ($this->_shouldRender()) {
-            $template = $this->view->getEngine();
-            $layout = $this->view->getHelper('layout')->getLayout();
-
-            if ($layout->skipCache) {
-                $template->caching = 0;
-            }
-
-            $template->setCompileId(
-                $layout->getTheme(),
-                $this->getRequest()->getModuleName()
-            );
-        //Debug::e("compileId: " . $this->view->getHelper('layout')->getLayout()->getTheme() .'-'. $this->getRequest()->getModuleName());
-            $this->render();
-        }
-    }
-
-    /**
      * Check if action content cached
      *
      * Determine if we have a cache hit. If so, return the response; else,
@@ -395,13 +356,8 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
         }
         XOOPS::registry('profiler')->start("Action");
 
-        //$layout->plugin->setRequest($request);
-        //$layout->plugin->setResponse($response);
         $cacheInfo = $layout->plugin->loadCacheInfo();
-        //$layout->setCacheInfo($cacheInfo);
 
-        //Debug::e(__METHOD__);
-        //Debug::e($cacheInfo);
         if (!$this->renderCache($cacheInfo)) {
             return;
         }
@@ -413,6 +369,47 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
         XOOPS::service('logger')->log("Action is cached", 'debug');
         /**#@-*/
     }
+
+    /**
+     * postDispatch - auto render a view
+     *
+     * Only autorenders if:
+     * - _noRender is false
+     * - action controller is present
+     * - request has not been re-dispatched (i.e., _forward() has not been called)
+     * - response is not a redirect
+     *
+     * @return void
+     */
+    public function postDispatch()
+    {
+        // Restore request dispatched status to resume formal helpers and plugins
+        if ($this->isCached()) {
+            $this->getRequest()->setDispatched(true);
+        }
+
+        /*
+        if (empty($this->template) && empty($this->data)) {
+            $this->setNoRender();
+        }
+        */
+
+        if ($this->_shouldRender()) {
+            $template = $this->view->getEngine();
+            $layout = $this->view->getHelper('layout')->getLayout();
+
+            if ($layout->skipCache) {
+                $template->caching = 0;
+            }
+
+            $template->setCompileId(
+                $layout->getTheme(),
+                $this->getRequest()->getModuleName()
+            );
+            $this->render();
+        }
+    }
+
 
     /**
      * Attempt to load content from template cache if cache is valid
@@ -438,8 +435,6 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
             $template->setCacheId($cache['cache_id']);
         }
         $template->setCompileId($layout->getTheme(), $request->getModuleName());
-        //Debug::e(__METHOD__);
-        //Debug::e($cache);
 
         if (empty($cache['template']) || !$template->is_cached($cache['template'])) {
             //Debug::e("Not cached");
@@ -450,11 +445,13 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
             return false;
         }
 
+        // Content is cached, load the content and send to response
         $name = $this->getResponseSegment();
         $this->getResponse()->appendBody(
             $content,
             $name
         );
+        // Skip following render to avoid duplicated rendering
         $this->setNoRender();
 
         return true;

@@ -37,7 +37,6 @@ class Default_IndexController extends \Application\Controller
         //$sql = "CREATE VIEW " . Xoops::registry('db')->prefix('modules') . " AS SELECT * FROM " . Xoops::getModel('module')->info('name');
         //Xoops::registry('db')->query($sql);
 
-
         return;
     }
 

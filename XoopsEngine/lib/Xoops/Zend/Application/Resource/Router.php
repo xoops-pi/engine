@@ -32,8 +32,8 @@ class Xoops_Zend_Application_Resource_Router
         if (null === $this->_router) {
             $options = $this->getOptions();
             $name = empty($options['name']) ? "Application" : ucfirst($options['name']);
-            $router = "Xoops_Zend_Controller_Router_" . $name;
             unset($options['name']);
+            $router = "Xoops_Zend_Controller_Router_" . $name;
             $bootstrap = $this->getBootstrap();
             $bootstrap->bootstrap('db');
             $bootstrap->bootstrap('FrontController');
@@ -41,22 +41,25 @@ class Xoops_Zend_Application_Resource_Router
             $front->setRouter(new $router);
             $this->_router = $front->getRouter();
 
-            if (!isset($options['routes'])) {
-                $options['routes'] = array();
-            }
-
             if (isset($options['chainNameSeparator'])) {
                 $this->_router->setChainNameSeparator($options['chainNameSeparator']);
+                unset($options['chainNameSeparator']);
             }
 
             if (isset($options['useRequestParametersAsGlobal'])) {
                 $this->_router->useRequestParametersAsGlobal($options['useRequestParametersAsGlobal']);
+                unset($options['useRequestParametersAsGlobal']);
             }
 
             if (!empty($options['routes'])) {
                 $this->_router->addConfig(new Zend_Config($options['routes']));
+                unset($options['routes']);
             }
 
+            if (!empty($options)) {
+                $this->_router->setParams($options);
+            }
+            /*
             if (!empty($options['route'])) {
                 $this->_router->route = $options['route'];
             }
@@ -64,6 +67,7 @@ class Xoops_Zend_Application_Resource_Router
             if (!empty($options['section'])) {
                 $this->_router->section = $options['section'];
             }
+            */
         }
         return $this->_router;
     }

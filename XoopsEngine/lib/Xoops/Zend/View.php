@@ -26,6 +26,7 @@ class Xoops_Zend_View extends Zend_View_Abstract
      */
     protected $engine = null;
     protected $engineOptions = array();
+    protected $engineClass = 'Xoops_Smarty_Engine';
     //protected $themePath = null;
     //public $section = null;
 
@@ -105,7 +106,8 @@ class Xoops_Zend_View extends Zend_View_Abstract
     public function getEngine()
     {
         if (!isset($this->engine)) {
-            $this->engine = new Xoops_Smarty_Engine($this->engineOptions);
+            $engineClass = $this->engineClass;
+            $this->engine = new $engineClass($this->engineOptions);
         }
         return $this->engine;
     }
@@ -188,8 +190,7 @@ class Xoops_Zend_View extends Zend_View_Abstract
             return "";
         }
 
-        //$template = XOOPS::path($template);
-        return $this->getEngine()->display($template, null, null, $this->getEngine()->getTemplateVars());
+        return $this->getEngine()->display($template, null, null, $this->getVars());
     }
 
     /**
@@ -220,7 +221,7 @@ class Xoops_Zend_View extends Zend_View_Abstract
 
     public function getTheme()
     {
-        return $this->getHelper('layout')->getLayout()->getTheme();
+        return Xoops::registry('layout')->getTheme();
     }
 
     /**
@@ -240,7 +241,8 @@ class Xoops_Zend_View extends Zend_View_Abstract
         }
 
         // themes/themeName/modules/moduleName/template.html, themes/themeName/apps/moduleName/template.html
-        if (false !== ($themePath = $this->getHelper('layout')->getLayout()->resourcePath($path, $isAbsolute))) {
+        //if (false !== ($themePath = $this->getHelper('layout')->getLayout()->resourcePath($path, $isAbsolute))) {
+        if (false !== ($themePath = Xoops::registry('layout')->resourcePath($path, $isAbsolute))) {
             return $themePath;
         }
         return $isAbsolute ? XOOPS::path($path) : $path;

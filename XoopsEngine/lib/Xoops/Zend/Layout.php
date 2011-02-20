@@ -165,17 +165,17 @@ class Xoops_Zend_Layout extends Zend_Layout
      */
     public static function startMvc($options = null)
     {
-        if (null === self::$_mvcInstance) {
-            self::$_mvcInstance = new self($options, true);
+        if (null === static::$_mvcInstance) {
+            static::$_mvcInstance = new static($options, true);
         } else {
             if (is_string($options)) {
-                self::$_mvcInstance->setLayoutPath($options);
+                static::$_mvcInstance->setLayoutPath($options);
             } elseif (is_array($options) || $options instanceof Zend_Config) {
-                self::$_mvcInstance->setOptions($options);
+                static::$_mvcInstance->setOptions($options);
             }
         }
 
-        return self::$_mvcInstance;
+        return static::$_mvcInstance;
     }
 
     /**
@@ -194,7 +194,7 @@ class Xoops_Zend_Layout extends Zend_Layout
         } else {
             $this->plugin = $plugin;
         }
-        $front = Zend_Controller_Front::getInstance();
+        $front = Xoops::registry('frontController');
         if (!$front->hasPlugin($pluginClass)) {
             $front->registerPlugin(
                 // register to run last | BUT before the ErrorHandler (if its available)
@@ -351,12 +351,8 @@ class Xoops_Zend_Layout extends Zend_Layout
             XOOPS::path("theme"),
         );
         $template->assign($this->metaList);
-        //Debug::e("doctype:" . $template->getVariable('doctype')->value);
 
         if (!$registered) {
-            //$template->register->templateFunction("blocks", array($this, "loadBlocks"));
-            //$template->register->templateFunction("navigation", array($this, "loadNavigation"));
-            //$template->register->outputFilter(array($this, "loadHead"));
             $template->registerPlugin("function", "blocks", array($this, "loadBlocks"));
             $template->registerPlugin("function", "navigation", array($this, "loadNavigation"));
             $template->registerFilter("output", array($this, "loadHead"));
@@ -374,11 +370,13 @@ class Xoops_Zend_Layout extends Zend_Layout
 
     public function setTheme($theme = "default")
     {
+        /*
         if ("default" != $theme) {
             if (!array_key_exists($theme, XOOPS::service("registry")->theme->read())) {
                 return $this;
             }
         }
+        */
 
         $this->theme = $theme;
         return $this;
@@ -494,7 +492,7 @@ class Xoops_Zend_Layout extends Zend_Layout
         $variables += array(
             'xoops_url'         => XOOPS::url('www'),
             'xoops_rootpath'    => XOOPS::path('www'),
-            'xoops_langcode'    => XOOPS::registry('locale')->getLanguage(),
+            'xoops_langcode'    => XOOPS::config('language'),
             'xoops_upload_url'  => XOOPS::url('upload'),
             'xoops_sitename'    => htmlspecialchars(XOOPS::config('sitename'), ENT_QUOTES),
             'xoops_dirname'     => XOOPS::registry("module") ? XOOPS::registry("module")->dirname : 'system',
@@ -509,7 +507,7 @@ class Xoops_Zend_Layout extends Zend_Layout
         //$this->getView()->doctype('XHTML1_TRANSITIONAL');
     }
 
-    private function initHead()
+    protected function initHead()
     {
         $view = $this->getView();
         $view->doctype('XHTML1_TRANSITIONAL');
@@ -527,14 +525,11 @@ class Xoops_Zend_Layout extends Zend_Layout
             }
         }
         $view->headMeta()->appendName("generator", "XOOPS");
-        $view->headMeta()->appendHttpEquiv("content-language", XOOPS::registry('locale')->getLanguage());
-        $view->headMeta()->appendHttpEquiv("content-type", "text/html; charset=" . XOOPS::registry('locale')->getCharset());
+        $view->headMeta()->appendHttpEquiv("content-language", XOOPS::config('language'));
+        $view->headMeta()->appendHttpEquiv("content-type", "text/html; charset=" . XOOPS::config('charset'));
 
         $view->headTitle()->setSeparator(" - ");
-        // "xoops_pagetitle" is deprecated, for backward compat only
-        if (XOOPS::registry('xoops_pagetitle')) {
-            $view->headTitle(XOOPS::registry('xoops_pagetitle'));
-        } elseif (XOOPS::registry("module")) {
+        if (XOOPS::registry("module")) {
             $view->headTitle(XOOPS::registry("module")->name);
         } else {
             $view->headTitle(XOOPS::config('slogan'));
@@ -543,21 +538,14 @@ class Xoops_Zend_Layout extends Zend_Layout
         $view->headTitle(XOOPS::config('sitename'));
 
         $view->headLink()->prependStylesheet("theme/" . $this->theme . "/style.css", "all");
-        //$view->headLink()->prependStylesheet("xoops.css", "all");
-        //$view->headLink()->appendAlternate("backend.php", "application/rss+xml", "XOOPS feed");
         $view->headLink(array(
             "rel"   => "favicon",
             "type"  => "image/ico",
             "href"  => "favicon.ico"
         ));
 
-        //$view->headScript()->prependFile("include/xoops.js");
         //$view->headScript()->appendFile("app/default/templates/test.js");
 
-        // "xoops_module_header" is deprecated, for backward compat only
-        if (XOOPS::registry('xoops_module_header')) {
-            $headMeta["xoops_module_header"] = XOOPS::registry('xoops_module_header');
-        }
         return $headMeta;
     }
 
@@ -574,7 +562,7 @@ class Xoops_Zend_Layout extends Zend_Layout
         return $data;
     }
 
-    private function loadMeta()
+    protected function loadMeta()
     {
         if ($cache = $this->getCacheInfo()) {
             $cacheKey = "meta_{$cache['cache_id']}";
@@ -594,7 +582,7 @@ class Xoops_Zend_Layout extends Zend_Layout
         $this->assign($meta);
     }
 
-    public function loadNavigation($params, $smarty, $template)
+    public function loadNavigation($params, $smarty, $template = null)
     {
         if (empty($params["assign"])) {
             return false;
@@ -629,6 +617,7 @@ class Xoops_Zend_Layout extends Zend_Layout
         } else {
             XOOPS::service('logger')->log("Navigation is cached", 'debug');
         }
+        $template = isset($template) ? $template : $smarty;
         $template->assign($params["assign"], $navigation);
         return;
     }
@@ -763,7 +752,7 @@ class Xoops_Zend_Layout extends Zend_Layout
 
     public function getCacheInfo()
     {
-        if (!isset($this->cacheInfo)) {
+        if (!isset($this->cacheInfo) && $this->plugin) {
             $this->cacheInfo = $this->plugin->loadCacheInfo();
         }
 

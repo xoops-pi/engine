@@ -26,8 +26,18 @@
  */
 class Xoops_Zend_Controller_Router_Legacy extends Xoops_Zend_Controller_Router_Application
 {
-    public $section = 'legacy';
-    public $route = 'legacy';
+    //public $section = 'legacy';
+    //public $route = 'legacy';
+
+    /**
+     * Array of invocation parameters to use when instantiating action
+     * controllers
+     * @var array
+     */
+    protected $_invokeParams = array(
+        'section'   => 'legacy',
+        'route'     => 'legacy',
+    );
 
     /**
      * Add default routes which are used to mimic basic router behaviour

@@ -68,7 +68,7 @@ class Xoops_Zend_Controller_Router_Route_Admin extends Zend_Controller_Router_Ro
      */
     public static function getInstance(Zend_Config $config)
     {
-        $frontController = Zend_Controller_Front::getInstance();
+        $frontController = Xoops::registry('frontController');
 
         $defs       = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
         $dispatcher = $frontController->getDispatcher();

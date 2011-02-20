@@ -62,7 +62,7 @@ class Xoops_Zend_Navigation_Page_Mvc extends Zend_Navigation_Page_Mvc
     {
         if ($this->_active === null) {
             //Debug::e("active not set");
-            $front = Zend_Controller_Front::getInstance();
+            $front = Xoops::registry('frontController');
             $reqParams = $front->getRequest()->getParams();
 
             if (!array_key_exists('module', $reqParams)) {

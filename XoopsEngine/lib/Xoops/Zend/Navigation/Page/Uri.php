@@ -40,8 +40,8 @@ class Xoops_Zend_Navigation_Page_Uri extends Zend_Navigation_Page_Uri
      */
     public function isActive($recursive = false)
     {
-        if (!isset($this->_active)) {
-            $front = Zend_Controller_Front::getInstance();
+        // TODO: frontController is not available or not valid for URI parameter detection
+        if (!isset($this->_active) && $front = Xoops::registry('frontController')) {
             $reqPath = $front->getRequest()->getPathInfo();
             $uriPath = parse_url($this->getUri(), PHP_URL_PATH);
             if (substr($uriPath, -1 * strlen($reqPath)) == $reqPath) {

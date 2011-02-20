@@ -211,7 +211,7 @@ class Xoops_Module_Info
             $adminmenu = array();
             include XOOPS::path("www") . "/modules/{$module}/{$config['adminmenu']}";
             foreach ($adminmenu as $key => $page) {
-                /*
+                /**/
                 $link = substr($page['link'], 6);
                 if (false !== ($pos = strpos($link, "?"))) {
                     $controller = rtrim(substr($link, 0, $pos), ".php");
@@ -227,7 +227,8 @@ class Xoops_Module_Info
                     "action"        => "admin",
                     "params"        => $params,
                 );
-                */
+                /**/
+                /*
                 $config['extensions']['navigation']['admin'][md5($page['link'])] = array(
                     "label"         => $page['title'],
                     "route"         => "admin",
@@ -235,6 +236,7 @@ class Xoops_Module_Info
                     "action"        => "index",
                     "params"        => array("link" => urlencode($page['link'])),
                 );
+                */
             }
             unset($config['adminmenu']);
         }

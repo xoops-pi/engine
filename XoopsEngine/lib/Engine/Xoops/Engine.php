@@ -170,7 +170,7 @@ class Engine implements \Kernel\EngineInterface
             foreach ($services as $name) {
                 \Xoops::service()->load($name);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo "Exception in basic service: <pre>" . $e->getMessage() . "</pre>";
             if (\Xoops::service()->hasService('error')) {
                 \Xoops::service('error')->handleException($e);
@@ -188,7 +188,7 @@ class Engine implements \Kernel\EngineInterface
                     "engine"        => $this,
                 );
                 $application = new \Xoops_Zend_Application($this->configs["environment"], $options);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 echo "Exception: <pre>" . $e->getMessage() . "</pre>";
                 if (\Xoops::service()->hasService('error')) {
                     \Xoops::service('error')->handleException($e);
