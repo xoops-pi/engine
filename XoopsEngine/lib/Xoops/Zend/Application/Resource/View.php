@@ -67,28 +67,18 @@ class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_Res
         // Initialize and register layout
         $this->getLayout($options_layout);
 
+        // viewRenderer options
+        $options_renderer = array();
+        if (isset($options['viewRenderer'])) {
+            $options_renderer = $options['viewRenderer'];
+            unset($options['viewRenderer']);
+        }
+
         // Initialize view
         $view = $this->getView($options);
 
-        // Check if frontController is booted
-        $bootstrap = $this->getBootstrap();
-        if ($bootstrap->hasPluginResource('FrontController')) {
-            $bootstrap->bootstrap('FrontController');
-            $front = $bootstrap->getResource('FrontController');
-            $noViewRenderer = $front->getParam('noViewRenderer');
-
-            if (empty($noViewRenderer)) {
-                // Register view renderer
-                $class = $this->viewRendererClass;
-                $viewRenderer = new $class();
-                $viewRenderer->setView($view);
-                Xoops_Zend_Controller_Action_HelperBroker::getStack()->offsetSet(-80, $viewRenderer);
-                $key = (isset($options['registry_key']) && !is_numeric($options['registry_key']))
-                    ? $options['registry_key']
-                    : 'viewRenderer';
-                XOOPS::registry($key, $viewRenderer);
-            }
-        }
+        // Initialize and register layout
+        $this->getRenderer($options_renderer, $view);
 
         return $view;
     }
@@ -131,6 +121,34 @@ class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_Res
         }
         XOOPS::registry('layout', $layout);
         return $layout;
+    }
+
+    /**
+     * Retrieve viewRenderer object
+     *
+     * @return viewRenderer
+     */
+    protected function getRenderer($options, $view)
+    {
+        // Check if frontController is booted
+        $bootstrap = $this->getBootstrap();
+        if ($bootstrap->hasPluginResource('FrontController')) {
+            $bootstrap->bootstrap('FrontController');
+            $front = $bootstrap->getResource('FrontController');
+            $noViewRenderer = $front->getParam('noViewRenderer');
+
+            if (empty($noViewRenderer)) {
+                // Register view renderer
+                $class = empty($options['class']) ? $this->viewRendererClass : $options['class'];
+                $viewRenderer = new $class();
+                $viewRenderer->setView($view);
+                Xoops_Zend_Controller_Action_HelperBroker::getStack()->offsetSet(-80, $viewRenderer);
+                $key = (isset($options['registry_key']) && !is_numeric($options['registry_key']))
+                    ? $options['registry_key']
+                    : 'viewRenderer';
+                XOOPS::registry($key, $viewRenderer);
+            }
+        }
     }
 
 }
