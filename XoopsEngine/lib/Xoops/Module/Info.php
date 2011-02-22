@@ -22,14 +22,20 @@ class Xoops_Module_Info
 
     public static function load($module, $category = false)
     {
+        $moduleType = Xoops::service('module')->getType($module);
+        $modulePath = Xoops::service('module')->getPath($module);
         if (!isset(self::$modules[$module]['info'])) {
             //XOOPS::service('translate')->loadTranslation('modinfo', $module);
-            $path = Xoops::service('module')->getPath($module);
-            $file = $path . "/configs/info.php";
+            //$path = Xoops::service('module')->getPath($module);
+            $file = $modulePath . "/configs/info.php";
             if (file_exists($file)) {
                 XOOPS::service('translate')->loadTranslation('info', $module);
                 $moduleInfo = Xoops_Config::load($file);
-                $moduleInfo['logo'] = "app/{$module}/" . $moduleInfo['logo'];
+                if (empty($moduleInfo['logo'])) {
+                    $moduleInfo['logo'] = "img/images/module.png";
+                } else {
+                    $moduleInfo['logo'] = (($moduleType == 'app') ? 'app' : 'module') . '/' .  $module . '/' . $moduleInfo['logo'];
+                }
             } else {
                 /*
                 $file = $path . "/xoops_version.php";
@@ -53,7 +59,7 @@ class Xoops_Module_Info
                 if (!isset(self::$modules[$module]['info'][1]['extensions'][$category])) {
                     if (!empty($info['extensions'][$category])) {
                         if (is_string($info['extensions'][$category])) {
-                            $file = XOOPS::path("app/{$module}/configs/" . $info['extensions'][$category]);
+                            $file = $modulePath . "/configs/" . $info['extensions'][$category];
                             $info['extensions'][$category] = Xoops_Config::load($file);
                         }
                         $info = $info['extensions'][$category];
@@ -68,7 +74,7 @@ class Xoops_Module_Info
                     if (!empty($info['extensions'])) {
                         foreach ($info['extensions'] as $extension => $options) {
                             if (!is_string($options)) continue;
-                            $file = XOOPS::path("app/{$module}/configs/{$options}");
+                            $file = $modulePath . "/configs/" . $options;
                             $info['extensions'][$extension] = Xoops_Config::load($file);
                         }
                     } else {
@@ -110,6 +116,8 @@ class Xoops_Module_Info
         if (!empty($config['image'])) {
             $config['logo'] = "www/modules/{$module}/" . $config['image'];
             unset($config['image']);
+        } else {
+            $config['logo'] = "img/images/module.png";
         }
 
         // Normalize readme file

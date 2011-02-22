@@ -61,7 +61,7 @@ class Modulelist extends \Kernel\Registry
                         'parent'    => isset($info['parent']) ? $info['parent'] : "",
                         'email'     => isset($info['email']) ? $info['email'] : "",
                         "type"      => \Xoops::service('module')->getType($module),
-                        'logo'      => !empty($info['logo']) ? $info['logo'] : "www/images/logo.png"
+                        'logo'      => $info['logo']
                     );
                 }
             }
@@ -89,7 +89,7 @@ class Modulelist extends \Kernel\Registry
                 //"update"    => formatTimestamp($module->update, 'm'),
                 "update"    => $module->update,
                 "type"      => \Xoops::service('module')->getType($dirname),
-                "logo"      => !empty($info['logo']) ? $info['logo'] : "www/images/logo.png",
+                "logo"      => $info['logo'],
             );
         }
 
