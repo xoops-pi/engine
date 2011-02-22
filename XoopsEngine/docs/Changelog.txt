@@ -1,6 +1,11 @@
 Xoops Engine Changelog
 
 
+Feb 22nd, 2011
+=============================
+1 Added namespace for app (in /usr/apps/) as "App" and module (in www/modules) as "Module"
+
+
 January 10th, 2011
 =============================
 1 Improved and simplified captcha mechanism
