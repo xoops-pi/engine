@@ -20,8 +20,8 @@
  * @version         $Id$
  */
 
-//class App_System_Form_Preference extends Xoops_Zend_Form
-class System_Form_Preference extends Xoops_Zend_Form
+class App_System_Form_Preference extends Xoops_Zend_Form
+//class System_Form_Preference extends Xoops_Zend_Form
 {
     protected function loadDefaultOptions()
     {
@@ -99,8 +99,8 @@ class System_Form_Preference extends Xoops_Zend_Form
             }
 
             if (!empty($edit["module"])) {
-                //$class = "App_" . ucfirst($edit["module"]) . "_Form_Element_" . ucfirst($type);
-                $class = $edit["module"] . "_form_element_" . $type;
+                $class = ('app' == Xoops::service('module')->getType($edit["module"]) ? 'App' : 'Module') . "_" . ucfirst($edit["module"]) . "_Form_Element_" . ucfirst($type);
+                //$class = $edit["module"] . "_form_element_" . $type;
                 if (class_exists($class)) {
                     $element = new $class($keyConfig, $options);
                 } else {

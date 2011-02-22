@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Gateway
-class User_Gateway
+class App_User_Gateway
+//class User_Gateway
 {
     protected static $models = array();
     protected static $cols = array();

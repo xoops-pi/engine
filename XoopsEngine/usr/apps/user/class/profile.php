@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Profile
-class User_Profile
+class App_User_Profile
+//class User_Profile
 {
     /*
     public static function listI($user)
@@ -123,7 +123,7 @@ class User_Profile
      */
     public static function avatar($value, $size = "")
     {
-        $value = User_Avatar::getTag($value, $size);
+        $value = App_User_Avatar::getTag($value, $size);
         return $value;
     }
 }

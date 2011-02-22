@@ -358,7 +358,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         return $form;
     }
 
-    protected function createLegacyUser($data)
+    protected function ____createLegacyUser($data)
     {
         $module = $this->getRequest()->getModuleName();
         $configs = XOOPS::service("registry")->config->read($module, "register");
@@ -406,7 +406,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         $data["create_time"] = time();
         $data["create_ip"] = $this->getRequest()->getClientIp();
 
-        $id = User_Gateway::create($data, $message);
+        $id = App_User_Gateway::create($data, $message);
         $status = true;
 
         // Requires activation by user

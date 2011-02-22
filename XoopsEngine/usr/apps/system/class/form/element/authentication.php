@@ -20,8 +20,8 @@
  * @version         $Id$
  */
 
-//class App_System_Form_Element_Authentication extends Zend_Form_Element_Select
-class System_Form_Element_Authentication extends Zend_Form_Element_Select
+class App_System_Form_Element_Authentication extends Zend_Form_Element_Select
+//class System_Form_Element_Authentication extends Zend_Form_Element_Select
 {
     /**
      * Constructor

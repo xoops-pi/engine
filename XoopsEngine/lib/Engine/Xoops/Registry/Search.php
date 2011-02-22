@@ -83,7 +83,8 @@ class Search extends \Kernel\Registry
             if (!empty($modules[$dirname]['callback'])) {
                 $modules[$dirname]['callback'] = explode("::", $modules[$dirname]['callback']);
                 $module = \XOOPS::service("module")->getDirectory($dirname);
-                $modules[$dirname]['callback'][0] = $module . '_' . $modules[$dirname]['callback'][0];
+                $prefix = "app" == \XOOPS::service("module")->getType($module) ? "app" : "module";
+                $modules[$dirname]['callback'][0] = $prefix . '_' . $module . '_' . $modules[$dirname]['callback'][0];
             }
         }
 

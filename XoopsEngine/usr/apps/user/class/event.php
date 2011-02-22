@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Event
-class User_Event
+class App_User_Event
+//class User_Event
 {
     const MODULE = "user";
 

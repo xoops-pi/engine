@@ -18,11 +18,11 @@
  * @version         $Id$
  */
 
-//class App_Mvc_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
-class Mvc_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
+class App_Mvc_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
+//class Mvc_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
 {
     public function bootstrap()
     {
-        XOOPS::service("event")->attach("system", "module_update", array("Mvc_Event", "runtime"));
+        XOOPS::service("event")->attach("system", "module_update", array("App_Mvc_Event", "runtime"));
     }
 }

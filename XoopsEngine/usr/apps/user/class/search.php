@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Search
-class User_Search
+class App_User_Search
+//class User_Search
 {
     protected static $module = "user";
 

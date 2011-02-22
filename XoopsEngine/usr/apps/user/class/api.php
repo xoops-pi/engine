@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Api
-class User_Api
+class App_User_Api
+//class User_Api
 {
     public function demo($args)
     {

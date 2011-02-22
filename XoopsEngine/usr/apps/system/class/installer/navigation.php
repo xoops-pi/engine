@@ -58,8 +58,8 @@
  *  );
  */
 
-//class App_System_Installer_Navigation extends Xoops_Installer_Module_Navigation
-class System_Installer_Navigation extends Xoops_Installer_Module_Navigation
+class App_System_Installer_Navigation extends Xoops_Installer_Module_Navigation
+//class System_Installer_Navigation extends Xoops_Installer_Module_Navigation
 {
     public function install(&$message)
     {

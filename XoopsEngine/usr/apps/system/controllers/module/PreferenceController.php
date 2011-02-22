@@ -91,8 +91,8 @@ class Module_PreferenceController extends Xoops_Zend_Controller_Action_Admin
         $options = array(
             "action"    => $action,
         );
-        //$form = new App_System_Form_Preference($options);
-        $form = new System_Form_Preference($options);
+        $form = new App_System_Form_Preference($options);
+        //$form = new System_Form_Preference($options);
         $form->addConfigs($configs["configs"]);
         $form->addCategories($configs["categories"]);
         $options = array(

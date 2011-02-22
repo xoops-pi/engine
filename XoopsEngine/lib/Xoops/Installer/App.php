@@ -31,6 +31,7 @@ class Xoops_Installer_App
     {
         $return = array();
         $message = array();
+        $classPrefix = ('app' == Xoops::service('module')->getType($name) ? 'app' : 'module') . '_' . $name;
 
         Xoops_Zend_Db_File_Mysql::reset();
         //XOOPS::service('translate')->loadTranslation('install', $name);
@@ -56,7 +57,7 @@ class Xoops_Installer_App
         $module->setFromArray($moduleData);
         // execute preInstall
         if (!empty($config['onInstall'])) {
-            $class = $config['onInstall'];
+            $class = $classPrefix . '_' . $config['onInstall'];
             if (class_exists($class) && method_exists($class, "preInstall")) {
                 $instHandler = new $class($config, $module);
                 $ret = $instHandler->preInstall($message);
@@ -95,7 +96,7 @@ class Xoops_Installer_App
 
         // execute postInstall
         if (!empty($config['onInstall'])) {
-            $class = $config['onInstall'];
+            $class = $classPrefix . '_' . $config['onInstall'];
             if (class_exists($class) && method_exists($class, "postInstall")) {
                 if (empty($instHandler)) {
                     $instHandler = new $class($config, $module);
@@ -112,6 +113,7 @@ class Xoops_Installer_App
     {
         $return = array();
         $message = array();
+        $classPrefix = ('app' == Xoops::service('module')->getType($name) ? 'app' : 'module') . '_' . $name;
 
         //$config =& $this->installer->config;
         $model = XOOPS::getModel("module");
@@ -125,7 +127,7 @@ class Xoops_Installer_App
 
         // execute preUpdate
         if (!empty($config['onUpdate'])) {
-            $class = $config['onUpdate'];
+            $class = $classPrefix . '_' . $config['onUpdate'];
             if (class_exists($class) && method_exists($class, "preUpdate")) {
                 $instHandler = new $class($config, $module, $oldVersion);
                 $ret = $instHandler->preUpdate($message);
@@ -164,7 +166,7 @@ class Xoops_Installer_App
 
         // execute postUpdate
         if (!empty($config['onUpdate'])) {
-            $class = $config['onUpdate'];
+            $class = $classPrefix . '_' . $config['onUpdate'];
             if (class_exists($class) && method_exists($class, "postUpdate")) {
                 if (empty($instHandler)) {
                     $instHandler = new $class($config, $module, $oldVersion);
@@ -181,6 +183,7 @@ class Xoops_Installer_App
     {
         $return = array();
         $message = array();
+        $classPrefix = ('app' == Xoops::service('module')->getType($name) ? 'app' : 'module') . '_' . $name;
 
         $model = XOOPS::getModel("module");
         if (!$module = $model->load($name)) {
@@ -190,7 +193,7 @@ class Xoops_Installer_App
 
         // execute preUninstall
         if (!empty($config['onUninstall'])) {
-            $class = $config['onUninstall'];
+            $class = $classPrefix . '_' . $config['onUninstall'];
             if (class_exists($class) && method_exists($class, "preUninstall")) {
                 $return['preUninstall']['status'] = true;
                 $instHandler = new $class($config, $module);
@@ -228,7 +231,7 @@ class Xoops_Installer_App
 
         // execute postUninstall
         if (!empty($config['onUninstall'])) {
-            $class = $config['onUninstall'];
+            $class = $classPrefix . '_' . $config['onUninstall'];
             if (class_exists($class) && method_exists($class, "postUninstall")) {
                 if (empty($instHandler)) {
                     $instHandler = new $class($config, $module);

@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Installer extends Xoops_Installer_Abstract
-class User_Installer extends Xoops_Installer_Abstract
+class App_User_Installer extends Xoops_Installer_Abstract
+//class User_Installer extends Xoops_Installer_Abstract
 {
     public function postInstall(&$message)
     {
@@ -48,7 +48,7 @@ class User_Installer extends Xoops_Installer_Abstract
             $modelCategory->insert($category);
         }
 
-        if (!User_Gateway::read(1)) {
+        if (!App_User_Gateway::read(1)) {
             $defaultUser = array(
                 "id"            => 1,
                 "identity"      => "sysop",
@@ -58,7 +58,7 @@ class User_Installer extends Xoops_Installer_Abstract
                 "active"        => 1,
                 "create_time"   => time(),
             );
-            User_Gateway::create($defaultUser);
+            App_User_Gateway::create($defaultUser);
         }
     }
 }

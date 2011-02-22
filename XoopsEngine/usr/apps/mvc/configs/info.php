@@ -41,9 +41,9 @@ return array(
     //'onUpdate'      => "App_Mvc_Module",
     //'onUninstall'   => "App_Mvc_Module",
 
-    'onInstall'     => "Mvc_Module",
-    'onUpdate'      => "Mvc_Module",
-    'onUninstall'   => "Mvc_Module",
+    'onInstall'     => "Module",
+    'onUpdate'      => "Module",
+    'onUninstall'   => "Module",
 
     'extensions'    => array(
         'database'  => array(

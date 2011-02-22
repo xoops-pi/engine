@@ -66,7 +66,7 @@ class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
 
         $keySeed = empty($options) ? md5($block['id']) : md5($block['id'] . serialize($options));
         $cache_key = Xoops_Zend_Cache::generateId('blk_' . $keySeed, $block["cache_level"]);
-        $template->setCompileId($this->view->getHelper('layout')->getLayout()->theme, $block['module']);
+        $template->setCompileId($this->view->getTheme(), $block['module']);
         if ($block["cache_expire"] <= 0) {
             $template->caching = 0;
         } else {

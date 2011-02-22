@@ -19,8 +19,8 @@
  */
 
 
-//class App_Mvc_Configtest extends Xoops_Installer_Module_Abstract
-class Mvc_Configtest extends Xoops_Installer_Module_Abstract
+class App_Mvc_Configtest extends Xoops_Installer_Module_Abstract
+//class Mvc_Configtest extends Xoops_Installer_Module_Abstract
 {
     public function install(&$message)
     {

@@ -36,9 +36,9 @@ class Xoops_Installer
     {
     }
 
-    protected function getInstaller($type = "app")
+    protected function getInstaller($type = "App")
     {
-        $type = ucfirst($type ?: "app");
+        $type = ucfirst($type ?: "App");
         $class = ($type == 'Legacy') ? 'Legacy_Installer' : 'Xoops_Installer_' . $type;
         $installer = new $class($this);
         return $installer;
@@ -82,14 +82,8 @@ class Xoops_Installer
 
     private function process($action, $name)
     {
-        $msgs = array();
         $type = XOOPS::service("module")->getType($name);
-        $handler = $this->getInstaller($type == "legacy" ? "legacy" : "app");
-        if (!is_callable(array($handler, $action))) {
-            $msgs[] = "Installer '{$class}::{$action}' is not callable.";
-            return $msgs;
-        }
-
+        $handler = $this->getInstaller(($type == "legacy") ? "legacy" : "app");
         $result = $handler->$action($name);
 
         XOOPS::persist()->clean();
@@ -121,8 +115,9 @@ class Xoops_Installer
     public function loadExtension($extension, $module, $options = null, $oldVersion = null)
     {
         $dirname = is_string($module) ? $module : $module->dirname;
+        $classPrefix = ('app' == Xoops::service('module')->getType($dirname) ? 'app' : 'module') . '_' . $dirname;
         //$class = "app_" . $dirname . "_installer_" . $extension;
-        $class = $dirname . "_installer_" . $extension;
+        $class = $classPrefix . "_installer_" . $extension;
         if (!class_exists($class)) {
             $class = "Xoops_Installer_Module_" . ucfirst($extension);
             if (!class_exists($class)) {

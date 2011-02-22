@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Avatar
-class User_Avatar
+class App_User_Avatar
+//class User_Avatar
 {
     /**
      * Get avatar file from user ID

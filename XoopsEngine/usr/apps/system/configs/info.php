@@ -37,9 +37,9 @@ return array(
     //'onUpdate'      => "App_System_Installer",
     //'onUninstall'   => "App_System_Installer",
 
-    'onInstall'     => "System_Installer",
-    'onUpdate'      => "System_Installer",
-    'onUninstall'   => "System_Installer",
+    'onInstall'     => "Installer",
+    'onUpdate'      => "Installer",
+    'onUninstall'   => "Installer",
 
     'extensions'    => array(
         'database'  => array(

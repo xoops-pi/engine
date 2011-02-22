@@ -64,7 +64,8 @@ class Event extends \Kernel\Registry
         $observerList = $modelObserver->fetchAll($select);
         foreach ($observerList as $row) {
             $module = \XOOPS::service("module")->getDirectory($row->module);
-            $callback = array($module . '_' . $row->class, $row->method);
+            $prefix = "app" == \XOOPS::service("module")->getType($row->module) ? "app" : "module";
+            $callback = array($prefix . '_' . $module . '_' . $row->class, $row->method);
             //$observers[$row->module] = array($module, $row->class, $row->method);
             $observers[$row->module] = $callback;
         }

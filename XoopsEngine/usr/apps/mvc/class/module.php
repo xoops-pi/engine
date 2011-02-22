@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_Mvc_Module extends Xoops_Installer_Abstract
-class Mvc_Module extends Xoops_Installer_Abstract
+class App_Mvc_Module extends Xoops_Installer_Abstract
+//class Mvc_Module extends Xoops_Installer_Abstract
 {
     public function preInstall(&$message)
     {

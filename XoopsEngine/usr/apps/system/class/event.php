@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_System_Event
-class System_Event
+class App_System_Event
+//class System_Event
 {
     public static function moduleinstall($data, $module)
     {

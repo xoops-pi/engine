@@ -18,7 +18,7 @@
  * @version         $Id$
  */
 
-namespace User\Registry;
+namespace App\User\Registry;
 
 //class App_User_Registry_Meta extends \Kernel\Registry
 class Meta extends \Kernel\Registry

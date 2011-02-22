@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_Mvc_Event
-class Mvc_Event
+class App_Mvc_Event
+//class Mvc_Event
 {
     public static function message($data, $module)
     {

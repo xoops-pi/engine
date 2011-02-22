@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_Mvc_Search
-class Mvc_Search
+class App_Mvc_Search
+//class Mvc_Search
 {
     protected static $module = "mvc";
 

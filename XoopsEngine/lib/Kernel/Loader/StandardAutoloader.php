@@ -129,6 +129,7 @@ class StandardAutoloader implements SplAutoloader
             if ($this->loadClass($class, self::LOAD_NS)) {
                 return $class;
             }
+            /*
             if (\Xoops::bound()) {
                 //\Debug::e($class);
                 // Loads module class
@@ -136,6 +137,7 @@ class StandardAutoloader implements SplAutoloader
                     return $class;
                 }
             }
+            */
             if ($this->isFallbackAutoloader()) {
                 // Loads standard class by mapping to directories
                 return $this->loadClass($class, self::ACT_AS_FALLBACK);
@@ -160,11 +162,13 @@ class StandardAutoloader implements SplAutoloader
             if ($this->loadClass($class, self::LOAD_PREFIX)) {
                 return $class;
             }
+            /*
             if (\Xoops::bound()) {
                 if ($this->loadClassModule($class, self::PREFIX_SEPARATOR)) {
                     return $class;
                 }
             }
+            */
             if ($this->isFallbackAutoloader()) {
                 return $this->loadClass($class, self::ACT_AS_FALLBACK);
             }

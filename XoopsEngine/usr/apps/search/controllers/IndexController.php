@@ -120,7 +120,6 @@ class Search_IndexController extends Xoops_Zend_Controller_Action
                 // App search class
                 if (!empty($search["callback"])) {
                     list($searchClass, $searchMethod) = $search["callback"];
-                    //$searchClass = $search['module'] . "_" . $searchClass;
                     $searchClass::setModule($dirname);
                     $result = $searchClass::$searchMethod($queries, $type, $limit, $offset, $uid);
                 // Legacy search function
@@ -204,15 +203,15 @@ class Search_IndexController extends Xoops_Zend_Controller_Action
         if (empty($this->users)) {
             return array();
         }
-        $userModel = XOOPS::getModel("users");
-        $select = $userModel->select()->from($userModel, array("uid", "name", "uname"))->where("uid IN (?)", array_keys($this->users));
+        $userModel = XOOPS::getModel("user");
+        $select = $userModel->select()->from($userModel, array("id", "name", "identity"))->where("id IN (?)", array_keys($this->users));
         $users = $userModel->getAdapter()->fetchAssoc($select);
         foreach ($users as $uid => &$user) {
             if (empty($user["name"])) {
-                $user["name"] = $user["uname"];
+                $user["name"] = $user["identity"];
             }
             $user["url"] = $this->getFrontController()->getRouter()->assemble(
-                array("user" => $user["uname"]), "profile"
+                array("user" => $user["identity"]), "profile"
             );
         }
 
@@ -221,7 +220,8 @@ class Search_IndexController extends Xoops_Zend_Controller_Action
 
     protected function getForm($params)
     {
-        include_once Xoops::path('www') . "/class/xoopsformloader.php";
+        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
+        Xoops_Legacy::autoload();
 
         // Form properties
         $formTitle = XOOPS::_("Search form");

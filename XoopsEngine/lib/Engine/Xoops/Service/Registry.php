@@ -27,7 +27,8 @@ class Registry extends \Kernel\Service\Registry
             $class = "Engine\\Xoops\\Registry\\" . ucfirst($name);
         } else {
             //$class = "\\module\\" . $module . "\\registry\\" . $name;
-            $class = $module . "\\registry\\" . $name;
+            $ns = 'app' == \Xoops::service('module')->getType($module) ? 'app' : 'module';
+            $class = $ns . "\\" . $module . "\\registry\\" . $name;
         }
         if (!class_exists($class)) {
             trigger_error("Registry class \"{$class}\" was not loaded.", E_USER_ERROR);

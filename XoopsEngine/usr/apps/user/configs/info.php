@@ -30,7 +30,7 @@ return array(
     'logo'          => "resources/images/logo.png",
     'readme'        => "docs/readme.txt",
 
-    'onInstall'     => "User_Installer",
+    'onInstall'     => "Installer",
     'extensions'    => array(
         'database'  => array(
             'sqlfile'   => array(

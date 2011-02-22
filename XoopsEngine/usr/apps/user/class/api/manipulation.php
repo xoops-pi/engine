@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_User_Api_Manipulation
-class User_Api_Manipulation
+class App_User_Api_Manipulation
+//class User_Api_Manipulation
 {
     /**
      * Create a user and populate corresponding profile/data
@@ -30,7 +30,7 @@ class User_Api_Manipulation
      */
     public function create($data, &$message = null)
     {
-        return User_Gateway::create($data, $message);
+        return App_User_Gateway::create($data, $message);
     }
 
     /**
@@ -42,7 +42,7 @@ class User_Api_Manipulation
      */
     public function update($data, &$message = null)
     {
-        return User_Gateway::update($data, $message);
+        return App_User_Gateway::update($data, $message);
     }
 
     /**
@@ -54,7 +54,7 @@ class User_Api_Manipulation
      */
     public function delete($id, &$message = null)
     {
-        return User_Gateway::delete($id, $message);
+        return App_User_Gateway::delete($id, $message);
     }
 
     /**
@@ -68,6 +68,6 @@ class User_Api_Manipulation
      */
     public function save($data, &$message = null)
     {
-        return User_Gateway::save($data, $message);
+        return App_User_Gateway::save($data, $message);
     }
 }

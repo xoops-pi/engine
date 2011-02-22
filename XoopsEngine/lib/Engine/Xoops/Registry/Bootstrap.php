@@ -29,7 +29,7 @@ class Bootstrap extends \Kernel\Registry
         $bootstraps = array();
         foreach ($modules as $dirname => $module) {
             if (empty($module['active'])) continue;
-            $class = $module['directory'] . "_bootstrap";
+            $class = ("app" == $module['type'] ? "app" : "module" ) . '_' . $module['directory'] . "_bootstrap";
             if (class_exists($class)) {
                 $bootstraps[] = $class;
             }

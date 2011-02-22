@@ -18,8 +18,8 @@
  * @version         $Id$
  */
 
-//class App_Search_Demo
-class Search_Demo
+class App_Search_Demo
+//class Search_Demo
 {
     protected static $module = "search";
 
