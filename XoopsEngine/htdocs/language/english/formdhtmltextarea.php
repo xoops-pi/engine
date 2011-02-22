@@ -3,7 +3,7 @@
  * Language definitions for {@link XoopsFormDhtmlTextArea}
  *
  * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code 
+ * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -19,7 +19,7 @@
  */
 
 /**
- * Localized fonts 
+ * Localized fonts
  */
 $GLOBALS["formtextdhtml_fonts"] = array("Arial", "Courier", "Georgia", "Helvetica", "Impact", "Verdana", "Haettenschweiler");
 
@@ -72,4 +72,5 @@ define("_XOOPS_FORM_ALT_LENGTH", "Current content length: %s");
 define("_XOOPS_FORM_ALT_LENGTH_MAX", "Maximum length: ");
 
 define("_XOOPS_FORM_PREVIEW_CONTENT", "Click the <strong>" . _PREVIEW . "</strong> to see the content in action.");
-?>
+
+define("_XOOPS_FORM_ALTYOUTUBE", "Youtue");

@@ -29,6 +29,7 @@ class Xoops_Legacy
         if (!defined('XOOPS_ROOT_PATH')) {
             define('XOOPS_ROOT_PATH', Xoops::path('www'));
         }
+        Xoops::service('translate')->loadTranslation('global');
         Xoops::autoloader()->registerCallback(array(__CLASS__, 'loadClassPath'));
         return;
     }
@@ -101,6 +102,8 @@ class Xoops_Legacy
                 'xoopseditor'               => $classPath . '/xoopseditor/xoopseditor.php',
                 'xoopseditorhandler'        => $classPath . '/xoopseditor/xoopseditor.php',
                 'xoopssecurity'             => $classPath . '/xoopssecurity.php',
+
+                'mytextsanitizer'           => $classPath . '/module.textsanitizer.php',
             );
 
             $iterator = new DirectoryIterator($classPath . '/xoopsform');

@@ -183,7 +183,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
                     "   id='" . $this->getName() . "_preview_button'" .
                     "   type='button' " .
                     "   value='" . _PREVIEW . "' " .
-                    "   onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . intval($this->doHtml) .")\"" .
+                    "   onclick=\"form_instantPreview('" . Xoops::url('www') . "', '" . $this->getName() . "','" . Xoops::url('www') . "/images', " . intval($this->doHtml) .")\"" .
                     " />";
             $ret .= "<br />" .
                     "<div id='" . $this->getName() . "_hidden' style='display: block;'> " .
@@ -197,7 +197,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         // Load javascript
         if (empty($js_loaded)) {
             $javascript = ( ($this->js) ? '<script language="JavaScript" type="text/javascript">' . $this->js . '</script>' : '' ) .
-                            '<script language="JavaScript" type="text/javascript" src="' . XOOPS_URL . '/include/formdhtmltextarea.js"></script>';
+                            '<script language="JavaScript" type="text/javascript" src="' . Xoops::url('www') . '/include/formdhtmltextarea.js"></script>';
             $ret = $javascript . $ret;
             $js_loaded = true;
         }
@@ -209,11 +209,11 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
     {
         $textarea_id = $this->getName();
         $code = "<a name='moresmiley'></a>" .
-            "<img src='" . XOOPS_URL . "/images/url.gif' alt='" . _XOOPS_FORM_ALT_URL . "' title='" . _XOOPS_FORM_ALT_URL . "' onclick='xoopsCodeUrl(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
-            "<img src='" . XOOPS_URL . "/images/email.gif' alt='" . _XOOPS_FORM_ALT_EMAIL . "' title='" . _XOOPS_FORM_ALT_EMAIL . "' onclick='xoopsCodeEmail(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTEREMAIL, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
-            "<img src='" . XOOPS_URL . "/images/imgsrc.gif' alt='" . _XOOPS_FORM_ALT_IMG . "' title='" . _XOOPS_FORM_ALT_IMG . "' onclick='xoopsCodeImg(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERIMGURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_IMGPOSRORL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
-            "<img src='" . XOOPS_URL . "/images/image.gif' alt='" . _XOOPS_FORM_ALT_IMAGE . "' title='" . _XOOPS_FORM_ALT_IMAGE . "' onclick='openWithSelfMain(\"" . XOOPS_URL . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
-            "<img src='" . XOOPS_URL . "/images/smiley.gif' alt='" . _XOOPS_FORM_ALT_SMILEY . "' title='" . _XOOPS_FORM_ALT_SMILEY . "' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+            "<img src='" . Xoops::url('www') . "/images/url.gif' alt='" . _XOOPS_FORM_ALT_URL . "' title='" . _XOOPS_FORM_ALT_URL . "' onclick='xoopsCodeUrl(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
+            "<img src='" . Xoops::url('www') . "/images/email.gif' alt='" . _XOOPS_FORM_ALT_EMAIL . "' title='" . _XOOPS_FORM_ALT_EMAIL . "' onclick='xoopsCodeEmail(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTEREMAIL, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
+            "<img src='" . Xoops::url('www') . "/images/imgsrc.gif' alt='" . _XOOPS_FORM_ALT_IMG . "' title='" . _XOOPS_FORM_ALT_IMG . "' onclick='xoopsCodeImg(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERIMGURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_IMGPOSRORL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
+            "<img src='" . Xoops::url('www') . "/images/image.gif' alt='" . _XOOPS_FORM_ALT_IMAGE . "' title='" . _XOOPS_FORM_ALT_IMAGE . "' onclick='openWithSelfMain(\"" . Xoops::url('www') . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
+            "<img src='" . Xoops::url('www') . "/images/smiley.gif' alt='" . _XOOPS_FORM_ALT_SMILEY . "' title='" . _XOOPS_FORM_ALT_SMILEY . "' onclick='openWithSelfMain(\"" . Xoops::url('www') . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $myts =& MyTextSanitizer::getInstance();
 
         $extensions = array_filter($myts->config['extensions']);
@@ -227,8 +227,8 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
             }
         }
         $code .=
-            "<img src='" . XOOPS_URL . "/images/code.gif' alt='" . _XOOPS_FORM_ALT_CODE . "' title='" . _XOOPS_FORM_ALT_CODE . "' onclick='xoopsCodeCode(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERCODE, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
-            "<img src='" . XOOPS_URL . "/images/quote.gif' alt='" . _XOOPS_FORM_ALT_QUOTE . "' title='" . _XOOPS_FORM_ALT_QUOTE . "' onclick='xoopsCodeQuote(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERQUOTE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"'/>";
+            "<img src='" . Xoops::url('www') . "/images/code.gif' alt='" . _XOOPS_FORM_ALT_CODE . "' title='" . _XOOPS_FORM_ALT_CODE . "' onclick='xoopsCodeCode(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERCODE, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" .
+            "<img src='" . Xoops::url('www') . "/images/quote.gif' alt='" . _XOOPS_FORM_ALT_QUOTE . "' title='" . _XOOPS_FORM_ALT_QUOTE . "' onclick='xoopsCodeQuote(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERQUOTE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"'/>";
         return $code;
     }
 
@@ -270,14 +270,14 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
 
         $fontStr .= "document.write(_editor_dialog); </script>";
 
-        $styleStr = "<img src='" . XOOPS_URL . "/images/bold.gif' alt='" . _XOOPS_FORM_ALT_BOLD . "' title='" . _XOOPS_FORM_ALT_BOLD . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeBold(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
-        $styleStr .= "<img src='" . XOOPS_URL . "/images/italic.gif' alt='" . _XOOPS_FORM_ALT_ITALIC . "' title='" . _XOOPS_FORM_ALT_ITALIC . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeItalic(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
-        $styleStr .= "<img src='" . XOOPS_URL . "/images/underline.gif' alt='" . _XOOPS_FORM_ALT_UNDERLINE . "' title='" . _XOOPS_FORM_ALT_UNDERLINE . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeUnderline(\"{$hiddentext}\", \"{$textarea_id}\");'/>&nbsp;";
-        $styleStr .= "<img src='" . XOOPS_URL . "/images/linethrough.gif' alt='" . _XOOPS_FORM_ALT_LINETHROUGH . "' title='" . _XOOPS_FORM_ALT_LINETHROUGH . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeLineThrough(\"{$hiddentext}\", \"{$textarea_id}\");' /></a>&nbsp;";
+        $styleStr = "<img src='" . Xoops::url('www') . "/images/bold.gif' alt='" . _XOOPS_FORM_ALT_BOLD . "' title='" . _XOOPS_FORM_ALT_BOLD . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeBold(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
+        $styleStr .= "<img src='" . Xoops::url('www') . "/images/italic.gif' alt='" . _XOOPS_FORM_ALT_ITALIC . "' title='" . _XOOPS_FORM_ALT_ITALIC . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeItalic(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
+        $styleStr .= "<img src='" . Xoops::url('www') . "/images/underline.gif' alt='" . _XOOPS_FORM_ALT_UNDERLINE . "' title='" . _XOOPS_FORM_ALT_UNDERLINE . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeUnderline(\"{$hiddentext}\", \"{$textarea_id}\");'/>&nbsp;";
+        $styleStr .= "<img src='" . Xoops::url('www') . "/images/linethrough.gif' alt='" . _XOOPS_FORM_ALT_LINETHROUGH . "' title='" . _XOOPS_FORM_ALT_LINETHROUGH . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeLineThrough(\"{$hiddentext}\", \"{$textarea_id}\");' /></a>&nbsp;";
 
-        $alignStr = "<img src='" . XOOPS_URL . "/images/alignleft.gif' alt='" . _XOOPS_FORM_ALT_LEFT . "' title='" . _XOOPS_FORM_ALT_LEFT . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeLeft(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
-        $alignStr .= "<img src='" . XOOPS_URL . "/images/aligncenter.gif' alt='" . _XOOPS_FORM_ALT_CENTER . "' title='" . _XOOPS_FORM_ALT_CENTER . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeCenter(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
-        $alignStr .= "<img src='" . XOOPS_URL . "/images/alignright.gif' alt='" . _XOOPS_FORM_ALT_RIGHT . "' title='" . _XOOPS_FORM_ALT_RIGHT . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeRight(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
+        $alignStr = "<img src='" . Xoops::url('www') . "/images/alignleft.gif' alt='" . _XOOPS_FORM_ALT_LEFT . "' title='" . _XOOPS_FORM_ALT_LEFT . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeLeft(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
+        $alignStr .= "<img src='" . Xoops::url('www') . "/images/aligncenter.gif' alt='" . _XOOPS_FORM_ALT_CENTER . "' title='" . _XOOPS_FORM_ALT_CENTER . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeCenter(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
+        $alignStr .= "<img src='" . Xoops::url('www') . "/images/alignright.gif' alt='" . _XOOPS_FORM_ALT_RIGHT . "' title='" . _XOOPS_FORM_ALT_RIGHT . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeRight(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
 
         //$fontStr = $fontStr . "<br />\n{$styleStr}&nbsp;&nbsp;<span id='{$hiddentext}'>" . _EXAMPLE . "</span>\n";
         $fontStr = $fontStr . "<br />\n{$styleStr}&nbsp;{$alignStr}&nbsp;\n";

@@ -64,7 +64,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             return;
         }
 
-        xoops_loadLanguage("findusers");
+        //xoops_loadLanguage("findusers");
+        Xoops::service('translate')->loadTranslation("findusers");
 
         $js_addusers =
             "<script type=\"text/javascript\">
