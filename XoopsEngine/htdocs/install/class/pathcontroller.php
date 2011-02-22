@@ -213,6 +213,12 @@ class PathController
         return $ret;
     }
 
+    private function validate_url_theme($url)
+    {
+        $url .= "/blank.gif";
+        return $this->validateImageUrl($url);
+    }
+
     private function validate_url_upload($url)
     {
         $url .= "/blank.gif";
