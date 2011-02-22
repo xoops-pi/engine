@@ -26,7 +26,7 @@ class User_ProfileController extends Xoops_Zend_Controller_Action
     public function  preDispatch()
     {
         if (!XOOPS::registry("user")->id) {
-            $this->_helper->redirector('index', 'login');
+            $this->_helper->redirector('index', 'login');//, null, array('route' => 'default'));
         }
     }
 

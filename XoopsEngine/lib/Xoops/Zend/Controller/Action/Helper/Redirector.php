@@ -89,8 +89,13 @@ class Xoops_Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Act
         $params['controller'] = $controller;
         $params['action']     = $action;
 
+        $routeName = 'default';
+        if (isset($params['route'])) {
+            $routeName = $params['route'];
+            unset($params['route']);
+        }
         $router = $this->getFrontController()->getRouter();
-        $url    = $router->assemble($params, null, true);
+        $url    = $router->assemble($params, $routeName, true);
 
         $this->_redirect($url);
     }
