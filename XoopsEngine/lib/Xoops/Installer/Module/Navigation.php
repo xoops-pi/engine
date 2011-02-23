@@ -51,7 +51,10 @@
  *              ),
  *              "p3" => array(
  *                  "label"         => "A Static Page",
- *                  "uri"           => "modules/article/read.php?id=5",
+ *                  // URI relative to webroot
+ *                  "uri"           => "/modules/article/read.php?id=5",
+ *                  // Or URI relative to current module root
+ *                  //"uri"         => "read.php?id=5"
  *                  "resource"      => "section=module&module=mvc&resource=test&item=3&privilege=read",
  *              ),
  *              ...
@@ -306,6 +309,10 @@ class Xoops_Installer_Module_Navigation extends Xoops_Installer_Abstract
         }
         if (isset($page["visible"])) {
             $page["visible"] = intval($page["visible"]);
+        }
+        // Transform a module relative URI to webroot
+        if (!empty($page["uri"]) && "/" != $page["uri"]{0}) {
+            $page["uri"] = "/modules/" . $module . "/" . $page["uri"];
         }
         $data = array();
         if (!is_array($page)) {

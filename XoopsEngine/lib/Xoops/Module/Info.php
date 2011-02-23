@@ -219,7 +219,7 @@ class Xoops_Module_Info
             $adminmenu = array();
             include XOOPS::path("www") . "/modules/{$module}/{$config['adminmenu']}";
             foreach ($adminmenu as $key => $page) {
-                /**/
+                /*
                 $link = substr($page['link'], 6);
                 if (false !== ($pos = strpos($link, "?"))) {
                     $controller = rtrim(substr($link, 0, $pos), ".php");
@@ -235,16 +235,13 @@ class Xoops_Module_Info
                     "action"        => "admin",
                     "params"        => $params,
                 );
+                */
                 /**/
-                /*
                 $config['extensions']['navigation']['admin'][md5($page['link'])] = array(
                     "label"         => $page['title'],
-                    "route"         => "admin",
-                    "controller"    => "legacy",
-                    "action"        => "index",
-                    "params"        => array("link" => urlencode($page['link'])),
+                    "uri"           => $page['link'],
                 );
-                */
+                /**/
             }
             unset($config['adminmenu']);
         }
@@ -252,6 +249,7 @@ class Xoops_Module_Info
         if (!empty($config['sub'])) {
             $config['extensions']['navigation']['front'] = array();
             foreach ($config['sub'] as $key => $page) {
+                /*
                 if (false !== ($pos = strpos($page['url'], "?"))) {
                     $controller = rtrim(substr($page['url'], 0, $pos), ".php");
                     $params = parse_str(substr($page['url'], $pos + 1));
@@ -260,10 +258,15 @@ class Xoops_Module_Info
                     $params = array();
                 }
                 $config['extensions']['navigation']['front'][md5($page['url'])] = array(
-                    'label' => $page['name'],
+                    'label'         => $page['name'],
                     "route"         => "legacy",
                     "controller"    => $controller,
                     "params"        => $params,
+                );
+                */
+                $config['extensions']['navigation']['front'][md5($page['url'])] = array(
+                    'label'         => $page['name'],
+                    "uri"           => $page['url'],
                 );
             }
             unset($config['sub']);
