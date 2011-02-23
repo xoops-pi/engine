@@ -421,6 +421,7 @@ CREATE TABLE `table` (
   `id`              int(10)         unsigned    NOT NULL    auto_increment,
   `name`            varchar(64)     NOT NULL,
   `module`          varchar(64)     NOT NULL,
+  `type`            enum('table', 'view')   NOT NULL default 'table',
 
   PRIMARY KEY  (`id`)
 # UNIQUE KEY `name` (`name`)

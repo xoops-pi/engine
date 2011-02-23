@@ -218,7 +218,6 @@ class Xoops_Zend_Db_File_Mysql
         self::split($pieces, $sql_query);
 
         $prefix = $db->prefix() . (empty(static::$prefix) ? "" : "_" . static::$prefix);
-        //$logs = array();
         foreach ($pieces as $piece) {
             $piece = trim($piece);
             // [0] contains the prefixed query
@@ -229,7 +228,8 @@ class Xoops_Zend_Db_File_Mysql
                 $logs[] = "Invalid query: " . $piece;
                 continue;
             }
-            if (preg_match("/^CREATE[\s]+(TABLE|VIEW)$/siU", $prefixed_query[1])) {
+            $matches = array();
+            if (preg_match("/^CREATE[\s]+(TABLE|VIEW)$/siU", $prefixed_query[1], $matches)) {
                 $action = "create";
                 $result = $db->query($prefixed_query[0]);
             } elseif (preg_match("/^INSERT[\s]+INTO$/siU", $prefixed_query[1])) {
@@ -248,12 +248,15 @@ class Xoops_Zend_Db_File_Mysql
             $tableName = (empty(static::$prefix) ? "" : static::$prefix . "_") . $prefixed_query[4];
             if (empty($errorInfo[1])) {
                 $logs[] = "Success: " . $action . " TABLE " . $tableName . " - " . $piece;
-                static::$logs[$action][] = $tableName;
+                if (!empty($matches)) {
+                    static::$logs[$action][$tableName] = strtolower($matches[1]);
+                } else {
+                    static::$logs[$action][] = $tableName;
+                }
             } else {
                 $status = false;
                 $logs[] = "failed: " . $action . " TABLE " . $tableName . " - " . $errorInfo[2];
             }
-            //$logs[$action][$prefixed_query[4]][$status][] = $message;
         }
         return $status;
     }

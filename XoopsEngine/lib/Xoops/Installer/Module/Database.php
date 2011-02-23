@@ -54,8 +54,8 @@ class Xoops_Installer_Module_Database extends Xoops_Installer_Abstract
         $status = Xoops_Zend_Db_File_Mysql::queryFile($sql_file_path, $message);
         if (!$status) {
             $createdTables = Xoops_Zend_Db_File_Mysql::getLogs("create");
-            foreach ($createdTables as $ct) {
-                XOOPS::registry("db")->query("DROP TABLE IF EXISTS " . XOOPS::registry("db")->prefix($ct));
+            foreach ($createdTables as $ct => $type) {
+                XOOPS::registry("db")->query("DROP " . $type . " IF EXISTS " . XOOPS::registry("db")->prefix($ct));
             }
             Xoops_Zend_Db_File_Mysql::reset();
             return false;
@@ -65,8 +65,8 @@ class Xoops_Installer_Module_Database extends Xoops_Installer_Abstract
         $createdTables = Xoops_Zend_Db_File_Mysql::getLogs("create");
         if (!empty($createdTables)) {
             $model = XOOPS::getModel("table");
-            foreach ($createdTables as $table) {
-                $model->insert(array("name" => $table, "module" => $module));
+            foreach ($createdTables as $table => $type) {
+                $model->insert(array("name" => $table, "module" => $module, "type" => $type));
             }
         }
 
@@ -88,18 +88,20 @@ class Xoops_Installer_Module_Database extends Xoops_Installer_Abstract
         $options = $this->config;
 
         $modelTable = XOOPS::getModel("table");
-        $select = $modelTable->select()->where("module = ?", $module)->from($modelTable, "name");
-        $createdTables = (array) $modelTable->getAdapter()->fetchCol($select);
+        $select = $modelTable->select()->where("module = ?", $module)->from($modelTable, array("name", "type"));
+        $createdTables = $modelTable->getAdapter()->fetchPairs($select);
         if (!empty($options['tables']) && is_array($options['tables'])) {
-            $createdTables = array_unique(array_merge($createdTables, $options['tables']));
+            $recordedTables = array_diff($options['tables'], array_keys($createdTables));
+            foreach ($recordedTables as $table) {
+                $createdTables[$table] = 'table';
+            }
         }
         $droppedTables = array();
-        foreach ($createdTables as $table) {
-            $result = XOOPS::registry("db")->query("DROP TABLE IF EXISTS " . XOOPS::registry("db")->prefix($table));
+        foreach ($createdTables as $table => $type) {
+            $result = XOOPS::registry("db")->query("DROP " . $type . " IF EXISTS " . XOOPS::registry("db")->prefix($table));
             $errorInfo = $result->errorInfo();
             if (empty($errorInfo[1])) {
                 $droppedTables[] = $table;
-                //$modelTable->delete(array("name = ?" => $table, "module = ?" => $module));
                 $message[] = "Table " . $table . " dropped";
             } else {
                 $message[] = "Table " . $table . " not dropped: " . $errorInfo[2];
