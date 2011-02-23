@@ -116,6 +116,10 @@ class StandardAutoloader implements SplAutoloader
                 if ($prefix === static::PREFIX_APP) {
                     return $this->loadClassApp($class, self::NS_SEPARATOR);
                 }
+                // Loads module class
+                if ($prefix === static::PREFIX_MODULE) {
+                    return $this->loadClassModule($class, self::NS_SEPARATOR);
+                }
                 // Loads plugin class
                 if ($prefix === static::PREFIX_PLUGIN) {
                     return $this->loadClassPlugin($class, self::NS_SEPARATOR);
@@ -151,6 +155,10 @@ class StandardAutoloader implements SplAutoloader
             if (\Xoops::bound()) {
                 if ($prefix === static::PREFIX_APP) {
                     return $this->loadClassApp($class, self::PREFIX_SEPARATOR);
+                }
+                // Loads module class
+                if ($prefix === static::PREFIX_MODULE) {
+                    return $this->loadClassModule($class, self::PREFIX_SEPARATOR);
                 }
                 if ($prefix === static::PREFIX_PLUGIN) {
                     return $this->loadClassPlugin($class, self::PREFIX_SEPARATOR);
@@ -469,12 +477,11 @@ class StandardAutoloader implements SplAutoloader
     protected function loadClassModule($class, $separator)
     {
         $class = strtolower($class);
-        if (false === ($pos = strpos($class, $separator))) {
-            return false;
-        }
-        $module = substr($class, 0, $pos);
+        $segs = explode($separator, $class, 3);
+        $module = $segs[1];
         if ($path = $this->loadModulePath($module)) {
-            $trimmedClass = strtolower(substr($class, $pos + strlen($separator)));
+            //$trimmedClass = strtolower(substr($class, $pos + strlen($separator)));
+            $trimmedClass = $segs[2];
             // create filename
             $filename = $this->transformClassNameToFilename($trimmedClass, $path);
             if (file_exists($filename)) {
@@ -493,22 +500,6 @@ class StandardAutoloader implements SplAutoloader
             $path .= '/class/';
         }
         return $path;
-
-        //$module = strtolower($module);
-        $persistKey = "autoloader.prefixes.app." . \XOOPS::config("identifier");
-        if (!$paths = \XOOPS::persist()->load($persistKey)) {
-            $list = \XOOPS::service('module')->getMeta();
-            $paths = array();
-            foreach ($list as $key => $app) {
-                $paths[$key] = \XOOPS::service('module')->getPath($key) . '/class/';
-            }
-            \XOOPS::persist()->save($paths, $persistKey);
-        }
-        if (empty($module)) {
-            return $paths;
-        } else {
-            return isset($paths[$module]) ? $paths[$module] : false;
-        }
     }
 
     protected function registerModulePath($module, $path)
