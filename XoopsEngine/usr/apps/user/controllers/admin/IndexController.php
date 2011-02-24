@@ -106,7 +106,7 @@ class User_IndexController extends Xoops_Zend_Controller_Action
                 "create_time"   => time(),
                 "create_ip"     => $this->getRequest()->getClientIp(),
             );
-            $id = User_Gateway::create($data);
+            $id = App_User_Gateway::create($data);
             $roleModel->insert(array("user" => $id, "role" => Xoops_Acl::MEMBER));
         }
 
@@ -142,10 +142,10 @@ class User_IndexController extends Xoops_Zend_Controller_Action
 
         $values = $form->getValues();
         if (!empty($id)) {
-            $status = User_Gateway::update($values, $message);
+            $status = App_User_Gateway::update($values, $message);
         } else {
             unset($values["id"]);
-            $status = User_Gateway::create($values, $message);
+            $status = App_User_Gateway::create($values, $message);
         }
         if (!$status) {
             $message[] = XOOPS::_("Profile was not able to save.");
@@ -182,7 +182,7 @@ class User_IndexController extends Xoops_Zend_Controller_Action
             return;
         }
 
-        $status = User_Gateway::delete($id, $message);
+        $status = App_User_Gateway::delete($id, $message);
         if (!$status) {
             $message = XOOPS::_("User deletion is not performed completely.") . '<br />' . implode("<br />", $message);
         } else {
