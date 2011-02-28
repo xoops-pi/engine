@@ -3,10 +3,10 @@
 <{foreach item=category from=$categories}>
     <li>
         <div style="padding: 5px 0;">
-            <{_ text="{$category.name}"}>
-            <a href="<{adminUrl module=system controller=preference action=system category=`$category.key`}>" title="<{_ text=Manage}>"><{_ text=Manage}></a>
+            <{_ text="<{$category.name}>"}>
+            <a href="<{adminUrl module=system controller=preference action=system category=<{$category.key}>}>" title="<{_ text=Manage}>"><{_ text=Manage}></a>
             <{if !empty($category.description)}>
-                <br /><{_ text="{$category.description}"}>
+                <br /><{_ text="<{$category.description}>"}>
             <{/if}>
         </div>
     </li>
