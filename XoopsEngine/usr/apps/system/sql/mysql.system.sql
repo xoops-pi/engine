@@ -209,7 +209,7 @@ CREATE TABLE `audit` (
   `extra`           varchar(255)    NOT NULL    default '',
   `time`            int(10)         unsigned NOT NULL   default '0',
   PRIMARY KEY  (`id`)
-) engine = ARCHIVE;
+);
 
 
 CREATE TABLE `event` (
