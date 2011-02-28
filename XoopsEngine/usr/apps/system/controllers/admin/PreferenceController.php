@@ -106,8 +106,12 @@ class System_PreferenceController extends Xoops_Zend_Controller_Action_Admin
 
         XOOPS::service("translate")->loadTranslation("comment", "");
         XOOPS::service("translate")->loadTranslation("notification", "");
-        XOOPS::service("translate")->loadTranslation("admin", $module);
-        //XOOPS::service("translate")->loadTranslation("modinfo", $module);
+        if (Xoops::service('module')->getType($module) == 'legacy') {
+            XOOPS::service("translate")->loadTranslation("global");
+            XOOPS::service("translate")->loadTranslation("modinfo", $module);
+        } else {
+            XOOPS::service("translate")->loadTranslation("admin", $module);
+        }
         //XOOPS::service("translate")->loadTranslation("info", $module);
         $title = sprintf(XOOPS::_("Configurations of Module %s"), $modules[$module]["name"]);
 
