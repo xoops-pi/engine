@@ -96,6 +96,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         $this->redirect($urlOptions, $options);
     }
 
+    /*
     public function imageAction()
     {
         $captcha = $this->createCaptcha()->getCaptcha();
@@ -109,6 +110,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         }
         return;
     }
+    */
 
     protected function createCaptcha($form = null)
     {
@@ -117,23 +119,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         $options = array(
             "label"     => "Please type following characters",
             "captcha"   => array(
-                //"captcha"   => "Dumb",
-
-                //"captcha"   => "Figlet",
-                //"wordLen"   => 6,
-                //"timeout"   => 300,
-
                 "captcha"           => "Image",
-                /*
-                "wordLen"           => 6,
-                "timeout"           => 300,
-                'font'              => XOOPS::path('img/captcha/fonts/Vera.ttf'),
-                'imgDir'            => XOOPS::path('img/captcha/data'),
-                'imgUrl'            => XOOPS::url('img/captcha/data'),
-                'width'             => 150,
-                'dotNoiseLevel'     => 10,
-                'lineNoiseLevel'    => 5,
-                */
             ),
             "description"   => "Click the above image to refresh",
         );
@@ -143,6 +129,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         }
         $captcha = $form->createElement("Captcha", $captchaName, $options);
 
+	    /*
         $callback = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -157,6 +144,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         );
         // For Image CAPTCHA
         $this->template->assign("captcha", $captchaData);
+	    */
 
         return $captcha;
     }
@@ -317,7 +305,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         $form->addElement("Password", "credential_confirm", $options);
         $form->addDisplayGroup(array("credential", "credential_confirm"), "password", array("legend" => XOOPS::_("Password")));
 
-        if (!empty($configs["captcha"])) {
+        if (extension_loaded("gd") && !empty($configs["captcha"])) {
             $captcha = $this->createCaptcha($form);
             $form->addElement($captcha);
         }

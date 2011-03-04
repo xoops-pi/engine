@@ -250,7 +250,7 @@ class System_RootController extends Xoops_Zend_Controller_Action
         );
         $form->addElement("password", "credential", $options);
 
-        if (!empty($configs["captcha"])) {
+        if (extension_loaded("gd") && !empty($configs["captcha"])) {
             $captcha = $this->createCaptcha($form);
             $form->addElement($captcha);
         }
