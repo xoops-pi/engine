@@ -181,18 +181,15 @@ class User_LoginController extends Xoops_Zend_Controller_Action
     public function getForm()
     {
         $module = $this->getRequest()->getModuleName();
-        //$path = $this->view->resourcePath("form.css");
-        //$url = Xoops::url($path);
         $this->view->headLink(array(
-            //"href"  => Xoops::url($this->view->resourcePath("form.css")),
             "href"  => "form.css",
             "rel"   => "stylesheet",
             "type"  => "text/css"
         ));
-        $action = $this->view->url(array(
-                "action" => "process",
-                "controller" => "login",
-                "module" => $module
+        $action = $this->getFrontController()->getRouter()->assemble(array(
+                "action"        => "process",
+                "controller"    => "login",
+                "module"        => $module
             ),
             "default"
         );

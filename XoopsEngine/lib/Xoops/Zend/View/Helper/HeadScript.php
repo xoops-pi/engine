@@ -25,7 +25,7 @@
  *
  * <code>
  * XOOPS::registry('view')->headScript('file', 'filename', 'append', array(), 'text/javascript');
- * XOOPS::registry('view')->headScript('source', 'source content', 'append', array(), 'text/javascript');
+ * XOOPS::registry('view')->headScript('script', 'source content', 'append', array(), 'text/javascript');
  * </code>
  */
 

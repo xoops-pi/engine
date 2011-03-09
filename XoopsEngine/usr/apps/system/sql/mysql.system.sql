@@ -206,7 +206,7 @@ CREATE TABLE `audit` (
   `action`          varchar(64)     NOT NULL    default '',
   `method`          varchar(64)     NOT NULL    default '',
   `memo`            varchar(255)    NOT NULL    default '',
-  `extra`           varchar(255)    NOT NULL    default '',
+  `extra`           text,
   `time`            int(10)         unsigned NOT NULL   default '0',
   PRIMARY KEY  (`id`)
 );
