@@ -20,9 +20,9 @@
 
 namespace Xoops\Security;
 
-class Dos extends AbstractSecurity
+class Agent extends AbstractSecurity
 {
-    const MESSAGE = "Access denied by DoS check";
+    const MESSAGE = "Access denied by HTTP_USER_AGENT check";
 
     /**
      * Check security settings
@@ -42,9 +42,19 @@ class Dos extends AbstractSecurity
         } elseif (function_exists('apache_getenv')) {
             $agent = apache_getenv($key, true);
         }
-        if (empty($agent) || '=' == $agent) {
-            return false;
+
+        // No HTTP_USER_AGENT detected, return false upon DoS check, otherwise null.
+        if (empty($agent) || '-' == $agent) {
+            return empty($options['dos']) ? null : false;
         }
+
+        // Check bad bots
+        if (!empty($options['bot'])) {
+            $pattern = is_array($options['bot']) ? implode("|", $options['bot']) : $options['bot'];
+            $status = preg_match('/' . $pattern . '/i', $agent) ? false : null;
+            return $status;
+        }
+
         return null;
     }
 

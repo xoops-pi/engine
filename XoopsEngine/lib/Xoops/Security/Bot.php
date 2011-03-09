@@ -20,9 +20,9 @@
 
 namespace Xoops\Security;
 
-class Dos extends AbstractSecurity
+class Bot extends AbstractSecurity
 {
-    const MESSAGE = "Access denied by DoS check";
+    const MESSAGE = "Access denied by bot check";
 
     /**
      * Check security settings
@@ -43,9 +43,13 @@ class Dos extends AbstractSecurity
             $agent = apache_getenv($key, true);
         }
         if (empty($agent) || '=' == $agent) {
-            return false;
+            return null;
         }
-        return null;
+        // Check bad bots
+        $pattern = is_array($options) ? implode("|", $options) : $options;
+        $status = preg_match('/' . $pattern . '/i', $agent) ? false : null;
+
+        return $status;
     }
 
 }
