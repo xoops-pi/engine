@@ -33,10 +33,10 @@ $config["categories"] = array(
         array("key"     => 'meta',
             "name"      => '_SYSTEM_AM_METAFOOTER',
             "description"      => ''),
+        /*
         array("key"     => 'censor',
             "name"      => '_SYSTEM_AM_CENSOR',
             "description"      => ''),
-        /*
         array("key"     => 'search',
             "name"      => '_SYSTEM_AM_SEARCH',
             "description"      => ''),
@@ -49,6 +49,9 @@ $config["categories"] = array(
             "name"      => '_SYSTEM_AM_AUTHENTICATION',
             "description"      => ''),
             */
+        array("key"     => 'text',
+            "name"      => '_SYSTEM_AM_TEXT',
+            "description"      => ''),
         array("key"     => 'root',
             "name"      => '_SYSTEM_AM_ROOT',
             "description"      => ''));
@@ -96,9 +99,18 @@ $i++;
 $config['items'][$i]['name'] = 'locale';
 $config['items'][$i]['title'] = '_SYSTEM_AM_LOCALE';
 $config['items'][$i]['description'] = '_SYSTEM_AM_LOCALE_DESC';
-$config['items'][$i]['edit'] = 'locale';
-$config['items'][$i]['filter'] = 'array';
-$config['items'][$i]['default'] = Xoops::config('locale'); //empty($GLOBALS['setup_system_locale']) ? array('lang' => 'en', 'charset' => 'UTF-8') : $GLOBALS['setup_system_locale'];
+$config['items'][$i]['edit'] = 'none';
+$config['items'][$i]['filter'] = '';
+$config['items'][$i]['default'] = Xoops::config('locale'); //empty($GLOBALS['setup_system_locale']) ? 'en' : $GLOBALS['setup_system_locale'];
+$config['items'][$i]['category'] = 'general';
+
+$i++;
+$config['items'][$i]['name'] = 'charset';
+$config['items'][$i]['title'] = '_SYSTEM_AM_CHARSET';
+$config['items'][$i]['description'] = '_SYSTEM_AM_CHARSET_DESC';
+$config['items'][$i]['edit'] = 'none';
+$config['items'][$i]['filter'] = '';
+$config['items'][$i]['default'] = Xoops::config('charset'); //empty($GLOBALS['setup_system_charset']) ? 'UTF-8' : $GLOBALS['setup_system_charset'];
 $config['items'][$i]['category'] = 'general';
 
 /*
@@ -285,6 +297,7 @@ $config['items'][$i]['default'] = "1";
 $config['items'][$i]['category'] = 'general';
 */
 
+/*
 $i++;
 $config['items'][$i]['name'] = 'closesite';
 $config['items'][$i]['title'] = '_SYSTEM_AM_CLOSESITE';
@@ -303,7 +316,6 @@ $config['items'][$i]['filter'] = 'array';
 $config['items'][$i]['default'] = array('1');
 $config['items'][$i]['category'] = 'general';
 
-/*
 $i++;
 $config['items'][$i]['name'] = 'closesite_text';
 $config['items'][$i]['title'] = '_SYSTEM_AM_CLOSESITETXT';
@@ -313,15 +325,6 @@ $config['items'][$i]['filter'] = 'string';
 $config['items'][$i]['default'] = _SYSTEM_MI_SITECLOSEDMSG;
 $config['items'][$i]['category'] = 'general';
 */
-
-$i++;
-$config['items'][$i]['name'] = 'my_ip';
-$config['items'][$i]['title'] = '_SYSTEM_AM_MYIP';
-$config['items'][$i]['description'] = '_SYSTEM_AM_MYIPDSC';
-$config['items'][$i]['edit'] = 'text';
-$config['items'][$i]['filter'] = 'string';
-$config['items'][$i]['default'] = "127.0.0.1";
-$config['items'][$i]['category'] = 'general';
 
 $i++;
 $config['items'][$i]['name'] = 'use_ssl';
@@ -372,24 +375,6 @@ $config['items'][$i]['default'] = "0";
 $config['items'][$i]['category'] = 'general';
 $config['items'][$i]['options'] = array("_SYSTEM_AM_COMORDER_OLDESTFIRST"   => 0,
                                         "_SYSTEM_AM_COMORDER_NEWESTFIRST"   => 1);
-
-$i++;
-$config['items'][$i]['name'] = 'enable_badips';
-$config['items'][$i]['title'] = '_SYSTEM_AM_DOBADIPS';
-$config['items'][$i]['description'] = '_SYSTEM_AM_DOBADIPSDSC';
-$config['items'][$i]['edit'] = 'yesno';
-$config['items'][$i]['filter'] = 'number_int';
-$config['items'][$i]['default'] = "0";
-$config['items'][$i]['category'] = 'general';
-
-$i++;
-$config['items'][$i]['name'] = 'bad_ips';
-$config['items'][$i]['title'] = '_SYSTEM_AM_BADIPS';
-$config['items'][$i]['description'] = '_SYSTEM_AM_BADIPSDSC';
-$config['items'][$i]['edit'] = 'textarea';
-$config['items'][$i]['filter'] = 'array';
-$config['items'][$i]['default'] = array('127.0.0.1');
-$config['items'][$i]['category'] = 'general';
 
 /*
 $i++;
@@ -625,6 +610,7 @@ $config['items'][$i]['filter'] = 'string';
 $config['items'][$i]['default'] = "Powered by Xoops Engine &copy; 2001-" . date('Y', time()) . " <a href=\"http://www.xoopsengine.org/\" rel=\"external\">Xoops Engine</a>";
 $config['items'][$i]['category'] = 'meta';
 
+/*
 $i++;
 $config['items'][$i]['name'] = 'meta_rating';
 $config['items'][$i]['title'] = '_SYSTEM_AM_METARATING';
@@ -639,6 +625,7 @@ $config['items'][$i]['options'] = array(
     "_SYSTEM_AM_METAOREST"  => "restricted",
     "_SYSTEM_AM_METAOMAT"   => "mature"
 );
+*/
 
 $i++;
 $config['items'][$i]['name'] = 'meta_author';
@@ -682,33 +669,6 @@ $config['items'][$i]['options'] = array("_SYSTEM_AM_INDEXFOLLOW"        => "inde
                                         "_SYSTEM_AM_NOINDEXNOFOLLOW"    => "noindex,nofollow");
 */
 
-// Censor section
-$i++;
-$config['items'][$i]['name'] = 'censor_enable';
-$config['items'][$i]['title'] = '_SYSTEM_AM_DOCENSOR';
-$config['items'][$i]['description'] = '_SYSTEM_AM_DOCENSORDSC';
-$config['items'][$i]['edit'] = 'yesno';
-$config['items'][$i]['filter'] = 'number_int';
-$config['items'][$i]['default'] = 0;
-$config['items'][$i]['category'] = 'censor';
-
-$i++;
-$config['items'][$i]['name'] = 'censor_words';
-$config['items'][$i]['title'] = '_SYSTEM_AM_CENSORWRD';
-$config['items'][$i]['description'] = '_SYSTEM_AM_CENSORWRDDSC';
-$config['items'][$i]['edit'] = 'textarea';
-$config['items'][$i]['filter'] = 'array';
-$config['items'][$i]['default'] = array('fuck', 'shit');
-$config['items'][$i]['category'] = 'censor';
-
-$i++;
-$config['items'][$i]['name'] = 'censor_replace';
-$config['items'][$i]['title'] = '_SYSTEM_AM_CENSORRPLC';
-$config['items'][$i]['description'] = '_SYSTEM_AM_CENSORRPLCDSC';
-$config['items'][$i]['edit'] = 'text';
-$config['items'][$i]['filter'] = 'string';
-$config['items'][$i]['default'] = "#OOPS#";
-$config['items'][$i]['category'] = 'censor';
 
 /*
 // Search section
@@ -995,8 +955,78 @@ $config['items'][$i]['default'] = "0";
 $config['items'][$i]['category'] = 'auth';
 */
 
+/*
+// Security category
+$i++;
+$config['items'][$i]['name'] = 'my_ip';
+$config['items'][$i]['title'] = '_SYSTEM_AM_MYIP';
+$config['items'][$i]['description'] = '_SYSTEM_AM_MYIPDSC';
+$config['items'][$i]['edit'] = 'text';
+$config['items'][$i]['filter'] = 'string';
+$config['items'][$i]['default'] = "127.0.0.1";
+$config['items'][$i]['category'] = 'security';
+
+$i++;
+$config['items'][$i]['name'] = 'enable_badips';
+$config['items'][$i]['title'] = '_SYSTEM_AM_DOBADIPS';
+$config['items'][$i]['description'] = '_SYSTEM_AM_DOBADIPSDSC';
+$config['items'][$i]['edit'] = 'yesno';
+$config['items'][$i]['filter'] = 'number_int';
+$config['items'][$i]['default'] = "0";
+$config['items'][$i]['category'] = 'security';
+
+$i++;
+$config['items'][$i]['name'] = 'bad_ips';
+$config['items'][$i]['title'] = '_SYSTEM_AM_BADIPS';
+$config['items'][$i]['description'] = '_SYSTEM_AM_BADIPSDSC';
+$config['items'][$i]['edit'] = 'textarea';
+$config['items'][$i]['filter'] = 'array';
+$config['items'][$i]['default'] = array('127.0.0.1');
+$config['items'][$i]['category'] = 'security';
+*/
+
+// Text category
+$i++;
+$config['items'][$i] = array(
+    'category'      => "text",
+    'name'          => "editor",
+    'title'         => "_SYSTEM_AM_TEXT_EDITOR",
+    'description'   => "_SYSTEM_AM_TEXT_EDITOR_DESC",
+    'edit'          => "editor",
+    'filter'        => "string",
+    'default'       => 'xoops'
+);
+
+$i++;
+$config['items'][$i]['name'] = 'censor_enable';
+$config['items'][$i]['title'] = '_SYSTEM_AM_DOCENSOR';
+$config['items'][$i]['description'] = '_SYSTEM_AM_DOCENSORDSC';
+$config['items'][$i]['edit'] = 'yesno';
+$config['items'][$i]['filter'] = 'number_int';
+$config['items'][$i]['default'] = 0;
+$config['items'][$i]['category'] = 'text';
+
+$i++;
+$config['items'][$i]['name'] = 'censor_words';
+$config['items'][$i]['title'] = '_SYSTEM_AM_CENSORWRD';
+$config['items'][$i]['description'] = '_SYSTEM_AM_CENSORWRDDSC';
+$config['items'][$i]['edit'] = 'textarea';
+$config['items'][$i]['filter'] = 'array';
+$config['items'][$i]['default'] = array('fuck', 'shit');
+$config['items'][$i]['category'] = 'text';
+
+$i++;
+$config['items'][$i]['name'] = 'censor_replace';
+$config['items'][$i]['title'] = '_SYSTEM_AM_CENSORRPLC';
+$config['items'][$i]['description'] = '_SYSTEM_AM_CENSORRPLCDSC';
+$config['items'][$i]['edit'] = 'text';
+$config['items'][$i]['filter'] = 'string';
+$config['items'][$i]['default'] = "#OOPS#";
+$config['items'][$i]['category'] = 'text';
+
 // Root category
-$config['items'][] = array(
+$i++;
+$config['items'][$i] = array(
     'category'      => "root",
     'name'          => "attempts",
     'title'         => "_SYSTEM_AM_ROOT_ATTEMPTS",
@@ -1006,7 +1036,8 @@ $config['items'][] = array(
     'default'       => 5
 );
 
-$config['items'][] = array(
+$i++;
+$config['items'][$i] = array(
     'category'      => "root",
     'name'          => "captcha",
     'title'         => "_SYSTEM_AM_CAPTCHA",
@@ -1016,7 +1047,8 @@ $config['items'][] = array(
     'default'       => 1
 );
 
-$config['items'][] = array(
+$i++;
+$config['items'][$i] = array(
     'category'      => "root",
     'name'          => "ips",
     'title'         => "_SYSTEM_AM_ROOT_IPS",

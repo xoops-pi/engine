@@ -95,6 +95,16 @@
                                 <category>general</category>
                             </params>
                         </general>
+                        <text>
+                            <label>Text processing</label>
+                            <route>admin</route>
+                            <module>system</module>
+                            <controller>preference</controller>
+                            <action>system</action>
+                            <params>
+                                <category>text</category>
+                            </params>
+                        </text>
                         <meta>
                             <label>Meta</label>
                             <route>admin</route>
@@ -105,16 +115,6 @@
                                 <category>meta</category>
                             </params>
                         </meta>
-                        <censor>
-                            <label>Censoring</label>
-                            <route>admin</route>
-                            <module>system</module>
-                            <controller>preference</controller>
-                            <action>system</action>
-                            <params>
-                                <category>censor</category>
-                            </params>
-                        </censor>
                         <mail>
                             <label>Mailing</label>
                             <route>admin</route>
@@ -126,7 +126,7 @@
                             </params>
                         </mail>
                         <root>
-                            <label>Root users</label>
+                            <label>Root access</label>
                             <route>admin</route>
                             <module>system</module>
                             <controller>preference</controller>

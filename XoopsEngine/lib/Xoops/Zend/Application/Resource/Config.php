@@ -33,6 +33,16 @@ class Xoops_Zend_Application_Resource_Config extends Zend_Application_Resource_R
 
         // Load data from cache
         $config = XOOPS::service('registry')->config->read('', 'general');
+        $localeFile = Xoops::path('language') . '/' . $config['language'] . '/locale.ini';
+        if (file_exists($localeFile)) {
+            $locale = parse_ini_file($localeFile);
+            $config['locale'] = $locale['lang'];
+            $config['charset'] = $locale['charset'];
+        } else {
+            $config['locale'] = $config['language'];
+            $config['charset'] = 'UTF-8';
+        }
+
         XOOPS::engine()->setConfigs($config);
     }
 }

@@ -26,9 +26,11 @@ include_once __DIR__ . '/class/dbmanager.php';
 $dbm = new db_manager();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //$GLOBALS['setup_system_language'] = $wizard->language;
-    //$GLOBALS['setup_system_locale'] = $wizard->locale;
+    //$GLOBALS['setup_system_locale'] = $wizard->locale['lang'];
+    //$GLOBALS['setup_system_charset'] = $wizard->locale['charset'];
     Xoops::config('language', $wizard->language);
-    Xoops::config('locale', $wizard->locale);
+    Xoops::config('locale', $wizard->locale['lang']);
+    Xoops::config('charset', $wizard->locale['charset']);
     if (!empty($_POST['retry'])) {
         $ret = Xoops_Installer::instance()->uninstall("system");
         if (!$ret) {

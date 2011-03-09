@@ -70,17 +70,13 @@ class App_System_Form_Preference extends Xoops_Zend_Form
             } else {
                 $edit = array();
             }
-            $type = empty($edit["type"]) ? "text" : $edit["type"];
             $options = isset($edit["options"]) ? $edit["options"] : array();
+            $type = empty($edit["type"]) ? "text" : strtolower($edit["type"]);
 
-            if (!isset($options["multiOptions"]) && !empty($configOptions[$idConfig])) {
-                $options["multiOptions"] = $configOptions[$idConfig];
+            if ($type == 'none') {
+                continue;
             }
-
-            $options["label"] = $config->title;
-            $options["description"] = $config->description;
-
-            switch (strtolower($type)) {
+            switch ($type) {
                 case "text":
                     if (!isset($options["size"])) {
                         $options["size"] = 50;
@@ -97,6 +93,14 @@ class App_System_Form_Preference extends Xoops_Zend_Form
                 default:
                     break;
             }
+
+            if (!isset($options["multiOptions"]) && !empty($configOptions[$idConfig])) {
+                $options["multiOptions"] = $configOptions[$idConfig];
+            }
+
+            $options["label"] = $config->title;
+            $options["description"] = $config->description;
+
 
             if (!empty($edit["module"])) {
                 $class = ('app' == Xoops::service('module')->getType($edit["module"]) ? 'App' : 'Module') . "_" . ucfirst($edit["module"]) . "_Form_Element_" . ucfirst($type);

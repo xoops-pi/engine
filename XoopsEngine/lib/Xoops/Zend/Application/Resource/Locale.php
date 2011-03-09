@@ -43,15 +43,15 @@ class Xoops_Zend_Application_Resource_Locale extends Zend_Application_Resource_R
             $metaPath = Xoops::path('www') . '/language/english/meta.ini';
         }
         $meta = Xoops::loadConfig($metaPath);
-        */
         $meta = Xoops::config('locale');
         $locale = $meta['lang'];
         $charset = $meta['charset'];
-        /*
+        */
         // Loads charset from system config
         $locale = XOOPS::config('locale');
         // Loads charset from system config
         $charset = XOOPS::config('charset');
+        /*
         // Transform locale if composed
         if (false !== strpos($locale, '.')) {
             list($locale, $_charset) = explode(".", $locale, 2);

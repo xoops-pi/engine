@@ -188,13 +188,13 @@ define("_SYSTEM_AM_THEMEOKDSC", "Choose themes that users can select as the defa
 
 
 // Xoops Authentication constants
+/*
 define("_SYSTEM_AM_AUTH_CONFOPTION_XOOPS", "XOOPS Database");
 define("_SYSTEM_AM_AUTH_CONFOPTION_LDAP", "Standard LDAP Directory");
 define("_SYSTEM_AM_AUTH_CONFOPTION_AD", "Microsoft Active Directory &copy");
 define("_SYSTEM_AM_AUTHENTICATION", "Authentication Options");
 define("_SYSTEM_AM_AUTHMETHOD", "Authentication Method");
 define("_SYSTEM_AM_AUTHMETHODDESC", "Which authentication method would you like to use for signing on users.");
-/*
 define("_SYSTEM_AM_LDAP_MAIL_ATTR", "LDAP - Mail Field Name");
 define("_SYSTEM_AM_LDAP_MAIL_ATTR_DESC", "The name of the E-Mail attribute in your LDAP directory tree.");
 define("_SYSTEM_AM_LDAP_NAME_ATTR", "LDAP - Common Name Field Name");
@@ -251,7 +251,6 @@ define("_SYSTEM_AM_LDAP_FIELD_MAPPING_DESC", "Describe here the mapping between 
 
 define("_SYSTEM_AM_LDAP_PROVIS_UPD", "Maintain xoops account provisionning");
 define("_SYSTEM_AM_LDAP_PROVIS_UPD_DESC", "The Xoops User account is always synchronized with the Authentication Server");
-*/
 
 define("_SYSTEM_AM_CPANEL", "Control Panel GUI");
 define("_SYSTEM_AM_CPANELDSC", "For backend");
@@ -261,6 +260,7 @@ define("_SYSTEM_AM_WELCOMETYPE_DESC", "The way of sending out a welcoming messag
 define("_SYSTEM_AM_WELCOMETYPE_EMAIL", "Email");
 define("_SYSTEM_AM_WELCOMETYPE_PM", "Message");
 define("_SYSTEM_AM_WELCOMETYPE_BOTH", "Email and message");
+*/
 
 define("_SYSTEM_AM_MODULEPREF", "Module Preferences");
 
@@ -287,3 +287,12 @@ define("_SYSTEM_AM_ENVIRONMENT_DESC", "");
 define("_SYSTEM_AM_ENVIRONMENT_PRODUCTION", "Production");
 define("_SYSTEM_AM_ENVIRONMENT_DEBUG", "Debug");
 define("_SYSTEM_AM_ENVIRONMENT_DEVELOPMENT", "Development");
+
+define("_SYSTEM_AM_TEXT", "Text processing");
+define("_SYSTEM_AM_TEXT_DESC", "");
+
+define("_SYSTEM_AM_TEXT_EDITOR", "WYSIWYG Editor");
+define("_SYSTEM_AM_TEXT_EDITOR_DESC", "Default editor for text processing");
+
+define("_SYSTEM_AM_SECURITY", "Security policy");
+define("_SYSTEM_AM_SECURITY_DESC", "");

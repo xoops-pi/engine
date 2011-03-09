@@ -18,9 +18,9 @@
  * @version         $Id$
  */
 
-class Xoops_Zend_Form_Element_Locale extends Zend_Form_Element_Select
+class Xoops_Zend_Form_Element_Charset extends Zend_Form_Element_Select
 {
-    protected $locale;
+    protected $charset;
 
     /**
      * Constructor
@@ -52,12 +52,8 @@ class Xoops_Zend_Form_Element_Locale extends Zend_Form_Element_Select
             }
 
             $locale = parse_ini_file($localeFile);
-            $lang = $locale['lang'];
-            /*
-            $charset = empty($locale['charset']) ? 'UTF-8' : $locale['charset'];
-            $localeList["{$lang}.{$charset}"] = "{$lang}.{$charset}";
-            */
-            $localeList[$lang] = $lang;
+            $charset = $locale['charset'];
+            $localeList[$charset] = $charset;
         }
 
         $this->setMultiOptions($localeList);
@@ -67,12 +63,11 @@ class Xoops_Zend_Form_Element_Locale extends Zend_Form_Element_Select
      * Set value
      *
      * @param  string $value
-     * @return Xoops_Zend_Form_Element_Locale
+     * @return Xoops_Zend_Form_Element_Charset
      */
     public function setValue($value)
     {
-        //$this->locale = $value['lang'] . '.' . $value['charset'];
-        $this->locale = $value;
+        $this->charset = $value;
         return $this;
     }
 
@@ -83,11 +78,7 @@ class Xoops_Zend_Form_Element_Locale extends Zend_Form_Element_Select
      */
     public function getValue($suppressArrayNotation = false)
     {
-        /*
-        list($lang, $charset) = explode('.', $this->locale);
-        $value = array('lang' => $lang, 'charset' => $charset);
-        */
-        $value = $this->locale;
+        $value = $this->charset;
 
         return $value;
     }
