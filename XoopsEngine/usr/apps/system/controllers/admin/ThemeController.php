@@ -260,9 +260,9 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
     {
         $description = XOOPS::_("You can find themes from below links:");
         $list = array(
-            "http://sourceforge.net/projects/xoops/files/" => XOOPS::_("XOOPS Project Repository"),
-            "http://www.xoops.org/modules/repository/" => XOOPS::_("XOOPS Community Repository"),
-            "http://www.xoops.org/modules/xoopspartners/" => XOOPS::_("XOOPS Local Support Communities"),
+            "http://directory.xoopsengine.org/" => XOOPS::_("Xoops Engine Repository"),
+            "http://support.xoopsengine.org"    => XOOPS::_("Xoops Engine Supports"),
+            "http://dev.xoopsengine.org"        => XOOPS::_("Xoops Engine Extensions Development Forge")
         );
         $this->template->assign("description", $description);
         $this->template->assign("list", $list);
@@ -307,7 +307,7 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
     protected function checkUpgrade($theme, $version)
     {
         $status = false;
-        $configFile = XOOPS::path("usr/themes/" . $theme . "/info.php");
+        $configFile = XOOPS::path("usr") . "/themes/" . $theme . "/info.php";
         if (file_exists($configFile)) {
             $config = include $configFile;
             $status = version_compare($version, $config["version"]);

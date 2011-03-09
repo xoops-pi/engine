@@ -34,7 +34,7 @@
 
 class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
 {
-    protected $refreshUrl = "captcha.php";
+    protected $refreshUrl = "usr/captcha/image.php";
     //protected $callback;
 
     /**

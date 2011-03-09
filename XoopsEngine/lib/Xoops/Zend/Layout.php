@@ -677,10 +677,10 @@ class Xoops_Zend_Layout extends Zend_Layout
         }
         // Check for application resource path
         if ("app" == $section && !empty($append)) {
-            $app_resource_path = XOOPS::path("www/apps") . "/" . $append;
+            $app_resource_path = XOOPS::path("www") . "/usr/apps/" . $append;
             // Found in www/apps
             if (file_exists($app_resource_path)) {
-                return $isAbsolute ? $app_resource_path : "www/apps/" . $append;
+                return $isAbsolute ? $app_resource_path : "www/usr/apps/" . $append;
             }
             $segs = explode("/", $append, 2);
             $module = $segs[0];
@@ -688,10 +688,10 @@ class Xoops_Zend_Layout extends Zend_Layout
             // Check parent in www/apps
             if ($dirname && strcmp($dirname, $module)) {
                 $parent_append = $dirname . (empty($segs[1]) ? "" : "/" . $segs[1]);
-                $parent_resource_path = XOOPS::path("www/apps") . "/" . $parent_append;
+                $parent_resource_path = XOOPS::path("www") . "/usr/apps/" . $parent_append;
                 // Found parent in www/apps
                 if (file_exists($parent_resource_path)) {
-                    return $isAbsolute ? $parent_resource_path : "www/apps/" . $parent_append;
+                    return $isAbsolute ? $parent_resource_path : "www/usr/apps/" . $parent_append;
                 }
                 // Return parent original file
                 return $isAbsolute ? XOOPS::path("app/" . $parent_append) : "app/" . $parent_append;
@@ -701,10 +701,10 @@ class Xoops_Zend_Layout extends Zend_Layout
         }
         // Check for plugin resource path
         if ("plugin" == $section && !empty($append)) {
-            $plugin_resource_path = XOOPS::path("www/plugins") . "/" . $append;
+            $plugin_resource_path = XOOPS::path("www") . "/usr/plugins/" . $append;
             // Found in www/plugins
             if (file_exists($app_resource_path)) {
-                return $isAbsolute ? $app_resource_path : "www/plugins/" . $append;
+                return $isAbsolute ? $app_resource_path : "www/usr/plugins/" . $append;
             }
             // Return original file
             return $isAbsolute ? XOOPS::path("plugin/" . $append) : "plugin/" . $append;

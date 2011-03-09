@@ -322,10 +322,9 @@ class System_ModuleController extends Xoops_Zend_Controller_Action_Admin
     {
         $description = XOOPS::_("You can find modules from below links:");
         $list = array(
-            "http://sourceforge.net/projects/xoops/files/" => XOOPS::_("XOOPS Project Repository"),
-            "http://www.xoops.org/modules/repository/" => XOOPS::_("XOOPS Community Repository"),
-            "http://www.xoops.org/modules/xoopspartners/" => XOOPS::_("XOOPS Local Support Communities"),
-            "http://dev.xoops.org" => XOOPS::_("XOOPS Module Development Forge")
+            "http://directory.xoopsengine.org/" => XOOPS::_("Xoops Engine Repository"),
+            "http://support.xoopsengine.org"    => XOOPS::_("Xoops Engine Supports"),
+            "http://dev.xoopsengine.org"        => XOOPS::_("Xoops Engine Extensions Development Forge")
         );
         $this->template->assign("description", $description);
         $this->template->assign("list", $list);
@@ -492,7 +491,7 @@ class System_ModuleController extends Xoops_Zend_Controller_Action_Admin
         );
 
         $source = XOOPS::path("app") . "/" . $sourceFolder;
-        $target = XOOPS::path("www") . "/apps/" . $targetFolder;
+        $target = XOOPS::path("www") . "/usr/apps/" . $targetFolder;
         if (!is_dir($source)) {
             return false;
         }
