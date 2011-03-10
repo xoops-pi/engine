@@ -14,15 +14,15 @@
  *
  * @category   Zend
  * @package    Zend_Cache
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Core.php 22651 2010-07-21 04:19:44Z ramon $
+ * @version    $Id: Core.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 
 /**
  * @package    Zend_Cache
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Cache_Core
@@ -397,7 +397,7 @@ class Zend_Cache_Core
             if ($this->_options['logging']) {
                 $this->_log("Zend_Cache_Core::save() : impossible to save cache (id=$id)");
             }
-            $this->remove($id);
+            $this->_backend->remove($id);
             return false;
         }
         if ($this->_options['write_control']) {

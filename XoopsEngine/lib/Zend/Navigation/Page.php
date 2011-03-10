@@ -14,9 +14,9 @@
  *
  * @category  Zend
  * @package   Zend_Navigation
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Page.php 22882 2010-08-22 14:00:16Z freak $
+ * @version    $Id: Page.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -29,7 +29,7 @@ require_once 'Zend/Navigation/Container.php';
  *
  * @category  Zend
  * @package   Zend_Navigation
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Navigation_Page extends Zend_Navigation_Container
@@ -138,11 +138,11 @@ abstract class Zend_Navigation_Page extends Zend_Navigation_Container
 
     /**
      * The type of page to use when it wasn't set
-     * 
+     *
      * @var string
      */
     protected static $_defaultPageType;
-    
+
     // Initialization:
 
     /**
@@ -191,7 +191,7 @@ abstract class Zend_Navigation_Page extends Zend_Navigation_Container
         } elseif(self::getDefaultPageType()!= null) {
             $type = self::getDefaultPageType();
         }
-        
+
         if(isset($type)) {
             if (is_string($type) && !empty($type)) {
                 switch (strtolower($type)) {
@@ -1119,17 +1119,17 @@ abstract class Zend_Navigation_Page extends Zend_Navigation_Container
     {
         return str_replace(' ', '', ucwords(str_replace('_', ' ', $property)));
     }
-    
+
     public static function setDefaultPageType($type = null) {
         if($type !== null && !is_string($type)) {
             throw new Zend_Navigation_Exception(
                 'Cannot set default page type: type is no string but should be'
             );
         }
-        
+
         self::$_defaultPageType = $type;
     }
-    
+
     public static function getDefaultPageType() {
         return self::$_defaultPageType;
     }

@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Translate
  * @subpackage Zend_Translate_Adapter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Adapter.php 22726 2010-07-30 10:52:07Z thomas $
+ * @version    $Id: Adapter.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -36,7 +36,7 @@ require_once 'Zend/Translate/Plural.php';
  * @category   Zend
  * @package    Zend_Translate
  * @subpackage Zend_Translate_Adapter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Translate_Adapter {
@@ -464,7 +464,7 @@ abstract class Zend_Translate_Adapter {
     /**
      * Returns the available languages from this adapter
      *
-     * @return array
+     * @return array|null
      */
     public function getList()
     {

@@ -15,8 +15,8 @@
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Rewrite.php 23362 2010-11-18 17:22:41Z bittarman $
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Rewrite.php 23775 2011-03-01 17:25:24Z ralph $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -31,7 +31,7 @@ require_once 'Zend/Controller/Router/Route.php';
  *
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
@@ -381,7 +381,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
 
         // Find the matching route
         $routeMatched = false;
-        
+
         foreach (array_reverse($this->_routes, true) as $name => $route) {
             // TODO: Should be an interface method. Hack for 1.0 BC
             if (method_exists($route, 'isAbstract') && $route->isAbstract()) {
@@ -458,7 +458,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
             }
         }
 
-        // Use UNION (+) in order to preserve numeric keys 
+        // Use UNION (+) in order to preserve numeric keys
         $params = $userParams + $this->_globalParams;
 
         $route = $this->getRoute($name);

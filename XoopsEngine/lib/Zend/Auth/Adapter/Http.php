@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage Zend_Auth_Adapter_Http
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Http.php 23088 2010-10-11 19:53:24Z padraic $
+ * @version    $Id: Http.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 
@@ -35,7 +35,7 @@ require_once 'Zend/Auth/Adapter/Interface.php';
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage Zend_Auth_Adapter_Http
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @todo       Support auth-int
  * @todo       Track nonces, nonce-count, opaque for replay protection and stale support
@@ -844,7 +844,7 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
 
         return $data;
     }
-    
+
     /**
      * Securely compare two strings for equality while avoided C level memcmp()
      * optimisations capable of leaking timing information useful to an attacker

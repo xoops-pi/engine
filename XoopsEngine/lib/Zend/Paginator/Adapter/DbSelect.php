@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbSelect.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: DbSelect.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -37,7 +37,7 @@ require_once 'Zend/Db/Select.php';
 /**
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interface
@@ -100,7 +100,9 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
         if ($rowCount instanceof Zend_Db_Select) {
             $columns = $rowCount->getPart(Zend_Db_Select::COLUMNS);
 
-            $countColumnPart = $columns[0][1];
+            $countColumnPart = empty($columns[0][2])
+                             ? $columns[0][1]
+                             : $columns[0][2];
 
             if ($countColumnPart instanceof Zend_Db_Expr) {
                 $countColumnPart = $countColumnPart->__toString();
@@ -214,7 +216,8 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
              * the original query and use it as a subquery os the COUNT query.
              */
             if (($isDistinct && count($columnParts) > 1) || count($groupParts) > 1 || !empty($havingParts)) {
-                $rowCount = $db->select()->from($this->_select);
+                $rowCount->reset(Zend_Db_Select::ORDER);
+                $rowCount = $db->select()->from($rowCount);
             } else if ($isDistinct) {
                 $part = $columnParts[0];
 

@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ProjectProfileFile.php 20851 2010-02-02 21:45:51Z ralph $
+ * @version    $Id: ProjectProfileFile.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -48,7 +48,7 @@ require_once 'Zend/Tool/Project/Profile/FileParser/Xml.php';
  *
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Tool_Project_Context_System_ProjectProfileFile
@@ -66,7 +66,7 @@ class Zend_Tool_Project_Context_System_ProjectProfileFile
      * @var Zend_Tool_Project_Profile
      */
     protected $_profile = null;
-    
+
     /**
      * getName()
      *
@@ -76,7 +76,7 @@ class Zend_Tool_Project_Context_System_ProjectProfileFile
     {
         return 'ProjectProfileFile';
     }
-    
+
     /**
      * setProfile()
      *

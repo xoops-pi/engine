@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage Adapter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Digest.php 23088 2010-10-11 19:53:24Z padraic $
+ * @version    $Id: Digest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 
@@ -31,7 +31,7 @@ require_once 'Zend/Auth/Adapter/Interface.php';
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage Adapter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Auth_Adapter_Digest implements Zend_Auth_Adapter_Interface
@@ -227,7 +227,7 @@ class Zend_Auth_Adapter_Digest implements Zend_Auth_Adapter_Interface
         $result['messages'][] = "Username '$this->_username' and realm '$this->_realm' combination not found";
         return new Zend_Auth_Result($result['code'], $result['identity'], $result['messages']);
     }
-    
+
     /**
      * Securely compare two strings for equality while avoided C level memcmp()
      * optimisations capable of leaking timing information useful to an attacker

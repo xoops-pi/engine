@@ -15,8 +15,8 @@
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Chain.php 23187 2010-10-20 18:42:37Z matthew $
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Chain.php 23775 2011-03-01 17:25:24Z ralph $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -28,7 +28,7 @@ require_once 'Zend/Controller/Router/Route/Abstract.php';
  *
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Abstract
@@ -77,9 +77,9 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
         $values  = array();
 
         foreach ($this->_routes as $key => $route) {
-            if ($key > 0 
-                && $matchedPath !== null 
-                && $subPath !== '' 
+            if ($key > 0
+                && $matchedPath !== null
+                && $subPath !== ''
                 && $subPath !== false
             ) {
                 $separator = substr($subPath, 0, strlen($this->_separators[$key]));

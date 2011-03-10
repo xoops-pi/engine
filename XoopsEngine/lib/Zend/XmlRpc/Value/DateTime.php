@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DateTime.php 20278 2010-01-14 14:48:59Z ralph $
+ * @version    $Id: DateTime.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 
@@ -31,7 +31,7 @@ require_once 'Zend/XmlRpc/Value/Scalar.php';
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_XmlRpc_Value_DateTime extends Zend_XmlRpc_Value_Scalar
@@ -48,7 +48,7 @@ class Zend_XmlRpc_Value_DateTime extends Zend_XmlRpc_Value_Scalar
      *
      * @var string
      */
-    protected $_isoFormatString = 'YYYYMMddTHH:mm:ss';
+    protected $_isoFormatString = 'yyyyMMddTHH:mm:ss';
 
     /**
      * Set the value of a dateTime.iso8601 native type

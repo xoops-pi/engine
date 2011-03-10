@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Form
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -23,9 +23,9 @@
  *
  * @category   Zend
  * @package    Zend_Form
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DisplayGroup.php 22930 2010-09-09 18:45:18Z matthew $
+ * @version    $Id: DisplayGroup.php 23775 2011-03-01 17:25:24Z ralph $
  */
 class Zend_Form_DisplayGroup implements Iterator,Countable
 {
@@ -67,7 +67,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
 
     /**
      * Form object to which the display group is currently registered
-     * 
+     *
      * @var Zend_Form
      */
     protected $_form;
@@ -284,15 +284,15 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
 
     /**
      * Set form object to which the display group is attached
-     * 
-     * @param  Zend_Form $form 
+     *
+     * @param  Zend_Form $form
      * @return Zend_Form_DisplayGroup
      */
     public function setForm(Zend_Form $form)
     {
         $this->_form = $form;
 
-        // Ensure any elements attached prior to setting the form are now 
+        // Ensure any elements attached prior to setting the form are now
         // removed from iteration by the form
         foreach ($this->getElements() as $element) {
             $form->removeFromIteration($element->getName());
@@ -303,7 +303,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
 
     /**
      * Get form object to which the group is attached
-     * 
+     *
      * @return Zend_Form|null
      */
     public function getForm()

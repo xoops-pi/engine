@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage Storage
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://todo     name_todo
- * @version    $Id: Blob.php 23167 2010-10-19 17:53:31Z mabe $
+ * @version    $Id: Blob.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -85,7 +85,7 @@ require_once 'Zend/Service/WindowsAzure/Exception.php';
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage Storage
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_WindowsAzure_Storage_Blob extends Zend_Service_WindowsAzure_Storage
@@ -537,7 +537,7 @@ class Zend_Service_WindowsAzure_Storage_Blob extends Zend_Service_WindowsAzure_S
 			$queryString[] = 'include=' . $include;
 		}
 		$queryString = self::createQueryStringFromArray($queryString);
-		 
+		
 		// Perform request
 		$response = $this->_performRequest('', $queryString, Zend_Http_Client::GET, array(), false, null, Zend_Service_WindowsAzure_Storage::RESOURCE_CONTAINER, Zend_Service_WindowsAzure_Credentials_CredentialsAbstract::PERMISSION_LIST);
 		if ($response->isSuccessful()) {
@@ -564,7 +564,7 @@ class Zend_Service_WindowsAzure_Storage_Blob extends Zend_Service_WindowsAzure_S
 			if ($maxResults !== null && count($containers) > $maxResults) {
 				$containers = array_slice($containers, 0, $maxResults);
 			}
-			 
+			
 			return $containers;
 		} else {
 			throw new Zend_Service_WindowsAzure_Exception($this->_getErrorMessage($response, 'Resource could not be accessed.'));
@@ -1152,7 +1152,7 @@ class Zend_Service_WindowsAzure_Storage_Blob extends Zend_Service_WindowsAzure_S
 				(int)$xmlRanges[$i]->End
 				);
 			}
-			 
+			
 			return $ranges;
 		} else {
 			throw new Zend_Service_WindowsAzure_Exception($this->_getErrorMessage($response, 'Resource could not be accessed.'));
@@ -1357,7 +1357,7 @@ class Zend_Service_WindowsAzure_Storage_Blob extends Zend_Service_WindowsAzure_S
 			$queryString[] = 'snapshot=' . $snapshotId;
 		}
 		$queryString = self::createQueryStringFromArray($queryString);
-		 
+		
 		// Additional headers?
 		$headers = array();
 		if ($leaseId !== null) {

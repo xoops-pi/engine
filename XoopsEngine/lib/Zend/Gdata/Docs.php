@@ -16,9 +16,9 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Docs
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Docs.php 20112 2010-01-07 02:39:32Z tjohns $
+ * @version    $Id: Docs.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -53,7 +53,7 @@ require_once 'Zend/Gdata/App/Extension/Title.php';
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Docs
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Docs extends Zend_Gdata
@@ -265,7 +265,7 @@ class Zend_Gdata_Docs extends Zend_Gdata
      *       the appropriate type doesn't exist yet.
      */
     public function createFolder($folderName, $folderResourceId=null) {
-        $category = new Zend_Gdata_App_Extension_Category(self::DOCUMENTS_CATEGORY_TERM, 
+        $category = new Zend_Gdata_App_Extension_Category(self::DOCUMENTS_CATEGORY_TERM,
                                                           self::DOCUMENTS_CATEGORY_SCHEMA);
         $title = new Zend_Gdata_App_Extension_Title($folderName);
         $entry = new Zend_Gdata_Entry();

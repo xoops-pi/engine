@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Json
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Json.php 20615 2010-01-25 19:54:12Z matthew $
+ * @version    $Id: Json.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -33,7 +33,7 @@ require_once 'Zend/Json/Expr.php';
  * @category   Zend
  * @package    Zend_Json
  * @uses       Zend_Json_Expr
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Json
@@ -360,12 +360,12 @@ class Zend_Json
 
         } // End of if (is_array($simpleXmlElementObject))
     } // End of function _processXml.
-    
+
     /**
      * Pretty-print JSON string
-     * 
+     *
      * Use 'indent' option to select indentation string - by default it's a tab
-     * 
+     *
      * @param string $json Original JSON string
      * @param array $options Encoding options
      * @return string
@@ -375,15 +375,15 @@ class Zend_Json
         $tokens = preg_split('|([\{\}\]\[,])|', $json, -1, PREG_SPLIT_DELIM_CAPTURE);
         $result = "";
         $indent = 0;
-        
+
         $ind = "\t";
         if(isset($options['indent'])) {
             $ind = $options['indent'];
         }
-        
+
         foreach($tokens as $token) {
             if($token == "") continue;
-            
+
             $prefix = str_repeat($ind, $indent);
             if($token == "{" || $token == "[") {
                 $indent++;
@@ -394,7 +394,7 @@ class Zend_Json
             } else if($token == "}" || $token == "]") {
                 $indent--;
                 $prefix = str_repeat($ind, $indent);
-                $result .= "\n$prefix$token";                
+                $result .= "\n$prefix$token";
             } else if($token == ",") {
                 $result .= "$token\n";
             } else {

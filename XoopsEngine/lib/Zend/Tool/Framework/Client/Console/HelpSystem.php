@@ -15,15 +15,15 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HelpSystem.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: HelpSystem.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Tool_Framework_Client_Console_HelpSystem
@@ -271,7 +271,7 @@ class Zend_Tool_Framework_Client_Console_HelpSystem
                     $this->_respondWithProviderName($providerMetadata);
                     $providerNameDisplayed = true;
                 }
-                
+
                 if ($includeAllSpecialties || $isSingleSpecialProviderAction) {
 
                     foreach ($providerSignature->getSpecialties() as $specialtyName) {
@@ -303,7 +303,7 @@ class Zend_Tool_Framework_Client_Console_HelpSystem
 
                     }
                 }
-                
+
                 // reset the special flag for single provider action with specialty
                 $isSingleSpecialProviderAction = false;
 

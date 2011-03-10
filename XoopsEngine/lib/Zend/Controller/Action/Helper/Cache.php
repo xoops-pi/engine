@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Cache.php 22662 2010-07-24 17:37:36Z mabe $
+ * @version    $Id: Cache.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -37,7 +37,7 @@ require_once 'Zend/Cache/Manager.php';
 /**
  * @category   Zend
  * @package    Zend_Controller
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Controller_Action_Helper_Cache
@@ -64,7 +64,7 @@ class Zend_Controller_Action_Helper_Cache
      * @var array
      */
     protected $_tags = array();
-    
+
     /**
      * Indexed map of Extensions by Controller and Action
      *
@@ -189,7 +189,7 @@ class Zend_Controller_Action_Helper_Cache
                 ->start($this->_encodeCacheId($reqUri), $tags, $extension);
         }
     }
-    
+
     /**
      * Encode a Cache ID as hexadecimal. This is a workaround because Backend ID validation
      * is trapped in the Frontend classes. Will try to get this reversed for ZF 2.0

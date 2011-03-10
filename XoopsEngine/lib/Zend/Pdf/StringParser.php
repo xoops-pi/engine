@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StringParser.php 22311 2010-05-27 12:57:37Z padraic $
+ * @version    $Id: StringParser.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 
@@ -38,7 +38,7 @@ require_once 'Zend/Pdf/Element/String.php';
  * PDF string parser
  *
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Pdf_StringParser
@@ -272,7 +272,7 @@ class Zend_Pdf_StringParser
             }
 
             $this->offset += strcspn($this->data, $compare, $this->offset);
- 
+
             return substr($this->data, $start, $this->offset - $start);
         }
     }

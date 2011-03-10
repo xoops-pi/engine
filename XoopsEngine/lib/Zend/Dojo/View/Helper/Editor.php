@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Editor.php 20116 2010-01-07 14:18:34Z matthew $
+ * @version    $Id: Editor.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /** Zend_Dojo_View_Helper_Dijit */
@@ -32,7 +32,7 @@ require_once 'Zend/Json.php';
  * @uses       Zend_Dojo_View_Helper_Textarea
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Dojo_View_Helper_Editor extends Zend_Dojo_View_Helper_Dijit
@@ -83,8 +83,8 @@ class Zend_Dojo_View_Helper_Editor extends Zend_Dojo_View_Helper_Dijit
             }
         }
 
-        // Previous versions allowed specifying "degrade" to allow using a 
-        // textarea instead of a div -- but this is insecure. Removing the 
+        // Previous versions allowed specifying "degrade" to allow using a
+        // textarea instead of a div -- but this is insecure. Removing the
         // parameter if set to prevent its injection in the dijit.
         if (isset($params['degrade'])) {
             unset($params['degrade']);
@@ -119,7 +119,7 @@ class Zend_Dojo_View_Helper_Editor extends Zend_Dojo_View_Helper_Dijit
                . $value
                . "</div>\n";
 
-        // Embed a textarea in a <noscript> tag to allow for graceful 
+        // Embed a textarea in a <noscript> tag to allow for graceful
         // degradation
         $html .= '<noscript>'
                . $this->view->formTextarea($hiddenId, $value, $attribs)

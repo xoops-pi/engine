@@ -15,15 +15,15 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Controller.php 20851 2010-02-02 21:45:51Z ralph $
+ * @version    $Id: Controller.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Tool_Project_Provider_Controller
@@ -57,7 +57,7 @@ class Zend_Tool_Project_Provider_Controller
         }
 
         $newController = $controllersDirectory->createResource(
-            'controllerFile', 
+            'controllerFile',
             array('controllerName' => $controllerName, 'moduleName' => $moduleName)
             );
 
@@ -112,10 +112,22 @@ class Zend_Tool_Project_Provider_Controller
     {
         $this->_loadProfile(self::NO_PROFILE_THROW_EXCEPTION);
 
+        // get request & response
+        $request = $this->_registry->getRequest();
+        $response = $this->_registry->getResponse();
+        
         // determine if testing is enabled in the project
         require_once 'Zend/Tool/Project/Provider/Test.php';
         $testingEnabled = Zend_Tool_Project_Provider_Test::isTestingEnabled($this->_loadedProfile);
 
+        if ($testingEnabled && !Zend_Tool_Project_Provider_Test::isPHPUnitAvailable()) {
+            $testingEnabled = false;
+            $response->appendContent(
+                'Note: PHPUnit is required in order to generate controller test stubs.',
+                array('color' => array('yellow'))
+                );
+        }
+        
         if (self::hasResource($this->_loadedProfile, $name, $module)) {
             throw new Zend_Tool_Project_Provider_Exception('This project already has a controller named ' . $name);
         }
@@ -124,14 +136,10 @@ class Zend_Tool_Project_Provider_Controller
         if (preg_match('#[_-]#', $name)) {
             throw new Zend_Tool_Project_Provider_Exception('Controller names should be camel cased.');
         }
-        
+
         $originalName = $name;
         $name = ucfirst($name);
-        
-        // get request & response
-        $request = $this->_registry->getRequest();
-        $response = $this->_registry->getResponse();
-        
+
         try {
             $controllerResource = self::createResource($this->_loadedProfile, $name, $module);
             if ($indexActionIncluded) {
@@ -139,7 +147,7 @@ class Zend_Tool_Project_Provider_Controller
                 $indexActionViewResource = Zend_Tool_Project_Provider_View::createResource($this->_loadedProfile, 'index', $name, $module);
             }
             if ($testingEnabled) {
-                $testControllerResource = Zend_Tool_Project_Provider_Test::createApplicationResource($this->_loadedProfile, $name, 'index', $module);
+                $testActionResource = Zend_Tool_Project_Provider_Test::createApplicationResource($this->_loadedProfile, $name, 'index', $module);
             }
 
         } catch (Exception $e) {
@@ -158,19 +166,19 @@ class Zend_Tool_Project_Provider_Controller
                 );
             unset($tense);
         }
-        
+
         // do the creation
         if ($request->isPretend()) {
-            
+
             $response->appendContent('Would create a controller at '  . $controllerResource->getContext()->getPath());
 
             if (isset($indexActionResource)) {
                 $response->appendContent('Would create an index action method in controller ' . $name);
                 $response->appendContent('Would create a view script for the index action method at ' . $indexActionViewResource->getContext()->getPath());
             }
-            
-            if ($testControllerResource) {
-                $response->appendContent('Would create a controller test file at ' . $testControllerResource->getContext()->getPath());
+
+            if ($testActionResource) {
+                $response->appendContent('Would create a controller test file at ' . $testActionResource->getParentResource()->getContext()->getPath());
             }
 
         } else {
@@ -185,9 +193,10 @@ class Zend_Tool_Project_Provider_Controller
                 $indexActionViewResource->create();
             }
 
-            if ($testControllerResource) {
-                $response->appendContent('Creating a controller test file at ' . $testControllerResource->getContext()->getPath());
-                $testControllerResource->create();
+            if ($testActionResource) {
+                $response->appendContent('Creating a controller test file at ' . $testActionResource->getParentResource()->getContext()->getPath());
+                $testActionResource->getParentResource()->create();
+                $testActionResource->create();
             }
 
             $this->_storeProfile();

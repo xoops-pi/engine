@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Twitter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Twitter.php 23312 2010-11-08 19:45:00Z matthew $
+ * @version    $Id: Twitter.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -39,7 +39,7 @@ require_once 'Zend/Oauth/Consumer.php';
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Twitter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Twitter extends Zend_Rest_Client
@@ -54,45 +54,45 @@ class Zend_Service_Twitter extends Zend_Rest_Client
      * This should be reviewed in the future...
      */
     const STATUS_MAX_CHARACTERS = 246;
-    
+
     /**
      * OAuth Endpoint
      */
     const OAUTH_BASE_URI = 'http://twitter.com/oauth';
-    
+
     /**
      * @var Zend_Http_CookieJar
      */
     protected $_cookieJar;
-    
+
     /**
      * Date format for 'since' strings
      *
      * @var string
      */
     protected $_dateFormat = 'D, d M Y H:i:s T';
-    
+
     /**
      * Username
      *
      * @var string
      */
     protected $_username;
-    
+
     /**
      * Current method type (for method proxying)
      *
      * @var string
      */
     protected $_methodType;
-    
+
     /**
      * Zend_Oauth Consumer
      *
      * @var Zend_Oauth_Consumer
      */
     protected $_oauthConsumer = null;
-    
+
     /**
      * Types of API methods
      *
@@ -107,7 +107,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
         'favorite',
         'block'
     );
-    
+
     /**
      * Options passed to constructor
      *
@@ -131,11 +131,15 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     public function __construct($options = null, Zend_Oauth_Consumer $consumer = null)
     {
         $this->setUri('http://api.twitter.com');
-        if (!is_array($options)) $options = array();
-        $options['siteUrl'] = self::OAUTH_BASE_URI;
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
+
+        if (!is_array($options)) {
+            $options = array();
+        }
+        $options['siteUrl'] = self::OAUTH_BASE_URI;
+
         $this->_options = $options;
         if (isset($options['username'])) {
             $this->setUsername($options['username']);
@@ -166,7 +170,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
         $this->_localHttpClient->setHeaders('Accept-Charset', 'ISO-8859-1,utf-8');
         return $this;
     }
-    
+
     /**
      * Get the local HTTP client as distinct from the static HTTP client
      * inherited from Zend_Rest_Client
@@ -177,7 +181,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     {
         return $this->_localHttpClient;
     }
-    
+
     /**
      * Checks for an authorised state
      *
@@ -923,8 +927,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
 
     /**
      * Protected function to validate that the integer is valid or return a 0
-     * @param $int
-     * @throws Zend_Http_Client_Exception if HTTP request fails or times out
+     * @param mixed $int
      * @return integer
      */
     protected function _validInteger($int)
