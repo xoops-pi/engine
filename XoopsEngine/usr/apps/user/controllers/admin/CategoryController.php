@@ -45,16 +45,17 @@ class User_CategoryController extends Xoops_Zend_Controller_Action
         $message = array();
         $existList = array();
         foreach ($rowset as $row) {
-            $existList[$row->key] = 1;
-            if (!empty($categoryList[$row->key]["delete"])) {
+            $key = $row->key;
+            $existList[$key] = 1;
+            if (!empty($categoryList[$key]["delete"])) {
                 if (!$status = $row->delete()) {
                     $message[] = XOOPS::_("Category '{$row->key}' was not deleted.");
                 } else {
-                    $form->removeElement($row->key);
-                    unset($existList[$row->key]);
+                    $form->removeSubForm($key);
+                    unset($existList[$key]);
                 }
-            } elseif (!$row->setFromArray($categoryList[$row->key])->save()) {
-                $message[] = XOOPS::_("Category '{$row->key}' was not saved.");
+            } elseif (!$row->setFromArray($categoryList[$key])->save()) {
+                $message[] = XOOPS::_("Category '{$key}' was not saved.");
             }
         }
         XOOPS::service("registry")->handler("meta", $module)->flush();
