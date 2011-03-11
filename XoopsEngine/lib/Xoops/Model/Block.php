@@ -63,6 +63,7 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
                 if (!empty($configs) && is_array($configs)) {
                     $options = array_merge($options, $configs);
                 }
+                $options['module'] = $block['module'];
                 $result = $func($options);
             }
         // Custom block
