@@ -29,13 +29,14 @@
     </tr>
 </table>
 
-<!-- Load navigation -->
-<{navigation assign=navigation}>
+<!-- Start global navigation -->
+<{* use <{navigation ...}> for global navigation *}>
+<{navigation}>
 
-<{if $navigation}>
-    <{include file="navigation.html"}>
-<{/if}>
-<{*include file="navigation.html" navigation=$navigation*}>
+<{* use <{nav ...}> for custom navigation *}>
+<{*nav name=front template="navigation.html"*}>
+<!-- End global navigation -->
+
 <!-- End header -->
 
 <!-- Load blocks -->

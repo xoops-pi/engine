@@ -582,17 +582,33 @@ class Xoops_Zend_Layout extends Zend_Layout
         $this->assign($meta);
     }
 
+    /**
+     * Load global navigation data and render as html
+     *
+     * @param array $params Potential variables: name - name of navigation to load; ulClass - ul class for rendering; assign - smarty variable for navigation data
+     * @param Xoops_Smarty $smarty
+     * @param Smarty_Template $template
+     */
     public function loadNavigation($params, $smarty, $template = null)
     {
+        $navigationName = empty($params['name']) ? $this->navigation : $params['name'];
+        if ($cache = $this->getCacheInfo()) {
+            $params['cache_id']     = isset($params['cache_id']) ? $params['cache_id'] : $cache['cache_id'];
+            $params['cache_expire'] = isset($params['cache_expire']) ? $params['cache_expire'] : $cache['expire'];
+            $params['cache_level']  = isset($params['cache_level']) ? $params['cache_level'] : $cache['cache_level'];
+        }
+        return $this->getView()->nav($navigationName, $params);
+
         if (empty($params["assign"])) {
             return false;
         }
-        if (empty($this->navigation)) {
+        $navigationName = empty($params['name']) ? $this->navigation : $params['name'];
+        if (empty($navigationName)) {
             return;
         }
 
         if ($cache = $this->getCacheInfo()) {
-            $cacheKey = "navigation_{$cache['cache_id']}";
+            $cacheKey = "navigation_{$navigationName}_{$cache['cache_id']}";
             if (!empty($cache['expire'])) {
                 //$navigation = $this->cache()->read($cacheKey, 'role');
                 $navigation = $this->cache()->read($cacheKey);
@@ -602,22 +618,22 @@ class Xoops_Zend_Layout extends Zend_Layout
             $view = $this->getView();
             $request = XOOPS::registry("frontController")->getRequest();
             $module = $request->getModuleName();
-            $config = XOOPS::service("registry")->navigation->read($this->navigation, $module);
+            $config = XOOPS::service("registry")->navigation->read($navigationName, $module);
             $container = new Xoops_Zend_Navigation($config);
             $view->navigation($container);
-            $ulClass = empty($params["ulClass"]) ? 'jd_menu' : $params["ulClass"];
+            $ulClass = empty($params["ul_class"]) ? 'jd_menu' : $params["ul_class"];
             $navigation = array(
                 "menu"          => $view->navigation()->menu()->setUlClass($ulClass)->render(),
                 "breadcrumbs"   => $view->navigation()->breadcrumbs()->setMinDepth(0)->setLinkLast(false)->render()
             );
-            if ($cache) {
+            if (!empty($cache)) {
                 //$this->cache()->write($navigation, $cacheKey, $cache['expire'], 'role');
                 $this->cache()->write($navigation, $cacheKey, $cache['expire']);
             }
         } else {
             XOOPS::service('logger')->log("Navigation is cached", 'debug');
         }
-        $template = isset($template) ? $template : $smarty;
+        $template = $template ?: $smarty;
         $template->assign($params["assign"], $navigation);
         return;
     }
