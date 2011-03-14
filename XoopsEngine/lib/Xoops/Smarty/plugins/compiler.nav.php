@@ -18,10 +18,16 @@
  */
 
 /**
- * Inserts a navigation
+ * Inserts a custome navigation
  *
  * <code>
- * <{nav name=navigationName template="navigation.html" ul_class=val1 cache_expire=val2 cache_id=val3 }>
+ * <{nav name=navigationName template="navigation.html" ul_class=val1 cache_expire=val2 cache_id=val3}>
+ * </code>
+ *
+ * A global navigation can be inserted via: (cache parameters for a global navigation are set via layout automatically)
+ *
+ * <code>
+ * <{navigation name=navigationName [template="navigation.html"] [ul_class=val1]}>
  * </code>
  */
 
