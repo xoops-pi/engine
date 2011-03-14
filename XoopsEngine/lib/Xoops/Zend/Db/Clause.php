@@ -17,7 +17,7 @@
  * @package         Db
  * @version         $Id$
  */
- 
+
 /**
  * XOOPS database query clause parser
  */
@@ -28,11 +28,10 @@ class Xoops_Zend_Db_Clause
     private $container;
     private $elements = array();
     private $properties = array();
-    
-    
+
     /**
      * Constructor
-     * 
+     *
      * @param   mixed   $element
      * @param   mixed   $term
      */
@@ -68,13 +67,13 @@ class Xoops_Zend_Db_Clause
         $this->add($element, $term, "OR");
         return $this;
     }
-    
+
     public function setAdapter($adapter)
     {
         $this->adapter = $adapter;
         return $this;
     }
-    
+
     public function __toString()
     {
         if (empty($this->adapter)) {
@@ -114,19 +113,19 @@ class Xoops_Zend_Db_Clause
         }
         return $render_string;
     }
-    
+
     public function getProperties()
     {
         return $this->properties;
     }
-    
+
     public function __get($property)
     {
         return array_key_exists($property, $this->properties)
                 ? $this->properties[$property]
                 : null;
     }
-    
+
     public function __call($property, $args)
     {
         $this->properties[$property] = $args;

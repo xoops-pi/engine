@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS smarty compiler plugin
+ * Smarty compiler plugin for Xoops Engine
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       The Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -26,7 +26,7 @@
  */
 
 
-class Smarty_Compiler_Menu  extends Smarty_Internal_CompileBase
+class Smarty_Compiler_Menu extends Smarty_Internal_CompileBase
 {
     /**
      * Compiles code for the {menu} tag

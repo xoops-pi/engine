@@ -70,7 +70,7 @@ return array(
         'search'    => array("callback" => "demo::index"),
         'block'     => array(
             array(
-                'key'           => "search",
+                'name'          => "search",
                 'file'          => "blocks.php",
                 'title'         => _SEARCH_MI_BLOCK,
                 'description'   => _SEARCH_MI_BLOCK_DESC,

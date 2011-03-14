@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS smarty compiler plugin
+ * Smarty compiler plugin for Xoops Engine
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       The Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -51,7 +51,7 @@ class Smarty_Compiler_Widget  extends Smarty_Internal_CompileBase
         foreach ($_attr as $k => $v) {
             $pars[] = var_export($k, true) . " => " . (empty($v) ? '""' : $v);
         }
-        $str = "XOOPS::registry(\"view\")->Widget({$name}, ";
+        $str = "XOOPS::registry(\"view\")->widget({$name}, ";
         $str .= "array(" . implode(", ", $pars) . ")";
         //$str .= var_export($_attr, true);
         $str .= ")";

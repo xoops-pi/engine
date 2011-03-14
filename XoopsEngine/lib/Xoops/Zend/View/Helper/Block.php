@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       The Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -25,8 +25,8 @@ class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
      *
      * @access public
      *
-     * @param  array|string|int|object    $name        block name, id or object
-     * @param  array                $options    options passed to the block: parameters and cacheLifetime, cacheLevel
+     * @param  array|string|int|object    $block        block name, id or object
+     * @param  array                $options    options passed to the block: parameters and cache_expire, cache_level
      * @return string content of the block
      */
     public function block($block, $options = array())

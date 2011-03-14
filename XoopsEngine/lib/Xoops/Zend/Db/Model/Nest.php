@@ -126,8 +126,8 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
     }
 
     /**#@+
-      * Node operations
-      */
+     * Node operations
+     */
 
     /**
      * Get extreme value of left or right
@@ -702,8 +702,8 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
     /**#@-*/
 
     /**#@+
-      * Section operations
-      */
+     * Section operations
+     */
     /**
      * Add a section from formulated array
      *
@@ -780,24 +780,24 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
      * @param   array   $cols       columns to be fetched
      * @param   bool    $plain      result format, plain array or hirechical tree
      * @return  array   $ret        associative array of children
-     *                              Tree format:
      *
-     *                              [id] =>
-     *                                  //[depth] => node depth
-     *                                  [node]  => node data
-     *                                  [child] => children
-     *                                      [id]    =>
-     *                                          //[depth]   => node depth
-     *                                          [node]    => node data
-     *                                          [child]   => children
+     *                              Tree format:
+     *                              [id] => array(          // int, node id
+     *                                  //[depth] => {0-?}, // int, node depth
+     *                                  [node]  => array(), // associative array, node data
+     *                                  [child] => array(   // associative array, child nodes
+     *                                      [id]    => array(   // int, node id
+     *                                          //[depth]   => {0-?},   // int, node depth
+     *                                          [node]    => array(),   // associative array, node data
+     *                                          [child]   => array(     // associative array, child nodes
      *
      *                              plain format:
-     *                              [id] => array of node data
-     *                                  //[depth] => node depth
-     *                                  //[node]  => node data
-     *                              [id] => array of node data
-     *                                  //[depth] => node depth
-     *                                  //[node]  => node data
+     *                              [id] => array(
+     *                                  //[depth] => {0-?},     // int, node depth
+     *                                  //[node]  => array(),   // associative array, child nodes
+     *                              [id] => array(
+     *                                  //[depth] => {0-?},     // int, node depth
+     *                                  //[node]  => array(),   // associative array, child nodes
      */
     public function enumerate($objective = null, $cols = null, $plain = false)
     {

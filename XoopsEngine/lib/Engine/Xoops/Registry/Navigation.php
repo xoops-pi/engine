@@ -22,7 +22,6 @@ namespace Engine\Xoops\Registry;
 
 class Navigation extends \Kernel\Registry
 {
-    //protected $registry_key = "registry_navigation";
     protected $module;
     protected static $section = "front";
     protected static $route = "default";
@@ -66,6 +65,7 @@ class Navigation extends \Kernel\Registry
         $configGlobal = $model->enumerate($clause, $columns, false);
 
         // Translate global admin navigation
+        //$domain = $module ?: "system";
         $domain = "system";
         $navigation = $this->translateConfig($configGlobal, $domain, $locale);
 
