@@ -810,7 +810,7 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
             if ($objective instanceof Xoops_Zend_Db_Clause) {
                 $select->where($objective);
             } else {
-                $singleRoot = true;
+                //$singleRoot = true;
                 if ($objective instanceof Xoops_Zend_Db_Table_Row_Node) {
                     $row = $objective;
                 } elseif (!$row = $this->findRow($objective)) {
@@ -818,12 +818,6 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
                 }
                 $root = $row;
                 $root_id = $root->id;
-                /*
-                $item = array(
-                    "depth" => $row->depth,
-                    "node"  => $row->toArray()
-                );
-                */
                 $item = $row->toArray();
                 if (empty($plain)) {
                     $ret[$root_id] = $item;
@@ -859,17 +853,10 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
             if (is_null($root) || $row->left > $root->right) {
                 if (!empty($ret) && empty($plain)) {
                     $result += $ret;
-                    //Debug::e($ret);
                 }
                 unset($ret);
                 $root = $row;
                 $root_id = $root->id;
-                /*
-                $item = array(
-                    "depth" => $row->depth,
-                    "node"  => $row->toArray()
-                );
-                */
                 $item = $row->toArray();
                 if (empty($plain)) {
                     $ret[$root_id] = $item;
@@ -901,12 +888,6 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
 
             //continue;
             // store the node
-            /*
-            $item = array(
-                "depth" => $row->depth,
-                "node"  => $row->toArray()
-            );
-            */
             $item = $row->toArray();
             if (empty($plain)) {
                 $parent["child"][$row->id] = $item;
@@ -917,7 +898,7 @@ abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model
         }
 
         if (empty($plain) && !$singleRoot && !empty($ret)) {
-            $result = array_merge($result, $ret);
+            $result += $ret;
         }
         return $result;
     }
