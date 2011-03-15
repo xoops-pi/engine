@@ -26,9 +26,11 @@ $iamge = false;
 if (!empty($id)) {
 
     $options = array(
-        "wordLen"   => 6,
-        'width'     => 150,
-        'height'    => 50,
+        "wordLen"           => 6,
+        'width'             => 150,
+        'height'            => 50,
+        'dotNoiseLevel'     => 30,
+        'lineNoiseLevel'    => 1,
         "font"      => XOOPS::path('img/captcha/fonts/Vera.ttf'),
     );
 
