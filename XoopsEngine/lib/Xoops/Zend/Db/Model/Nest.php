@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       The Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -22,7 +22,7 @@
  * XOOPS Nested Set Tree Model
  *
  * Managing Hierarchical Data with Nested Set Model
- * @see: http://dev.mysql.com/tech-resources/articles/hierarchical-data.html
+ * @see http://dev.mysql.com/tech-resources/articles/hierarchical-data.html
  */
 
 abstract class Xoops_Zend_Db_Model_Nest extends Xoops_Zend_Db_Model

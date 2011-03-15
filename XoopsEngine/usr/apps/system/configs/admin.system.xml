@@ -381,6 +381,14 @@
                                     <action>module</action>
                                     <visible>0</visible>
                                 </module>
+                                <item>
+                                    <label>Module container</label>
+                                    <route>admin</route>
+                                    <module>system</module>
+                                    <controller>menu</controller>
+                                    <action>item</action>
+                                    <visible>0</visible>
+                                </item>
                             </pages>
                         </menu>
 

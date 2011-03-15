@@ -13,8 +13,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
- * @category        Xoops_Core
- * @package         Security
+ * @package         Xoops_Core
+ * @subpackage      Security
  * @version         $Id$
  */
 
@@ -30,6 +30,11 @@ class Security
             header("HTTP/1.1 403 Forbidden");
         }
         exit("Access denied" . ($message ? ": " . $message : "."));
+    }
+
+    public static function escape($text)
+    {
+        return htmlspecialchars($text, ENT_QUOTES, Xoops::config('charset'));
     }
 
     /**#@++

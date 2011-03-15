@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       The Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -22,8 +22,8 @@
  * XOOPS Directed Acyclic Graph or Partilly Ordered Set Model
  *
  * Managing Partially Ordered Data with DAG
- * @see: http://en.wikipedia.org/wiki/Directed_acyclic_graph
- * @see: http://www.codeproject.com/KB/database/Modeling_DAGs_on_SQL_DBs.aspx
+ * @see http://en.wikipedia.org/wiki/Directed_acyclic_graph
+ * @see http://www.codeproject.com/KB/database/Modeling_DAGs_on_SQL_DBs.aspx
  */
 
 abstract Xoops_Zend_Db_Model_Dag extends Xoops_Zend_Db_Model

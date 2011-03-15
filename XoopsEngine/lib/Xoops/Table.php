@@ -13,8 +13,8 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
- * @category        Xoops_Core
- * @package         Table
+ * @package         Xoops_Core
+ * @subpackage      Table
  * @version         $Id$
  * @uses            Xoops_Zend_Loader_PluginLoader
  * @uses            Xoops_Zend_Table_Exception
