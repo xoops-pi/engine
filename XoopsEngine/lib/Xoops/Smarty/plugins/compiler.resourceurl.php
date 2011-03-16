@@ -30,6 +30,7 @@
  * <code>
  * // Generate an resourceUrl using specified resourcePath
  * <{resourceUrl path=$resourcePath}>
+ * <{resourceUrl path="app/moduleName/resources/images/img.png"}>
  * </code>
  */
 

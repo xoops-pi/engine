@@ -117,7 +117,6 @@ class System_RootController extends Xoops_Zend_Controller_Action
 
         //$this->setTemplate("root_authenticate.html");
         Xoops::service("auth")->loadAdapter("root");
-        //$myts = MyTextsanitizer::getInstance();
         $result = Xoops::service("auth")->process($identity, $credential);
 
         if (!$result->isValid()) {
@@ -160,22 +159,6 @@ class System_RootController extends Xoops_Zend_Controller_Action
         $this->redirect($urlOptions, $options);
     }
 
-    /*
-    public function imageAction()
-    {
-        $captcha = $this->createCaptcha()->getCaptcha();
-        $captcha->generate();
-        $result = array(
-            "image"     => $captcha->getImgUrl() . $captcha->getId() . $captcha->getSuffix(),
-            "id"        => $captcha->getId(),
-        );
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            echo json_encode($result);
-        }
-        return;
-    }
-    */
-
     protected function createCaptcha($form = null)
     {
         $module = $this->getRequest()->getModuleName();
@@ -192,16 +175,6 @@ class System_RootController extends Xoops_Zend_Controller_Action
             $form = new Xoops_Zend_Form();
         }
         $captcha = $form->createElement("Captcha", $captchaName, $options);
-
-        /*
-        $callback = $this->getFrontController()->getRouter()->assemble(
-            array(
-                "action"        => "image",
-            ),
-            "root"
-        );
-        $captcha->getCaptcha()->setCallback($callback);
-        */
 
         return $captcha;
     }

@@ -190,7 +190,6 @@ class Xoops_Zend_Session_SaveHandler_Cookie implements Zend_Session_SaveHandler_
         if (count($rawData) < 3) {
             return false;
         }
-        //$rawData[2] = $rawData[2] ? Xoops_Crypt::decrypt($rawData[2]) : '';
         if ($rawData[2]) {
             $rawData[2] = Xoops_Zend_Filter::filterStatic($rawData[2], 'decrypt');
         }
@@ -201,7 +200,6 @@ class Xoops_Zend_Session_SaveHandler_Cookie implements Zend_Session_SaveHandler_
     {
         $cookieName = $this->getCookieName($id);
         $modified = time();
-        //$rawData = $lifetime . '.' . $modified . '.' . ($data ? Xoops_Crypt::encrypt($data) : '');
         if ($data) {
             $data = Xoops_Zend_Filter::filterStatic($data, 'encrypt');
         }

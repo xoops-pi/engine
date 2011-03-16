@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       The Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -19,9 +19,9 @@
  */
 
 /**
- * @todo: inline base64 image
- * @see: http://en.wikipedia.org/wiki/Data_URI_scheme
- * @see: http://www.codeproject.com/KB/aspnet/captchanet.aspx
+ * @todo    inline base64 image
+ * @see     http://en.wikipedia.org/wiki/Data_URI_scheme
+ * @see     http://www.codeproject.com/KB/aspnet/captchanet.aspx
  * Browser limitations:
     The image is encoded in base64 (i.e. 7 bit characters).
     This means the image is typically 30% larger than the original bit map.
