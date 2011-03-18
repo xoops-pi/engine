@@ -33,7 +33,7 @@ class Memcached implements PersistInterface
     public function __construct()
     {
         if (!extension_loaded('memcached')) {
-            throw new exception('The memcached extension must be loaded for using this model !');
+            throw new \Exception('The memcached extension must be loaded for using this model !');
         }
         $this->memcached = new \memcached;
         $this->memcached->addServer(self::SERVER_HOST, self::SERVER_PORT, self::SERVER_WEIGHT);

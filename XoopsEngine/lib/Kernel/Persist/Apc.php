@@ -24,7 +24,7 @@ class Apc implements PersistInterface
     public function __construct()
     {
         if (!extension_loaded('apc')) {
-            throw new exception('The apc extension must be loaded for using this model !');
+            throw new \Exception('The apc extension must be loaded for using this model !');
         }
     }
 

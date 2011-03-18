@@ -31,7 +31,7 @@ class Memcache implements PersistInterface
     public function __construct()
     {
         if (!extension_loaded('memcache')) {
-            throw new exception('The memcache extension must be loaded for using this model !');
+            throw new \Exception('The memcache extension must be loaded for using this model !');
         }
         $this->memcache = new \memcache;
         $this->memcache->addServer(self::DEFAULT_HOST);

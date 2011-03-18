@@ -62,7 +62,7 @@ class File implements PersistInterface
         }
         $cacheFile = $this->fileName($id);
         if (!$file = fopen($cacheFile, "w")) {
-            throw new exception("Cache file '{$cacheFile}' can not be created.");
+            throw new \Exception("Cache file '{$cacheFile}' can not be created.");
         }
         $content = "<?php return " . var_export($data, true) . ";?>";
         fwrite($file, $content);
