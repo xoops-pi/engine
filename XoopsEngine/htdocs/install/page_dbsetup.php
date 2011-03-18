@@ -10,7 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -21,7 +21,7 @@
 //$xoopsOption['hascommon'] = true;
 require_once __DIR__ . '/include/common.inc.php';
 if (!defined('XOOPS_INSTALL')) { die('XOOPS Installation wizard die'); }
-defined('BOOTSTRAP') or define('BOOTSTRAP', false);
+defined('XOOPS_BOOTSTRAP') or define('XOOPS_BOOTSTRAP', false);
 include '../boot.php';
 
 $pageHasForm = true;

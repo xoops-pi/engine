@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -28,10 +28,10 @@
  *
  * Note: No evidence is collected for so-called better performance yet.
  */
-//define("HEADER_TYPE", 'SENDFILE');
+//define("XOOPS_HEADER_TYPE", 'SENDFILE');
 /*#@-*/
 
-define('BOOTSTRAP', '');
+define('XOOPS_BOOTSTRAP', '');
 require __DIR__ . '/boot.php';
 
 // Fetch path from query string if path is not set, i.e. through a direct request
@@ -67,13 +67,13 @@ if (in_array($suffix, array('css', 'js', 'gif', 'jpg', 'png'))) {
 header('Content-type: ' . $content_type);
 header('Content-Length: ' . filesize($path));
 
-if (defined('HEADER_TYPE')) {
+if (defined('XOOPS_HEADER_TYPE')) {
     // For nginx X-Accel-Redirect
-    if ('ACCEL_REDIRECT' === HEADER_TYPE) {
+    if ('ACCEL_REDIRECT' === XOOPS_HEADER_TYPE) {
         header('X-Accel-Redirect: ' . $path);
         return;
     // For apache X-Sendfile
-    } elseif ('SENDFILE' === HEADER_TYPE) {
+    } elseif ('SENDFILE' === XOOPS_HEADER_TYPE) {
         header('X-Sendfile: ' . $path);
         return;
     }

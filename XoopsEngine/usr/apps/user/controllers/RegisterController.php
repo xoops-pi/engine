@@ -118,9 +118,9 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         $captchaName = "captcha";
         $options = array(
             "label"     => "Please type following characters",
-            "captcha"   => array(
+            //"captcha"   => array(
                 "captcha"           => "Image",
-            ),
+            //),
             "description"   => "Click the above image to refresh",
         );
         if ($form instanceof Xoops_Zend_Form) {
@@ -129,7 +129,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         }
         $captcha = $form->createElement("Captcha", $captchaName, $options);
 
-	    /*
+        /*
         $callback = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -144,7 +144,7 @@ class User_RegisterController extends Xoops_Zend_Controller_Action
         );
         // For Image CAPTCHA
         $this->template->assign("captcha", $captchaData);
-	    */
+        */
 
         return $captcha;
     }

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Xoops Engine http://www.xoopsengine.org/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -164,11 +164,11 @@ class XOOPS
         //} elseif (isset($GLOBALS['xoopsOption']["bootstrap"])) {
             // Bootstrap set in global options
             //$bootstrap = $GLOBALS['xoopsOption']["bootstrap"];
-        } elseif (defined('BOOTSTRAP')) {
+        } elseif (defined('XOOPS_BOOTSTRAP')) {
             // Bootstrap set in global options
-            $bootstrap = constant('BOOTSTRAP');
+            $bootstrap = constant('XOOPS_BOOTSTRAP');
         } else {
-            // If not set, load legacy
+            // If not set, load regular bootstrap
             $bootstrap = "application";
         }
         // Load engine
@@ -218,7 +218,7 @@ class XOOPS
                 require self::ROOT . '/Kernel/Persist.php';
             }
             */
-            $type = defined("PERSIST_TYPE") ? constant("PERSIST_TYPE") : null;
+            $type = defined("XOOPS_PERSIST_TYPE") ? constant("XOOPS_PERSIST_TYPE") : null;
             self::$persist = new Kernel\Persist($type);
         }
         return self::$persist;

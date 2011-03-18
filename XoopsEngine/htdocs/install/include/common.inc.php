@@ -5,7 +5,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright   Xoops Engine
  * @license     BSD License
  * @package     installer
  * @since       3.0
@@ -46,8 +46,8 @@ $xoopsOption['nocommon'] = true;
 if (!empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = false;
     //$xoopsOption['bootstrap'] = "setup";
-    define('BOOTSTRAP', "setup");
+    define('XOOPS_BOOTSTRAP', "setup");
     include '../boot.php';
 } else {
-    define('BOOTSTRAP', false);
+    define('XOOPS_BOOTSTRAP', false);
 }

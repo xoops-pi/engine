@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @package         Kernel
@@ -150,18 +150,18 @@ class Engine implements \Kernel\EngineInterface
      * - Load primary services
      * - Application bootstrap
      *
-     * @access public
+     * @param string|array $bootstrap  bootstrap name or bootstrap options
      * @return string   path to boot file
      */
     public function boot($bootstrap = null)
     {
         // Set run environment
         // Defined in configuration
-        if (defined('APPLICATION_ENV')) {
-            $this->configs['environment'] = APPLICATION_ENV;
+        if (defined('XOOPS_ENV')) {
+            $this->configs['environment'] = XOOPS_ENV;
         // Defined via system variable
-        } elseif (getenv('APPLICATION_ENV')) {
-            $this->configs['environment'] = getenv('APPLICATION_ENV');
+        } elseif (getenv('XOOPS_ENV')) {
+            $this->configs['environment'] = getenv('XOOPS_ENV');
         }
 
         try {
@@ -184,7 +184,7 @@ class Engine implements \Kernel\EngineInterface
             try {
                 $options = array(
                     "autoloader"    => \Xoops::autoloader(),
-                    "bootfile"      => $bootstrap,
+                    "bootstrap"     => $bootstrap,
                     "engine"        => $this,
                 );
                 $application = new \Xoops_Zend_Application($this->configs["environment"], $options);

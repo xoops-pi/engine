@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Xoops Engine http://www.xoopsengine.org/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
@@ -25,11 +25,13 @@ if (!defined("XOOPS_BOOT_INCLUDED")) {
     defined("XOOPS_PATH") OR define("XOOPS_PATH", "");
 
     // Backend support for persistent data, valid values: Apc, Memcached, Memcache, File
-    defined("PERSIST_TYPE") OR define("PERSIST_TYPE", "");
+    defined("XOOPS_PERSIST_TYPE") OR define("XOOPS_PERSIST_TYPE", "");
 
     // Prefix for persistent data key
-    defined("PERSIST_PREFIX") OR define("PERSIST_PREFIX", "xoops");
+    defined("XOOPS_PERSIST_PREFIX") OR define("XOOPS_PERSIST_PREFIX", "xoops");
 
     include XOOPS_PATH . '/Xoops.php';
-    return XOOPS::boot(XOOPS_ENGINE);
+    if (!defined('XOOPS_BOOT_SKIP')) {
+        return XOOPS::boot(XOOPS_ENGINE);
+    }
 }

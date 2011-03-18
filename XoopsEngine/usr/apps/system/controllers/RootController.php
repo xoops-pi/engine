@@ -165,9 +165,13 @@ class System_RootController extends Xoops_Zend_Controller_Action
         $captchaName = "captcha";
         $options = array(
             "label"     => "Please type following characters",
-            "captcha"   => array(
+            //"captcha"   => array(
                 "captcha"   => "Image",
-            ),
+                // Indicates CAPTCHA to use admin session to store token, applicable only if Image CAPTCHA with remote image generator script is used
+                "captchaOptions"    => array(
+                    "section"   => "admin",
+                ),
+            //),
             "description"   => "Click the above image to refresh",
         );
         if ($form instanceof Xoops_Zend_Form) {

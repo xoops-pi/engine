@@ -34,6 +34,12 @@
 
 class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
 {
+    /**
+     * Section to determine what session storage is used
+     * Front end session uses different storage from backend (or section of "admin")
+     */
+    protected $section = "";
+
     protected $refreshUrl = "usr/captcha/image.php";
     //protected $callback;
 
@@ -119,9 +125,9 @@ class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
         $imgId = is_string($element) ? $element : $element->getId();
         return "<img width=\"" . $this->getWidth() . "\" height=\"" . $this->getHeight() . "\" alt=\"" . $this->getImgAlt() . "\"" .
             //" src=\"" . $this->getImgUrl() . $this->getId() . $this->getSuffix() . "\"" .
-            " src=\"" . $this->getRefreshUrl() . '?id=' . $id . "\"" .
+            " src=\"" . $this->getRefreshUrl(array('id' => $id)) . "\"" .
             " style='cursor: pointer; vertical-align: middle;'" .
-            " onclick=\"this.src='" . $this->getRefreshUrl() . '?id=' . $id . "&amp;refresh='+Math.random()\"  style='cursor: pointer; vertical-align: middle;'" .
+            " onclick=\"this.src='" . $this->getRefreshUrl(array('id' => $id)) . "&amp;refresh='+Math.random()\"  style='cursor: pointer; vertical-align: middle;'" .
             " id=\"" . $imgId . "-image\"" .
             " /><br />";
     }
@@ -132,6 +138,11 @@ class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
         $this->callback = $callback;
     }
     */
+
+    public function setSection($section)
+    {
+        $this->section = $section;
+    }
 
     /**
      * Generate captcha
@@ -154,9 +165,17 @@ class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
         return $id;
     }
 
-    protected function getRefreshUrl()
+    protected function getRefreshUrl($params = array())
     {
-        return Xoops::url('www') . '/' . $this->refreshUrl;
+        if ($this->section) {
+            $params['section'] = $this->section;
+        }
+        $url = Xoops::url('www') . '/' . $this->refreshUrl;
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params, '', '&amp;');
+        }
+
+        return $url;
     }
 
     /*

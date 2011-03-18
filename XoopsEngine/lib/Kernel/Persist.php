@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Xoops Engine http://www.xoopsengine.org/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @package         Kernel
@@ -91,7 +91,7 @@ class Persist
     public function prefix($key = null)
     {
         if (null === $this->prefix) {
-            $this->prefix = defined('PERSIST_PREFIX') ? constant('PERSIST_PREFIX') : 'persist';
+            $this->prefix = defined('XOOPS_PERSIST_PREFIX') ? constant('XOOPS_PERSIST_PREFIX') : 'persist';
         }
         if (null === $key) {
             return $this->prefix;

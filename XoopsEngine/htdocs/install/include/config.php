@@ -3,7 +3,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright   Xoops Engine
  * @license     BSD License
  * @package     installer
  * @since       3.0

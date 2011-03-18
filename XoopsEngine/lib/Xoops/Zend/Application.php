@@ -41,18 +41,23 @@ class Xoops_Zend_Application extends Zend_Application
             $bootfile = "application";
             $options = array();
         } elseif (is_array($options)) {
-            if (array_key_exists("bootfile", $options)) {
-                $bootfile = $options["bootfile"];
-                unset($options["bootfile"]);
+            if (array_key_exists("bootstrap", $options)) {
+                $bootOption = $options["bootstrap"];
+                unset($options["bootstrap"]);
             }
         } elseif (is_string($options) && !empty($options)) {
-            $bootfile = $options;
+            $bootOption = $options;
             $options = array();
         }
         $options = (array) $options;
-        if (!empty($bootfile)) {
-            $bootFile = XOOPS::path("var") . "/etc/bootstrap.{$bootfile}.ini";
-            $options = array_merge($this->_loadConfig($bootFile), $options);
+        if (!empty($bootOption)) {
+            if (is_string($bootOption)) {
+                $bootFile = XOOPS::path("var") . "/etc/bootstrap.{$bootOption}.ini";
+                $bootOption = $this->_loadConfig($bootFile);
+            } elseif (is_array($bootOption)) {
+                $bootOption = $this->completeConfig($bootOption);
+            }
+            $options = array_merge($bootOption, $options);
         }
         $this->setOptions($options);
     }
@@ -172,6 +177,8 @@ class Xoops_Zend_Application extends Zend_Application
         $persistKey = "config.bootstrap." . md5($file);
         if (!$config = XOOPS::persist()->load($persistKey)) {
             $config = parent::_loadConfig($file);
+            $config = $this->completeConfig($config);
+            /*
             if (!empty($config["resources"])) {
                 foreach ($config["resources"] as $key => &$cfg) {
                     if (!is_array($cfg) || empty($cfg["config"])) {
@@ -182,7 +189,29 @@ class Xoops_Zend_Application extends Zend_Application
                     $cfg = array_merge($cfg, $opt);
                 }
             }
+            */
             $status = XOOPS::persist()->save($config, $persistKey);
+        }
+        return $config;
+    }
+
+    /**
+     * Load resource configuration from files
+     *
+     * @param  array $options
+     * @return array
+     */
+    protected function completeConfig($config)
+    {
+        if (!empty($config["resources"])) {
+            foreach ($config["resources"] as $key => &$cfg) {
+                if (!is_array($cfg) || empty($cfg["config"])) {
+                    continue;
+                }
+                $opt = Xoops_Config::load(XOOPS::path("var") . "/etc/resource." . $cfg["config"] . ".ini");
+                unset($cfg["config"]);
+                $cfg = array_merge($cfg, $opt);
+            }
         }
         return $config;
     }

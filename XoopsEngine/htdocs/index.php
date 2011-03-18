@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -39,7 +39,7 @@ if (!empty($_SERVER['REQUEST_URI']) && false !== ($pos = strpos($_SERVER['REQUES
     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 0, $pos);
 }
 
-define('BOOTSTRAP', 'application');
+define('XOOPS_BOOTSTRAP', 'application');
 include __DIR__ . "/boot.php";
 exit();
 /*#@-*/

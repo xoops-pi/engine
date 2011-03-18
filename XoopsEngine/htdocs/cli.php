@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -17,6 +17,5 @@
  * @version         $Id$
  */
 
-define('BOOTSTRAP', 'cli');
-//$GLOBALS['xoopsOption']['bootstrap'] = 'cli';
+define('XOOPS_BOOTSTRAP', 'cli');
 include __DIR__ . "/boot.php";

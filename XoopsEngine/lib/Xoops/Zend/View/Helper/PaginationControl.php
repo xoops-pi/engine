@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -39,7 +39,7 @@ class Xoops_Zend_View_Helper_PaginationControl extends Zend_View_Helper_Paginati
         foreach($params as $param => $value) {
             $router->setGlobalParam($param, $value);
         }
-        
+
         return parent::paginationControl($paginator, $scrollingStyle, $partial, $params);
     }
 }

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Xoops Engine http://www.xoopsengine.org/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -17,8 +17,8 @@
  * @version         $Id$
  */
 
-defined('BOOTSTRAP') or define('BOOTSTRAP', false);
-//define('APPLICATION_ENV', 'production');
+defined('XOOPS_BOOTSTRAP') or define('XOOPS_BOOTSTRAP', false);
+//define('XOOPS_ENV', 'production');
 require __DIR__ . '/boot.php';
 
 $result = array();
