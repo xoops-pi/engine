@@ -65,7 +65,7 @@
                         {
                             id          : $(NODE).attr("id"),
                             reference   : $(REF_NODE).attr("id"),
-                            type        : TYPE,
+                            type        : TYPE
                         },
                         function (data) {
                             //alert(data.status);
@@ -87,7 +87,7 @@
                         callback.renameCall,
                         {
                             id      : $(NODE).attr("id"),
-                            label   : $node.text(),
+                            label   : $node.text()
                         },
                         function (data) {
                             //alert(data.status);
@@ -99,7 +99,7 @@
                         "json"
                     );
 
-                    },
+                    }
             },
             types   : {
                 "default"  : {
@@ -111,7 +111,7 @@
                     deletable   : false, // can be function
                     creatable   : true, // can be function
                     draggable   : false, // can be function
-                    editable    : false, // can be function
+                    editable    : false // can be function
                 },
                 "protected"  : {
                     clickable   : true, // can be function
@@ -119,11 +119,11 @@
                     deletable   : false, // can be function
                     creatable   : false, // can be function
                     draggable   : true, // can be function
-                    editable    : false, // can be function
-                },
+                    editable    : false // can be function
+                }
             },
             ui        : {
-                theme_name    : "classic",// if set to false no theme will be loaded
+                theme_name    : "classic"// if set to false no theme will be loaded
             },
             plugins : {
                 contextmenu : {
@@ -146,7 +146,7 @@
                                     node: NODE
                                 });
                                 //alert(modalForm);
-                                },
+                                }
                         },
                         // edit an item
                         edit : {
@@ -169,7 +169,7 @@
                                     containerCss: ({ width: "500px", height: "275px", marginLeft: "-250px" }),
                                     tree: TREE_OBJ,
                                     node: NODE,
-                                    op  : "edit",
+                                    op  : "edit"
                                 });
 
                                 $.get(
@@ -195,7 +195,7 @@
                                     "json"
                                 );
 
-                                },
+                                }
                         },
                         rename : false,
                         remove : {
@@ -214,8 +214,8 @@
                                     tree: TREE_OBJ,
                                     node: NODE
                                 });
-                                },
-                        },
+                                }
+                        }
                     }
                 }
             }
@@ -255,7 +255,7 @@
                     uri         : $("#uri").attr("value"),
                     resource    : $("#resource").attr("value"),
                     visible     : $("#visible").attr("value"),
-                    navigation  : "<{$navigation}>",
+                    navigation  : "<{$navigation}>"
                 },
                 function (data) {
                     //alert($(node_obj).attr("id"));
@@ -298,7 +298,7 @@
             $.post(
                 callback.deleteCall,
                 {
-                    id   : $(node_obj).attr("id"),
+                    id   : $(node_obj).attr("id")
                 },
                 function (data) {
                     if (data == null || data.status == "undefined" || data.status != 1) {
