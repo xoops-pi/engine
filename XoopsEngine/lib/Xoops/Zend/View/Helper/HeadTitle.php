@@ -23,8 +23,24 @@
  * @see Zend_View_Helper_HeadTitle
  *
  * <code>
- * XOOPS::registry('view')->headTitle('Title', 'append');
+ *  XOOPS::registry('view')->headTitle('Title');
+ *  XOOPS::registry('view')->headTitle('Title', 'append');
+ *  XOOPS::registry('view')->headTitle('Title', 'set');
+ *  XOOPS::registry('view')->headTitle('Title', 'prepend');
  * </code>
  */
 class Xoops_Zend_View_Helper_HeadTitle extends Zend_View_Helper_HeadTitle
-{}
+{
+    /**
+     * Retrieve placeholder for title element and optionally set state
+     *
+     * @param  string $title
+     * @param  string $setType potential value: set - replace existing content; append - append to existing content, default; prepend - prepend to existing content
+     * @return Zend_View_Helper_HeadTitle
+     */
+    public function headTitle($title = null, $setType = null)
+    {
+        parent::headTitle($title, $setType ? strtoupper($setType) : null);
+        return $this;
+    }
+}
