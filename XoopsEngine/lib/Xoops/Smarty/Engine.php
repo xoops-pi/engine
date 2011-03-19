@@ -47,7 +47,7 @@ XOOPS::autoloader()->registerCallback("Xoops_Smarty_Autoload");
  */
 class Xoops_Smarty_Engine extends Smarty
 {
-    public $currentTemplate; // = "db:system_dummy.html";
+    public $currentTemplate;
     //private $cache_id;
 
     public function __construct($options = array())

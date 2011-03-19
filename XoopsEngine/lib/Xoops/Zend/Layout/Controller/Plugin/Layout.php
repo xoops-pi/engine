@@ -158,7 +158,7 @@ class Xoops_Zend_Layout_Controller_Plugin_Layout extends Zend_Layout_Controller_
         }
 
         // if template is not set, we need save the content to smarty cache
-        if ($cache['template'] != "db:system_dummy.html") {
+        if ($cache['template'] != "system/dummy.html") {
             return true;
         }
         $template = $layout->getView()->getEngine();
@@ -170,7 +170,7 @@ class Xoops_Zend_Layout_Controller_Plugin_Layout extends Zend_Layout_Controller_
         }
         $content = $layout->{$layout->getContentKey()};
         $template->assign("dummy_content", $content);
-        $template->fetch("db:system_dummy.html", $cacheInfo['cache_id']);
+        $template->fetch("system/dummy.html", $cacheInfo['cache_id']);
     }
 
     private function readPageCache()
