@@ -9,12 +9,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
  * @category        Xoops_Theme
- * @package         dev
+ * @package         default
  * @version         $Id$
  */
 
@@ -28,9 +28,11 @@
  *  empty.html - empty layout with body only
  *  admin.html - backoffice layout
  *  paginator.html - Paginator template
+ *  comment.html - Comment template
+ *  notification.html - Notification form template
  * OPTIONAL:
  *  navigation.html - generic navigation template, referenced by layout.html
- *  
+ *
  * Stylesheet files:
  * REQUIRED:
  *  style.css - main css file
@@ -40,17 +42,20 @@
  *  default/scripts/exception.css - css file for error pages
  *  default/images/loading_indicator.jpg - Indicator image for redirecting page
  */
+
 return array(
     // Version
-    "version"       => "1.0.1",
+    "version"       => "1.0.0",
     // Title of the theme
-    "name"          => "Xoops Engine Theme",
-    // Parent theme to inherate
+    "name"          => "Dev Theme",
+    // Parent theme to inherit
     "parent"        => "default",
     // Author information: name, email, website
-    "author"        => "Theme architecture: Taiwen Jiang <taiwenjiang@tsinghua.org.cn>; Resources: XOOPS Development Team",
+    "author"        => "Theme architecture: Taiwen Jiang <taiwenjiang@tsinghua.org.cn>; Resources: Xoops Engine Development Team",
     // Screenshot image. If no screenshot is available, the default theme screenshot will be used
-    "screenshot"    => "screenshot.png",
+    //"screenshot"    => "screenshot.png",
     // License or theme images and scripts
     "license"       => "Creative Common License http://creativecommons.org/licenses/by/3.0/",
+    // Disable the theme
+    "disable"       => false
 );

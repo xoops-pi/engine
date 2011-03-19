@@ -32,9 +32,10 @@ class Themelist extends \Kernel\Registry
     {
         $type = isset($options['type']) ? $options['type'] : 'installed';
         $themes = array();
-        if ($type == 'install') {
-            $skipList = array_keys(self::read('installed'));
-            $iterator = new \DirectoryIterator(\Xoops::path("theme"));
+        if ($type == 'install' || $type == 'deploy') {
+            $skipList = ($type == 'deploy') ? array() : array_keys(self::read('installed'));
+            $themePath = ($type == 'deploy') ? 'usr/themes' : 'theme';
+            $iterator = new \DirectoryIterator(\Xoops::path($themePath));
             foreach ($iterator as $fileinfo) {
                 if (!$fileinfo->isDir() || $fileinfo->isDot()) {
                     continue;
@@ -51,6 +52,11 @@ class Themelist extends \Kernel\Registry
                 if (!empty($themeInfo["disable"])) continue;
                 if (empty($themeInfo["name"])) {
                     $themeInfo["name"] = $themeName;
+                }
+                if (empty($themeInfo["screenshot"])) {
+                    $themeInfo["screenshot"] = 'img/images/theme.png';
+                } else {
+                    $themeInfo["screenshot"] = $themePath . '/' . $themeName . '/' . $themeInfo["screenshot"];
                 }
                 $themes[$themeName] = $themeInfo;
             }
@@ -76,7 +82,7 @@ class Themelist extends \Kernel\Registry
 
     protected function loadData(&$options = array())
     {
-        if (isset($options['type']) && $options['type'] == 'install') {
+        if (isset($options['type']) && ($options['type'] == 'install' || $options['type'] == 'deploy')) {
             return $this->loadDynamic($options);
         }
         if (false === ($data = $this->loadCache($options))) {

@@ -19,6 +19,14 @@
  */
 
 /**
+ * Theme life cycle
+ *  1 Deployment: from usr/themes/ to www/themes
+ *  2 Installation: from www/themes to database
+ *  3 Activation/Deactivation
+ *  4 Uninstallation: remove from database
+ */
+
+/**
  * A complete theme set should include following files:
  *
  * Folder and file skeleton:
@@ -52,6 +60,9 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         $this->skipCache();
     }
 
+    /**
+     * List of installed themes: active and inactive
+     */
     public function indexAction()
     {
         $themes = XOOPS::service('registry')->themelist->read('active');
@@ -67,6 +78,9 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         $this->setTemplate("theme_list.html");
     }
 
+    /**
+     * List of themes available in usr/themes that can be deployed into www/themes
+     */
     public function availableAction()
     {
         $themes = XOOPS::service('registry')->themelist->read('install');
@@ -75,24 +89,12 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         }
         $this->template->assign("themes_install", $themes);
 
-        $iterator = new DirectoryIterator(XOOPS::path("usr/themes"));
-        $pathThemes = XOOPS::path("theme");
-        $themes = array();
-        foreach ($iterator as $fileinfo) {
-            if (!$fileinfo->isDir()) {
-                continue;
-            }
-            $name = $fileinfo->getFilename();
-            if (file_exists($pathThemes . "/" . $name)) {
-                continue;
-            }
-            $configFile = $fileinfo->getPathname() . "/info.php";
-            if (!file_exists($configFile)) {
-                continue;
-            }
-            $themes[$name] = include $configFile;
-            //$themes[$name]["screenshot"] = Xoops::url('usr/themes') . '/' . $key . '/' . $themes[$name]["screenshot"];
+        $themes = XOOPS::service('registry')->themelist->read('deploy');
+        /*
+        foreach ($themes as $key => &$theme) {
+            $theme["upgrade"] = $this->checkUpgrade($key, $theme["version"]);
         }
+        */
         $this->template->assign("themes_deploy", $themes);
 
         $this->setTemplate("theme_available.html");
@@ -128,8 +130,8 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         XOOPS::service('registry')->theme->flush();
         XOOPS::service('registry')->themelist->flush();
 
-        XOOPS::registry('view')->getEngine()->clearTemplate('', $dirname);
-        XOOPS::registry('view')->getEngine()->clearCache('', $dirname);
+        XOOPS::registry('view')->getEngine()->clearTemplate(null, $dirname);
+        XOOPS::registry('view')->getEngine()->clearCache(null, $dirname);
         $url = array("action" => "index", "route" => "admin", "reset" => true);
         $options = array("time" => 5, "message" => $message);
         $this->redirect($url, $options);
@@ -195,8 +197,8 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
             XOOPS::service('registry')->themelist->flush();
         }
 
-        XOOPS::registry('view')->getEngine()->clearTemplate('', $dirname);
-        XOOPS::registry('view')->getEngine()->clearCache('', $dirname);
+        XOOPS::registry('view')->getEngine()->clearTemplate(null, $dirname);
+        XOOPS::registry('view')->getEngine()->clearCache(null, $dirname);
 
         $url = array("action" => "index", "route" => "admin", "reset" => true);
         $options = array("time" => 5, "message" => $message);
@@ -206,28 +208,33 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
     public function installAction()
     {
         $dirname = $this->getRequest()->getParam("dirname");
-        $themes = XOOPS::service('registry')->themelist->read('install');
-        $data = isset($themes[$dirname]) ? $themes[$dirname] : null;
-        if (empty($data)) {
+        $configFile = Xoops::path('theme') . '/' . $dirname . '/info.php';
+        if (!file_exists($configFile)) {
             $message = sprintf(XOOPS::_("The theme '%s' is not found."), $dirname);
-        } elseif (empty($data["parent"]) && $files = $this->checkFiles($dirname)) {
-            $message = XOOPS::_("Files missing: ") . implode(" ", $files);
         } else {
-            $data["dirname"] = $dirname;
-            $data["active"] = 1;
-            $data["update"] = time();
-            $model = XOOPS::getModel("theme");
-            $columns = $model->info("cols");
-            foreach ($data as $col => $val) {
-                if (!in_array($col, $columns)) {
-                    unset($data[$col]);
+            $data = include $configFile;
+            if (empty($data["parent"]) && $files = $this->checkFiles($dirname)) {
+                $message = XOOPS::_("Files missing: ") . implode(" ", $files);
+            } else {
+                $data["dirname"] = $dirname;
+                $data["active"] = 1;
+                $data["update"] = time();
+                if (empty($data["name"])) {
+                    $data["name"] = $dirname;
                 }
-            }
+                $model = XOOPS::getModel("theme");
+                $columns = $model->info("cols");
+                foreach ($data as $col => $val) {
+                    if (!in_array($col, $columns)) {
+                        unset($data[$col]);
+                    }
+                }
 
-            $model->insert($data);
-            $message = sprintf(XOOPS::_("The theme '%s' is installed."), $dirname);
-            XOOPS::service('registry')->theme->flush();
-            XOOPS::service('registry')->themelist->flush();
+                $model->insert($data);
+                $message = sprintf(XOOPS::_("The theme '%s' is installed."), $dirname);
+                XOOPS::service('registry')->theme->flush();
+                XOOPS::service('registry')->themelist->flush();
+            }
         }
 
         $options = array("time" => 5, "message" => $message);
@@ -248,8 +255,8 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
             XOOPS::service('registry')->themelist->flush();
         }
 
-        XOOPS::registry('view')->getEngine()->clearTemplate('', $dirname);
-        XOOPS::registry('view')->getEngine()->clearCache('', $dirname);
+        XOOPS::registry('view')->getEngine()->clearTemplate(null, $dirname);
+        XOOPS::registry('view')->getEngine()->clearCache(null, $dirname);
 
         $url = array("action" => "index", "route" => "admin", "reset" => true);
         $options = array("time" => 5, "message" => $message);
@@ -337,16 +344,19 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
     {
         $source = $theme;
         $target = $theme;
-        $stats = $this->copyFolder($source, $target);
-        $config = include $source . "/info.php";
+        $config = include Xoops::path('usr') . '/themes/' . $source . "/info.php";
         if (!empty($config["parent"])) {
             $statsParent = $this->copyFolder($config["parent"], $target, $source);
-            $stats["files"]["copied"] += $statsParent["files"]["copied"];
-            $stats["files"]["failed"] += $statsParent["files"]["copied"];
-            $stats["folders"]["created"] += $statsParent["files"]["copied"];
-            $stats["folders"]["failed"] += $statsParent["files"]["copied"];
         }
-        $status = (0 == $stats["files"]["failed"] + $stats["folders"]["failed"]) ? true : false;
+        $stats = $this->copyFolder($source, $target);
+        if (!empty($statsParent)) {
+            $stats["files"]["copied"] += $statsParent["files"]["copied"];
+            $stats["files"]["failed"] += $statsParent["files"]["failed"];
+            $stats["folders"]["created"] += $statsParent["folders"]["created"];
+            $stats["folders"]["failed"] += $statsParent["folders"]["failed"];
+        }
+
+        $status = (0 == count($stats["files"]["failed"]) + count($stats["folders"]["failed"])) ? true : false;
         return $status;
     }
 
@@ -363,12 +373,12 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
     protected function copyFolder($sourceTheme, $targetTheme, $exclude = null)
     {
         $files = array(
-            "copied"    => 0,
-            "failed"    => 0,
+            "copied"    => array(),
+            "failed"    => array(),
         );
         $folders  = array(
-            "created"   => 0,
-            "failed"    => 0,
+            "created"   => array(),
+            "failed"    => array(),
         );
 
         $source = XOOPS::path("usr") . "/themes/" . $sourceTheme;
@@ -398,16 +408,16 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
                         chmod($targetFile, 0777);
                     }
                     if (copy($filename, $targetFile)) {
-                        $files["copied"]++;
+                        $files["copied"][] = $filename . ' => ' . $targetFile;
                     } else {
-                        $files["failed"]++;
+                        $files["failed"][] = $filename . ' => ' . $targetFile;
                     }
                 } elseif ($fileinfo->isDir()) {
                     if (!is_dir($targetFile)) {
                         if (mkdir($targetFile, 0777)) {
-                            $folders["created"]++;
+                            $folders["created"][] = $targetFile;
                         } else {
-                            $folders["failed"]++;
+                            $folders["failed"][] = $targetFile;
                         }
                     } else {
                         chmod($targetFile, 0777);

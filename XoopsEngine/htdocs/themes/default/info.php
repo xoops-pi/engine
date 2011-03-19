@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -47,8 +47,8 @@ return array(
     // Version
     "version"       => "1.0.0",
     // Title of the theme
-    "name"          => "XOOPS 3 Theme",
-    // Parent theme to inherate
+    "name"          => "Xoops Engine Theme",
+    // Parent theme to inherit
     "parent"        => "",
     // Author information: name, email, website
     "author"        => "Theme architecture: Taiwen Jiang <taiwenjiang@tsinghua.org.cn>; Resources: Xoops Engine Development Team",

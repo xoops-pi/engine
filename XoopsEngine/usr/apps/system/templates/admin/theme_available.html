@@ -11,7 +11,7 @@
     </tr>
 <{foreach key=dirname item=theme from=$themes_install}>
     <tr>
-        <td><{htmlImage src="usr/themes/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{htmlImage src="<{$theme.screenshot}>" alt="<{$theme.name}>" width=120}>
         <td><{$theme.name}>
         <td><{$theme.version}>
         <td><{$theme.parent}>
@@ -35,7 +35,7 @@
     </tr>
 <{foreach key=dirname item=theme from=$themes_deploy}>
     <tr>
-        <td><{htmlImage src="usr/themes/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{htmlImage src="<{$theme.screenshot}>" alt="<{$theme.name}>" width=120}>
         <td><{$theme.name}>
         <td><{$theme.version}>
         <td><{$theme.parent}>

@@ -192,8 +192,8 @@ class Xoops_Smarty_Engine extends Smarty
     public function clearModuleCache($module_dirname = null)
     {
         if (empty($module_dirname)) {
-            $this->clearTemplate('', '');
-            $this->clearCache('', '');
+            $this->clearTemplate(null, null);
+            $this->clearCache(null, null);
             return true;
         }
 

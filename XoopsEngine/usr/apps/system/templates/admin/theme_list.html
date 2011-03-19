@@ -13,7 +13,7 @@
     </tr>
 <{foreach key=dirname item=theme from=$themes_active}>
     <tr>
-        <td><{htmlImage src="theme/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{htmlImage src="<{$theme.screenshot}>" alt="<{$theme.name}>" width=120}>
         <td><{$theme.name}>
         <td><{$theme.version}>
         <td><{$theme.parent}>
@@ -41,7 +41,7 @@
     </tr>
 <{foreach key=dirname item=theme from=$themes_inactive}>
     <tr>
-        <td><{htmlImage src="theme/`$dirname`/`$theme.screenshot`" alt="`$theme.name`" width=120}>
+        <td><{htmlImage src="<{$theme.screenshot}>" alt="<{$theme.name}>" width=120}>
         <td><{$theme.name}>
         <td><{$theme.version}>
         <td><{$theme.parent}>

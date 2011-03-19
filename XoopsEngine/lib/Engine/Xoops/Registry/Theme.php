@@ -40,13 +40,13 @@ class Theme extends \Kernel\Registry
         foreach ($rowset as $row) {
             $themes[$row->dirname] = array(
                 "name"          => $row->name,
-                "screenshot"    => $row->screenshot,
+                "screenshot"    => $row->screenshot ? 'theme/' . $row->dirname . '/' . $row->screenshot : 'img/images/theme.png',
             );
         }
         if (!isset($themes["default"])) {
             $themes["default"] = array(
                 "name"          => "Default",
-                "screenshot"    => "screenshot.png",
+                "screenshot"    => "theme/default/screenshot.png",
             );
         }
 
