@@ -41,9 +41,9 @@ class Xoops_Zend_Application extends Zend_Application
             $bootfile = "application";
             $options = array();
         } elseif (is_array($options)) {
-            if (array_key_exists("bootstrap", $options)) {
-                $bootOption = $options["bootstrap"];
-                unset($options["bootstrap"]);
+            if (array_key_exists("bootoption", $options)) {
+                $bootOption = $options["bootoption"];
+                unset($options["bootoption"]);
             }
         } elseif (is_string($options) && !empty($options)) {
             $bootOption = $options;

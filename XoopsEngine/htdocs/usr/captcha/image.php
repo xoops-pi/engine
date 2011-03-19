@@ -22,9 +22,9 @@ define('XOOPS_BOOT_SKIP', 1);
 require __DIR__ . '/../../boot.php';
 $options = array();
 // admin section may use different session storage from frond end
-$options['bootstrap']['resources']['session']['config'] = 'session' . (empty($_GET['section']) ? '' : '.' . htmlspecialchars($_GET['section'], ENT_QUOTES, 'UTF-8'));
+$options['bootoption']['resources']['session']['config'] = 'session' . (empty($_GET['section']) ? '' : '.' . htmlspecialchars($_GET['section'], ENT_QUOTES, 'UTF-8'));
 /*
-$options['bootstrap']['resources']['session'] = array(
+$options['bootoption']['resources']['session'] = array(
     'name'          => 'XOOPSSESSION',
     'savehandler'   => 'Db',
 );

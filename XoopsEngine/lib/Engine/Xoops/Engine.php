@@ -184,7 +184,7 @@ class Engine implements \Kernel\EngineInterface
             try {
                 $options = array(
                     "autoloader"    => \Xoops::autoloader(),
-                    "bootstrap"     => $bootstrap,
+                    "bootoption"    => $bootstrap,
                     "engine"        => $this,
                 );
                 $application = new \Xoops_Zend_Application($this->configs["environment"], $options);
