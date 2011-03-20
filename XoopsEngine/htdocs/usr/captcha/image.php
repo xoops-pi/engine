@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Xoops Engine
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -18,13 +18,13 @@
  */
 
 define('XOOPS_BOOT_SKIP', 1);
-//define('XOOPS_ENV', 'production');
+define('XOOPS_ENV', 'production');
 require __DIR__ . '/../../boot.php';
 $options = array();
 // admin section may use different session storage from frond end
-$options['bootoption']['resources']['session']['config'] = 'session' . (empty($_GET['section']) ? '' : '.' . htmlspecialchars($_GET['section'], ENT_QUOTES, 'UTF-8'));
+$options['bootstrap']['resources']['session']['config'] = 'session' . (empty($_GET['section']) ? '' : '.' . htmlspecialchars($_GET['section'], ENT_QUOTES, 'UTF-8'));
 /*
-$options['bootoption']['resources']['session'] = array(
+$options['bootstrap']['resources']['session'] = array(
     'name'          => 'XOOPSSESSION',
     'savehandler'   => 'Db',
 );
