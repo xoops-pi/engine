@@ -1,0 +1,52 @@
+
+<p>Hello, <strong><{$data}></strong> in <strong><{$module}></strong>!</p>
+
+<p><{applet name="welcome"}></p>
+
+<h2>URL Demonstration</h2>
+
+<{assign var=search value='search'}>
+<{assign var=js value="include/xoops.js"}>
+<{assign var=charset value="gbk"}>
+<{assign var=route value='default'}>
+<{assign var=action value='test'}>
+
+<!--
+<h3>Widget of 'xoops-top'</h3>
+<{*widget name="xoops-top" test=$search cache_expire=0*}>
+<h3>Widget of varied search</h3>
+<{*widget name=$search cache_expire=10*}>
+<h3>Block of varied search</h3>
+<{*widget name=$search*}>
+<h3>Block of varied search with custom options</h3>
+<p><{*widget name=$searchWidget action=$action method=$method form=$form advanced=1*}></p>
+-->
+
+<{headScript src=$js}>
+<{capture name=action}>
+    <{appUrl route=search}>
+<{/capture}>
+<{assign var=form value="homepage-search"}>
+<{assign var=searchWidget value=search}>
+<{assign var=method value=get}>
+
+<p><a href="<{appUrl route=default module=demo controller=test action=$action uid=www pwd=xxx}>" title="test for application url">Test appUrl</a></p>
+<p><a href="<{adminUrl module=demo controller=index action=test  uid=www pwd=xxx}>" title="test for application admin url">Test adminUrl</a></p>
+<p><a href="<{adminUrl module=demo controller=index action=$action  uid=www pwd=xxx}>" title="test for application admin url">Test adminUrl</a></p>
+<p><a href="<{legacyUrl module=demo controller=test action=$action uid=www pwd=xxx}>" title="test for legacy url">Test legacyUrl</a></p>
+<p><a href="<{legacyUrl module=demo controller=test action=admin uid=www pwd=xxx}>" title="test or legacy admin url">Test admin legacyUrl</a></p>
+
+<{headMeta key=keywords content="xoops, zend, meta" type=name lang=en scheme=test}>
+<{* headScript src='app/demo/resources/scripts/test.js' type='text/javascript' charset=`$charset` test=good test2=$js *}>
+<{headScript source='/* test */' type='text/javascript' charset="$charset" test=good test2=$js}>
+<{headLink href="app/demo/resources/scripts/test.css"}>
+<{headStyle content='font-size: 200%;' placement=append media=screen title='for test'}>
+
+<p>
+<{htmlImage src="images/xoops-feed.png" alt="test for image"}>
+<br />
+<{* htmlImage src="http://www.php.net/images/php_snow_2008.gif" alt="PHP logo" width="80px" *}>
+</p>
+<p>Static file by imgUrl: <{imgUrl path=$js}>
+</p><p>Resource file by resourceUrl: <{resourceUrl path="images/search.png"}>
+</p>
