@@ -250,9 +250,9 @@ class Xoops_Installer_Module_Navigation extends Xoops_Installer_Abstract
         $status = true;
         $module = $this->module->dirname;
         //$modelPage = XOOPS::getModel("navigation_page");
-        if (!isset($page["module"])) {
+        //if (!isset($page["module"])) {
             $page["module"] = $module;
-        }
+        //}
         if (!isset($page["navigation"])) {
             $page["navigation"] = $navigation;
         }
