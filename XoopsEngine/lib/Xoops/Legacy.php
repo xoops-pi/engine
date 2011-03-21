@@ -24,6 +24,11 @@ class Xoops_Legacy
 {
     static protected $classMap;
 
+    public function __construct()
+    {
+        static::autoload();
+    }
+
     public static function autoload()
     {
         if (!defined('XOOPS_ROOT_PATH')) {
@@ -119,8 +124,43 @@ class Xoops_Legacy
         static::$classMap = $map;
     }
 
-    public static function __callStatic($method, $args)
+    public function __call($method, $args)
     {
+        switch (strtolower($method)) {
+            case 'path':
+                return call_user_func_array(array('Xoops', 'path'), $args);
+                break;
+            case 'url':
+                return call_user_func_array(array('Xoops', 'url'), $args);
+                break;
+            case 'buildurl':
+                return call_user_func_array(array('Xoops', 'buildUrl'), $args);
+                break;
+            default:
+                break;
+        }
         return;
+    }
+
+    public static function loadModule($dirname = null)
+    {
+        global $xoopsModule, $xoopsModuleConfig, $module_handler;
+
+        $dirname = $dirname ?: Xoops::registry('module')->dirname;
+        $module_handler = xoops_gethandler('module');
+        $xoopsModule = $module_handler->getByDirname($dirname);
+        if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
+            throw new Exception("Module unavailable!", 404);
+        }
+        $xoopsModuleConfig = Xoops::service('module')->loadConfig($dirname);
+    }
+
+    public static function loadUser()
+    {
+        global $xoopsUser;
+        $uid = Xoops::registry('user')->id;
+        if ($uid) {
+            $xoopsUser = XOOPS::getHandler('user')->get($uid);
+        }
     }
 }
