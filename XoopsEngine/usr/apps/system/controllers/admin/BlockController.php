@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -523,7 +523,7 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
 
         $name           = $this->getRequest()->getPost("name");
         $title          = $this->getRequest()->getPost("title");
-        $type           = $this->getRequest()->getPost("type");
+        $type           = $this->getRequest()->getPost("type", "");
         $content        = $this->getRequest()->getPost("content");
         $cache_expire   = $this->getRequest()->getPost("cache_expire");
         $cache_level    = $this->getRequest()->getPost("cache_level");
@@ -656,6 +656,7 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         }
         */
 
+        $form->addElement(new XoopsFormHidden('id', $block["id"]));
         $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));
         return $form;
     }
@@ -690,6 +691,7 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         ));
         $form->addElement($selectType);
 
+        $form->addElement(new XoopsFormHidden('id', $block["id"]));
         $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));
         return $form;
     }
