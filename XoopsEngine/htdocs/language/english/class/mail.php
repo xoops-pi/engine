@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.opensource.org/licenses/bsd-license.php BSD liscense
  * @author          Taiwen Jiang <taiwenjiang@tsinghua.org.cn>
  * @since           3.0
@@ -17,8 +17,13 @@
  * @version         $Id$
  */
 
-class Xoops_En_Mail extends Xoops_Zend_Mail_Locale
+class Xoops_English_Mail extends Xoops_Zend_Mail_Locale
 {
+    /**
+     * Locale handler
+     */
+    protected static $locale = "english";
+
     /**
      * Public constructor
      *

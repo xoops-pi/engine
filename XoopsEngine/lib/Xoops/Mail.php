@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @package         Xoops_Core
@@ -61,12 +61,13 @@ class Xoops_Mail
     {
         $mailer = null;
 
-        $locale = !empty($locale) ? $locale : XOOPS::registry("locale")->getLocale();
-        $className = "xoops_" . $locale . "_mail";
+        $localeName = $locale ?: XOOPS::service("translate")->getAdapter()->getLocale();
+        //$locale = $locale ?: XOOPS::registry("locale")->getLocale();
+        $className = "xoops_" . $localeName . "_mail";
         if ($this->mailer && strtolower(get_class($this->mailer)) == $className) {
             return $this->mailer;
         }
-        $path = XOOPS::service("translate")->getPath("", $locale);
+        $path = XOOPS::service("translate")->getPath();
         $localeFound = false;
         if (!empty($path)) {
             $class = $path . "/class/mail.php";
@@ -81,6 +82,9 @@ class Xoops_Mail
         $mailer = new $className();
         if (!empty($this->charset)) {
             $mailer->setCharset($this->charset);
+        }
+        if (!empty($locale)) {
+            $mailer->setLocale($locale);
         }
 
         if (!$this->mailer) {
@@ -268,8 +272,8 @@ class Xoops_Mail
     public function getTemplate()
     {
         if (!isset($this->template)) {
-            $this->template = new Xoops_Zend_Mail_Template();
-            $this->template->setMailer($this->getMailer());
+            $this->template = new Xoops_Zend_Mail_Template($this->getMailer());
+            //$this->template->setMailer($this->getMailer());
         }
         return $this->template;
     }

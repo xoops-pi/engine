@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -35,7 +35,7 @@ class Xoops_Zend_Mail_Locale extends Zend_Mail
     public function __construct($charset = null)
     {
         if (is_null($charset)) {
-            $charset = XOOPS::registry("locale")->getCharset();
+            $charset = XOOPS::config('charset');
         }
         $this->_charset = $charset;
     }
@@ -51,9 +51,9 @@ class Xoops_Zend_Mail_Locale extends Zend_Mail
 
     public function setLocale($locale)
     {
-        if ($locale instanceof Xoops_Zend_Locale) {
+        //if ($locale instanceof Xoops_Zend_Locale) {
             static::$locale = $locale;
-        }
+        //}
 
         return $this;
     }
@@ -68,6 +68,8 @@ class Xoops_Zend_Mail_Locale extends Zend_Mail
 
     protected function convert(&$text)
     {
+        return;
+
         if ($this->getLocale()->getCharset() == $this->getCharset()) {
             return;
         }
