@@ -71,7 +71,7 @@ class Xoops_Mail
         $localeFound = false;
         if (!empty($path)) {
             $class = $path . "/class/mail.php";
-            if (include XOOPS::path($class)) {
+            if (class_exists($class, false) || include XOOPS::path($class)) {
                 $localeFound = true;
            }
         }
