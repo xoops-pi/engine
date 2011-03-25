@@ -65,7 +65,7 @@ class Xoops_Zend_Mail_Template// extends Xoops_Smarty_Template
         $path = XOOPS::path(XOOPS::service("translate")->getPath($this->domain, $this->mailer->getLocale())) . "/mails";
         $content = $this->engine->fetch($path . "/" . $this->template);
         $pos = strrpos($this->template, ".");
-        if (substr($this->template, $pos) == "html") {
+        if (substr($this->template, $pos + 1) == "html") {
             $this->mailer->setBodyHtml($content);
         } else {
             $this->mailer->setBodyText($content);
