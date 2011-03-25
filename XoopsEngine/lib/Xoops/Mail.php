@@ -67,15 +67,14 @@ class Xoops_Mail
         if ($this->mailer && strtolower(get_class($this->mailer)) == $className) {
             return $this->mailer;
         }
-        $path = XOOPS::service("translate")->getPath();
-        $localeFound = false;
-        if (!empty($path)) {
-            $class = $path . "/class/mail.php";
-            if (class_exists($class, false) || include XOOPS::path($class)) {
-                $localeFound = true;
-           }
+        if (!class_exists($className, false)) {
+            $path = XOOPS::service("translate")->getPath();
+            if (!empty($path)) {
+                $classFile = $path . "/class/mail.php";
+                include XOOPS::path($classFile);
+            }
         }
-        if (!$localeFound) {
+        if (!class_exists($className, false)) {
             $className = "Xoops_Zend_Mail_Locale";
         }
 
