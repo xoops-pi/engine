@@ -176,7 +176,7 @@ CREATE TABLE `block` (
   `name`            varchar(64)     NOT NULL default '',            # user key, empty or unique string, for calling from template
   `title`           varchar(255)    NOT NULL default '',
   `description`     text,                                           # Description
-  `type`            varchar(64)     NOT NULL default '',            # "" - generated; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
+  `type`            varchar(64)     NOT NULL default '',            # "" - generated; C - Cloned; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
   `options`         text,                                           # for generated, delimited by "|"
   `active`          tinyint(1)      unsigned NOT NULL default '1',  # for generated, updated by system on module activation
   `module`          varchar(64)     NOT NULL default '',            # for generated

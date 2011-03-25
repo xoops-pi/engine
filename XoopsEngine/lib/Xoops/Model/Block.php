@@ -82,11 +82,13 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
                     //$content = str_replace('{X_SITEURL}', $xoops->url('www'), $content);
                     break;
                 case 'S':
+                    Xoops_Legacy::autoload();
                     $myts = MyTextSanitizer::getInstance();
                     //$content = str_replace('{X_SITEURL}', $xoops->url('www'), $block['content']);
                     $content = $myts->displayTarea($block['content'], 0, 1);
                     break;
                 default:
+                    Xoops_Legacy::autoload();
                     $myts = MyTextSanitizer::getInstance();
                     //$content = str_replace('{X_SITEURL}', $xoops->url('www'), $this->getVar('content', 'N'));
                     $content = $myts->displayTarea($block['content'], 0, 0);
@@ -95,7 +97,7 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
                 $result["content"] = str_replace('{X_SITEURL}', XOOPS::url('www'), $content);
                 break;
             case 'E':
-                $result = htmlspecialchars($block['content'], ENT_QUOTES);
+                $result = Xoops\Security::escape($block['content']);
                 break;
             default:
                 $result = $block['content'];
