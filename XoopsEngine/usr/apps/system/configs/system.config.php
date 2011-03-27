@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -44,17 +44,18 @@ $config["categories"] = array(
         array("key"     => 'mail',
             "name"      => '_SYSTEM_AM_MAILER',
             "description"      => ''),
-            /*
-        array("key"     => 'auth',
-            "name"      => '_SYSTEM_AM_AUTHENTICATION',
-            "description"      => ''),
-            */
         array("key"     => 'text',
             "name"      => '_SYSTEM_AM_TEXT',
             "description"      => ''),
+        /*
+        array("key"     => 'auth',
+            "name"      => '_SYSTEM_AM_AUTHENTICATION',
+            "description"      => ''),
+        */
         array("key"     => 'root',
             "name"      => '_SYSTEM_AM_ROOT',
-            "description"      => ''));
+            "description"      => ''),
+);
 
 // Config items
 
@@ -156,6 +157,15 @@ $config['items'][$i]['name'] = 'theme_set';
 $config['items'][$i]['title'] = '_SYSTEM_AM_DTHEME';
 //$config['items'][$i]['description'] = '_SYSTEM_AM_DTHEMEDSC';
 $config['items'][$i]['edit'] = 'theme';
+$config['items'][$i]['filter'] = '';
+$config['items'][$i]['default'] = "default";
+$config['items'][$i]['category'] = 'general';
+
+$i++;
+$config['items'][$i]['name'] = 'cpanel';
+$config['items'][$i]['title'] = '_SYSTEM_AM_CPANEL';
+//$config['items'][$i]['description'] = '_SYSTEM_AM_CPANEL_DESC';
+$config['items'][$i]['edit'] = array('module' => 'system', 'type' => 'cpanel');
 $config['items'][$i]['filter'] = '';
 $config['items'][$i]['default'] = "default";
 $config['items'][$i]['category'] = 'general';

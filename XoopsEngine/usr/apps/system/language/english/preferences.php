@@ -96,11 +96,11 @@ define("_SYSTEM_AM_BADEMAILS", "Enter emails that should not be used in user pro
 define("_SYSTEM_AM_BADEMAILSDSC", "Separate each with a '|', case insensitive, regex enabled.");
 define("_SYSTEM_AM_BADUNAMES", "Enter names that should not be selected as username");
 define("_SYSTEM_AM_BADUNAMESDSC", "Separate each with a '|', case insensitive, regex enabled.");
-*/
 define("_SYSTEM_AM_DOBADIPS", "Enable IP bans?");
 define("_SYSTEM_AM_DOBADIPSDSC", "Users from specified IP addresses will not be able to view your site");
 define("_SYSTEM_AM_BADIPS", "Enter IP addresses that should be banned from the site.");
 define("_SYSTEM_AM_BADIPSDSC", "Separate each with a '|', case insensitive, regex enabled. '^aaa.bbb.ccc' will disallow visitors with an IP that starts with 'aaa.bbb.ccc'; 'aaa.bbb.ccc$' will disallow visitors with an IP that ends with 'aaa.bbb.ccc'; 'aaa.bbb.ccc' will disallow visitors with an IP that contains 'aaa.bbb.ccc'.");
+*/
 define("_SYSTEM_AM_PREFMAIN", "Preferences Main");
 define("_SYSTEM_AM_METAKEY", "Meta Keywords");
 define("_SYSTEM_AM_METAKEYDSC", "The keywords meta tag is a series of keywords that represents the content of your site. Type in keywords with each separated by a comma or a space in between. (Ex. XOOPS, PHP, mySQL, portal system)");
@@ -294,5 +294,10 @@ define("_SYSTEM_AM_TEXT_DESC", "");
 define("_SYSTEM_AM_TEXT_EDITOR", "WYSIWYG Editor");
 define("_SYSTEM_AM_TEXT_EDITOR_DESC", "Default editor for text processing");
 
+/*
 define("_SYSTEM_AM_SECURITY", "Security policy");
 define("_SYSTEM_AM_SECURITY_DESC", "");
+*/
+
+define("_SYSTEM_AM_CPANEL", "Control panel");
+define("_SYSTEM_AM_CPANEL_DESC", "");

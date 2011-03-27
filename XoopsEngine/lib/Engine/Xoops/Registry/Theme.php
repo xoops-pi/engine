@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -32,8 +32,11 @@ class Theme extends \Kernel\Registry
     {
         $model = \Xoops::getModel("theme");
         //Debug::backtrace();
+        $type = empty($options['type']) ? 'front' : $options['type'];
+
         $select = $model->select()->from($model, array("dirname", "name", "screenshot"))
             ->where("active = ?", 1)
+            ->where("type IN (?)", array('both', $type))
             ->order(array("order", "parent"));
         $rowset = $model->fetchAll($select);
         $themes = array();
@@ -53,9 +56,9 @@ class Theme extends \Kernel\Registry
         return $themes;
     }
 
-    public function read()
+    public function read($type = 'front')
     {
-        $options = array();
+        $options = compact('type');
         return $this->loadData($options);
     }
 

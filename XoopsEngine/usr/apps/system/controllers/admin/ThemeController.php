@@ -116,6 +116,9 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
             $data = include $configFile;
             if (version_compare($row->version, $data["version"])) {
                 $data["update"] = time();
+                if (empty($data["type"])) {
+                    $data["type"] = 'both';
+                }
                 $columns = $model->info("cols");
                 foreach ($columns as $col) {
                     if (isset($data[$col]) && $data[$col] != $row->$col) {
@@ -222,6 +225,9 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
                 if (empty($data["name"])) {
                     $data["name"] = $dirname;
                 }
+                if (empty($data["type"])) {
+                    $data["type"] = 'both';
+                }
                 $model = XOOPS::getModel("theme");
                 $columns = $model->info("cols");
                 foreach ($data as $col => $val) {
@@ -250,7 +256,7 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         } else {
             $model = XOOPS::getModel("theme");
             $model->delete(array("dirname = ?" => $dirname));
-            $message = sprintf(XOOPS::_("The theme '$s' is uninstalled."), $dirname);
+            $message = sprintf(XOOPS::_("The theme '%s' is uninstalled."), $dirname);
             XOOPS::service('registry')->theme->flush();
             XOOPS::service('registry')->themelist->flush();
         }

@@ -280,6 +280,7 @@ CREATE TABLE `theme` (
   `order`           smallint(5)     unsigned NOT NULL default '0',
   `screenshot`      varchar(255)    NOT NULL default '',
 # `license`         varchar(255)    NOT NULL default '',
+  `type`            varchar(32)     NOT NULL default 'both',   # Type of theme: both - both front and admin; front - front; admin - admin
 
   PRIMARY KEY       (`id`),
   UNIQUE KEY        `dirname` (`dirname`)

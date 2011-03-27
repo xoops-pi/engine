@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Xoops Engine
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -57,5 +57,7 @@ return array(
     // License or theme images and scripts
     "license"       => "Creative Common License http://creativecommons.org/licenses/by/3.0/",
     // Disable the theme
-    "disable"       => false
+    "disable"       => false,
+    // Type of layouts available in the theme
+    //"type"          => 'both', // Potential value: 'both', 'admin', 'front', default as 'both'
 );
