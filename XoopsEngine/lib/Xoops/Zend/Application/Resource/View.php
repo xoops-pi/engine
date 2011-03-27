@@ -104,9 +104,11 @@ class Xoops_Zend_Application_Resource_View extends Zend_Application_Resource_Res
     protected function getLayout($options)
     {
         // Initialize and register layout
-        $options['theme'] = isset($options['theme'])
-                            ? $options['theme']
-                            : (XOOPS::config('theme_set') ?: 'default');
+        if (empty($options['theme'])) {
+            $configName = (!empty($options['type']) && 'admin' == $options['type']) ? 'cpanel' : 'theme_set';
+            $options['theme'] = XOOPS::config($configName);
+        }
+
         $initMvc = true;
         if (isset($options['initMvc'])) {
             $initMvc = (bool) $options['initMvc'];
