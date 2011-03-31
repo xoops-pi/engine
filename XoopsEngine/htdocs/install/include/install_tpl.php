@@ -13,6 +13,7 @@
  * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author          Skalpa Keo <skalpa@xoops.org>
  * @since           3.0
  * @package         Xoops_Setup
  * @version         $Id$

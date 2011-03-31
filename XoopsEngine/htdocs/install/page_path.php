@@ -10,7 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -167,7 +167,7 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($configs as $config) {
         $error = false;
-        chmod($config['file'], 0777);
+        //chmod($config['file'], 0777);
         if (!$file = fopen($config['file'], "w")) {
             $error = true;
         } else {

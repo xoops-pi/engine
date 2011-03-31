@@ -3,12 +3,12 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   Xoops Engine
- * @license     BSD License
- * @package     installer
- * @since       3.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id$
+ * @copyright       Xoops Engine http://www.xoopsengine.org
+ * @license         BSD License
+ * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @package         installer
+ * @since           3.0
+ * @version         $Id$
  */
 
 $pages = array(

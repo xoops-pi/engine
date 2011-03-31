@@ -3,14 +3,13 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   Xoops Engine
- * @license     BSD License
- * @package     installer
- * @since       3.0
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id: config.php 1429 2008-04-02 12:27:19Z phppp $
+ * @copyright       Xoops Engine
+ * @license         BSD License
+ * @package         installer
+ * @since           3.0
+ * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author          Skalpa Keo <skalpa@xoops.org>
+ * @version         $Id$
  */
 
 if (!defined('XOOPS_INSTALL')) { die('XOOPS Custom Installation die'); }

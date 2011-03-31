@@ -3,13 +3,13 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     BSD License
- * @package     installer
- * @since       3.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @version     $Id$
+ * @copyright       Xoops Engine
+ * @license         BSD License
+ * @package         installer
+ * @since           3.0
+ * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author          Skalpa Keo <skalpa@xoops.org>
+ * @version         $Id$
  */
 
 class PathController
