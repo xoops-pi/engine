@@ -7,16 +7,16 @@
 <{$headScript}>
 <{$headStyle}>
 </head>
-<body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+<body id="xoops-<{$xoops_dirname}>" class="<{$xoops_langcode}>">
 
 <!-- Start Header -->
 <table cellspacing="0">
-    <tr id="header">
-        <td id="headerlogo"><a href="<{url path='www/'}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='xoops-logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
-        <td id="headerbanner"><{widget name=xoops_banner}></td>
+    <tr id="xoops-header">
+        <td id="xoops-headerlogo"><a href="<{url path='www/'}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='xoops-logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
+        <td id="xoops-headerbanner"><{widget name=xoops_banner}></td>
     </tr>
     <tr>
-        <td id="headerbar" colspan="2">&nbsp;</td>
+        <td id="xoops-headerbar" colspan="2">&nbsp;</td>
     </tr>
 </table>
 
@@ -26,16 +26,16 @@
 <table cellspacing="0">
     <tr>
         <{if isset($side_menu)}>
-        <td id="leftcolumn">
+        <td id="xoops-leftcolumn">
         <!-- Start left blocks loop -->
             <{include file="side_menu.html"}>
         <!-- End left blocks loop -->
         </td>
         <{/if}>
 
-        <td id="centercolumn">
+        <td id="xoops-centercolumn">
             <!-- Start content module page -->
-            <{if $xoops_contents && ($xoops_contents != ' ')}><div id="content"><{$xoops_contents}></div><{/if}>
+            <{if $xoops_contents && ($xoops_contents != ' ')}><div id="xoops-content"><{$xoops_contents}></div><{/if}>
             <!-- End content module -->
         </td>
 
@@ -44,7 +44,7 @@
 
 <!-- Start footer -->
 <table cellspacing="0">
-<tr id="footerbar">
+<tr id="xoops-footerbar">
     <td><{$xoops_footer}></td>
 </tr>
 </table>

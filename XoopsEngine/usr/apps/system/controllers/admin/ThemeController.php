@@ -12,6 +12,7 @@
  * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @credits         Hu Zhenghui, ezsky
  * @since           3.0
  * @category        Xoops_Module
  * @package         System
@@ -30,12 +31,15 @@
  * A complete theme set should include following files:
  *
  * Folder and file skeleton:
- * REQUIRED:
+ * REQUIRED for front:
  *  layout.html - complete layout template: header, footer, body, blocks, navigation
  *  simple.html - simplified layout: header, footer, body
  *  empty.html - empty layout with body only
- *  admin.html - backoffice layout
  *  paginator.html - Paginator template
+ *  comment.html - Comment template
+ *  notification.html - Notification form template
+ * REQUIRED for admin:
+ *  admin.html - backoffice layout
  * OPTIONAL:
  *  navigation.html - generic navigation template, referenced by layout.html
  *
@@ -47,12 +51,11 @@
  *  default/scripts/redirect.css - css file for redirecting page
  *  default/scripts/exception.css - css file for error pages
  *  default/images/loading_indicator.jpg - Indicator image for redirecting page
+ *
+ * Best practices:
+ *  1 It is hightly recommended to use 'xoops-' as prefix for all id's used in theme to avoid conflicts.
  */
 
-/**
- * Theme installer was suggested by zhuzhenghui and ezsky during a gathering at Cava Cafe.
- * I am trying to build demo-like installer based on module installer and hope other developers will complete it.
- */
 class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
 {
     public function init()
@@ -216,7 +219,8 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
             $message = sprintf(XOOPS::_("The theme '%s' is not found."), $dirname);
         } else {
             $data = include $configFile;
-            if (empty($data["parent"]) && $files = $this->checkFiles($dirname)) {
+            $type = isset($data['type']) ? $data['type'] : 'both';
+            if (empty($data["parent"]) && $files = $this->checkFiles($dirname, $type)) {
                 $message = XOOPS::_("Files missing: ") . implode(" ", $files);
             } else {
                 $data["dirname"] = $dirname;
@@ -292,21 +296,32 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         $this->forward("index");
     }
 
-    protected function checkFiles($theme)
+    protected function checkFiles($theme, $type = 'both')
     {
         $fileList = array(
-            "layout.html",      // complete layout template: header, footer, body, blocks, navigation
-            "simple.html",      // simplified layout: header, footer, body
-            "empty.html",       // empty layout with body only
-            "admin.html",       // backoffice layout
-            "paginator.html",   // Paginator template
-            "comment.html",     // Comment template
-            "notification.html",// Notification form template
-            "style.css",        // main css file
-            "form.css",         // generic form css file
+            'front' => array(
+                "layout.html",      // complete layout template: header, footer, body, blocks, navigation
+                "simple.html",      // simplified layout: header, footer, body
+                "empty.html",       // empty layout with body only
+                "paginator.html",   // Paginator template
+                "comment.html",     // Comment template
+                "notification.html",// Notification form template
+                "style.css",        // main css file
+                "form.css",         // generic form css file
+            ),
+            'admin' => array(
+                "admin.html",       // backoffice layout
+                "style.css",        // main css file
+                "form.css",         // generic form css file
+            ),
         );
         $path = XOOPS::path("theme/" . $theme);
 
+        if (isset($fileList[$type])) {
+            $files = $fileList[$type];
+        } else {
+            $files = array_unique(array_merge($fileList['front'], $fileList['admin']));
+        }
         $missingFiles = array();
         foreach ($fileList as $file) {
             if (!file_exists($path . "/" . $file)) {

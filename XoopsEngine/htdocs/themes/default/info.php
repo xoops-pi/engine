@@ -22,14 +22,15 @@
  * A complete theme set should include following files:
  *
  * Folder and file skeleton:
- * REQUIRED:
+ * REQUIRED for front:
  *  layout.html - complete layout template: header, footer, body, blocks, navigation
  *  simple.html - simplified layout: header, footer, body
  *  empty.html - empty layout with body only
- *  admin.html - backoffice layout
  *  paginator.html - Paginator template
  *  comment.html - Comment template
  *  notification.html - Notification form template
+ * REQUIRED for admin:
+ *  admin.html - backoffice layout
  * OPTIONAL:
  *  navigation.html - generic navigation template, referenced by layout.html
  *
@@ -41,6 +42,9 @@
  *  default/scripts/redirect.css - css file for redirecting page
  *  default/scripts/exception.css - css file for error pages
  *  default/images/loading_indicator.jpg - Indicator image for redirecting page
+ *
+ * Best practices:
+ *  1 It is hightly recommended to use 'xoops-' as prefix for all id's used in theme to avoid conflicts.
  */
 
 return array(
