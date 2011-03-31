@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -29,19 +29,19 @@ class User_IndexController extends Xoops_Zend_Controller_Action
             $this->_helper->redirector('index', 'profile');
         }
     }
-    
+
     public function indexAction()
     {
         $module = $this->getRequest()->getModuleName();
         $this->setTemplate("user_page.html");
         $configs = XOOPS::service("registry")->config->read($module, "account");
-        
+
         $id = $this->getRequest()->getParam("user");
         $userRow = XOOPS::getModel("user")->findRow($id);
         if (!$userRow) {
             $this->_helper->redirector('index', 'profile');
         }
-        
+
         $profileRow = $userRow->profile();
         if ($profileRow) {
             $metaList = $profileRow->display();
@@ -50,7 +50,7 @@ class User_IndexController extends Xoops_Zend_Controller_Action
             $metaList = array();
             $avatar = "";
         }
-        
+
         $profileMeta = XOOPS::service("registry")->handler("meta", $module)->read();
         foreach ($profileMeta as $keyCategory => &$category) {
             foreach ($category["meta"] as $keyMeta => &$meta) {
@@ -64,7 +64,7 @@ class User_IndexController extends Xoops_Zend_Controller_Action
                 unset($profileMeta[$keyCategory]);
             }
         }
-        
+
         $account = array(
             "id"        => $userRow->id,
             "identity"  => $userRow->identity,

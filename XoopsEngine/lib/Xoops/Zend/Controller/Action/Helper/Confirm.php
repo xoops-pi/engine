@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -153,11 +153,11 @@ class Xoops_Zend_Controller_Action_Helper_Confirm extends Zend_Controller_Action
      *          [string      action      Action URI for confirmation form]
      *          string      method      Method for confirmation form, default as 'post'
      *
-     *          string      name        Name for confirmation select element 
+     *          string      name        Name for confirmation select element
      *          int|array   options     MultiOptions for select element, default as 1 for Yesno
      *
      *          array       hidden      Appended data, associative array
-     * 
+     *
      * @param string|array      $url        URL or options to assemble a URL as confirmation form action
      * @param string|array|bool $urlGoback  Options to be used when generating goback url, true for generating automatically
      * @return void
@@ -185,7 +185,7 @@ class Xoops_Zend_Controller_Action_Helper_Confirm extends Zend_Controller_Action
             } else {
                 $result = $helperObject->setGotoUrl($url, $options);
             }
-            
+
             return $result;
         };
         /*

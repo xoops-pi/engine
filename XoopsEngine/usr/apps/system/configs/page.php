@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -26,7 +26,7 @@ return array(
             'title'         => _SYSTEM_MI_PAGE_BLOCKS,
             'name'          => "block",
             'module'        => "default",
-            "parent"        => "public", 
+            "parent"        => "public",
             'block'         => 1,
         ),
         // homepage
@@ -57,11 +57,11 @@ return array(
             "action"        => "index",
             'title'         => _SYSTEM_MI_PAGE_REDIRECT,
             "parent"        => array(
-                "name"      => "public", 
+                "name"      => "public",
                 "module"    => "system",
             ),
             "access"        => array(
-                "guest"     => 1, 
+                "guest"     => 1,
                 "member"    => 1,
             ),
         ),

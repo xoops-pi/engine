@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -21,7 +21,7 @@
 class Xoops_Zend_Form_Element_Role extends Zend_Form_Element_Select
 {
     protected static $roles;
-    
+
     /**
      * Constructor
      *
@@ -34,7 +34,7 @@ class Xoops_Zend_Form_Element_Role extends Zend_Form_Element_Select
         parent::__construct($spec, $options);
         $this->setServiceOptions();
     }
-    
+
     protected function setServiceOptions()
     {
         if (!isset(static::$roles)) {
@@ -42,7 +42,7 @@ class Xoops_Zend_Form_Element_Role extends Zend_Form_Element_Select
             $select = $roleModel->select();
             static::$roles = $roleModel->getAdapter()->fetchPairs($select);
         }
-        
+
         $this->setMultiOptions(static::$roles);
     }
 }

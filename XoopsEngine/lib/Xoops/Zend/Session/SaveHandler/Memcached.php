@@ -14,8 +14,7 @@
  *   save_path = "127.0.0.1:11211"
  * It is simple and does not need the custom session savehandler. However custom session expiration per user is not supported, see {@Xoops_Zend_Session::rememberMe}.
  *
- *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0

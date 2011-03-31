@@ -22,44 +22,39 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
     protected $_primary = "id";
 
     /**
+     * Classname for row
+     *
+     * @var string
+     */
+    //protected $_rowClass = 'Xoops_Model_Block_Row';
+
+    /**
      * return the content of the block for output
      *
-     * @TODO: This method should be put at contoller layer
-     *
      * @param array $block
-     * @param string $format potential value:
-     * <ul>
-     * <li>S: for display
-     * <li>E: for edit
-     * <li>default: raw
-     * </ul>
      * @return mixed
      */
-    public function buildBlock($block, $format = 'S', $configs = array())
+    public function buildBlock($block, $configs = array())
     {
-        //global $xoops;
-
-        // System-generated block
-        if (empty($block["type"])) {
-            switch (strtoupper($format)) {
-            case 'E':
-                $func = $block["edit_func"];
-                break;
-            case 'S':
-            default:
-                $func = $block["show_func"];
-                break;
-            }
+        $isCustom = empty($block["module"]) ? true : false;
+        // Module-generated block
+        if (!$isCustom) {
+            $func = $block["show_func"];
             if (empty($func)) {
                 $result = false;
             } else {
                 XOOPS::service('translate')->loadTranslation('blocks', $block['module']);
                 if (!function_exists($func)) {
-                    //$info = XOOPS::service('registry')->module->read($block['module']);
                     include_once Xoops::service('module')->getPath($block['module']) . '/blocks/' . $block['func_file'];
-                    //include_once XOOPS::path($info['path'] . '/' . $block['module'] . '/blocks/' . $block['func_file']);
                 }
-                $options = explode('|', $block['options']);
+                /*
+                if (empty($block["show_func"])) {
+                    $options = unserialize($block['options']);
+                } else {
+                    $options = explode('|', $block['options']);
+                }
+                */
+                $options = empty($block['options']) ? array() : unserialize($block['options']);
                 if (!empty($configs) && is_array($configs)) {
                     $options = array_merge($options, $configs);
                 }
@@ -68,41 +63,16 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
             }
         // Custom block
         } else {
-            switch (strtoupper($format)) {
-            case 'S':
-                switch ($block['type']) {
+            switch ($block['type']) {
                 case 'H':
                     $content = $block['content'];
                     break;
-                case 'P':
-                    ob_start();
-                    echo eval($block['content']);
-                    $content = ob_get_contents();
-                    ob_end_clean();
-                    //$content = str_replace('{X_SITEURL}', $xoops->url('www'), $content);
-                    break;
-                case 'S':
-                    Xoops_Legacy::autoload();
-                    $myts = MyTextSanitizer::getInstance();
-                    //$content = str_replace('{X_SITEURL}', $xoops->url('www'), $block['content']);
-                    $content = $myts->displayTarea($block['content'], 0, 1);
-                    break;
+                case 'T':
                 default:
-                    Xoops_Legacy::autoload();
-                    $myts = MyTextSanitizer::getInstance();
-                    //$content = str_replace('{X_SITEURL}', $xoops->url('www'), $this->getVar('content', 'N'));
-                    $content = $myts->displayTarea($block['content'], 0, 0);
+                    $content = Xoops\Security::escape($block['content']);
                     break;
-                }
-                $result["content"] = str_replace('{X_SITEURL}', XOOPS::url('www'), $content);
-                break;
-            case 'E':
-                $result = Xoops\Security::escape($block['content']);
-                break;
-            default:
-                $result = $block['content'];
-                break;
             }
+            $result = str_replace('{X_SITEURL}', XOOPS::url('www'), $content);
         }
 
         return $result;

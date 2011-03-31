@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -37,6 +37,7 @@ class Xoops_Zend_Form extends Zend_Form
     {
         $this->setOptions($this->loadDefaultOptions());
         parent::__construct($options);
+        $this->build();
     }
 
     protected function loadDefaultOptions()
@@ -51,6 +52,16 @@ class Xoops_Zend_Form extends Zend_Form
             ),
         );
         return $default_options;
+    }
+
+    /**
+     * Build elements if available
+     *
+     * @return Xoops_Zend_Form
+     */
+    protected function build()
+    {
+        return $this;
     }
 
     /**
@@ -132,11 +143,14 @@ class Xoops_Zend_Form extends Zend_Form
      *
      * @param  string $type
      * @param  string $name
-     * @param  array|Zend_Config $options
+     * @param  array|Zend_Config|string $options
      * @return Zend_Form_Element
      */
     public function createElement($type, $name, $options = null)
     {
+        if (null !== $options && !is_array($options) && !($options instanceof Zend_Config)) {
+            $options = array('value' => $options);
+        }
         $element = parent::createElement($type, $name, $options);
         $element->addPrefixPath("Xoops_Zend_Validate", "Xoops/Zend/Validate", "validate");
         if (method_exists($element, "setForm")) {
@@ -159,7 +173,7 @@ class Xoops_Zend_Form extends Zend_Form
      *
      * @param  string|Zend_Form_Element $element
      * @param  string $name
-     * @param  array|Zend_Config $options
+     * @param  array|Zend_Config|string $options
      * @return Zend_Form
      */
     public function addElement($element, $name = null, $options = null)
@@ -167,6 +181,10 @@ class Xoops_Zend_Form extends Zend_Form
         if (empty($name) && $element instanceof Zend_Form_Element) {
             $name = $element->getName();
         }
+        if (null !== $options && !is_array($options) && !($options instanceof Zend_Config)) {
+            $options = array('value' => $options);
+        }
+
         parent::addElement($element, $name, $options);
         $element = $this->_elements[$name];
         if (method_exists($element, "setForm")) {

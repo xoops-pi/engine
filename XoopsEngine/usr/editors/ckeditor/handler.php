@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -36,12 +36,16 @@ class Handler extends \Xoops\Editor\AbstractEditor
             $this->config['language'] = \Xoops::config('locale');
         }
 
-        include_once __DIR__ . '/editor/ckeditor.php';
+        //include_once __DIR__ . '/editor/ckeditor.php';
+        include_once __DIR__ . '/ckeditor.php';
         $basePath = \Xoops::url('img') . '/editors/ckeditor/';
-        $ckEditor = new \CKEditor($basePath);
+        $ckEditor = new CKEditor($basePath);
         $ckEditor->returnOutput = true;
         if ($this->attribs) {
             $ckEditor->textareaAttributes = array_merge($ckEditor->textareaAttributes, $this->attribs);
+        }
+        if (!empty($this->id)) {
+            $ckEditor->textareaAttributes['id'] = $this->id;
         }
 
 

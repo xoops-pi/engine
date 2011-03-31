@@ -11,7 +11,7 @@
  *
  * Based on Matthew Weier O'Phinney's tutorial {@link http://weierophinney.net/matthew/archives/217-Creating-composite-elements.html}
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0

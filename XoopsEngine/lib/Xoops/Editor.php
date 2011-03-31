@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @package         Xoops_Core
@@ -29,9 +29,11 @@ class Editor
         }
         $type = $type ?: 'xoops';
         $editorClass = 'Editor\\' . ucfirst($type) . '\\Handler';
-        $editorFile = \Xoops::path('usr') . '/editors/' . $type . '/handler.php';
-        if (file_exists($editorFile)) {
-            include $editorFile;
+        if (!class_exists($editorClass, false)) {
+            $editorFile = \Xoops::path('usr') . '/editors/' . $type . '/handler.php';
+            if (file_exists($editorFile)) {
+                include $editorFile;
+            }
         }
         if (!class_exists($editorClass) || !is_subclass_of($editorClass, 'Xoops\\Editor\\AbstractEditor')) {
             $editorClass = 'Xoops\\Editor\\Xoops\\Handler';

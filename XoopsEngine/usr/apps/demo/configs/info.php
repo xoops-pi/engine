@@ -58,7 +58,8 @@ return array(
                         "order" => 5),
                 array("name"    => "_DEMO_AM_CATEGORY_TEST",
                         "key"   => "test",
-                        "order" => 10)),
+                        "order" => 10)
+            ),
             "items"         => array(
                 array(
                     'name'          => "test",
@@ -67,7 +68,8 @@ return array(
                     'description'   => "_DEMO_AM_TEST_DESC",
                     'edit'          => "text",
                     'filter'        => "string",
-                    'default'       => "Configuration text"),
+                    'default'       => "Configuration text"
+                ),
                 array(
                     'name'          => "add",
                     'category'      => "general",
@@ -75,7 +77,10 @@ return array(
                     'description'   => "_DEMO_AM_TEST_DESC",
                     'edit'          => "text",
                     'filter'        => "string",
-                    'default'       => "Configuration text"))),
+                    'default'       => "Configuration text"
+                )
+            )
+        ),
         'event'     => "event.php",
         'test'      => array("custom_handler" => "Demo_Configtest"),
         'search'    => array("callback" => "search::index"),
@@ -85,15 +90,6 @@ return array(
         'notification'  => "notification.php",
         'comment'   => "comment.php",
         'route'     => "route.ini",
-        'block'     => array(
-            array(
-                'file'          => "blocks.php",
-                'title'         => _DEMO_MI_BLOCK,
-                'description'   => _DEMO_MI_BLOCK_DESC,
-                'show_func'     => "demo_block_show",
-                'edit_func'     => "demo_block_edit",
-                'options'       => "optOne|optTwo",
-                'template'      => 'block_show.html')),
-
-        )
+        'block'     => "block.php",
+    )
 );

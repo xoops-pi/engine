@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -21,32 +21,32 @@
 return array(
     "categories"    => array(
         array(
-            "name"          => "_USER_AM_ACCOUNT", 
+            "name"          => "_USER_AM_ACCOUNT",
             "key"           => "account",
             "order"         => 1,
             "description"   => "",
         ),
         array(
-            "name"          => "_USER_AM_LOGIN", 
-            "key"           => "login", 
+            "name"          => "_USER_AM_LOGIN",
+            "key"           => "login",
             "order"         => 2,
             "description"   => "",
         ),
         array(
-            "name"          => "_USER_AM_REGISTER", 
-            "key"           => "register", 
+            "name"          => "_USER_AM_REGISTER",
+            "key"           => "register",
             "order"         => 3,
             "description"   => "",
         ),
         array(
-            "name"          => "_USER_AM_AVATAR", 
-            "key"           => "avatar", 
+            "name"          => "_USER_AM_AVATAR",
+            "key"           => "avatar",
             "order"         => 4,
             "description"   => "",
         ),
         array(
-            "name"          => "_USER_AM_ADMIN", 
-            "key"           => "admin", 
+            "name"          => "_USER_AM_ADMIN",
+            "key"           => "admin",
             "order"         => 5,
             "description"   => "",
         ),
@@ -61,7 +61,7 @@ return array(
             'filter'        => "string",
             'default'       => "member",
             'options'       => array(
-                                "_USER_AM_PROFILE_PUBLIC"       => "public", 
+                                "_USER_AM_PROFILE_PUBLIC"       => "public",
                                 "_USER_AM_PROFILE_MEMBER"       => "member",
                                 "_USER_AM_PROFILE_MODERATOR"    => "moderator",
                                 "_USER_AM_PROFILE_CALLBACK"     => "callback")),
@@ -90,7 +90,7 @@ return array(
             'filter'        => "string",
             'default'       => "loose",
             'options'       => array(
-                                "_USER_AM_UNAME_STRICT" => "strict", 
+                                "_USER_AM_UNAME_STRICT" => "strict",
                                 "_USER_AM_UNAME_MEDIUM" => "medium",
                                 "_USER_AM_UNAME_LOOSE"  => "loose")),
         array(
@@ -117,8 +117,8 @@ return array(
             'edit'          => "textarea",
             'filter'        => "array",
             'default'       => array(
-                                    'webmaster', 
-                                    '^xoops', 
+                                    'webmaster',
+                                    '^xoops',
                                     '^admin')),
         array(
             'category'      => "account",
@@ -136,7 +136,7 @@ return array(
             'edit'          => "text",
             'filter'        => "number_int",
             'default'       => 5),
-    
+
         // Login preferences
         array(
             'category'      => "login",
@@ -147,10 +147,10 @@ return array(
             'filter'        => "string",
             'default'       => "",
             'options'       => array(
-                                "_USER_AM_IDENTITY_DEFAULT" => "", 
+                                "_USER_AM_IDENTITY_DEFAULT" => "",
                                 "_USER_AM_IDENTITY_USERID"  => "userid",
                                 "_USER_AM_IDENTITY_EMAIL"   => "email",
-                                "_USER_AM_IDENTITY_ANY"     => "any")),            
+                                "_USER_AM_IDENTITY_ANY"     => "any")),
         array(
             'category'      => "login",
             'name'          => "rememberme",
@@ -237,7 +237,7 @@ return array(
             'default'       => "auto",
             'options'       => array(
                                 "_MD_AM_ACTIVATE_AUTO"  => "auto",
-                                "_MD_AM_ACTIVATE_USER"  => "user", 
+                                "_MD_AM_ACTIVATE_USER"  => "user",
                                 "_MD_AM_ACTIVATE_ADMIN" => "admin")),
         array(
             'category'      => "register",
@@ -258,7 +258,7 @@ return array(
                 "multiple"  => "multiple",
             ),
             'filter'        => "array",
-            'default'       => array()),                    
+            'default'       => array()),
         array(
             'category'      => "register",
             'name'          => "activate_expire",
@@ -299,7 +299,7 @@ return array(
             'edit'          => "yesno",
             'filter'        => "number_int",
             'default'       => 1),
-        /*                        
+        /*
         array(
             'category'      => "register",
             'name'          => "welcome",
@@ -308,7 +308,7 @@ return array(
             'edit'          => "textarea",
             'filter'        => "string",
             'default'       => _USER_MI_WELCOME_CONTENT),
-        */    
+        */
         // Avatar
         array(
             'category'      => "avatar",
@@ -367,7 +367,7 @@ return array(
             'edit'          => "text",
             'filter'        => "number_int",
             'default'       => 500),
-            
+
         // Administration
         array(
             'category'      => "admin",
@@ -377,6 +377,6 @@ return array(
             'edit'          => "text",
             'filter'        => "number_int",
             'default'       => 50),
-            
+
     ),
 );

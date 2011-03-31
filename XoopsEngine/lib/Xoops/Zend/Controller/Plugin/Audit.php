@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -17,7 +17,7 @@
  * @package         Controller
  * @version         $Id$
  */
- 
+
 class Xoops_Zend_Controller_Plugin_Audit extends Zend_Controller_Plugin_Abstract
 {
     protected $audit;
@@ -33,7 +33,7 @@ class Xoops_Zend_Controller_Plugin_Audit extends Zend_Controller_Plugin_Abstract
      * methods - specific request methods to be logged
      */
     protected $options = array();
-    
+
     /**
      * Constructor
      *
@@ -80,7 +80,7 @@ class Xoops_Zend_Controller_Plugin_Audit extends Zend_Controller_Plugin_Abstract
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         if ($this->isLogged) return;
-        
+
         $this->isLogged = true;
         $this->request = $request;
         $this->response = XOOPS::registry("frontController")->getResponse();
@@ -100,7 +100,7 @@ class Xoops_Zend_Controller_Plugin_Audit extends Zend_Controller_Plugin_Abstract
         $this->response = XOOPS::registry("frontController")->getResponse();
         $this->log();
     }
-    
+
     /**
      * Logging audit trail
      *
@@ -125,7 +125,7 @@ class Xoops_Zend_Controller_Plugin_Audit extends Zend_Controller_Plugin_Abstract
         if ($params === false) {
             return;
         }
-        
+
         $data = array(
             "time"  => time(),
             "memo"  => $memo
@@ -133,7 +133,7 @@ class Xoops_Zend_Controller_Plugin_Audit extends Zend_Controller_Plugin_Abstract
         $data = array_merge($params, $data);
         $this->getAudit()->insert($data);
     }
-    
+
     private function getParams()
     {
         if (!is_null($this->params)) {
@@ -185,10 +185,10 @@ class Xoops_Zend_Controller_Plugin_Audit extends Zend_Controller_Plugin_Abstract
             }
         }
         $data["section"] = XOOPS::registry("frontController")->getParam("section");
-        $data["extra"] = $this->request->isPost() 
+        $data["extra"] = $this->request->isPost()
                             ? $this->request->getRawBody()
                             : $this->request->getRequestUri();
-        
+
         $this->params = $data;
         return $this->params;
     }

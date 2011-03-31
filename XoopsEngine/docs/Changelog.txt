@@ -7,6 +7,7 @@ Feb 22nd, 2011
 2 Built WYSIWYG editor factory, integrated CKEditor and jQuery based ClEditor
 3 Built security handler and resource, added XSS filter, IP protection, super globals contamination, etc.
 4 Upgraded Zend Framework to 1.11.4
+5 Block is refactored with Xoops/Zend_Form
 
 
 January 10th, 2011

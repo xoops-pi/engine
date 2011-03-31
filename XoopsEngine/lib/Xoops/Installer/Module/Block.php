@@ -22,6 +22,7 @@
  * Block configuration specs
  *
  *  return array(
+ *      // Block with mixed options
  *      "blockA" => array(
  *          "name"          => "BlockUniqueName",
  *          "title"         => "Block Title",
@@ -33,6 +34,38 @@
  *          "template"      => "template.html", // in modules/module/templates/blocks/
  *          "cache"         => "role", // Cache level
  *          "access"        => array(), // ACL rules
+ *      ),
+ *      // Block with structured options
+ *      "blockB" => array(
+ *          "name"          => "BlockUniqueName",
+ *          "title"         => "Block Title",
+ *          "description"   => "Desribing the block",
+ *          "file"          => "block_definition_file.php",  // In modules/module/blocks/
+ *          "show_func"     => "function_name_to_fetch_display_content", // Defined in above file
+ *          "template"      => "template.html", // in modules/module/templates/blocks/
+ *          "cache"         => "role", // Cache level
+ *          "access"        => array(), // ACL rules
+ *          "options"       => array(
+ *              'a' => array(
+ *                  'title'         => '_APP_MB_OPTION_A',
+ *                  'description'   => '_APP_MB_OPTION_A_DESC',
+ *                  'edit'          => 'select',
+ *                  'filter'        => 'num_int',
+ *                  'default'       => 1,
+ *                  'options'       => array(
+ *                      '_APP_MB_OPTION_A_1'    => 1,
+ *                      '_APP_MB_OPTION_A_2'    => 2,
+ *                      '_APP_MB_OPTION_A_3'    => 3,
+ *                  ),
+ *              ),
+ *              'b'  => array(
+ *                  'title'         => '_APP_MB_OPTION_B',
+ *                  'description'   => '_APP_MB_OPTION_B_DESC',
+ *                  'edit'          => array('module' => 'demo', 'type' => 'choose'),
+ *                  'filter'        => 'string',
+ *                  'default'       => 'good',
+ *              ),
+ *          ),
  *      ),
  *      ...
  *  );
@@ -50,7 +83,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             if (!isset($block['file']) || !isset($block['show_func'])) {
                 continue;
             }
-            $blockModel = array(
+            $data = array(
                 "key"           => isset($block["name"]) ? $block["name"] : $key,
                 "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
                 "title"         => $block['title'],
@@ -66,7 +99,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 "access"        => isset($block['access']) ? $block['access'] : null,
             );
 
-            $this->add($blockModel, $message);
+            $this->addBlock($data, $message);
         }
 
         XOOPS::service('registry')->block->flush($dirname);
@@ -100,36 +133,41 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
 
             $select = $model->select()
                             ->where('`key` = ?', $blockKey)
+                            ->where('`module` = ?', $dirname)
+                            ->where('`root` = ?', 0)
                             ->where('`show_func` = ?', $block['show_func'])
                             ->where("`func_file` = ?", $block['file']);
             $blockList = $select->query()->fetchAll();
             if (empty($blockList)) {
-                $blockModel = array(
-                    "key"       => $blockKey,
-                    "name"      => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
-                    "title"     => $block['title'],
-                    "module"    => $dirname,
-                    "func_file" => $block['file'],
-                    "show_func" => $block['show_func'],
-                    "edit_func" => isset($block['edit_func']) ? $block['edit_func'] : '',
-                    "template"  => isset($block['template']) ? $block['template'] : '',
-                    "options"   => isset($block['options']) ? $block['options'] : '',
+                $data = array(
+                    "key"           => $blockKey,
+                    "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                    "title"         => $block['title'],
+                    "module"        => $dirname,
+                    "func_file"     => $block['file'],
+                    "show_func"     => $block['show_func'],
+                    "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
+                    "template"      => isset($block['template']) ? $block['template'] : '',
+                    "options"       => isset($block['options']) ? $block['options'] : '',
                     "cache_level"   => isset($block['cache']) ? $block['cache'] : "",
-                    "active"    => 1,
+                    "active"        => 1,
                 );
 
-                $this->add($blockModel, $message);
+                $this->addBlock($data, $message);
             } else {
                 foreach ($blockList as $item) {
                     $data = array(
-                        "name"      => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
-                        "module"    => $dirname,
-                        "edit_func" => isset($block['edit_func']) ? $block['edit_func'] : '',
-                        "template"  => isset($block['template']) ? $block['template'] : '',
+                        "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                        "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
+                        "template"      => isset($block['template']) ? $block['template'] : '',
                         "cache_level"   => isset($block['cache']) ? $block['cache'] : "",
+                        "options"       => isset($block['options']) ? $block['options'] : '',
                     );
+                    /*
                     $where = array('id = ?' => $item["id"]);
                     $model->update($data, $where);
+                    */
+                    $this->updateBlock($item["id"], $data, $message);
                 }
             }
         }
@@ -138,7 +176,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $clauseFunc->addOr('func_file NOT IN (?)', array_unique($funcfiles));
         $clause = new Xoops_Zend_Db_Clause();
         $clause->add("module = ?", $dirname);
-        $clause->add("type = ?", "");
+        //$clause->add("type = ?", "");
         $clause->add($clauseFunc);
         $select = $model->select()->where($clause);
         $blockList = $select->query()->fetchAll();
@@ -146,7 +184,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         foreach ($blockList as $block) {
             $blockId[] = $block["id"];
         }
-        $this->delete($blockId, $message);
+        $this->deleteBlock($blockId, $message);
 
     }
 
@@ -166,7 +204,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         foreach ($blockList as $block) {
             $blockId[] = $block["id"];
         }
-        $this->delete($blockId, $message);
+        $this->deleteBlock($blockId, $message);
 
         XOOPS::service('registry')->block->flush($dirname);
     }
@@ -195,10 +233,14 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         XOOPS::service('registry')->block->flush($dirname);
     }
 
-    private function add($block, &$message)
+    /**
+     * Adds a block and its relevant options, ACL rules
+     */
+    private function addBlock($block, &$message)
     {
         $dirname = $this->module->dirname;
         $modelBlock = XOOPS::getModel("block");
+        $modelOption = XOOPS::getModel("block_option");
         $modelRule = XOOPS::getModel("acl_rule");
 
         $rules = array();
@@ -206,7 +248,34 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             $rules = $block["access"];
             unset($block["access"]);
         }
+        $options = array();
+        $opts = array();
+        if (is_array($block['options'])) {
+            $order = 0;
+            foreach ($block['options'] as $name => $option) {
+                $opts[$name] = $option['default'];
+                $option['name'] = $name;
+                $option['order'] = $order++;
+                $options[] = $option;
+            }
+            $block['options'] = serialize($opts);
+        } elseif (!empty($block['options'])) {
+            $block['options'] = serialize(explode('|', $block['options']));
+        }
         $id = $modelBlock->insert($block);
+
+        foreach ($options as $option) {
+            $option['block'] = $id;
+            /*
+            if (!empty($option['options']) && is_array($option['options'])) {
+                $option['options'] = serialize($option['options']);
+            }
+            */
+            //$modelOption->insert($option);
+            $optionRow = $modelOption->createRow($option);
+            $optionRow->save();
+        }
+
         $dataRule = array(
             "resource"  => $id,
             "section"   => "block",
@@ -224,13 +293,122 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         }
     }
 
-    private function delete($id, &$message)
+    /**
+     * Updates a block and its relevant options
+     */
+    private function updateBlock($id, $data, &$message)
     {
         if (empty($id)) {
             return;
         }
         $dirname = $this->module->dirname;
         $modelBlock = XOOPS::getModel("block");
+        $modelOption = XOOPS::getModel("block_option");
+
+        $options = $block['options'];
+        unset($block['options']);
+        $where = array('id = ?' => $id);
+        $modelBlock->update($data, $where);
+        unset($data['name']);
+        $where = array('root = ?' => $id);
+        $modelBlock->update($data, $where);
+
+        if (!is_array($options)) {
+            $modelOption->delete(array('block = ?' => $id));
+        } else {
+            $optionList = array();
+            $order = 0;
+            foreach ($options as $name => $option) {
+                $option['name'] = $name;
+                $option['order'] = $order++;
+                $optionList[] = $option;
+            }
+
+            $clause = new Xoops_Zend_Db_Clause('block', $id);
+            $optionExist = $modelOption->get($clause);
+
+            $findPosition = function ($name, $candidates)
+            {
+                $pos = false;
+                foreach ($candidates as $key => $item) {
+                    if ($item['name'] == $name) {
+                        $pos = $key;
+                        break;
+                    }
+                }
+                return $pos;
+            };
+
+            $hasChange = false;
+            $toDelete = array();
+            $toUpdate = array();
+            $deleteData = array();
+            $newData = array();
+            foreach ($optionExist as $option) {
+                $pos = $findPosition($option->name, $options);
+                if ($pos === false) {
+                    $toDelete[] = $option->id;
+                    $deleteData[$option->name] = 1;
+                    continue;
+                }
+                //$option->order = $pos;
+                $toUpdate[] = $option;
+            }
+            // Delete not used options
+            if (!empty($toDelete)) {
+                $modelOption->delete(array("id IN (?)" => $toDelete));
+                $hasChange = true;
+            }
+            // Update existing options
+            foreach ($toUpdate as $option) {
+                $option->setFromArray($optionList[$option->order])->save();
+                unset($optionList[$option->order]);
+            }
+            // Insert new options
+            foreach ($optionList as $option) {
+                $option['block'] = $id;
+                //$modelOption->insert($option);
+                $optionRow = $modelOption->createRow($option);
+                $optionRow->save();
+                $newData[$option['name']] = $option['default'];
+                $hasChange = true;
+            }
+
+            if ($hasChange) {
+                // Update block options data
+                $options = array_diff_key($options, $deleteData);
+                $options = array_merge($newData, $options);
+                $where = array('id = ?' => $id);
+                $data = array('options' => serialize($options));
+                $modelBlock->update($data, $where);
+
+                // Update cloned blocks
+                $select = $model->select()->where('root = ?', $id);
+                $blockList = $select->query()->fetchAll();
+                foreach ($blockList as $block) {
+                    $options = empty($block['options']) ? array() : unserialize($block['options']);
+                    $options = array_diff_key($options, $deleteData);
+                    $options = array_merge($newData, $options);
+
+                    $where = array('id = ?' => $block['id']);
+                    $data = array('options' => serialize($options));
+                    $modelBlock->update($data, $where);
+                }
+            }
+        }
+    }
+
+    /**
+     * Deletes a block and its relevant options, ACL rules
+     */
+    private function deleteBlock($id, &$message)
+    {
+        if (empty($id)) {
+            return;
+        }
+        $dirname = $this->module->dirname;
+        $modelBlock = XOOPS::getModel("block");
+        $modelOption = XOOPS::getModel("block_option");
         $modelRule = XOOPS::getModel("acl_rule");
         $modelPage = XOOPS::getModel("page");
         $modelPageBlock = XOOPS::getModel("page_block");
@@ -238,8 +416,19 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $id = is_array($id) ? $id : array($id);
 
         // delete from block table
-        $where = array('id IN (?)' => $id);
-        $modelBlock->delete($where);
+        $clause = new Xoops_Zend_Db_Clause('id IN (?)', $id);
+        $clause->addOr('root IN (?)', $id);
+        //$where = array('id IN (?)' => $id);
+        //Debug::e($id);
+        //Debug::e($clause);
+        //Debug::e($clause->render($modelBlock->getAdapter()));
+        //define('exit', 1);
+        $modelBlock->delete($clause);
+        //exit();
+
+        // delete from block option table
+        $where = array('block IN (?)' => $id);
+        $modelOption->delete($where);
 
         // delete from rule table
         $where = array(

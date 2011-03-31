@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -47,7 +47,7 @@ return array(
         'filter'        => "string",
         'default'       => "desc",
         'options'       => array(
-                            "_PLUGIN_COMMENT_DISPLAY_ORDER_DESC"    => "desc", 
+                            "_PLUGIN_COMMENT_DISPLAY_ORDER_DESC"    => "desc",
                             "_PLUGIN_COMMENT_DISPLAY_ORDER_ASC"     => "asc")),
     array(
         'name'          => "post_approval",

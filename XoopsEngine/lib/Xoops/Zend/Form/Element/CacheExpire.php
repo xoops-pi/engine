@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -32,22 +32,22 @@ class Xoops_Zend_Form_Element_CacheExpire extends Zend_Form_Element_Select
         parent::__construct($spec, $options);
         $this->setServiceOptions();
     }
-    
+
     protected function setServiceOptions()
     {
         $options = array(
-            '-1'        => XOOPS::_('Disable'), 
-            '0'         => _NOCACHE, 
-            '30'        => sprintf(_SECONDS, 30), 
-            '60'        => _MINUTE, 
-            '300'       => sprintf(_MINUTES, 5), 
-            '1800'      => sprintf(_MINUTES, 30), 
-            '3600'      => _HOUR, 
-            '18000'     => sprintf(_HOURS, 5), 
-            '86400'     => _DAY, 
-            '259200'    => sprintf(_DAYS, 3), 
-            '604800'    => _WEEK,
-            '2592000'   => _MONTH
+            '-1'        => XOOPS::_('Disable'),
+            '0'         => XOOPS::_('No Cache'),
+            '30'        => sprintf(XOOPS::_('%d seconds'), 30),
+            '60'        => XOOPS::_('1 minute'),
+            '300'       => sprintf(XOOPS::_('%d minutes'), 5),
+            '1800'      => sprintf(XOOPS::_('%d minutes'), 30),
+            '3600'      => XOOPS::_('1 hour'),
+            '18000'     => sprintf(XOOPS::_('%d hours'), 5),
+            '86400'     => XOOPS::_('1 day'),
+            '259200'    => sprintf(XOOPS::_('%d days'), 3),
+            '604800'    => XOOPS::_('1 week'),
+            '2592000'   => XOOPS::_('1 month')
         );
         $this->setMultiOptions($options);
     }

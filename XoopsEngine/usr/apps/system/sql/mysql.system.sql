@@ -172,11 +172,12 @@ CREATE TABLE `page_block` (
 
 CREATE TABLE `block` (
   `id`              mediumint(8)    unsigned NOT NULL auto_increment,
+  `root`            mediumint(8)    unsigned NOT NULL default '0',  # root ID for cloned block
   `key`             varchar(64)     NOT NULL default '',            # internal key
   `name`            varchar(64)     NOT NULL default '',            # user key, empty or unique string, for calling from template
   `title`           varchar(255)    NOT NULL default '',
   `description`     text,                                           # Description
-  `type`            varchar(64)     NOT NULL default '',            # "" - generated; C - Cloned; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
+  `type`            varchar(64)     NOT NULL default '',            # "" - generated; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
   `options`         text,                                           # for generated, delimited by "|"
   `active`          tinyint(1)      unsigned NOT NULL default '1',  # for generated, updated by system on module activation
   `module`          varchar(64)     NOT NULL default '',            # for generated
@@ -188,13 +189,26 @@ CREATE TABLE `block` (
   `cache_expire`    int(10)         unsigned NOT NULL default '0',
   `cache_level`     varchar(64)     NOT NULL default '',
   PRIMARY KEY  (`id`)
-# UNIQUE KEY `module_key` (`module`, `key`)
-# KEY mid (mid),
-# KEY visible (visible),
-# KEY isactive_visible_mid (isactive,visible,mid),
-# KEY mid_funcnum (mid,func_num)
 );
 
+
+# block option
+CREATE TABLE `block_option` (
+  `id`              int(10)         unsigned NOT NULL auto_increment,
+  `name`            varchar(64)     NOT NULL default '',            # key, empty or unique string for a block
+  `block`           mediumint(8)    unsigned NOT NULL default '0',  # block ID
+# `module`          varchar(64)     NOT NULL    default '',         # Dirname of module
+  `title`           varchar(255)    NOT NULL default '',
+  `description`     varchar(255)    NOT NULL default '',
+  `edit`            tinytext,                                       # callback options for edit
+  `options`         text,                                           # serialized options data
+  `filter`          varchar(64)     NOT NULL default '',
+  `order`           smallint(5)     unsigned NOT NULL default '0',
+  `default`         tinytext,
+
+  PRIMARY KEY   (`id`),
+  KEY `block_option`  (`block`, `order`)
+);
 
 CREATE TABLE `audit` (
   `id`              int(10)         unsigned NOT NULL auto_increment,

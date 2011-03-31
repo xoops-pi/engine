@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -22,7 +22,7 @@
 class User_Validate_UserDuplicate extends Zend_Validate_Abstract
 {
     const DUPLICATED = 'duplicated';
-    protected $userId = null;
+    protected $id = null;
 
     protected $_messageTemplates = array(
         self::DUPLICATED => 'The username has been taken'
@@ -39,19 +39,20 @@ class User_Validate_UserDuplicate extends Zend_Validate_Abstract
         }
 
         if (array_key_exists('id', $options)) {
-            $this->userId = $options['id'];
+            $this->id = $options['id'];
         }
     }
 
-    public function isValid($value)
+    public function isValid($value, $context = null)
     {
         $value = (string) $value;
         $this->_setValue($value);
 
         $userModel = XOOPS::getModel("user_account");
         $select = $userModel->select()->where("identity = ?", $value);
-        if (!empty($this->userId)) {
-            $select->where("id <> ?", $this->userId);
+        $id = isset($context['id']) ? $context['id'] : $this->id;
+        if (!empty($id)) {
+            $select->where("id <> ?", $id);
         }
         $rowset = $userModel->fetchAll($select);
         if ($rowset->count() == 0) {

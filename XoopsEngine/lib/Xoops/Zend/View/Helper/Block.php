@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -76,7 +76,7 @@ class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
         $logger = XOOPS::service('logger');
         // Generate block content if not cached
         if (!$block["cache_expire"] || !$template->is_cached($tplName, $cache_key)) {
-            if ($content = $model->buildBlock($block, "S", $options)) {
+            if ($content = $model->buildBlock($block, $options)) {
                 $template->assign('block', $content);
                 $block['content'] = $template->fetch($tplName, $cache_key);
                 $logger->log($block["title"] . " generated", 'debug', 'block');

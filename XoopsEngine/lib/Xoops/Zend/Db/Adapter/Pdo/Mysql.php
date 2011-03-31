@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -132,6 +132,9 @@ class Xoops_Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
      */
     protected function _whereExpr($where)
     {
+        if ($where instanceof Xoops_Zend_Db_Clause) {
+            $where = $where->render($this);
+        }
         if (is_array($where) && isset($where["order"])) {
             $order = $where["order"];
             unset($where["order"]);

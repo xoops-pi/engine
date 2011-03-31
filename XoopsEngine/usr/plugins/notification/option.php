@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -27,7 +27,7 @@ return array(
         'filter'        => "string",
         'default'       => "message",
         'options'       => array(
-                            "_PLUGIN_NOTIFICATION_METHOD_EMAIL"     => "email", 
+                            "_PLUGIN_NOTIFICATION_METHOD_EMAIL"     => "email",
                             "_PLUGIN_NOTIFICATION_METHOD_MESSAGE"   => "message")),
     array(
         'name'          => "items_iteration",
@@ -44,9 +44,9 @@ return array(
         'filter'        => "number_int",
         'default'       => 100000,
         'options'       => array(
-                            "_PLUGIN_NOTIFICATION_INTERVAL_SEC1"        => 1000000, 
-                            "_PLUGIN_NOTIFICATION_INTERVAL_SEC10TH"     => 100000, 
-                            "_PLUGIN_NOTIFICATION_INTERVAL_SEC100TH"    => 10000, 
+                            "_PLUGIN_NOTIFICATION_INTERVAL_SEC1"        => 1000000,
+                            "_PLUGIN_NOTIFICATION_INTERVAL_SEC10TH"     => 100000,
+                            "_PLUGIN_NOTIFICATION_INTERVAL_SEC100TH"    => 10000,
                             "_PLUGIN_NOTIFICATION_INTERVAL_SEC1000TH"   => 1000)),
     array(
         'name'          => "cache_expire",

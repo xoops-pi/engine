@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -106,7 +106,7 @@ return array(
         ),
         "search"    => "text",
     ),
-    
+
     // Avatar: upload/aaa.jpg => upload/avatar/aaa.jpg or img/aaa.jpg => img/avatar/aaa.jpg
     "avatar"    => array(
         "category"  => false,
@@ -117,7 +117,7 @@ return array(
         "view"      => "avatar",
         "search"    => false,
    ),
-    
+
     // Contact
     "msn" => array(
         "category"  => "contact",
@@ -157,7 +157,7 @@ return array(
         "edit"      => "link",
         "search"    => "text",
     ),
-    
+
     // Preference
     "theme" => array(
         "category"  => "preference",
@@ -263,6 +263,6 @@ return array(
         "edit"      => false,
         "admin"     => "Text"
     ),
-    
+
     // Education, work
 );

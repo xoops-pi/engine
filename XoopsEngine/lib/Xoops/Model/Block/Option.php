@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework for Xoops Engine
+ * Xoops Block Option Model Row
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,33 +9,22 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
- * @category        Xoops_Zend
- * @package         Controller
+ * @package         Xoops_Model
  * @version         $Id$
  */
 
-/**
- * Ruby routing based Router.
- *
- * @package    Xoops_Zend
- * @subpackage Router
- */
-class Xoops_Zend_Controller_Router_Admin extends Xoops_Zend_Controller_Router_Application
+class Xoops_Model_Block_Option extends Xoops_Zend_Db_Model
 {
-    //public $section = 'admin';
-    //public $route = 'admin';
+    protected $_primary = "id";
 
     /**
-     * Array of invocation parameters to use when instantiating action
-     * controllers
-     * @var array
+     * Classname for row
+     *
+     * @var string
      */
-    protected $_invokeParams = array(
-        'section'   => 'admin',
-        'route'     => 'admin',
-    );
+    protected $_rowClass = 'Xoops_Model_Block_Option_Row';
 }

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -39,7 +39,7 @@ class Xoops_Zend_Controller_Action_Helper_Audit extends Zend_Controller_Action_H
     {
         call_user_func_array(array($this->getAuditPlugin(), "log"), func_get_args());
     }
-    
+
     /**
      * Returns the audit Plugin object
      *

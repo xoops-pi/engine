@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The Xoops Engine http://sourceforge.net/projects/xoops/
+ * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
@@ -122,7 +122,7 @@ return array(
                 ),
             ),
         ),
-    
+
         'profile'     => array(
             'label'         => "Profile",
             'route'         => "admin",
@@ -158,7 +158,7 @@ return array(
                 ),
             ),
         ),
-        
+
         'permission'     => array(
             'label'         => "Permission",
             'route'         => "admin",
@@ -185,6 +185,6 @@ return array(
                 ),
             ),
         ),
-        
+
     ),
 );

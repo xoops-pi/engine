@@ -1,6 +1,6 @@
 <?php
 /**
- * Startpage selection element
+ * Admin theme selection element
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -8,8 +8,6 @@
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * Based on Matthew Weier O'Phinney's tutorial {@link http://weierophinney.net/matthew/archives/217-Creating-composite-elements.html}
  *
  * @copyright       Xoops Engine http://www.xoopsengine.org
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
