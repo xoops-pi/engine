@@ -41,7 +41,7 @@ class Gateway
     public static function getModel($model)
     {
         if (!isset(static::$models[$model])) {
-            static::$models[$model] = XOOPS::getModel($model);
+            static::$models[$model] = \XOOPS::getModel($model);
         }
         return static::$models[$model];
     }
@@ -55,7 +55,7 @@ class Gateway
      */
     public static function create($data, &$message = null)
     {
-        $userModel = XOOPS::getModel("user");
+        $userModel = \XOOPS::getModel("user");
         $userRow = $userModel->createRow();
         //$colsAccount = static::getCols("user_account");
         //$user = array();
@@ -68,7 +68,7 @@ class Gateway
 
         $id = $userRow->save();
         if (!$id) {
-            $message[] = XOOPS::_("User account was not created.");
+            $message[] = \XOOPS::_("User account was not created.");
             return false;
         }
         $profileRow = $userRow->profile();
@@ -76,16 +76,16 @@ class Gateway
         $status = $profileRow->save();
         if (!$status) {
             $userRow->delete();
-            $message[] = XOOPS::_("User profile was not created.");
+            $message[] = \XOOPS::_("User profile was not created.");
             return false;
         }
 
         if (isset($data["role"])) {
-            $userRoleModel = XOOPS::getModel("acl_user");
+            $userRoleModel = \XOOPS::getModel("acl_user");
             $row = $userRoleModel->createRow(array("user" => $id, "role" => $data["role"]));
             $status = $row->save();
             if (!$status) {
-                $message[] = XOOPS::_("User role was not created.");
+                $message[] = \XOOPS::_("User role was not created.");
             }
         }
         return $id;
@@ -121,15 +121,15 @@ class Gateway
     public static function update($data, &$message = null)
     {
         if (empty($data["id"])) {
-            $message[] = XOOPS::_("User ID is required.");
+            $message[] = \XOOPS::_("User ID is required.");
             return false;
         }
         $id = $data["id"];
         unset($data["id"]);
-        $userModel = XOOPS::getModel("user");
+        $userModel = \XOOPS::getModel("user");
         $userRow = $userModel->findRow($id);
         if (!$userRow) {
-            $message[] = XOOPS::_("User identity '" . $id . "' was not found.");
+            $message[] = \XOOPS::_("User identity '" . $id . "' was not found.");
             return false;
         }
         foreach ($data as $col => $val) {
@@ -137,22 +137,22 @@ class Gateway
         }
         $status = $userRow->save();
         if (!$status) {
-            $message[] = XOOPS::_("User account was not updated.");
+            $message[] = \XOOPS::_("User account was not updated.");
             return false;
         }
         $profileRow = $userRow->profile();
         $status = $profileRow->save();
         if (!$status) {
-            $message[] = XOOPS::_("User profile was not updated.");
+            $message[] = \XOOPS::_("User profile was not updated.");
             return false;
         }
         if (isset($data["role"])) {
-            $userRoleModel = XOOPS::getModel("acl_user");
+            $userRoleModel = \XOOPS::getModel("acl_user");
             $row = $userRoleModel->findRow($id);
             $row->role = $data["role"];
             $status = $row->save();
             if (!$status) {
-                $message[] = XOOPS::_("User role was not saved.");
+                $message[] = \XOOPS::_("User role was not saved.");
             }
         }
 
@@ -217,8 +217,8 @@ class Gateway
      */
     public static function read($id, &$message = null)
     {
-        $userModel = XOOPS::getModel("user");
-        $profileModel = XOOPS::getModel("user_profile");
+        $userModel = \XOOPS::getModel("user");
+        $profileModel = \XOOPS::getModel("user_profile");
         $select = $userModel->getAdapter()->select()
                                                 ->from(array("u" => $userModel->info("name")),
                                                     array("id", "identity", "name", "email"))
@@ -227,7 +227,7 @@ class Gateway
                                                 ->where("u.id = ?", $id);
         $row = $userModel->getAdapter()->fetchRow($select);
         if (!$row) {
-            $message[] = XOOPS::_("No record for user '{$id}' was found.");
+            $message[] = \XOOPS::_("No record for user '{$id}' was found.");
         }
 
         return $row;
@@ -243,28 +243,28 @@ class Gateway
     public static function delete($id, &$message = null)
     {
         $status = true;
-        $userModel = XOOPS::getModel("user");
+        $userModel = \XOOPS::getModel("user");
         $userRow = $userModel->findRow($id);
         if (!$userRow) {
-            $message[] = XOOPS::_("User identity '" . $id . "' was not found.");
+            $message[] = \XOOPS::_("User identity '" . $id . "' was not found.");
             return false;
         }
         $profileRow = $userRow->profile();
         $state = $profileRow->delete();
         if (!$state) {
-            $message[] = XOOPS::_("User profile '{$id}' was not deleted.");
+            $message[] = \XOOPS::_("User profile '{$id}' was not deleted.");
             $status = false;
         }
         $state = $userRow->delete();
         if (!$state) {
-            $message[] = XOOPS::_("User account '{$id}' was not deleted.");
+            $message[] = \XOOPS::_("User account '{$id}' was not deleted.");
             $status = false;
         }
-        $userRoleModel = XOOPS::getModel("acl_user");
+        $userRoleModel = \XOOPS::getModel("acl_user");
         if ($row = $userRoleModel->findRow($id)) {
             $state = $row->delete();
             if (!$state) {
-                $message[] = XOOPS::_("User role was not deleted.");
+                $message[] = \XOOPS::_("User role was not deleted.");
                 $status = false;
             }
         }
@@ -287,7 +287,7 @@ class Gateway
         if (!empty($data["id"])) {
             $isNew = false;
         } else {
-            $userModel = XOOPS::getModel("user");
+            $userModel = \XOOPS::getModel("user");
             $userRow = $userModel->fetchRow(array("identity = ?" => $data["identity"]));
             if ($userRow) {
                 $isNew = false;

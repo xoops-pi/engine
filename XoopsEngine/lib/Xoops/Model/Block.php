@@ -39,7 +39,7 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
         $isCustom = empty($block["module"]) ? true : false;
         // Module-generated block
         if (!$isCustom) {
-            $render = $block["show_func"];
+            $render = $block["render"];
             $class = '';
             if ($render) {
                 list($class, $method) = explode('::', $render);

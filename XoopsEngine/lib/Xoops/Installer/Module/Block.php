@@ -77,7 +77,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $dirname = $this->module->dirname;
         $message = $this->message;
         $blocks = $this->config;
-        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $module);
+        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $dirname);
         foreach ($blocks as $key => $block) {
             // break the loop if missing block config
             if (empty($block['render']) && (!isset($block['file']) || !isset($block['show_func']))) {
@@ -124,7 +124,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $model = XOOPS::getModel("block");
         $showfuncs = array();
         $funcfiles = array();
-        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '_' . ($this->module->parent ?: $module);
+        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '_' . ($this->module->parent ?: $dirname);
         foreach ($blocks as $key => $block) {
             if (!empty($block['func_file'])) {
                 $funcfiles[] = $block['file'];
