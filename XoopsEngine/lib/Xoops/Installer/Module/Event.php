@@ -18,6 +18,27 @@
  * @version         $Id$
  */
 
+/**
+ * Event meta:
+ *  // Event list
+ *  "events"    => array(
+ *      // event name (unique)
+ *      "user_call" => array(
+ *          // title
+ *          "title" => XOOPS::_("Event hook demo"),
+ *      ),
+ *  ),
+ *  // Observer list
+ *  "observers" => array(
+ *      array(
+ *          // event info: module, event name
+ *          "event"     => array("pm", "test"),
+ *          // callback info: class::method
+ *          "callback"  => "event::message",
+ *      ),
+ *  ),
+ */
+
 class Xoops_Installer_Module_Event extends Xoops_Installer_Abstract
 {
     public function install(&$message)
@@ -42,13 +63,16 @@ class Xoops_Installer_Module_Event extends Xoops_Installer_Abstract
         $modelObserver = XOOPS::getModel("event_observer");
         $observers = !empty($this->config["observers"]) ? $this->config["observers"] : array();
         $flushList = array();
+
+        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $module);
         foreach ($observers as $observer) {
+            list($class, $method) = explode('::', $observer["callback"]);
             $data = array();
             $data["event_module"] = $observer["event"][0];
             $data["event"] = $observer["event"][1];
             $data["module"] = $module;
-            $data["class"] = $observer["callback"][0];
-            $data["method"] = $observer["callback"][1];
+            $data["class"] = $classPrefix . '\\' . $class;
+            $data["method"] = $method;
             $status = $modelObserver->insert($data) * $status;
             $flushList[] = $observer["event"];
         }
@@ -96,21 +120,23 @@ class Xoops_Installer_Module_Event extends Xoops_Installer_Abstract
 
         $observerConfig = !empty($this->config["observers"]) ? $this->config["observers"] : array();
         $observers = array();
+        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $module);
         foreach ($observerConfig as $observer) {
+            list($class, $method) = explode('::', $observer["callback"]);
             $data = array();
             $data["event_module"] = $observer["event"][0];
             $data["event"] = $observer["event"][1];
             $data["module"] = $module;
-            $data["class"] = $observer["callback"][0];
-            $data["method"] = $observer["callback"][1];
-            $key = $data["event_module"] . "-" . $data["event"] . "-" . $data["class"] . "-" . $data["method"];
+            $data["class"] = $classPrefix . '\\' . $class;
+            $data["method"] = $method;
+            $key = md5($data["event_module"] . "-" . $data["event"] . "-" . $data["class"] . "-" . $data["method"]);
             $observers[$key] = $data;
         }
         $select = $modelObserver->select()->where("module = ?", $module);
         $observerList = $modelObserver->fetchAll($select);
         $flushList = array();
         foreach ($observerList as $row) {
-            $key = $row->event_module . "-" . $row->event . "-" . $row->class . "-" . $row->method;
+            $key = md5($row->event_module . "-" . $row->event . "-" . $row->class . "-" . $row->method);
             if (!isset($observers[$key])) {
                 $status = $modelObserver->delete(array("id = ?" => $row->id)) * $status;
                 $flushList[] = array($row->event_module, $row->event);
@@ -118,7 +144,7 @@ class Xoops_Installer_Module_Event extends Xoops_Installer_Abstract
                 unset($observers[$key]);
             }
         }
-        foreach ($observers as $observer) {
+        foreach ($observers as $key => $observer) {
             $status = $modelObserver->insert($observer) * $status;
             $flushList[] = array($observer["event_module"], $observer["name"]);
         }

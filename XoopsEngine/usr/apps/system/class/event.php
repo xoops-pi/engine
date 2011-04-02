@@ -18,11 +18,12 @@
  * @version         $Id$
  */
 
-class App_System_Event
-//class System_Event
+namespace App\System;
+
+class Event
 {
     public static function moduleinstall($data, $module)
     {
-        Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
+        \Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
     }
 }

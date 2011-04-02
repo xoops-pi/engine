@@ -46,39 +46,39 @@ return array(
             // event info: module, event name
             "event"     => array("user", "login"),
             // callback info: class, method
-            "callback"  => array("event", "login")
+            "callback"  => "event::login",
         ),
         array(
             "event"     => array("user", "login_failure"),
-            "callback"  => array("event", "login_failure")
+            "callback"  => "event::login_failure",
         ),
         array(
             "event"     => array("user", "register"),
-            "callback"  => array("event", "register")
+            "callback"  => "event::register",
         ),
         array(
             "event"     => array("user", "activate"),
-            "callback"  => array("event", "activate")
+            "callback"  => "event::activate",
         ),
         array(
             "event"     => array("system", "module_install"),
-            "callback"  => array("event", "profile")
+            "callback"  => "event::profile",
         ),
         array(
             "event"     => array("system", "module_uninstall"),
-            "callback"  => array("event", "profile")
+            "callback"  => "event::profile",
         ),
         array(
             "event"     => array("system", "module_activate"),
-            "callback"  => array("event", "profile")
+            "callback"  => "event::profile",
         ),
         array(
             "event"     => array("system", "module_deactivate"),
-            "callback"  => array("event", "profile")
+            "callback"  => "event::profile",
         ),
         array(
             "event"     => array("system", "module_update"),
-            "callback"  => array("event", "profile")
+            "callback"  => "event::profile",
         ),
     ),
 );

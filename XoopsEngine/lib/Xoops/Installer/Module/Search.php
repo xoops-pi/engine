@@ -23,7 +23,7 @@
  *  module - the module to be searched
  *  callback - callback class::method by app or module
  *  function - callback function by legacy module
- *  file - the name of file that contains the callback
+ *  file - the name of file that contains the function for legacy module
  *
  */
 class Xoops_Installer_Module_Search extends Xoops_Installer_Abstract
@@ -42,6 +42,10 @@ class Xoops_Installer_Module_Search extends Xoops_Installer_Abstract
         $model = XOOPS::getModel("search");
         $columnsSearch = $model->info("cols");
         $data = $this->config;
+        if (!empty($data['callback'])) {
+            $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $module);
+            $data['callback'] = $classPrefix . '\\' . $data['callback'];
+        }
         foreach ($data as $key => $val) {
             if (!in_array($key, $columnsSearch)) {
                 unset($data[$key]);
@@ -75,6 +79,10 @@ class Xoops_Installer_Module_Search extends Xoops_Installer_Abstract
         }
         $columnsSearch = $model->info("cols");
         $data = $this->config;
+        if (!empty($data['callback'])) {
+            $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $module);
+            $data['callback'] = $classPrefix . '\\' . $data['callback'];
+        }
         foreach ($data as $key => $val) {
             if (!in_array($key, $columnsSearch)) {
                 unset($data[$key]);

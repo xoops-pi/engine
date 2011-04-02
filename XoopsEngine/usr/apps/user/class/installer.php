@@ -48,7 +48,7 @@ class App_User_Installer extends Xoops_Installer_Abstract
             $modelCategory->insert($category);
         }
 
-        if (!App_User_Gateway::read(1)) {
+        if (!\App\User\Gateway::read(1)) {
             $defaultUser = array(
                 "id"            => 1,
                 "identity"      => "sysop",
@@ -58,7 +58,7 @@ class App_User_Installer extends Xoops_Installer_Abstract
                 "active"        => 1,
                 "create_time"   => time(),
             );
-            App_User_Gateway::create($defaultUser);
+            \App\User\Gateway::create($defaultUser);
         }
     }
 }

@@ -39,27 +39,30 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
         $isCustom = empty($block["module"]) ? true : false;
         // Module-generated block
         if (!$isCustom) {
-            $func = $block["show_func"];
-            if (empty($func)) {
-                $result = false;
-            } else {
-                XOOPS::service('translate')->loadTranslation('blocks', $block['module']);
+            $render = $block["show_func"];
+            $class = '';
+            if ($render) {
+                list($class, $method) = explode('::', $render);
+            } elseif ($block["show_func"]) {
+                $func = $block["show_func"];
                 if (!function_exists($func)) {
                     include_once Xoops::service('module')->getPath($block['module']) . '/blocks/' . $block['func_file'];
                 }
-                /*
-                if (empty($block["show_func"])) {
-                    $options = unserialize($block['options']);
-                } else {
-                    $options = explode('|', $block['options']);
-                }
-                */
+            }
+            if (empty($func) && empty($render)) {
+                $result = false;
+            } else {
+                XOOPS::service('translate')->loadTranslation('blocks', $block['module']);
                 $options = empty($block['options']) ? array() : unserialize($block['options']);
                 if (!empty($configs) && is_array($configs)) {
                     $options = array_merge($options, $configs);
                 }
-                $options['module'] = $block['module'];
-                $result = $func($options);
+                if ($render && class_exists($class)) {
+                    $result = $class::$method($options, $block['module']);
+                } else {
+                    $options['module'] = $block['module'];
+                    $result = $func($options);
+                }
             }
         // Custom block
         } else {

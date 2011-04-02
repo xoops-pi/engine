@@ -71,10 +71,9 @@ return array(
         'block'     => array(
             array(
                 'name'          => "search",
-                'file'          => "blocks.php",
                 'title'         => _SEARCH_MI_BLOCK,
                 'description'   => _SEARCH_MI_BLOCK_DESC,
-                'show_func'     => "search_block_show",
+                'render'        => "block::render",
                 'template'      => 'search.html')),
 
         ));

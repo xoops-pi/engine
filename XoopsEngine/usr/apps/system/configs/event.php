@@ -44,8 +44,8 @@ return array(
         array(
             // event info: module, event name
             "event"     => array("system", "module_install"),
-            // callback info: class, method
-            "callback"  => array("event", "moduleinstall")
+            // callback info: class::method
+            "callback"  => "event::moduleinstall",
         ),
     ),
 );

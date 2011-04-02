@@ -22,7 +22,7 @@
  * Block configuration specs
  *
  *  return array(
- *      // Block with mixed options
+ *      // Block with legacy mode, e.g. file, show_func, edit_func and mixed options
  *      "blockA" => array(
  *          "name"          => "BlockUniqueName",
  *          "title"         => "Block Title",
@@ -35,13 +35,12 @@
  *          "cache"         => "role", // Cache level
  *          "access"        => array(), // ACL rules
  *      ),
- *      // Block with structured options
+ *      // Block with new mode, e.g. render, structured options
  *      "blockB" => array(
  *          "name"          => "BlockUniqueName",
  *          "title"         => "Block Title",
  *          "description"   => "Desribing the block",
- *          "file"          => "block_definition_file.php",  // In modules/module/blocks/
- *          "show_func"     => "function_name_to_fetch_display_content", // Defined in above file
+ *          "render"        => 'class::method',
  *          "template"      => "template.html", // in modules/module/templates/blocks/
  *          "cache"         => "role", // Cache level
  *          "access"        => array(), // ACL rules
@@ -78,9 +77,10 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $dirname = $this->module->dirname;
         $message = $this->message;
         $blocks = $this->config;
+        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $module);
         foreach ($blocks as $key => $block) {
             // break the loop if missing block config
-            if (!isset($block['file']) || !isset($block['show_func'])) {
+            if (empty($block['render']) && (!isset($block['file']) || !isset($block['show_func']))) {
                 continue;
             }
             $data = array(
@@ -89,8 +89,9 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 "title"         => $block['title'],
                 "description"   => isset($block["description"]) ? $block["description"] : "",
                 "module"        => $dirname,
-                "func_file"     => $block['file'],
-                "show_func"     => $block['show_func'],
+                "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
+                "func_file"     => isset($block['func_file']) ? $block['func_file'] : '',
+                "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
                 "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                 "template"      => isset($block['template']) ? $block['template'] : '',
                 "options"       => isset($block['options']) ? $block['options'] : '',
@@ -123,12 +124,14 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $model = XOOPS::getModel("block");
         $showfuncs = array();
         $funcfiles = array();
+        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '_' . ($this->module->parent ?: $module);
         foreach ($blocks as $key => $block) {
-            if (empty($block['show_func']) || empty($block['file'])) {
-                continue;
+            if (!empty($block['func_file'])) {
+                $funcfiles[] = $block['file'];
             }
-            $showfuncs[] = $block['show_func'];
-            $funcfiles[] = $block['file'];
+            if (!empty($block['show_func'])) {
+                $showfuncs[] = $block['show_func'];
+            }
             $blockKey = isset($block["name"]) ? $block["name"] : $key;
 
             $select = $model->select()
@@ -144,8 +147,9 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                     "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
                     "title"         => $block['title'],
                     "module"        => $dirname,
-                    "func_file"     => $block['file'],
-                    "show_func"     => $block['show_func'],
+                    "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
+                    "func_file"     => isset($block['func_file']) ? $block['func_file'] : '',
+                    "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
                     "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                     "template"      => isset($block['template']) ? $block['template'] : '',
                     "options"       => isset($block['options']) ? $block['options'] : '',
@@ -158,6 +162,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 foreach ($blockList as $item) {
                     $data = array(
                         "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                        "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
                         "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                         "template"      => isset($block['template']) ? $block['template'] : '',
                         "cache_level"   => isset($block['cache']) ? $block['cache'] : "",

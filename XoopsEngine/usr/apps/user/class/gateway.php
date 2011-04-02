@@ -18,8 +18,9 @@
  * @version         $Id$
  */
 
-class App_User_Gateway
-//class User_Gateway
+namespace App\User;
+
+class Gateway
 {
     protected static $models = array();
     protected static $cols = array();

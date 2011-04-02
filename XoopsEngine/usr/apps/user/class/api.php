@@ -18,12 +18,13 @@
  * @version         $Id$
  */
 
-class App_User_Api
-//class User_Api
+namespace App\User;
+
+class Api
 {
     public function demo($args)
     {
-        Debug::e(__METHOD__);
+        \Debug::e(__METHOD__);
         return true;
     }
 }

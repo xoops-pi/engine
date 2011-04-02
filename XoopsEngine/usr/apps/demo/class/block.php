@@ -1,6 +1,6 @@
 <?php
 /**
- * Demo module bootstrap
+ * Demo module block class
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -18,11 +18,17 @@
  * @version         $Id$
  */
 
-class App_Demo_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
-//class Demo_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
+namespace App\Demo;
+
+class Block extends \Xoops\BlockRender
 {
-    public function bootstrap()
+    public static function blocka($options, $module = null)
     {
-        XOOPS::service("event")->attach("system", "module_update", array("App\\Demo\\Event", "runtime"));
+        \Debug::e("Called by " . $module . " through " . __METHOD__);
+    }
+
+    public static function blockb($options, $module = null)
+    {
+        \Debug::e("Called by " . $module . " through " . __METHOD__);
     }
 }

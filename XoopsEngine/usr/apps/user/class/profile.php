@@ -18,8 +18,9 @@
  * @version         $Id$
  */
 
-class App_User_Profile
-//class User_Profile
+namespace App\User;
+
+class Profile
 {
     /*
     public static function listI($user)
@@ -50,11 +51,11 @@ class App_User_Profile
     {
         switch ($value) {
             case "female":
-                $value = XOOPS::_("Female");
+                $value = \XOOPS::_("Female");
                 break;
             case "male":
             default:
-                $value = XOOPS::_("Male");
+                $value = \XOOPS::_("Male");
                 break;
         }
 
@@ -64,7 +65,7 @@ class App_User_Profile
     public static function birthday($value)
     {
         list($year, $month, $day) = explode("-", $value);
-        $value = sprintf(XOOPS::_("%s-%s-%s"), $year, $month, $day);
+        $value = sprintf(\XOOPS::_("%s-%s-%s"), $year, $month, $day);
         return $value;
     }
 
@@ -82,7 +83,7 @@ class App_User_Profile
 
     public static function signature($value)
     {
-        $configs = XOOPS::service("registry")->config->read("user");
+        $configs = \XOOPS::service("registry")->config->read("user");
         $format = $configs["signature"];
         switch ($format) {
             case "nohtml":
@@ -109,7 +110,7 @@ class App_User_Profile
 
     public static function timezone($value)
     {
-        $timezone = Xoops_Zend_Locale::getTranslation($value, "CityToTimezone", "en");
+        $timezone = \Xoops_Zend_Locale::getTranslation($value, "CityToTimezone", "en");
         $value = empty($timezone) ? $value : $timezone;
         return $value;
     }
@@ -123,7 +124,7 @@ class App_User_Profile
      */
     public static function avatar($value, $size = "")
     {
-        $value = App_User_Avatar::getTag($value, $size);
+        $value = Avatar::getTag($value, $size);
         return $value;
     }
 }

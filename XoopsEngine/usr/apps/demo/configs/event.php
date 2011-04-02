@@ -33,19 +33,19 @@ return array(
             // event info: module, event name
             "event"     => array("pm", "test"),
             // callback info: class, method
-            "callback"  => array("event", "message")
+            "callback"  => "event::message",
         ),
         array(
             "event"     => array("demo", "user_call"),
-            "callback"  => array("event", "selfcall")
+            "callback"  => "event::selfcall",
         ),
         array(
             "event"     => array("system", "module_install"),
-            "callback"  => array("event", "moduleinstall")
+            "callback"  => "event::moduleinstall",
         ),
         array(
             "event"     => array("system", "module_update"),
-            "callback"  => array("event", "moduleupdate")
+            "callback"  => "event::moduleupdate",
         ),
     ),
 );

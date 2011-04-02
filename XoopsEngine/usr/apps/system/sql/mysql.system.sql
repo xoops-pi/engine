@@ -178,6 +178,7 @@ CREATE TABLE `block` (
   `title`           varchar(255)    NOT NULL default '',
   `description`     text,                                           # Description
   `type`            varchar(64)     NOT NULL default '',            # "" - generated; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
+  `render`          varchar(64)     NOT NULL default '',            # for generated, render class::method
   `options`         text,                                           # for generated, delimited by "|"
   `active`          tinyint(1)      unsigned NOT NULL default '1',  # for generated, updated by system on module activation
   `module`          varchar(64)     NOT NULL default '',            # for generated

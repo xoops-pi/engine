@@ -18,8 +18,9 @@
  * @version         $Id$
  */
 
-class App_User_Avatar
-//class User_Avatar
+namespace App\User;
+
+class Avatar
 {
     /**
      * Get avatar file from user ID
@@ -28,7 +29,7 @@ class App_User_Avatar
      */
     public static function getFile($id)
     {
-        $model = XOOPS::getModel("user_profile");
+        $model = \XOOPS::getModel("user_profile");
         if (!$row = $model->findRow($id)) {
             return false;
         }
@@ -88,7 +89,7 @@ class App_User_Avatar
                 $size_string = "";
                 break;
         }
-        $value = '<img src="' . XOOPS::url($path) . '" ' . $size_string. ' alt="" title="" />';
+        $value = '<img src="' . \XOOPS::url($path) . '" ' . $size_string. ' alt="" title="" />';
         return $value;
     }
 }

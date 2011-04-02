@@ -52,7 +52,7 @@ class User_EditController extends Xoops_Zend_Controller_Action
         }
 
         $values = $form->getValues();
-        $status = App_User_Gateway::update($values, $message);
+        $status = \App\User\Gateway::update($values, $message);
         if (!$status) {
             $message[] = XOOPS::_("Profile was not able to save. Please try again or contact webmaster.");
             $form->addErrors($message);
@@ -81,7 +81,7 @@ class User_EditController extends Xoops_Zend_Controller_Action
             $posts = $this->getRequest()->getPost();
             if ($form->isValid($posts)) {
                 $values = $form->getValues();
-                $status = App_User_Gateway::update($values, $message);
+                $status = \App\User\Gateway::update($values, $message);
                 if (!$status) {
                     $message[] = XOOPS::_("Email was not able to save. Please try again or contact webmaster.");
                     $form->addErrors($message);
@@ -116,7 +116,7 @@ class User_EditController extends Xoops_Zend_Controller_Action
             $posts = $this->getRequest()->getPost();
             if ($form->isValid($posts)) {
                 $values = $form->getValues();
-                $status = App_User_Gateway::update($values, $message);
+                $status = \App\User\Gateway::update($values, $message);
                 if (!$status) {
                     $message[] = XOOPS::_("Password was not able to save. Please try again or contact webmaster.");
                     $form->addErrors($message);

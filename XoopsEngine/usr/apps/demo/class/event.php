@@ -18,36 +18,37 @@
  * @version         $Id$
  */
 
-class App_Demo_Event
-//class Demo_Event
+namespace App\Demo;
+
+class Event
 {
     public static function message($data, $module)
     {
-        Debug::e("Called by {$module} through " . __METHOD__);
+        \Debug::e("Called by {$module} through " . __METHOD__);
     }
 
     public static function selfcall($data, $module)
     {
-        Debug::e("Called by {$module} through " . __METHOD__);
+        \Debug::e("Called by {$module} through " . __METHOD__);
     }
 
     public static function moduleupdate($data, $module)
     {
-        Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
+        \Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
     }
 
     public static function moduleinstall($data, $module)
     {
-        Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
+        \Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
     }
 
     public static function runtime($data, $module)
     {
-        Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
+        \Xoops::service('logger')->log("Called by {$module} through " . __METHOD__);
     }
 
     public static function register($data, $module)
     {
-        Debug::e("Called by {$module} through " . __METHOD__);
+        \Debug::e("Called by {$module} through " . __METHOD__);
     }
 }

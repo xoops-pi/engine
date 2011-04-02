@@ -22,11 +22,9 @@
 return array(
     // Block with options and template
     'block-a'   => array(
-        'file'          => "blocks.php",
         'title'         => _DEMO_MI_BLOCK_FIRST,
         'description'   => _DEMO_MI_BLOCK_FIRST_DESC,
-        'show_func'     => "demo_block_show",
-        //'edit_func'     => "demo_block_edit",
+        'render'        => "block::blocka",
         'template'      => 'block_show.html',
         'options'       => array(
             // text option
@@ -49,11 +47,9 @@ return array(
     ),
     // Block with custom options and template
     'block-b'   => array(
-        'file'          => "blocks.php",
         'title'         => _DEMO_MI_BLOCK_SECOND,
         'description'   => _DEMO_MI_BLOCK_SECOND_DESC,
-        'show_func'     => "demo_block_show",
-        //'edit_func'     => "demo_block_edit",
+        'render'        => "block::blockb",
         'template'      => 'block_show.html',
         'options'       => array(
             // select option
@@ -91,9 +87,8 @@ return array(
     ),
     // Simple block w/o option, no template
     'block-d'   => array(
-        'file'          => "blocks.php",
         'title'         => _DEMO_MI_BLOCK_FOURTH,
         'description'   => _DEMO_MI_BLOCK_FOURTH_DESC,
-        'show_func'     => "demo_block_show",
+        'render'        => "block::random",
     ),
 );

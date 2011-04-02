@@ -18,15 +18,11 @@
  * @version         $Id$
  */
 
-class App_Demo_Search
-//class Demo_Search
+namespace App\Demo;
+
+class Search extends \Xoops\Search
 {
     protected static $module = "demo";
-
-    public static function setModule($module)
-    {
-        static::$module = $module;
-    }
 
     public static function index($queries, $type, $limit, $offset, $uid)
     {
@@ -34,7 +30,7 @@ class App_Demo_Search
         //Debug::e("Inside " . __METHOD__);
         //Debug::e($params);
 
-        $router = XOOPS::registry("frontController")->getRouter();
+        $router = \XOOPS::registry("frontController")->getRouter();
         $results = array();
         $max = 1000;
         $count = 0;
@@ -44,7 +40,7 @@ class App_Demo_Search
                 "uid"       => 1,
                 "time"      => time(),
                 "link"      => $router->assemble(array("q" => "test-" . $i), "search"),
-                "title"     => XOOPS::_("Test term " . $i),
+                "title"     => \XOOPS::_("Test term " . $i),
                 "content"   => "Some content for term " . $i,
             );
             $results[] = $item;

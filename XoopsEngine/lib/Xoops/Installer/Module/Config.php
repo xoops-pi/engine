@@ -28,6 +28,7 @@ array(
     'description'   => "",
     'default'       => "",
     'edit'          => "formelement",
+    //'edit'        => array('module' => 'dirname', 'type' => "formelement"),
     'filter'        => "filtertype",
 ),
 */
