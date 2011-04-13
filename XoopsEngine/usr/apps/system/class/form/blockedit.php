@@ -113,6 +113,7 @@ class App_System_Form_BlockEdit extends Xoops_Zend_Form
                     $options = array(
                         'label'         => $option->title,
                         'value'         => isset($blockOptions[$keyOption]) ? $blockOptions[$keyOption] : '',
+                        'module'        => $block['module'],
                     );
                     if ($multiOptions = $option->options) {
                         $options['multiOptions'] = $multiOptions;
