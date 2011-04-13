@@ -83,9 +83,12 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             if (empty($block['render']) && (!isset($block['file']) || !isset($block['show_func']))) {
                 continue;
             }
+            $blockKey = isset($block["name"]) ? $block["name"] : $key;
+            $blockName = isset($block["name"]) ? $block["name"] : (is_string($key) ? $key : '');
+            $blockName = empty($blockName) ? '' : $dirname . "-" . $blockName;
             $data = array(
                 "key"           => isset($block["name"]) ? $block["name"] : $key,
-                "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                "name"          => $blockName,
                 "title"         => $block['title'],
                 "description"   => isset($block["description"]) ? $block["description"] : "",
                 "module"        => $dirname,
@@ -133,6 +136,8 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 $showfuncs[] = $block['show_func'];
             }
             $blockKey = isset($block["name"]) ? $block["name"] : $key;
+            $blockName = isset($block["name"]) ? $block["name"] : (is_string($key) ? $key : '');
+            $blockName = empty($blockName) ? '' : $dirname . "-" . $blockName;
 
             $select = $model->select()
                             ->where('`key` = ?', $blockKey)
@@ -144,7 +149,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             if (empty($blockList)) {
                 $data = array(
                     "key"           => $blockKey,
-                    "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                    "name"          => $blockName,
                     "title"         => $block['title'],
                     "module"        => $dirname,
                     "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
@@ -161,7 +166,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             } else {
                 foreach ($blockList as $item) {
                     $data = array(
-                        "name"          => isset($block["name"]) ? $dirname . "-" . $block["name"] : "",
+                        "name"          => $blockName,
                         "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
                         "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                         "template"      => isset($block['template']) ? $block['template'] : '',

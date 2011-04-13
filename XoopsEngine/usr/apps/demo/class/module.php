@@ -19,7 +19,6 @@
  */
 
 class App_Demo_Module extends Xoops_Installer_Abstract
-//class Demo_Module extends Xoops_Installer_Abstract
 {
     public function preInstall(&$message)
     {
@@ -31,6 +30,12 @@ class App_Demo_Module extends Xoops_Installer_Abstract
     {
         $message = $this->message;
         $message[] = 'Called from ' . __METHOD__;
+
+        $model = Xoops::service('module')->getModel('test', $this->module->dirname);
+        $data = array(
+            'message'   => 'The app is installed on ' . date('Y-m-d H:i:s'),
+        );
+        $model->insert($data);
     }
 
     public function preUninstall(&$message)
@@ -55,6 +60,11 @@ class App_Demo_Module extends Xoops_Installer_Abstract
     {
         $message = $this->message;
         $message[] = 'Called from ' . __METHOD__;
+
+        $model = Xoops::service('module')->getModel('test', $this->module->dirname);
+        $data = array(
+            'message'   => 'The app is updated on ' . date('Y-m-d H:i:s'),
+        );
+        $model->insert($data);
     }
 }
-?>

@@ -18,7 +18,6 @@
  * @version         $Id$
  */
 
-//class App_Demo_Model_test extends Xoops_Zend_Db_Model
 class Demo_Model_test extends Xoops_Zend_Db_Model
 {
     protected $_primary = "id";

@@ -27,8 +27,6 @@ class Search extends \Xoops\Search
     public static function index($queries, $type, $limit, $offset, $uid)
     {
         $params = compact("queries", "type", "limit", "offset", "uid");
-        //Debug::e("Inside " . __METHOD__);
-        //Debug::e($params);
 
         $router = \XOOPS::registry("frontController")->getRouter();
         $results = array();

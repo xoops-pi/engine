@@ -20,7 +20,6 @@
 
 
 class App_Demo_Configtest extends Xoops_Installer_Module_Abstract
-//class Demo_Configtest extends Xoops_Installer_Module_Abstract
 {
     public function install(&$message)
     {
@@ -41,4 +40,3 @@ class App_Demo_Configtest extends Xoops_Installer_Module_Abstract
     }
 
 }
-?>

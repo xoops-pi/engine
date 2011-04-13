@@ -19,7 +19,6 @@
  */
 
 class App_Demo_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
-//class Demo_Bootstrap //extends Zend_Application_Bootstrap_BootstrapAbstract
 {
     public function bootstrap()
     {

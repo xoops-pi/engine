@@ -33,10 +33,6 @@ return array(
                 'data'      => ''),
                 ),
 
-    //'onInstall'     => "App_System_Installer",
-    //'onUpdate'      => "App_System_Installer",
-    //'onUninstall'   => "App_System_Installer",
-
     'onInstall'     => "Installer",
     'onUpdate'      => "Installer",
     'onUninstall'   => "Installer",

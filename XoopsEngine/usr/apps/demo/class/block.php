@@ -24,10 +24,16 @@ class Block extends \Xoops\BlockRender
 {
     public static function blocka($options, $module = null)
     {
+
         \Debug::e("Called by " . $module . " through " . __METHOD__);
     }
 
     public static function blockb($options, $module = null)
+    {
+        \Debug::e("Called by " . $module . " through " . __METHOD__);
+    }
+
+    public static function random($options, $module = null)
     {
         \Debug::e("Called by " . $module . " through " . __METHOD__);
     }

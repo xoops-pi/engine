@@ -18,7 +18,6 @@
  * @version         $Id$
  */
 
-//xoops_backtrace();
 return array(
     'name'          => _USER_MI_NAME,
     'description'   => _USER_MI_DESC,
