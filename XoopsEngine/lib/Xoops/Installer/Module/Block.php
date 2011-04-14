@@ -86,14 +86,15 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             $blockKey = isset($block["name"]) ? $block["name"] : $key;
             $blockName = isset($block["name"]) ? $block["name"] : (is_string($key) ? $key : '');
             $blockName = empty($blockName) ? '' : $dirname . "-" . $blockName;
+            $blockRender = empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'];
             $data = array(
-                "key"           => isset($block["name"]) ? $block["name"] : $key,
+                "key"           => $blockKey,
                 "name"          => $blockName,
                 "title"         => $block['title'],
                 "description"   => isset($block["description"]) ? $block["description"] : "",
                 "module"        => $dirname,
-                "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
-                "func_file"     => isset($block['func_file']) ? $block['func_file'] : '',
+                "render"        => $blockRender,
+                "func_file"     => isset($block['file']) ? $block['file'] : '',
                 "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
                 "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                 "template"      => isset($block['template']) ? $block['template'] : '',
@@ -125,26 +126,45 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         }
 
         $model = XOOPS::getModel("block");
+        $blockKeys = array();
         $showfuncs = array();
         $funcfiles = array();
-        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '_' . ($this->module->parent ?: $dirname);
+        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $dirname);
         foreach ($blocks as $key => $block) {
-            if (!empty($block['func_file'])) {
+            // break the loop if missing block config
+            if (empty($block['render']) && (!isset($block['file']) || !isset($block['show_func']))) {
+                continue;
+            }
+            if (!empty($block['file'])) {
                 $funcfiles[] = $block['file'];
+            } else {
+                $block['file'] = '';
             }
             if (!empty($block['show_func'])) {
                 $showfuncs[] = $block['show_func'];
+            } else {
+                $block['show_func'] = '';
             }
             $blockKey = isset($block["name"]) ? $block["name"] : $key;
+            $blockKeys[] = $blockKey;
             $blockName = isset($block["name"]) ? $block["name"] : (is_string($key) ? $key : '');
             $blockName = empty($blockName) ? '' : $dirname . "-" . $blockName;
+            $blockRender = empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'];
 
-            $select = $model->select()
-                            ->where('`key` = ?', $blockKey)
-                            ->where('`module` = ?', $dirname)
-                            ->where('`root` = ?', 0)
-                            ->where('`show_func` = ?', $block['show_func'])
-                            ->where("`func_file` = ?", $block['file']);
+            // Normal block
+            if (!empty($block['render'])) {
+                $select = $model->select()
+                                ->where('`key` = ?', $blockKey)
+                                ->where('`module` = ?', $dirname)
+                                ->where('`root` = ?', 0);
+            // Legacy block
+            } else {
+                $select = $model->select()
+                                ->where('`module` = ?', $dirname)
+                                ->where('`root` = ?', 0)
+                                ->where('`show_func` = ?', $block['show_func'])
+                                ->where("`func_file` = ?", $block['file']);
+            }
             $blockList = $select->query()->fetchAll();
             if (empty($blockList)) {
                 $data = array(
@@ -152,8 +172,8 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                     "name"          => $blockName,
                     "title"         => $block['title'],
                     "module"        => $dirname,
-                    "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
-                    "func_file"     => isset($block['func_file']) ? $block['func_file'] : '',
+                    "render"        => $blockRender,
+                    "func_file"     => isset($block['file']) ? $block['file'] : '',
                     "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
                     "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                     "template"      => isset($block['template']) ? $block['template'] : '',
@@ -167,7 +187,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 foreach ($blockList as $item) {
                     $data = array(
                         "name"          => $blockName,
-                        "render"        => empty($block['render']) ? '' : $classPrefix . '\\' . $block['render'],
+                        "render"        => $blockRender,
                         "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                         "template"      => isset($block['template']) ? $block['template'] : '',
                         "cache_level"   => isset($block['cache']) ? $block['cache'] : "",
@@ -181,13 +201,18 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 }
             }
         }
-        $clauseFunc = new Xoops_Zend_Db_Clause();
-        $clauseFunc->add('show_func NOT IN (?)', array_unique($showfuncs));
-        $clauseFunc->addOr('func_file NOT IN (?)', array_unique($funcfiles));
         $clause = new Xoops_Zend_Db_Clause();
         $clause->add("module = ?", $dirname);
-        //$clause->add("type = ?", "");
-        $clause->add($clauseFunc);
+        // Normal block
+        if (!empty($block['render'])) {
+            $clause->add('`key` NOT IN (?)', array_unique($blockKeys));
+        // Legacy block
+        } else {
+            $clauseFunc = new Xoops_Zend_Db_Clause();
+            $clauseFunc->add('show_func NOT IN (?)', array_unique($showfuncs));
+            $clauseFunc->addOr('func_file NOT IN (?)', array_unique($funcfiles));
+            $clause->add($clauseFunc);
+        }
         $select = $model->select()->where($clause);
         $blockList = $select->query()->fetchAll();
         $blockId = array();
@@ -195,7 +220,6 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
             $blockId[] = $block["id"];
         }
         $this->deleteBlock($blockId, $message);
-
     }
 
     public function uninstall(&$message)
@@ -315,8 +339,8 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $modelBlock = XOOPS::getModel("block");
         $modelOption = XOOPS::getModel("block_option");
 
-        $options = $block['options'];
-        unset($block['options']);
+        $options = $data['options'];
+        unset($data['options']);
         $where = array('id = ?' => $id);
         $modelBlock->update($data, $where);
         unset($data['name']);
@@ -334,8 +358,8 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 $optionList[] = $option;
             }
 
-            $clause = new Xoops_Zend_Db_Clause('block', $id);
-            $optionExist = $modelOption->get($clause);
+            //$clause = new Xoops_Zend_Db_Clause('block = ' . $id);
+            $optionExist = $modelOption->fetchAll(array('block = ?' => $id));
 
             $findPosition = function ($name, $candidates)
             {
@@ -393,7 +417,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 $modelBlock->update($data, $where);
 
                 // Update cloned blocks
-                $select = $model->select()->where('root = ?', $id);
+                $select = $modelBlock->select()->where('root = ?', $id);
                 $blockList = $select->query()->fetchAll();
                 foreach ($blockList as $block) {
                     $options = empty($block['options']) ? array() : unserialize($block['options']);

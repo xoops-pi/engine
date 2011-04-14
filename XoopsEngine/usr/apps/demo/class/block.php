@@ -24,17 +24,28 @@ class Block extends \Xoops\BlockRender
 {
     public static function blocka($options, $module = null)
     {
-
-        \Debug::e("Called by " . $module . " through " . __METHOD__);
+        $block = array(
+            'caption'   => 'Block A',
+            'content'   => 'Called by ' . $module . ' through ' . __METHOD__
+        );
+        return $block;
     }
 
     public static function blockb($options, $module = null)
     {
-        \Debug::e("Called by " . $module . " through " . __METHOD__);
+        $block = array(
+            'caption'   => 'Block B',
+            'content'   => 'Called by ' . $module . ' through ' . __METHOD__
+        );
+        return $block;
     }
 
     public static function random($options, $module = null)
     {
-        \Debug::e("Called by " . $module . " through " . __METHOD__);
+        $block = array(
+            'caption'   => 'Block B',
+            'content'   => 'Called by ' . $module . ' through ' . __METHOD__ . ' w/o template'
+        );
+        return $block;
     }
 }

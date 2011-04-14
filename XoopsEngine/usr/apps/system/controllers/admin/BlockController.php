@@ -639,7 +639,7 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $this->redirect($redirect, $options);
     }
 
-    private function getFormBlock($name, $block, $title, $action)
+    private function ____getFormBlock($name, $block, $title, $action)
     {
         //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();
@@ -681,7 +681,7 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         return $form;
     }
 
-    private function getFormCustom($name, $block, $title, $action)
+    private function ____getFormCustom($name, $block, $title, $action)
     {
         //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();

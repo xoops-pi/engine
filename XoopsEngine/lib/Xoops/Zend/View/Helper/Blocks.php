@@ -18,6 +18,11 @@
  * @version         $Id$
  */
 
+/**
+ * Helper for fetching and rendering blocks on a page
+ * @see Engine\Xoops\Registry\Block
+ */
+
 class Xoops_Zend_View_Helper_Blocks extends Zend_View_Helper_Abstract
 {
     /**
@@ -44,7 +49,7 @@ class Xoops_Zend_View_Helper_Blocks extends Zend_View_Helper_Abstract
         }
         $blockIds = array();
         foreach ($blocks as $position => $ids) {
-            $blockIds += $ids;
+            $blockIds = array_merge($blockIds, $ids);
         }
         if (empty($blockIds)) {
             return array();

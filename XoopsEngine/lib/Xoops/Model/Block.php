@@ -46,7 +46,7 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
             } elseif ($block["show_func"]) {
                 $func = $block["show_func"];
                 if (!function_exists($func)) {
-                    include_once Xoops::service('module')->getPath($block['module']) . '/blocks/' . $block['func_file'];
+                    include_once Xoops::path(Xoops::service('module')->getPath($block['module']) . '/blocks/' . $block['func_file']);
                 }
             }
             if (empty($func) && empty($render)) {

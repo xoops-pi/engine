@@ -46,13 +46,11 @@ class Block extends \Kernel\Registry
             }
             $pages[$key] = $page["id"];
         }
-        //Debug::e($pages);
         //if (!empty($pages)) {
-            $modelBlock = \Xoops::getModel('page_block');
+            $modelLinks = \Xoops::getModel('page_block');
             $clause = new \Xoops_Zend_Db_Clause("page IN (?)", array_values($pages));
             $clause->order(array("position", "order"));
-            $blockLinks = $modelBlock->get($clause);
-            //Debug::e($blockLinks);
+            $blockLinks = $modelLinks->get($clause);
             // Blocks Ids
             $blocksId = array();
             // Local blocks added by the module
@@ -61,8 +59,25 @@ class Block extends \Kernel\Registry
             $blocksGlobal = array();
             // Disabled global blocks
             $blocksDisable = array();
+
+            // Get all block Ids
             foreach ($blockLinks as $link) {
                 $blocksId[$link["block"]] = 1;
+            }
+            // Check for active for blocks
+            if (!empty($blocksId)) {
+                $modelBlock = \XOOPS::getModel('block');
+                $select = $modelBlock->select()->where('id IN (?)', array_keys($blocksId))->where('active = ?', 0);
+                $ids = $modelBlock->getAdapter()->fetchCol($select);
+                foreach ($ids as $id) {
+                    unset($blocksId[$id]);
+                }
+            }
+            foreach ($blockLinks as $link) {
+                // Skip inactive blocks
+                if (!isset($blocksId[$link["block"]])) {
+                    continue;
+                }
                 // negative order as global disabling
                 if ($link["order"] <= 0) {
                     $blocksDisable[abs($link["order"])] = $link["block"];
@@ -71,6 +86,7 @@ class Block extends \Kernel\Registry
                     $blocksLocal[$link["page"]][$link["position"]][$link["order"]][] = $link["block"];
                 }
             }
+
             foreach ($blockLinks as $link) {
                 // Skip invalide global blocks: page <> 0 or block disabled or not positive order
                 if ($link["page"] != 0 || isset($blocksDisable[$link["id"]]) || $link["order"] <= 0) continue;
@@ -86,9 +102,6 @@ class Block extends \Kernel\Registry
                 //$blocksAllowed = $acl->getItems("block", $clause);
                 $blocksAllowed = $acl->getResources($clause);
             }
-            //Debug::e($blockLinks);
-            //Debug::e($blocksLocal);
-            //Debug::e($blocksDisable);
 
             // placeholder for ordered block IDs
             $pageRow = array();

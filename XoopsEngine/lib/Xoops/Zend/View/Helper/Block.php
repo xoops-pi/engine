@@ -18,6 +18,15 @@
  * @version         $Id$
  */
 
+/**
+ * Helper for fetching and rendering a block
+ *
+ * <code>
+ * XOOPS::registry('view')->block('block-name', array('opt1' => 'val1', 'opt2' => 'val2'));
+ * XOOPS::registry('view')->block(24, array('opt1' => 'val1', 'opt2' => 'val2'));
+ * </code>
+ */
+
 class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
 {
     /**
@@ -49,7 +58,7 @@ class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
         if (is_object($block)) {
             $block = $block->toArray();
         }
-        if (empty($block)) {
+        if (empty($block) || empty($block['active'])) {
             return false;
         }
 

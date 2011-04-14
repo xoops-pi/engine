@@ -144,7 +144,7 @@ CREATE TABLE `acl_rule` (
 
 # mvc pages
 CREATE TABLE `page` (
-  `id`              mediumint(8)    unsigned    NOT NULL auto_increment,
+  `id`              int(8)    unsigned    NOT NULL auto_increment,
   `title`           varchar(64)     NOT NULL    default '',
   `section`         varchar(64)     NOT NULL    default '', # page resource: admin, front; other resource: block
   `module`          varchar(64)     NOT NULL    default '',
@@ -160,19 +160,19 @@ CREATE TABLE `page` (
 );
 
 CREATE TABLE `page_block` (
-  `id`              mediumint(8)    unsigned    NOT NULL auto_increment,
-  `page`            mediumint(8)    unsigned    NOT NULL    default '0',
-  `block`           mediumint(8)    unsigned    NOT NULL    default '0',
+  `id`              int(8)    unsigned    NOT NULL auto_increment,
+  `page`            int(8)    unsigned    NOT NULL    default '0',
+  `block`           int(8)    unsigned    NOT NULL    default '0',
   `position`        smallint(5)     unsigned    NOT NULL    default '0', #potential value: 0 - left, 1 - right, 2 - topleft, 3 - topcenter, 4 - topright, 5 - bottomleft, 6 - bottomcenter, 7 - bottomright
-  `order`           mediumint(8)    NOT NULL    default '5',    # positive: display orer; negative: id of global page-block link that will be disabled on a specific page
+  `order`           int(8)    NOT NULL    default '5',    # positive: display orer; negative: id of global page-block link that will be disabled on a specific page
 
   PRIMARY KEY  (`id`),
   KEY `page_block` (`page`, `order`, `block`)    # not necessarily UNIQUE
 );
 
 CREATE TABLE `block` (
-  `id`              mediumint(8)    unsigned NOT NULL auto_increment,
-  `root`            mediumint(8)    unsigned NOT NULL default '0',  # root ID for cloned block
+  `id`              int(8)          unsigned NOT NULL auto_increment,
+  `root`            int(8)          unsigned NOT NULL default '0',  # root ID for cloned block
   `key`             varchar(64)     NOT NULL default '',            # internal key
   `name`            varchar(64)     NOT NULL default '',            # user key, empty or unique string, for calling from template
   `title`           varchar(255)    NOT NULL default '',
@@ -197,7 +197,7 @@ CREATE TABLE `block` (
 CREATE TABLE `block_option` (
   `id`              int(10)         unsigned NOT NULL auto_increment,
   `name`            varchar(64)     NOT NULL default '',            # key, empty or unique string for a block
-  `block`           mediumint(8)    unsigned NOT NULL default '0',  # block ID
+  `block`           int(8)          unsigned NOT NULL default '0',  # block ID
 # `module`          varchar(64)     NOT NULL    default '',         # Dirname of module
   `title`           varchar(255)    NOT NULL default '',
   `description`     varchar(255)    NOT NULL default '',
@@ -252,13 +252,13 @@ CREATE TABLE `event_observer` (
 );
 
 CREATE TABLE `module` (
-  `id`          smallint(5)     unsigned NOT NULL auto_increment,
-  `name`        varchar(64)     NOT NULL default '',
-  `version`     varchar(64)     NOT NULL default '',
-  `update`      int(10)         unsigned NOT NULL default '0',
-  `active`      tinyint(1)      unsigned NOT NULL default '1',
-  `dirname`     varchar(64)     NOT NULL default '',
-  `parent`      varchar(64)     NOT NULL default '',                # dirname of original module, from which the module is cloned
+  `id`          smallint(5)         unsigned NOT NULL auto_increment,
+  `name`        varchar(64)         NOT NULL default '',
+  `version`     varchar(64)         NOT NULL default '',
+  `update`      int(10)             unsigned NOT NULL default '0',
+  `active`      tinyint(1)          unsigned NOT NULL default '1',
+  `dirname`     varchar(64)         NOT NULL default '',
+  `parent`      varchar(64)         NOT NULL default '',                # dirname of original module, from which the module is cloned
 
   PRIMARY KEY   (`id`),
   UNIQUE KEY    `dirname` (`dirname`),
@@ -316,7 +316,7 @@ CREATE TABLE `search` (
 
 
 CREATE TABLE `route` (
-  `id`              mediumint(8)    unsigned    NOT NULL auto_increment,
+  `id`              int(8)          unsigned    NOT NULL auto_increment,
   `priority`        smallint(5)     NOT NULL    default '0',
   `section`         varchar(64)     NOT NULL    default '',
   `name`            varchar(64)     NOT NULL    default '',
@@ -362,7 +362,7 @@ CREATE TABLE `config_category` (
 
 # System config option
 CREATE TABLE `config_option` (
-  `id`              mediumint(8)    unsigned NOT NULL auto_increment,
+  `id`              int(8)          unsigned NOT NULL auto_increment,
   `name`            varchar(64)     NOT NULL    default '',
   `value`           varchar(255)    NOT NULL default '',
   `config`          smallint(5)     unsigned NOT NULL default '0',

@@ -25,7 +25,7 @@ return array(
         'title'         => _DEMO_MI_BLOCK_FIRST,
         'description'   => _DEMO_MI_BLOCK_FIRST_DESC,
         'render'        => "block::blocka",
-        'template'      => 'block_show.html',
+        'template'      => 'block-a.html',
         'options'       => array(
             // text option
             'first' => array(
@@ -50,7 +50,7 @@ return array(
         'title'         => _DEMO_MI_BLOCK_SECOND,
         'description'   => _DEMO_MI_BLOCK_SECOND_DESC,
         'render'        => "block::blockb",
-        'template'      => 'block_show.html',
+        'template'      => 'block-b.html',
         'options'       => array(
             // select option
             'third' => array(
@@ -82,7 +82,7 @@ return array(
         'description'   => _DEMO_MI_BLOCK_THIRD_DESC,
         'show_func'     => "demo_block_show",
         'edit_func'     => "demo_block_edit",
-        'template'      => 'block_show.html',
+        'template'      => 'block-c.html',
         'options'       => '31|threetwo'
     ),
     // Simple block w/o option, no template

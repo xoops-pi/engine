@@ -50,8 +50,7 @@ return array(
         'search'    => array("callback" => "search::index"),
         'user'      => "user.php",
         'block'     => array(
-            array(
-                'name'          => "login",
+            'login'     => array(
                 'title'         => _USER_MI_BLOCK_LOGIN,
                 'description'   => _USER_MI_BLOCK_LOGIN_DESC,
                 'render'        => "block::login",
@@ -62,8 +61,7 @@ return array(
                     'member'    => 0,
                 ),
             ),
-            array(
-                'name'          => "user",
+            'user'      => array(
                 'title'         => _USER_MI_BLOCK_USER,
                 'description'   => _USER_MI_BLOCK_USER_DESC,
                 'render'        => "block::user",
@@ -75,8 +73,7 @@ return array(
                     'member'    => 1,
                 ),
             ),
-            array(
-                'name'          => "account",
+            'account'   => array(
                 'title'         => _USER_MI_BLOCK_ACCOUNT,
                 'description'   => _USER_MI_BLOCK_ACCOUNT_DESC,
                 'render'        => "block::account",
