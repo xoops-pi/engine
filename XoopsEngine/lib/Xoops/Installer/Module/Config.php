@@ -106,7 +106,9 @@ class Xoops_Installer_Module_Config extends Xoops_Installer_Abstract
                     $data["order"] = $categories[$key]['order'];
                 }
                 // Update existent category
-                $modelCategory->update($data, array("id = ?" => $row->id));
+                if (!empty($data)) {
+                    $modelCategory->update($data, array("id = ?" => $row->id));
+                }
             }
         }
         foreach ($categories as $key => $category) {
