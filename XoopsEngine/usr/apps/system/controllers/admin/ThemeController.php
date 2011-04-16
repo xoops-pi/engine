@@ -323,7 +323,7 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
             $files = array_unique(array_merge($fileList['front'], $fileList['admin']));
         }
         $missingFiles = array();
-        foreach ($fileList as $file) {
+        foreach ($files as $file) {
             if (!file_exists($path . "/" . $file)) {
                 $missingFiles[] = $file;
             }
