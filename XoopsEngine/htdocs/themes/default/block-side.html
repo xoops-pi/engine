@@ -1,0 +1,13 @@
+<div
+    id="xoops-block-<{$block.id}>"
+    class="block-container<{if !empty($block.style)}> <{$block.style}><{/if}>"
+>
+    <{if !empty($block.title)}>
+        <div class="block-title">
+            <{if !empty($block.link)}><a href="<{$block.link}>" title="<{$block.title}>"><{/if}>
+                <{$block.title}>
+            <{if !empty($block.link)}></a><{/if}>
+        </div>
+    <{/if}>
+    <div class="block-content"><{$block.content}></div>
+</div>
