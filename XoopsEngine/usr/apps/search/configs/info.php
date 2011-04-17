@@ -69,8 +69,7 @@ return array(
         'navigation'    => "navigation.php",
         'search'    => array("callback" => "demo::index"),
         'block'     => array(
-            array(
-                'name'          => "search",
+            'search'  => array(
                 'title'         => _SEARCH_MI_BLOCK,
                 'description'   => _SEARCH_MI_BLOCK_DESC,
                 'render'        => "block::render",

@@ -80,13 +80,14 @@ class Block extends \Kernel\Registry
                 }
                 // negative order as global disabling
                 if ($link["order"] <= 0) {
-                    $blocksDisable[abs($link["order"])] = $link["block"];
+                    $blocksDisable[abs($link["order"])][] = $link["block"];
                 // positive page as module local page
                 } elseif ($link["page"] > 0) {
                     $blocksLocal[$link["page"]][$link["position"]][$link["order"]][] = $link["block"];
                 }
             }
 
+            // Get global blocks
             foreach ($blockLinks as $link) {
                 // Skip invalide global blocks: page <> 0 or block disabled or not positive order
                 if ($link["page"] != 0 || isset($blocksDisable[$link["id"]]) || $link["order"] <= 0) continue;
@@ -107,8 +108,9 @@ class Block extends \Kernel\Registry
             $pageRow = array();
             $positionGlobal = array_keys($blocksGlobal);
             ksort($blocksLocal);
-            foreach (array_values($pages) as $page) {
-                //Debug::e("page-" . $page);
+            $pageList = array_unique(array_values($pages));
+            foreach ($pageList as $page) {
+                //\Debug::e("page-" . $page);
                 // page local blocks
                 $blocksPage = isset($blocksLocal[$page]) ? $blocksLocal[$page] : array();
                 // Available positions for local blocks
@@ -117,7 +119,7 @@ class Block extends \Kernel\Registry
                     // Available positions for global blocks
                     $positions = array_unique(array_merge($positions, $positionGlobal));
                 //}
-                //Debug::e($positions);
+                //\Debug::e($positions);
                 foreach ($positions as $pos) {
                     //Debug::e("position-" . $pos);
                     // Available orders
@@ -140,7 +142,7 @@ class Block extends \Kernel\Registry
                     // ordered blocks
                     $blocksOrdered = array();
                     foreach ($orders as $order) {
-                        //Debug::e("order-" . $order);
+                        //\Debug::e("order-" . $order);
                         // global ordered blocks
                         if (isset($blocksGlobal[$pos][$order])) {
                             $blocks = $blocksGlobal[$pos][$order];
@@ -150,17 +152,19 @@ class Block extends \Kernel\Registry
                         if (/*$page != 0 && */isset($blocksPage[$pos][$order])) {
                             $blocksOrdered = array_merge($blocksOrdered, $blocksPage[$pos][$order]);
                         }
-                        //Debug::e($blocksOrdered);
+                        //\Debug::e($blocksOrdered);
                     }
+                    //\Debug::e("$page-$pos");
+                    //\Debug::e($blocksOrdered);
                     // Allowed page block IDs
                     if (!is_null($blocksAllowed)) {
                         $blocksOrdered = array_intersect($blocksOrdered, $blocksAllowed);
                     }
                     $pageRow[$page][$pos] = $blocksOrdered;
+                    //\Debug::e($blocksOrdered);
                 }
             }
             //Debug::e($pageRow);
-            //unset($pages[""]);
             // index => page ID
             foreach ($pages as $key => &$item) {
                 if (isset($pageRow[$item])) {

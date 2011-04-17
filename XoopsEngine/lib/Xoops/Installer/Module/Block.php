@@ -24,7 +24,7 @@
  *  return array(
  *      // Block with legacy mode, e.g. file, show_func, edit_func and mixed options
  *      "blockA" => array(
- *          "name"          => "BlockUniqueName",
+ *          "name"          => "BlockUniqueName", // If it is not specified, the key 'blockA' will be used
  *          "title"         => "Block Title",
  *          "description"   => "Desribing the block",
  *          "file"          => "block_definition_file.php",  // In modules/module/blocks/
@@ -37,13 +37,16 @@
  *      ),
  *      // Block with new mode, e.g. render, structured options
  *      "blockB" => array(
- *          "name"          => "BlockUniqueName",
- *          "title"         => "Block Title",
- *          "description"   => "Desribing the block",
- *          "render"        => 'class::method',
+ *          "name"          => "BlockUniqueName",   // If it is not specified, the key 'blockB' will be used
+ *          "title"         => "Block Title",       // Required
+ *          "title_hidden"  => false,               // Optional
+ *          "link"          => '/link/to/a/URL',    // Optional
+ *          "style"         => 'specified-style',    // Optional, specified stylesheet class for display
+ *          "description"   => "Desribing the block",   // Optional
+ *          "render"        => 'class::method',         // Required
  *          "template"      => "template.html", // in modules/module/templates/blocks/
- *          "cache"         => "role", // Cache level
- *          "access"        => array(), // ACL rules
+ *          "cache"         => "role", // Cache level, optional
+ *          "access"        => array(), // ACL rules, optional
  *          "options"       => array(
  *              'a' => array(
  *                  'title'         => '_APP_MB_OPTION_A',
@@ -91,17 +94,23 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 "key"           => $blockKey,
                 "name"          => $blockName,
                 "title"         => $block['title'],
+                "title_hidden"  => empty($block['title_hidden']) ? 0 : 1,
+                "link"          => empty($block['link']) ? '' : $block['link'],
+                "style"         => empty($block['style']) ? '' : $block['style'],
+
                 "description"   => isset($block["description"]) ? $block["description"] : "",
                 "module"        => $dirname,
                 "render"        => $blockRender,
-                "func_file"     => isset($block['file']) ? $block['file'] : '',
-                "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
-                "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                 "template"      => isset($block['template']) ? $block['template'] : '',
                 "options"       => isset($block['options']) ? $block['options'] : '',
                 "cache_level"   => isset($block['cache']) ? $block['cache'] : "",
                 "active"        => 1,
                 "access"        => isset($block['access']) ? $block['access'] : null,
+
+                // Legacy fields
+                "func_file"     => isset($block['file']) ? $block['file'] : '',
+                "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
+                "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
             );
 
             $this->addBlock($data, $message);
@@ -171,15 +180,21 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                     "key"           => $blockKey,
                     "name"          => $blockName,
                     "title"         => $block['title'],
+                    "title_hidden"  => empty($block['title_hidden']) ? 0 : 1,
+                    "link"          => empty($block['link']) ? '' : $block['link'],
+                    "style"         => empty($block['style']) ? '' : $block['style'],
+                    "description"   => isset($block["description"]) ? $block["description"] : "",
                     "module"        => $dirname,
                     "render"        => $blockRender,
-                    "func_file"     => isset($block['file']) ? $block['file'] : '',
-                    "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
-                    "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                     "template"      => isset($block['template']) ? $block['template'] : '',
                     "options"       => isset($block['options']) ? $block['options'] : '',
                     "cache_level"   => isset($block['cache']) ? $block['cache'] : "",
                     "active"        => 1,
+
+                    // Legacy fields
+                    "func_file"     => isset($block['file']) ? $block['file'] : '',
+                    "show_func"     => isset($block['show_func']) ? $block['show_func'] : '',
+                    "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                 );
 
                 $this->addBlock($data, $message);
@@ -187,11 +202,12 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
                 foreach ($blockList as $item) {
                     $data = array(
                         "name"          => $blockName,
+                        "description"   => isset($block["description"]) ? $block["description"] : "",
                         "render"        => $blockRender,
-                        "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                         "template"      => isset($block['template']) ? $block['template'] : '',
                         "cache_level"   => isset($block['cache']) ? $block['cache'] : "",
                         "options"       => isset($block['options']) ? $block['options'] : '',
+                        "edit_func"     => isset($block['edit_func']) ? $block['edit_func'] : '',
                     );
                     /*
                     $where = array('id = ?' => $item["id"]);
@@ -300,12 +316,6 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
 
         foreach ($options as $option) {
             $option['block'] = $id;
-            /*
-            if (!empty($option['options']) && is_array($option['options'])) {
-                $option['options'] = serialize($option['options']);
-            }
-            */
-            //$modelOption->insert($option);
             $optionRow = $modelOption->createRow($option);
             $optionRow->save();
         }

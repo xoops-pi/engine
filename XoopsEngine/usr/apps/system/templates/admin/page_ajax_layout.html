@@ -1,11 +1,10 @@
 <form id="xo-page-frm" action="<{adminUrl module=system controller=page action=savelayout}>" method="post" >
 <div class="xo-page">
     <div class="xo-page-head">
-        <{_ text="Select Page:"}>
+        <{_ text='Select a page from a module:'}>
         <select name="module" id="select-black">
-            <option value=""><{_ text="Select Module"}></option>
-            <{foreach key=dir item=module from=$modules}>
-            <option value="<{$dir}>"><{$module.name}></option>
+            <{foreach key=dir item=name from=$modulesPage}>
+            <option value="<{$dir}>"><{$name}></option>
             <{/foreach}>
         </select>
         <select name="page" id="select-page">

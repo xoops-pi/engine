@@ -101,6 +101,7 @@ class App_System_Form_Preference extends Xoops_Zend_Form
 
 
             if (!empty($edit["module"])) {
+                /*
                 $class = ('app' == Xoops::service('module')->getType($edit["module"]) ? 'App' : 'Module') . "_" . ucfirst($edit["module"]) . "_Form_Element_" . ucfirst($type);
                 //$class = $edit["module"] . "_form_element_" . $type;
                 if (class_exists($class)) {
@@ -108,6 +109,8 @@ class App_System_Form_Preference extends Xoops_Zend_Form
                 } else {
                     $element = $this->createElement("text", $keyConfig);
                 }
+                */
+                $element = $this->createElement(array($edit["module"], $type), $keyConfig, $options);
             } else {
                 $element = $this->createElement($type, $keyConfig, $options);
             }

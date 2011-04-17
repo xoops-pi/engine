@@ -329,7 +329,6 @@ class System_ResourceController extends Xoops_Zend_Controller_Action_Admin
     // Resource form
     private function getFormResourceAdd($name, $resource, $title, $action)
     {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();
 
         $form = new XoopsThemeForm($title, $name, $action, 'post', true);
@@ -343,11 +342,9 @@ class System_ResourceController extends Xoops_Zend_Controller_Action_Admin
 
     private function getFormResourceEdit($name, $resource, $title, $action)
     {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();
 
         $form = new XoopsThemeForm($title, $name, $action, 'post', true);
-        //$form->addElement(new XoopsFormText(XOOPS::_('Controller'), 'resource_controller', 50, 64, $resource["controller"]));
         $form->addElement(new XoopsFormText(XOOPS::_('Title'), 'title', 50, 255, $resource["title"]));
 
         $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));

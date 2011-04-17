@@ -22,7 +22,9 @@
  * Helper for fetching and rendering a block
  *
  * <code>
- * XOOPS::registry('view')->block('block-name', array('opt1' => 'val1', 'opt2' => 'val2'));
+ * XOOPS::registry('view')->block('block-name', array('title_hidden' => 1, 'opt1' => 'val1', 'opt2' => 'val2'));
+ * XOOPS::registry('view')->block('block-name', array('link' => '/link/to/a/URL', 'opt1' => 'val1', 'opt2' => 'val2'));
+ * XOOPS::registry('view')->block('block-name', array('style' => 'specified-css-class', 'opt1' => 'val1', 'opt2' => 'val2'));
  * XOOPS::registry('view')->block(24, array('opt1' => 'val1', 'opt2' => 'val2'));
  * </code>
  */
@@ -62,12 +64,19 @@ class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
             return false;
         }
 
-        foreach (array("title", "cache_expire", "cache_level", "template") as $key) {
+        foreach (array("title", "title_hidden", "link", "style", "cache_expire", "cache_level", "template") as $key) {
             if (isset($options[$key])) {
                 $block[$key] = $options[$key];
                 //unset($options[$key]);
             }
         }
+        if (!empty($block['title_hidden'])) {
+            $block['title'] = '';
+        }
+        if (!empty($block['link']) && !preg_match("/^http[s]*:\/\//i", $block['link'])) {
+            $block['link'] = Xoops::url('www') . '/' . ltrim($block['link'], '/');
+        }
+
         $tplName = ($tplName = $block['template'])
                     ? "file:block/" . $block['module'] . "/" . $tplName
                     : "file:block/system/dummy.html";

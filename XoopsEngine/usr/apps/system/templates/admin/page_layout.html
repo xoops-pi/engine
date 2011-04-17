@@ -1,10 +1,3 @@
-<{*
-<{headScript src="img/js/jquery/jquery-1.4.2.min.js"}>
-<{headScript src="img/js/jquery/jquery.form.js"}>
-<{headScript src="img/js/jquery/jquery-ui-1.7.2.custom.min.js"}>
-<{headScript src="app/system/templates/script/jquery.xoops.block.js"}>
-<{headLink href="img/css/ui/jquery-ui-1.7.2.custom.css"}>
-*}>
 
 <{jQuery file=["extensions/form/jquery.form.js","ui/jquery-ui-1.7.2.custom.js","ui/jquery-ui-1.7.2.custom.css"]}>
 <{headScript src="app/system/resources/scripts/jquery.xoops.block.js"}>
@@ -137,11 +130,12 @@ div.xo-page .xo-page-center ul li {
 </style>
 <div>
     <div class="xo-block">
+
         <div class="xo-block-page">
-            Select Module:
+            <{_ text='Select a module to get its blocks:'}>
             <select name="dirname" id="select-module">
-                <{foreach key=dir item=module from=$modules}>
-                <option value="<{$dir}>" <{if $dirname eq $dir}>selected="selected"<{/if}> ><{$module.name}></option>
+                <{foreach key=dir item=name from=$modulesBlock}>
+                <option value="<{$dir}>" <{if $dirname eq $dir}>selected="selected"<{/if}> ><{$name}></option>
                 <{/foreach}>
             </select>
         </div>

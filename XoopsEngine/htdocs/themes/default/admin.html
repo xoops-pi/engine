@@ -12,8 +12,8 @@
 <!-- Start Header -->
 <table cellspacing="0">
     <tr id="xoops-header">
-        <td id="xoops-headerlogo"><a href="<{url path='www/'}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='xoops-logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
-        <td id="xoops-headerbanner"><{widget name=xoops_banner}></td>
+        <td id="xoops-headerlogo"><a href="<{url path='www/'}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='images/logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
+        <td id="xoops-headerbanner"><{widget name=banner}></td>
     </tr>
     <tr>
         <td id="xoops-headerbar" colspan="2">&nbsp;</td>
@@ -26,14 +26,14 @@
 <table cellspacing="0">
     <tr>
         <{if isset($side_menu)}>
-        <td id="xoops-leftcolumn">
+        <td id="xoops-column-left">
         <!-- Start left blocks loop -->
             <{include file="side_menu.html"}>
         <!-- End left blocks loop -->
         </td>
         <{/if}>
 
-        <td id="xoops-centercolumn">
+        <td id="xoops-column-center">
             <!-- Start content module page -->
             <{if $xoops_contents && ($xoops_contents != ' ')}><div id="xoops-content"><{$xoops_contents}></div><{/if}>
             <!-- End content module -->
@@ -44,7 +44,7 @@
 
 <!-- Start footer -->
 <table cellspacing="0">
-<tr id="xoops-footerbar">
+<tr id="xoops-footer">
     <td><{$xoops_footer}></td>
 </tr>
 </table>

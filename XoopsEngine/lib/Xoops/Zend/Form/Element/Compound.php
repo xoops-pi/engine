@@ -77,13 +77,17 @@ class Xoops_Zend_Form_Element_Compound extends Zend_Form_Element implements Iter
     public function setElementsBelongTo($array)
     {
         $origName = $this->getElementsBelongTo();
-        $name = $this->filterName($array, true);
-        if (empty($name)) {
-            $name = null;
+        if (false === $array) {
+            $this->setIgnore(true);
+        } else {
+            $array = $this->filterName($array, true);
+            if (empty($array)) {
+                $array = null;
+            }
         }
-        $this->_elementsBelongTo = $name;
+        $this->_elementsBelongTo = $array;
 
-        if (null === $name) {
+        if (null === $array) {
             $this->setIsArray(false);
             if (null !== $origName) {
                 $this->_setElementsBelongTo();
@@ -213,7 +217,7 @@ class Xoops_Zend_Form_Element_Compound extends Zend_Form_Element implements Iter
 
         $this->_elements[$element->getName()] = $element;
         $this->_compoundUpdated = true;
-        if (false === $element->getBelongsTo()) {
+        if (false === $this->getElementsBelongTo() || false === $element->getBelongsTo()) {
             $this->registerForm($element);
         } else {
             $this->_setElementsBelongTo($name);
@@ -233,7 +237,6 @@ class Xoops_Zend_Form_Element_Compound extends Zend_Form_Element implements Iter
     {
         foreach ($elements as $element) {
             if (!$element instanceof Zend_Form_Element) {
-                require_once 'Zend/Form/Exception.php';
                 throw new Zend_Form_Exception('elements passed via array to addElements() must be Zend_Form_Elements only');
             }
             $this->addElement($element);
@@ -507,6 +510,7 @@ class Xoops_Zend_Form_Element_Compound extends Zend_Form_Element implements Iter
      */
     public function setValue($value)
     {
+        $value = (array) $value;
         foreach ($value as $name => $val) {
             if ($element = $this->getElement($name)) {
                 //Debug::e($this->getname().":$name:$val:".get_class($element));
@@ -586,6 +590,7 @@ class Xoops_Zend_Form_Element_Compound extends Zend_Form_Element implements Iter
     public function isValid($value, $context = null)
     {
         $result = true;
+        $value = (array) $value;
         foreach ($value as $name => $val) {
             if ($element = $this->getElement($name)) {
                 $result = $element->isValid($val, $context) && $result;

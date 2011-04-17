@@ -9,16 +9,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license         BSD liscense
+ * @copyright       Xoops Engine http://www.xoopsengine.org
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
- * @package         xoops
+ * @package         XoopsForm
  * @version         $Id$
  */
-
-//global $xoops;
-//include_once $xoops->path("www") . "/class/xoopsform/form.php";
 
 class XoopsFormGrid extends XoopsForm
 {

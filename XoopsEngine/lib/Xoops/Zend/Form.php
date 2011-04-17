@@ -141,7 +141,7 @@ class Xoops_Zend_Form extends Zend_Form
      * settings as specified in the form object (including plugin loader
      * prefix paths, default decorators, etc.).
      *
-     * @param  string $type
+     * @param  string|array $type    type of the element, string for a global element, array($module, $type) for a module specific element
      * @param  string $name
      * @param  array|Zend_Config|string $options
      * @return Zend_Form_Element
@@ -151,7 +151,13 @@ class Xoops_Zend_Form extends Zend_Form
         if (null !== $options && !is_array($options) && !($options instanceof Zend_Config)) {
             $options = array('value' => $options);
         }
-        $element = parent::createElement($type, $name, $options);
+        if (is_array($type)) {
+            list($module, $eleType) = $type;
+            $class = ('app' == Xoops::service('module')->getType($module) ? 'App' : 'Module') . "_" . ucfirst($module) . "_Form_Element_" . ucfirst($eleType);
+            $element = new $class($name, $options);
+        } else {
+            $element = parent::createElement($type, $name, $options);
+        }
         $element->addPrefixPath("Xoops_Zend_Validate", "Xoops/Zend/Validate", "validate");
         if (method_exists($element, "setForm")) {
             $element->setForm($this);
@@ -171,25 +177,33 @@ class Xoops_Zend_Form extends Zend_Form
      * If a Zend_Form_Element is provided, $name may be optionally provided,
      * and any provided $options will be ignored.
      *
-     * @param  string|Zend_Form_Element $element
+     * @param  string|Zend_Form_Element|array $element
      * @param  string $name
      * @param  array|Zend_Config|string $options
      * @return Zend_Form
      */
     public function addElement($element, $name = null, $options = null)
     {
-        if (empty($name) && $element instanceof Zend_Form_Element) {
-            $name = $element->getName();
+        if (!($element instanceof Zend_Form_Element)) {
+            $element = $this->createElement($element, $name, $options);
+        } else {
+            if (empty($name) && $element instanceof Zend_Form_Element) {
+                $name = $element->getName();
+            }
+            if (null !== $options && !is_array($options) && !($options instanceof Zend_Config)) {
+                $options = array('value' => $options);
+            }
+            if (method_exists($element, "setForm")) {
+                $element->setForm($this);
+            }
         }
-        if (null !== $options && !is_array($options) && !($options instanceof Zend_Config)) {
-            $options = array('value' => $options);
-        }
-
         parent::addElement($element, $name, $options);
+        /*
         $element = $this->_elements[$name];
         if (method_exists($element, "setForm")) {
             $element->setForm($this);
         }
+        */
         /*
         if (!$element->translatorIsDisabled() && !$element->hasTranslator()) {
             $element->setTranslator($this->setTranslator());

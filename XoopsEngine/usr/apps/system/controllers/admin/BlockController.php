@@ -174,8 +174,11 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $block = $model->findRow($id)->toArray();
         $isCustom = empty($block["module"]) ? true : false;
         // Clone
+        $cloneFrom = '';
         if ($clone) {
-            $block['name']  = empty($block['name']) ? '' : $block['name'] . '-clone';
+            $cloneFrom = $block['id'];
+            $cloneName =
+            $block['name']  = empty($block['name']) ? '' : $block['name'] . uniqid();
             $block['title'] = $block['title'] . ' clone';
             $block['root']  = $isCustom ? '' : ($block['root'] ?: $block['id']);
             $block['id']    = '';
@@ -193,7 +196,7 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
             $form = new App_System_Form_BlockCustom($options);
         }
         $form->addElement('Hidden', 'dirname', $dirname);
-        $form->addElement('Hidden', 'clone', $clone);
+        $form->addElement('Hidden', 'clone', $cloneFrom);
         $this->renderFormBlock($form);
     }
 
@@ -541,20 +544,10 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
     public function saveAction()
     {
         $module = $this->getRequest()->getModuleName();
-        /*
-        $dirname        = $this->getRequest()->getPost("dirname");
-        $name           = $this->getRequest()->getPost("name");
-        $title          = $this->getRequest()->getPost("title");
-        $type           = $this->getRequest()->getPost("type", "");
-        $content        = $this->getRequest()->getPost("content");
-        $cache_expire   = $this->getRequest()->getPost("cache_expire");
-        $cache_level    = $this->getRequest()->getPost("cache_level", "");
-        $id             = $this->getRequest()->getPost("id", 0);
-        $clone          = $this->getRequest()->getPost("clone", false);
-        */
         $posts      = $this->getRequest()->getPost();
         $id         = $this->getRequest()->getPost("id", 0);
         $isCustom   = $this->getRequest()->getPost("custom", false);
+        $cloneFrom    = $this->getRequest()->getPost("clone", false);
         $action     = $this->view->url(array("action" => "save", "controller" => "block", "module" => $module));
         $options = array(
             'action'    => $action,
@@ -575,9 +568,9 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $data = array();
         $values = $form->getValues();
         if ($isCustom) {
-            $keys = array("name", "title", "type", "content", "cache_expire", "cache_level");
+            $keys = array("name", "title", "title_hidden", "style", "link", "cache_expire", "cache_level", "type", "content");
         } else {
-            $keys = array('root', "name", "title", "cache_expire", 'module');
+            $keys = array("name", "title", "title_hidden", "style", "link", "cache_expire", 'root', 'module');
             $data['options'] = serialize($values['options']);
         }
         foreach ($keys as $key) {
@@ -586,11 +579,42 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $model = XOOPS::getModel('block');
         // Create a new custom block or clone a block
         if (empty($id)) {
+            // Copy existent data for cloning
+            if ($cloneFrom) {
+                $row = $model->findRow($cloneFrom);
+                $parentData = $row->toArray();
+                unset($parentData['id']);
+                $data = array_merge($parentData, $data);
+            }
+            // Insert into DB
             $id = $model->insert($data);
-            if ($isCustom) {
-                $message = XOOPS::_("The block is added successfully.");
-            } else {
+            if ($cloneFrom) {
                 $message = XOOPS::_("The block is cloned successfully.");
+
+                // Copy ACL data from parent
+                $modelRule = XOOPS::getModel("acl_rule");
+                $select = $modelRule->select()->where('resource = ?', $cloneFrom)
+                                                ->where('section = ?', 'block');
+                $ruleList = $modelRule->getAdapter()->fetchAll($select);
+                foreach ($ruleList as $rule) {
+                    unset($rule['id']);
+                    $rule['resource'] = $id;
+                    $modelRule->insert($rule);
+                }
+            } else {
+                $message = XOOPS::_("The block is added successfully.");
+
+                // Add ACL data
+                $modelRule = XOOPS::getModel("acl_rule");
+                $dataRule = array(
+                    "resource"  => $id,
+                    "section"   => "block",
+                );
+                $roles = array("guest", "member");
+                foreach ($roles as $role) {
+                    $dataRule["role"] = $role;
+                    $modelRule->insert($dataRule);
+                }
             }
         // Update a block
         } else {
@@ -612,16 +636,26 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $op = $this->_getParam("op", "");
 
         $model = XOOPS::getModel('block');
-        $select = $model->select()
-                        ->where("id = ?", $id);
-        if (!$block = $model->fetchRow($select)) {
+        //$select = $model->select()->where("id = ?", $id);
+        // Fetch the block row
+        if (!$block = $model->findRow($id)) {
             $message = XOOPS::_("The block is not found.");
-        } elseif (empty($block->type) || !in_array($op, array("delete", "activate", "deactivate"))) {
+        // Only custom blocks or cloned blocks are allowed for the operations
+        } elseif ((!$block->type && !$block->root) || !in_array($op, array("delete", "activate", "deactivate"))) {
             $message = XOOPS::_("Invalid operation.");
+        // Perform the operation
         } else {
             switch ($op) {
             case "delete":
+                // Delete a block from DB
                 $model->delete(array("id = ?" => $id));
+                // Remove its ACL rules
+                $modelRule = XOOPS::getModel("acl_rule");
+                $where = array(
+                    'resource = ?'  => $id,
+                    "section = ?"   => "block"
+                );
+                $modelRule->delete($where);
                 break;
             case "activate":
                 $model->update(array("active" => 1), array("id = ?" => $id));
@@ -637,83 +671,6 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $options = array("message" => $message, "time" => 3);
         $redirect = array("action" => "index", "dirname" => $block->module);
         $this->redirect($redirect, $options);
-    }
-
-    private function ____getFormBlock($name, $block, $title, $action)
-    {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
-        Xoops_Legacy::autoload();
-
-        $form = new XoopsThemeForm($title, $name, $action, 'post', true);
-
-        $name = new XoopsFormText(XOOPS::_('Name'), 'name', 50, 64, $block["name"]);
-        $name->setDescription(XOOPS::_('Should be empty or unique'));
-        $form->addElement($name);
-        $form->addElement(new XoopsFormText(XOOPS::_('Title'), 'title', 50, 255, $block["title"]));
-        $selectExpire = new XoopsFormSelect(XOOPS::_('Cache expire'), "cache_expire", $block["cache_expire"]);
-        $selectExpire->addOptionArray(static::getExpireOptions());
-        $form->addElement($selectExpire);
-        /*
-        $selectLevel = new XoopsFormSelect(XOOPS::_('Cache level'), "cache_level", $block["cache_level"]);
-        $selectLevel->addOptionArray(static::getLevelOptions());
-        $form->addElement($selectLevel);
-        */
-        if (!empty($block["content"])) {
-            $form->addElement(new XoopsFormLabel(XOOPS::_('Options'), $block["content"]));
-        }
-
-        /*
-        if (!empty($block["edit_func"])) {
-            XOOPS::service('translate')->loadTranslation('blocks', $block['module']);
-            $file = Xoops::service('module')->getPath($block['module']) . '/blocks/' . $block['func_file'];
-            include_once Xoops::service('module')->getPath($block['module']) . '/blocks/' . $block['func_file'];
-
-            //$info = XOOPS::service('registry')->module->read($block['module']);
-            //include_once XOOPS::path($info['path'] . '/' . $block['module'] . '/blocks/' . $block['func_file']);
-            $options = explode('|', $block['options']);
-            $options_form = $block["edit_func"]($options);
-            $form->addElement(new XoopsFormLabel(_AM_OPTIONS, $options_form));
-        }
-        */
-
-        $form->addElement(new XoopsFormHidden('type', $block["type"]));
-        $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));
-        return $form;
-    }
-
-    private function ____getFormCustom($name, $block, $title, $action)
-    {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
-        Xoops_Legacy::autoload();
-
-        $form = new XoopsThemeForm($title, $name, $action, 'post', true);
-        $name = new XoopsFormText(XOOPS::_('Name'), 'name', 50, 64, $block["name"]);
-        $name->setDescription(XOOPS::_('Should be empty or unique'));
-        $form->addElement($name);
-        $form->addElement(new XoopsFormText(XOOPS::_('Title'), 'title', 50, 255, $block["title"]));
-        $selectExpire = new XoopsFormSelect(XOOPS::_('Cache expire'), "cache_expire", $block["cache_expire"]);
-        $selectExpire->addOptionArray(static::getExpireOptions());
-        $form->addElement($selectExpire);
-        $selectLevel = new XoopsFormSelect(XOOPS::_('Cache level'), "cache_level", $block["cache_level"]);
-        $selectLevel->addOptionArray(static::getLevelOptions());
-        $form->addElement($selectLevel);
-
-        $textarea = new XoopsFormDhtmlTextArea(XOOPS::_('Content'), 'content', $block['content'], 15, 70);
-        $textarea->setDescription("");
-        $textarea->doHtml = true;
-        $form->addElement($textarea, true);
-        $selectType = new XoopsFormSelect(XOOPS::_('Type'), 'type', $block['type']);
-        $selectType->addOptionArray(array(
-            'H' => XOOPS::_('HTML'),
-            'P' => XOOPS::_('PHP'),
-            'S' => XOOPS::_('BB code with smiley'),
-            'T' => XOOPS::_('BB code without simley')
-        ));
-        $form->addElement($selectType);
-
-        //$form->addElement(new XoopsFormHidden('id', $block["id"]));
-        $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));
-        return $form;
     }
 
     private function getFormList($name, $blocks, $title, $action)
@@ -781,7 +738,7 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
             unset($label);
 
             // Custom or cloned block
-            if (!empty($block['type'])) {
+            if (!empty($block['type']) || !empty($block['root'])) {
                 $href = $this->view->url(array(
                                             "op"            => "delete",
                                             "action"        => "op",

@@ -176,19 +176,28 @@ CREATE TABLE `block` (
   `key`             varchar(64)     NOT NULL default '',            # internal key
   `name`            varchar(64)     NOT NULL default '',            # user key, empty or unique string, for calling from template
   `title`           varchar(255)    NOT NULL default '',
+
   `description`     text,                                           # Description
   `type`            varchar(64)     NOT NULL default '',            # "" - generated; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
   `render`          varchar(64)     NOT NULL default '',            # for generated, render class::method
-  `options`         text,                                           # for generated, delimited by "|"
+  `options`         text,                                           # serialized options
   `active`          tinyint(1)      unsigned NOT NULL default '1',  # for generated, updated by system on module activation
-  `module`          varchar(64)     NOT NULL default '',            # for generated
+  `module`          varchar(64)     NOT NULL default '',            # module generating the block
+  `content`         text,                                           # for custom
+  `cache_expire`    int(10)         unsigned NOT NULL default '0',
+  `cache_level`     varchar(64)     NOT NULL default '',
+
+  `title_hidden`    tinyint(1)      unsigned NOT NULL default '0',  # Hide the title
+  `link`            varchar(255)    NOT NULL default '',            # URL the title linked to
+  `style`           varchar(255)    NOT NULL default '',            # specified stylesheet class for display
+
+  #@+ Legacy fields
   `func_file`       varchar(64)     NOT NULL default '',            # for generated
   `show_func`       varchar(64)     NOT NULL default '',            # for generated
   `edit_func`       varchar(64)     NOT NULL default '',            # for generated
   `template`        varchar(64)     NOT NULL default '',            # for generated
-  `content`         text,                                           # for custom
-  `cache_expire`    int(10)         unsigned NOT NULL default '0',
-  `cache_level`     varchar(64)     NOT NULL default '',
+  #@-
+
   PRIMARY KEY  (`id`)
 );
 
@@ -441,4 +450,14 @@ CREATE TABLE `table` (
 
   PRIMARY KEY  (`id`)
 # UNIQUE KEY `name` (`name`)
+);
+
+# Monitoring callback
+CREATE TABLE `monitor` (
+  `id`              int(10)         unsigned    NOT NULL    auto_increment,
+  `module`          varchar(64)     NOT NULL default '',
+  `callback`        varchar(64)     NOT NULL default '',
+
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `module` (`module`)
 );

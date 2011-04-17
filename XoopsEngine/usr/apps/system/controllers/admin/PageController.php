@@ -28,6 +28,24 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
         $section = $this->_getParam("section", "front");
         $dirname = $this->_getParam("dirname", "default");
 
+        $moduleList = $this->getModuleListOfPage();
+        foreach ($moduleList as $dir =>& $item) {
+            $item = array(
+                'name'  => $item,
+                'url'   => $this->view->url(
+                    array(
+                        "module"        => "system",
+                        "controller"    => "page",
+                        "action"        => "index",
+                        "dirname"       => $dir,
+                        "section"       => $section,
+                    ),
+                    "admin"
+                )
+            );
+        }
+
+        /*
         $modules = XOOPS::service("registry")->modulelist->read("active");
         $moduleDefault = array("default" => array("name"  => XOOPS::_("System Application")));
         $modules = array_merge($moduleDefault, $modules);
@@ -48,6 +66,7 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
                 )
             );
         }
+        */
 
         $modelPage = XOOPS::getModel("page");
         $select = $modelPage->select()->distinct()->from($modelPage, array("section"));
@@ -90,7 +109,7 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
             $page["description"] .= "-" . $page['action'];
         }
 
-        $title = sprintf(XOOPS::_("Pages of module %s"), $modules[$dirname]["name"]);
+        $title = sprintf(XOOPS::_("Pages of module %s"), $moduleList[$dirname]["name"]);
         $action = $this->view->url(array("action" => "save", "controller" => "page", "module" => $module));
         $form = $this->getFormList("page_form_list", $pages, $title, $action, $section);
         $form->addElement(new XoopsFormHidden('section', $section));
@@ -256,10 +275,29 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
             return;
         }
 
-        $modules = XOOPS::service("registry")->modulelist->read("active");
+        //$modules = XOOPS::service("registry")->modulelist->read("active");
         $dirname = $this->_getParam("dirname", "");
         $position = $this->_getParam("position", 0);
 
+        $moduleList = $this->getModuleListOfBlock();
+        foreach ($moduleList as $dir =>& $item) {
+            $item = array(
+                'name'  => $item,
+                'url'   => $this->view->url(
+                    array(
+                        "module"        => "system",
+                        "controller"    => "page",
+                        "action"        => "insert",
+                        "dirname"       => $dir,
+                        "page"          => $page->id,
+                        "position"      => $position
+                    ),
+                    "admin"
+                )
+            );
+        }
+
+        /*
         $moduleList = array();
         $modules[""] = array(
             "name"  => XOOPS::_("Custom blocks"),
@@ -280,13 +318,13 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
                 )
             );
         }
+        */
 
         $model = XOOPS::getModel("block");
         $select = $model->select()
                         ->where("module = ?", $dirname);
         $blocks = $model->fetchAll($select)->toArray();
 
-        //$positions = self::getBlockPositions();
         $title = sprintf(XOOPS::_("Add blocks to page %s"), $page->title);
         $action = $this->view->url(array("action" => "insertblock", "controller" => "page", "module" => $module));
         $form = $this->getFormInsert("page_form_insert", $blocks, $title, $action);
@@ -608,7 +646,6 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
     // Page form
     private function getFormPage($name, $page, $title, $action)
     {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();
 
         $form = new XoopsThemeForm($title, $name, $action, 'post', true);
@@ -662,7 +699,7 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
                                         "module"        => $module,
                                         "id"            => $id,
                                         ), "admin");
-            $editLink = "<a href=\"" . $href. "\" title=\"". $page["title"] ."\">" . XOOPS::_("Manage") . "</a>";
+            $editLink = "<a href=\"" . $href . "\" title=\"" . $page["title"] . "\">" . XOOPS::_("Manage") . "</a>";
             $label = new XoopsFormLabel("", $editLink);
             $ele->addElement($label);
             unset($label);
@@ -673,7 +710,7 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
                                         "module"        => $module,
                                         "id"            => $id,
                                         ), "admin");
-            $editLink = "<a href=\"" . $href. "\" title=\"". $page["title"] ."\">" . XOOPS::_("Delete") . "</a>";
+            $editLink = "<a href=\"" . $href . "\" title=\"" . $page["title"] . "\">" . XOOPS::_("Delete") . "</a>";
             $label = new XoopsFormLabel("", $editLink);
             $ele->addElement($label);
             unset($label);
@@ -685,7 +722,7 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
                                             "module"        => $module,
                                             "page"          => $id,
                                             ), "admin");
-                $blockLink = "<a href=\"" . $href. "\" title=\"". $page["title"] ."\">" . XOOPS::_("Block") . "</a>";
+                $blockLink = "<a href=\"" . $href . "\" title=\"" . $page["title"] . "\">" . XOOPS::_("Block") . "</a>";
                 $label = new XoopsFormLabel("", $blockLink);
                 $ele->addElement($label);
                 unset($label);
@@ -702,11 +739,10 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
     // Page's block list form
     private function getFormBlocks($name, $blocks, $title, $action, $page)
     {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();
         $module = $this->getRequest()->getModuleName();
 
-        $blockPositions = self::getBlockPositions();
+        $blockPositions = static::getBlockPositions();
         $form = new XoopsThemeForm($title, $name, $action, 'post', true);
         foreach ($blockPositions as $position => $title) {
             if ($position < 0 || empty($blocks[$position])) continue;
@@ -744,7 +780,7 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
             ),
             "admin"
         );
-        $editLink = "<a href=\"" . $href. "\" title=\"". XOOPS::_("Add a block") ."\">" . XOOPS::_("Add a block") . "</a>";
+        $editLink = "<a href=\"" . $href. "\" title=\"" . XOOPS::_("Add a block") . "\">" . XOOPS::_("Add a block") . "</a>";
         $label = new XoopsFormLabel(XOOPS::_("Add a block"), $editLink);
         $form->addElement($label);
         unset($label);
@@ -837,44 +873,24 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
      */
     public function layoutAction()
     {
-        if ( $this->_request->isPost() ) {
-            //Debug::e($_POST);
-            exit;
-        }
         $this->setTemplate("system/admin/page_layout.html");
         $module = $this->getRequest()->getModuleName();
-        $modules = XOOPS::service("registry")->modulelist->read("active");
-        $dirname = $this->_getParam("dirname", "system");
+        $dirname = $this->_getParam("dirname", "");
 
-        foreach (array_keys($modules) as $dir) {
-            $info = Xoops::service('module')->loadInfo($dir);
-            // skip if the module does not have blocks
-            if (empty($info['extensions']['block'])) {
-                continue;
-            }
-            $moduleList[$dir] = array(
-                "name"  => $modules[$dir]["name"],
-                "url"   => $this->view->url(
-                    array(
-                        "module"        => $module,
-                        "controller"    => "block",
-                        "action"        => "layout"
-                    ),
-                    "admin"
-                )
-            );
-        }
+
+        $modulesPage = $this->getModuleListOfPage();
+        $modulesBlock = $this->getModuleListOfBlock();
 
         $model = XOOPS::getModel("block");
         $select = $model->select()
-                        ->where("module = ?", $dirname);
+                        ->where("module = ?", $dirname)
+                        ->where("active = ?", 1);
         $blocks = $model->fetchAll($select);
 
-        $this->template->assign(array(
-                                    "dirname"   => $dirname,
-                                    "modules"   => $moduleList,
-                                    "blocks"    => $blocks
-                                ));
+        $this->template->assign('dirname', $dirname);
+        $this->template->assign('modulesPage', $modulesPage);
+        $this->template->assign('modulesBlock', $modulesBlock);
+        $this->template->assign('blocks', $blocks);
     }
 
     public function savelayoutAction()
@@ -895,7 +911,8 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
 
         $model = XOOPS::getModel("block");
         $select = $model->select()
-                        ->where("module = ?", $dirname);
+                        ->where("module = ?", $dirname)
+                        ->where("active = ?", 1);
         $blocks = $model->fetchAll($select);
         $this->template->assign("blocks",$blocks);
     }
@@ -903,19 +920,69 @@ class System_PageController extends Xoops_Zend_Controller_Action_Admin
     public function ajaxpageAction()
     {
         $dirname = $this->_getParam("dirname", "default");
+        $section = $this->_getParam("section", "front");
 
+        $modelPage = XOOPS::getModel("page");
+        $select = $modelPage->select()
+                        ->where("section = ?", $section)
+                        ->where("module = ?", $dirname)
+                        ->order(array("controller", "action"));
+        $pages = $modelPage->fetchAll($select)->toArray();
+        $html = "<option value=\"0\">" . XOOPS::_('Select Page') . "</option>" . PHP_EOF;
+        foreach ($pages as $id => $page) {
+            $title = $page['title'] . ' (' . $dirname;
+            if (!empty($page['controller'])) {
+                $title .= '-' . $page['controller'];
+                if (!empty($page['action'])) {
+                    $title .= '-' . $page['action'];
+                }
+            }
+            $title .= ')';
+            $html .= "<option value=\"{$id}\">" . Xoops\Security::escape($title) . "</option>" . PHP_EOF;
+        }
+
+        /*
         $model = XOOPS::getModel("page");
         $select = $model->select()
                         ->where("module = ?", $dirname)
                         ->order(array("controller", "action"));
         $pages = $model->fetchAll($select)->toArray();
-        $html = "<option value=\"0\">Select Page</option>";
+        $html = "<option value=\"0\">" . XOOPS::_('Select Page') . "</option>" . PHP_EOF;
         if ( $pages ) {
             foreach ($pages as $k=>$val) {
-                $html .= "<option value=\"{$val["id"]}\">{$val["title"]}</option> ";
+                $html .= "<option value=\"{$val["id"]}\">{$val['title']}</option>" . PHP_EOF;
             }
         }
+        */
         echo $html;
     }
 
+    protected function getModuleListOfPage()
+    {
+        $modules = XOOPS::service("registry")->modulelist->read("active");
+
+        $modulesPage = array("default" => XOOPS::_("System Application"));
+        foreach (array_keys($modules) as $dir) {
+            $modulesPage[$dir] = $modules[$dir]["name"];
+        }
+
+        return $modulesPage;
+    }
+
+    protected function getModuleListOfBlock()
+    {
+        $modules = XOOPS::service("registry")->modulelist->read("active");
+        $modulesBlock = array();
+        foreach (array_keys($modules) as $dir) {
+            // skip if the module does not have blocks
+            $info = Xoops::service('module')->loadInfo($dir, 'block');
+            if (empty($info)) {
+                continue;
+            }
+            $modulesBlock[$dir] = $modules[$dir]["name"];
+        }
+        $modulesBlock[''] = XOOPS::_("Custom blocks");
+
+        return $modulesBlock;
+    }
 }

@@ -1,7 +1,7 @@
 
 <script type="text/javascript">
     $(function() {
-        // 调用模块的区块
+        // Fetch blocks of a module
         $("#select-module").selectModule({
                 url:"<{adminUrl module=system controller=block action=ajax}>",
                 container:"#draggable"
@@ -127,11 +127,12 @@ div.xo-page .xo-page-center ul li {
 </style>
 <div>
     <div class="xo-block">
+
         <div class="xo-block-page">
-            Select Module:
+            <{_ text='Select a module to get its blocks:'}>
             <select name="dirname" id="select-module">
                 <{foreach key=dir item=module from=$modules}>
-                <option value="<{$dir}>" <{if $dirname eq $dir}>selected="selected"<{/if}> ><{$module.name}></option>
+                <option value="<{$dir}>"<{if $dirname eq $dir}> selected="selected"<{/if}>><{$module.name}></option>
                 <{/foreach}>
             </select>
         </div>
@@ -140,7 +141,6 @@ div.xo-page .xo-page-center ul li {
 
         <div class="clearfix"></div>
     </div>
-
 
 
     <{include file="app/system/admin/block_ajax_page.html"}>

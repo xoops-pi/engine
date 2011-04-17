@@ -49,8 +49,15 @@ class App_System_Form_BlockCustom extends App_System_Form_BlockEdit
         );
         $this->addElement('Text', 'name', $options);
 
+        // Title and display
         $options = array(
-            'label'         => 'Title',
+            'label'             => 'Title',
+            'elementsBelongTo'  => false,
+        );
+        $titleCompound = $this->createElement('Compound', 'title-compound', $options);
+
+        // Title/Caption
+        $options = array(
             'value'         => $block['title'],
             'required'      => true,
             'filters'       => array(
@@ -59,7 +66,35 @@ class App_System_Form_BlockCustom extends App_System_Form_BlockEdit
                 ),
             ),
         );
-        $this->addElement('Text', 'title', $options);
+        $titleCompound->addElement('Text', 'title', $options);
+
+        // To hide title?
+        $options = array(
+            'label'         => 'Hide',
+            'value'         => $block['title_hidden'],
+        );
+        $titleCompound->addElement('Checkbox', 'title_hidden', $options);
+        $this->addElement($titleCompound);
+
+        // Link
+        $options = array(
+            'label'         => 'Link URL',
+            'value'         => $block['link'],
+            'filters'       => array(
+                'trim'      => array(
+                    'filter'    => 'StringTrim',
+                ),
+            ),
+        );
+        $this->addElement('Text', 'link', $options);
+
+        // Display style
+        $options = array(
+            'label'         => 'Display style',
+            'value'         => $block['style'],
+        );
+        //$element = new App_System_Form_Element_Blockstyle('style', $options);
+        $this->addElement(array('system', 'Blockstyle'), 'style', $options);
 
         $options = array(
             'label'         => 'Cache expire',

@@ -1,14 +1,14 @@
 Xoops Engine Changelog
 
 
-Feb 22nd, 2011
+April 20th, 2011
 =============================
 1 Added namespace for app (in /usr/apps/) as "App" and module (in www/modules) as "Module"
 2 Built WYSIWYG editor factory, integrated CKEditor and jQuery based ClEditor
 3 Built security handler and resource, added XSS filter, IP protection, super globals contamination, etc.
 4 Upgraded Zend Framework to 1.11.4
-5 Block is refactored with Xoops/Zend_Form
-
+5 Block is refactored with Xoops/Zend_Form, more controllable with style, title switch, link, etc.
+6 Formulated theme schema with global namespace
 
 January 10th, 2011
 =============================

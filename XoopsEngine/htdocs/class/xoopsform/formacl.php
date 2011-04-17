@@ -9,15 +9,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license         BSD liscense
+ * @copyright       Xoops Engine http://www.xoopsengine.org
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           3.0
- * @package         xoops
+ * @package         XoopsForm
  * @version         $Id$
  */
-
-//include_once XOOPS::path("www") . "/class/xoopsform/form.php";
 
 class XoopsFormAcl extends XoopsForm
 {
@@ -127,7 +125,6 @@ class XoopsFormAcl extends XoopsForm
             $ret .= "<tfoot><tr class='foot'><td colspan='" . $this->getCols() . "'>{$description}</td></tr></tfoot>";
         }
 
-        //xoops_result($this->rules);
         $hidden = '';
         $class ='even';
         foreach ($this->resources as $id => $resource) {
@@ -141,8 +138,6 @@ class XoopsFormAcl extends XoopsForm
                 $rules = $this->rules[$id];
             }
 
-            //xoops_result($rules);
-            //xoops_result($access);
             $ret .= "<tr valign='top' align='left'>";
             $rowspan = " rowspan='" . count($privileges) . "' ";
             $ret .= "<td class='head'{$rowspan}>";
@@ -171,24 +166,25 @@ class XoopsFormAcl extends XoopsForm
                 }
 
                 foreach (array_keys($this->roles) as $role) {
+
                     $namespace = empty($this->privileges[$id]) ? "{$id}-{$role}-" : "{$id}-{$role}-{$privilege}";
                     $ret .= "<td class='even'>";
                     // Allowed: deny = 0
                     $ret .= "<input type='radio' id='rules-{$namespace}-1' name='rules[{$namespace}]'";
-                    if (empty($rules[$privilege][$role]) && isset($rules[$privilege][$role])) {
-                        $ret .= " 'checked'";
+                    if (isset($rules[$privilege][$role]) && empty($rules[$privilege][$role])) {
+                        $ret .= " checked='checked'";
                     }
-                    $ret .= " value='0'> V<br />";
+                    $ret .= " value='0'> Y<br />";
                     // Denied: deny = 1;
                     $ret .= "<input type='radio' id='rules-{$namespace}-0' name='rules[{$namespace}]'";
                     if (!empty($rules[$privilege][$role])) {
-                        $ret .= " 'checked'";
+                        $ret .= " checked='checked'";
                     }
-                    $ret .= " value='1'> X<br />";
+                    $ret .= " value='1'> N<br />";
                     // Not set: deny = -1
                     $ret .= "<input type='radio' id='rules-{$namespace}--1' name='rules[{$namespace}]'";
                     if (!isset($rules[$privilege][$role])) {
-                        $ret .= " 'checked'";
+                        $ret .= " checked='checked'";
                     }
                     $ret .= " value='-1'> I";
                     $ret .= "</td>";

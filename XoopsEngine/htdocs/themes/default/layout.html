@@ -19,8 +19,8 @@
 <!-- Start Header -->
 <table cellspacing="0">
     <tr id="xoops-header">
-        <td id="xoops-header-logo"><a href="<{absUrl path=www}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='xoops-logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
-        <td id="xoops-header-banner"><{widget name=xoops_banner}></td>
+        <td id="xoops-header-logo"><a href="<{absUrl path=www}>" title="<{$xoops_sitename}>"><img src="<{resourceUrl path='images/logo.png'}>" alt="<{$xoops_sitename}>" /></a></td>
+        <td id="xoops-header-banner"><{widget name=banner}></td>
         <td id="xoops-header-account"><{widget name="user-account" size=s}></td>
     </tr>
     <tr>
@@ -44,39 +44,39 @@
     <tr>
         <!-- Start left blocks loop -->
         <{if isset($xoopsBlocks.left)}>
-            <td id="xoops-leftcolumn">
+            <td id="xoops-column-left">
             <{foreach item=block from=$xoopsBlocks.left}>
-                <{include file="block-left.html"}>
+                <{include file="block-side.html"}>
             <{/foreach}>
             </td>
         <{/if}>
         <!-- End left blocks loop -->
 
-        <td id="xoops-centercolumn">
+        <td id="xoops-column-center">
             <!-- Display center blocks if any -->
             <{if isset($xoopsBlocks.topleft) or isset($xoopsBlocks.topcenter) or isset($xoopsBlocks.topright)}>
                 <table cellspacing="0">
                     <tr>
-                        <td id="xoops-centerCcolumn" colspan="2">
+                        <td id="xoops-column-top-center" colspan="2">
                         <!-- Start center-center blocks loop -->
                         <{foreach item=block from=$xoopsBlocks.topcenter}>
-                            <{include file="block-top-center.html"}>
+                            <{include file="block-center.html"}>
                         <{/foreach}>
                         <!-- End center-center blocks loop -->
                         </td>
                     </tr>
                     <tr>
-                        <td id="xoops-centerLcolumn">
+                        <td id="xoops-column-top-left">
                         <!-- Start center-left blocks loop -->
                         <{foreach item=block from=$xoopsBlocks.topleft}>
-                            <{include file="block-top-left.html"}>
+                            <{include file="block-center.html"}>
                         <{/foreach}>
                         <!-- End center-left blocks loop -->
                         </td>
-                        <td id="xoops-centerRcolumn">
+                        <td id="xoops-column-top-right">
                         <!-- Start center-right blocks loop -->
                         <{foreach item=block from=$xoopsBlocks.topright}>
-                            <{include file="block-top-right.html"}>
+                            <{include file="block-center.html"}>
                         <{/foreach}>
                         <!-- End center-right blocks loop -->
                         </td>
@@ -94,9 +94,9 @@
                 <table cellspacing="0">
                     <{if isset($xoopsBlocks.bottomcenter)}>
                         <tr>
-                            <td id="xoops-bottomCcolumn" colspan="2">
+                            <td id="xoops-column-bottom-center" colspan="2">
                             <{foreach from=$xoopsBlocks.bottomcenter item=block}>
-                                <{include file="block-bottom-center.html"}>
+                                <{include file="block-center.html"}>
                             <{/foreach}>
                             </td>
                         </tr>
@@ -104,15 +104,15 @@
 
                     <{if isset($xoopsBlocks.bottomleft) or isset($xoopsBlocks.bottomright)}>
                         <tr>
-                            <td id="xoops-bottomLcolumn">
+                            <td id="xoops-column-bottom-left">
                             <{foreach from=$xoopsBlocks.bottomleft item=block}>
-                                <{include file="block-bottom-left.html"}>
+                                <{include file="block-center.html"}>
                             <{/foreach}>
                             </td>
 
-                            <td id="xoops-bottomRcolumn">
+                            <td id="xoops-column-bottom-right">
                                 <{foreach from=$xoopsBlocks.bottomright item=block}>
-                                    <{include file="block-bottom-right.html"}>
+                                    <{include file="block-center.html"}>
                                 <{/foreach}>
                             </td>
                         </tr>
@@ -124,10 +124,10 @@
         </td>
 
         <{if isset($xoopsBlocks.right)}>
-            <td id="xoops-rightcolumn">
+            <td id="xoops-column-right">
             <!-- Start right blocks loop -->
             <{foreach item=block from=$xoopsBlocks.right}>
-                <{include file="block-right.html"}>
+                <{include file="block-side.html"}>
             <{/foreach}>
             <!-- End right blocks loop -->
             </td>
@@ -137,7 +137,7 @@
 
 <!-- Start footer -->
 <table cellspacing="0">
-<tr id="xoops-footerbar">
+<tr id="xoops-footer">
     <td><{$xoops_footer}> | <{__ text=_THEME_DEFAULT_SITE}></td>
 </tr>
 </table>

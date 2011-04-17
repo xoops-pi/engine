@@ -24,7 +24,6 @@ class System_RuleController extends Xoops_Zend_Controller_Action_Admin
     // @TODO: section
     public function indexAction()
     {
-        //$this->setTemplate("system/admin/resource_index.html");
         $module = $this->getRequest()->getModuleName();
         $modules = XOOPS::service("registry")->modulelist->read("active");
         $moduleDeault = array("default" => array("name"  => XOOPS::_("System Application")));
