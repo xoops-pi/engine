@@ -121,10 +121,10 @@ class App_System_Form_BlockEdit extends Xoops_Zend_Form
         );
         $this->addElement('CacheExpire', 'cache_expire', $options);
 
+        XOOPS::service('translate')->loadTranslation('blocks', $module);
         $blockOptions = is_array($block['options']) ? $block['options'] : unserialize($block['options']);
         // Legacy function
         if (!empty($block['edit_func'])) {
-            XOOPS::service('translate')->loadTranslation('blocks', $module);
             include_once $modulePath . '/blocks/' . $block['func_file'];
             //$options = explode('|', $block['options']);
             $options['module'] = $module;

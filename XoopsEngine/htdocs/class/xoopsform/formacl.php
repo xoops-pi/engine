@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+trigger_error('To be upgraded to Xoops_Form');
+
 class XoopsFormAcl extends XoopsForm
 {
     private $cols;
