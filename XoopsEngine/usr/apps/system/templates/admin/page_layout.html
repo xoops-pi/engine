@@ -10,7 +10,7 @@
                 container:"#draggable"
         });
         // Select a block
-        $("#select-black").selectBlock({
+        $("#select-block").selectBlock({
                 url:"<{adminUrl module=system controller=page action=ajaxpage}>",
                 container:"#select-page"
         });
@@ -135,7 +135,7 @@ div.xo-page .xo-page-center ul li {
             <{_ text='Select a module to get its blocks:'}>
             <select name="dirname" id="select-module">
                 <{foreach key=dir item=name from=$modulesBlock}>
-                <option value="<{$dir}>" <{if $dirname eq $dir}>selected="selected"<{/if}> ><{$name}></option>
+                <option value="<{$dir}>"<{if $dirname eq $dir}> selected="selected"<{/if}>><{$name}></option>
                 <{/foreach}>
             </select>
         </div>

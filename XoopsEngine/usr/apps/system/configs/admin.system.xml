@@ -226,6 +226,14 @@
                             <action>block</action>
                             <visible>0</visible>
                         </block>
+                        <inset>
+                            <label>Insert blocks</label>
+                            <module>system</module>
+                            <route>admin</route>
+                            <controller>page</controller>
+                            <action>insert</action>
+                            <visible>0</visible>
+                        </inset>
                         <readme>
                             <label>Readme</label>
                             <route>admin</route>
@@ -251,12 +259,22 @@
                             <action>index</action>
                         </list>
                         <add>
-                            <label>Create Block</label>
+                            <label>Create Custom Block</label>
                             <module>system</module>
                             <route>admin</route>
                             <controller>block</controller>
                             <action>add</action>
                         </add>
+                        <compound>
+                            <label>Create Block Compound</label>
+                            <module>system</module>
+                            <route>admin</route>
+                            <controller>block</controller>
+                            <action>add</action>
+                            <params>
+                                <compound>1</compound>
+                            </params>
+                        </compound>
                         <edit>
                             <label>Edit a block</label>
                             <module>system</module>
@@ -273,6 +291,14 @@
                             <action>distribute</action>
                             <visible>0</visible>
                         </distribute>
+                        <compoundblocks>
+                            <label>Compound block</label>
+                            <module>system</module>
+                            <route>admin</route>
+                            <controller>block</controller>
+                            <action>compound</action>
+                            <visible>0</visible>
+                        </compoundblocks>
                         <readme>
                             <label>Readme</label>
                             <route>admin</route>

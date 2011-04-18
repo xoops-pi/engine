@@ -78,7 +78,9 @@ class Xoops_Zend_View_Helper_Block extends Zend_View_Helper_Abstract
         }
 
         $tplName = ($tplName = $block['template'])
-                    ? "file:block/" . $block['module'] . "/" . $tplName
+                    ? ($block['module']
+                        ? "file:block/" . $block['module'] . "/" . $tplName
+                        : "file:block/system/" . $tplName)
                     : "file:block/system/dummy.html";
         $template = $this->view->getEngine();
 

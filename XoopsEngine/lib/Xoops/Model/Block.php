@@ -40,9 +40,9 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
         // Module-generated block
         if (!$isCustom) {
             $render = $block["render"];
-            $class = '';
+            $renderClass = '';
             if ($render) {
-                list($class, $method) = explode('::', $render);
+                list($renderClass, $method) = explode('::', $render);
             } elseif ($block["show_func"]) {
                 $func = $block["show_func"];
                 if (!function_exists($func)) {
@@ -57,25 +57,40 @@ class Xoops_Model_Block extends Xoops_Zend_Db_Model
                 if (!empty($configs) && is_array($configs)) {
                     $options = array_merge($options, $configs);
                 }
-                if ($render && class_exists($class)) {
-                    $result = $class::$method($options, $block['module']);
+                if ($render && class_exists($renderClass)) {
+                    $result = $renderClass::$method($options, $block['module']);
                 } else {
                     $options['module'] = $block['module'];
                     $result = $func($options);
                 }
             }
-        // Custom block
+        // Custom block or block compound
         } else {
             switch ($block['type']) {
+                case 'C':
+                    $options = empty($block['options']) ? array() : unserialize($block['options']);
+                    if (!empty($configs) && is_array($configs)) {
+                        $options = array_merge($options, $configs);
+                    }
+                    $renderClass = 'App\\System\\Block\\' . ucfirst($block['style']);
+                    $renderClass::setModel($this);
+                    $renderClass::setOptions($options);
+                    $renderClass::setCompound($block['id']);
+                    $result = array(
+                        'content'   => $renderClass::render(),
+                        'options'   => $renderClass::getOptions(),
+                    );
+                    break;
                 case 'H':
                     $content = $block['content'];
+                    $result = str_replace('{X_SITEURL}', XOOPS::url('www'), $content);
                     break;
                 case 'T':
                 default:
                     $content = Xoops\Security::escape($block['content']);
+                    $result = str_replace('{X_SITEURL}', XOOPS::url('www'), $content);
                     break;
             }
-            $result = str_replace('{X_SITEURL}', XOOPS::url('www'), $content);
         }
 
         return $result;

@@ -106,6 +106,8 @@ return array(
         'notification'  => 'notification.php',
         'comment'   => 'comment.php',
         'route'     => 'route.ini',
+        // Callback for stats and monitoring
+        'monitor'   => array('callback' => 'monitor::index'),
         // Additional custom extension
         'test'      => array('custom_handler' => 'Demo_Configtest'),
     )

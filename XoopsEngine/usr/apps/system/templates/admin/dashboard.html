@@ -1,3 +1,17 @@
+
+<{if $monitors}>
+<h2><{_ text="Stats:"}></h2>
+<{foreach item=app key=dirname from=$monitors}>
+    <div style="padding: 5px 0;">
+        <ul><{$app.title}>
+            <{foreach item=lst from=$app.data}>
+            <li><{$lst.message}><{if $lst.callback}> <a href="<{$lst.callback}>" title="<{_ text='Details'}>"><{_ text="Details"}></a><{/if}></li>
+            <{/foreach}>
+        </ul>
+    </div>
+<{/foreach}>
+<{/if}>
+
 <h2><{_ text="Tasks:"}></h2>
 <{foreach item=task from=$tasks}>
     <div style="padding: 5px 0;">

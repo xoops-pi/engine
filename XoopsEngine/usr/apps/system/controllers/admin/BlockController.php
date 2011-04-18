@@ -24,31 +24,14 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
     {
         $this->setTemplate("system/admin/block_list.html");
         $module = $this->getRequest()->getModuleName();
-        $modules = XOOPS::service("registry")->modulelist->read("active");
+        //$modules = XOOPS::service("registry")->modulelist->read("active");
         $dirname = $this->_getParam("dirname", "");
 
-        $moduleList = array();
-        $moduleList[""] = array(
-            "name"  => XOOPS::_("Custom Blocks"),
-            "url"   => $this->getFrontController()->getRouter()->assemble(
-                array(
-                    "module"        => $module,
-                    "controller"    => "block",
-                    "action"        => "index",
-                ),
-                "admin"
-            )
-        );
-        foreach (array_keys($modules) as $dir) {
-            //if ($dir == $dirname) continue;
-            $info = Xoops::service('module')->loadInfo($dir);
-            // skip if the module does not have blocks
-            if (empty($info['extensions']['block'])) {
-                continue;
-            }
-            $moduleList[$dir] = array(
-                "name"  => $modules[$dir]["name"],
-                "url"   => $this->getFrontController()->getRouter()->assemble(
+        $moduleList = $this->getModuleListOfBlock();
+        foreach ($moduleList as $dir =>& $item) {
+            $item = array(
+                'name'  => $item,
+                'url'   => $this->view->url(
                     array(
                         "module"        => $module,
                         "controller"    => "block",
@@ -61,11 +44,25 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         }
 
         $model = XOOPS::getModel("block");
-        $select = $model->select()
-                        ->where("module = ?", $dirname);
+        $select = $model->select();
+        if ('-' === $dirname) {
+            $select->order("module ASC")->order("id ASC");
+        } else {
+            $select->where("module = ?", $dirname)->order("id ASC");
+        }
         $blocks = $model->fetchAll($select);
 
-        $title = empty($dirname) ? XOOPS::_("Custom Blocks") : sprintf(XOOPS::_("Blocks of Module %s"), $modules[$dirname]["name"]);
+        switch ($dirname) {
+            case '':
+                $title = XOOPS::_("Custom blocks");
+                break;
+            case '-':
+                $title = XOOPS::_("All blocks");
+                break;
+            default:
+                $title = sprintf(XOOPS::_("Blocks of module %s"), $moduleList[$dirname]["name"]);
+                break;
+        }
         $action = $this->view->url(array("action" => "cache", "controller" => "block", "module" => $module));
         $form = $this->getFormList("block_form_list", $blocks, $title, $action);
         $form->addElement(new XoopsFormHidden('dirname', $dirname));
@@ -87,23 +84,19 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         }
         $this->setTemplate("system/admin/block_layout.html");
         $module = $this->getRequest()->getModuleName();
-        $modules = XOOPS::service("registry")->modulelist->read("active");
-        $dirname = $this->_getParam("dirname", "system");
+        //$modules = XOOPS::service("registry")->modulelist->read("active");
+        $dirname = $this->_getParam("dirname", "");
 
-        foreach (array_keys($modules) as $dir) {
-            //if ($dir == $dirname) continue;
-            $info = Xoops::service('module')->loadInfo($dir);
-            // skip if the module does not have blocks
-            if (empty($info['extensions']['block'])) {
-                continue;
-            }
-            $moduleList[$dir] = array(
-                "name"  => $modules[$dir]["name"],
-                "url"   => $this->getFrontController()->getRouter()->assemble(
+        $moduleList = $this->getModuleListOfBlock();
+        foreach ($moduleList as $dir =>& $item) {
+            $item = array(
+                'name'  => $item,
+                'url'   => $this->view->url(
                     array(
                         "module"        => $module,
                         "controller"    => "block",
-                        "action"        => "layout"
+                        "action"        => "layout",
+                        "dirname"       => $dir,
                     ),
                     "admin"
                 )
@@ -111,8 +104,12 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         }
 
         $model = XOOPS::getModel("block");
-        $select = $model->select()
-                        ->where("module = ?", $dirname);
+        $select = $model->select();
+        if ('-' === $dirname) {
+            $select->order("module ASC")->order("id ASC");
+        } else {
+            $select->where("module = ?", $dirname)->order("id ASC");
+        }
         $blocks = $model->fetchAll($select);
 
         $this->template->assign(array(
@@ -143,24 +140,121 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
     public function addAction()
     {
         $module = $this->getRequest()->getModuleName();
-
-        $block = array(
-            "name"          => "",
-            "title"         => "",
-            "content"       => "",
-            "type"          => "H",
-            "cache_expire"  => 0,
-            "cache_level"   => ""
-        );
+        $isCompound = $this->_getParam("compound");
 
         $action = $this->view->url(array("action" => "save", "controller" => "block", "module" => $module));
-        $options = array(
-            'action'    => $action,
-            'block'     => $block,
-            'legend'    => 'Add a new block'
-        );
-        $form = new App_System_Form_BlockCustom($options);
+        if ($isCompound) {
+            $block = array(
+                "name"          => "",
+                "title"         => "",
+                "type"          => "C",
+                "cache_expire"  => 0,
+                "cache_level"   => ""
+            );
+            $options = array(
+                'action'    => $action,
+                'block'     => $block,
+                'legend'    => 'Add a block compound'
+            );
+            $form = new App_System_Form_BlockCompound($options);
+        } else {
+            $block = array(
+                "name"          => "",
+                "title"         => "",
+                "content"       => "",
+                "type"          => "H",
+                "cache_expire"  => 0,
+                "cache_level"   => ""
+            );
+            $options = array(
+                'action'    => $action,
+                'block'     => $block,
+                'legend'    => 'Add a new block'
+            );
+            $form = new App_System_Form_BlockCustom($options);
+        }
         $this->renderFormBlock($form);
+    }
+
+    public function compoundAction()
+    {
+        $module = $this->getRequest()->getModuleName();
+        $dirname = $this->_getParam("dirname", "");
+        $id = $this->_getParam("id", 0);
+
+        $model = XOOPS::getModel('block');
+        $select = $model->select()->where("id = ?", $id);
+        if (!$compound = $model->fetchRow($select)) {
+            $message = XOOPS::_("The block is not found.");
+            $options = array("message" => $message, "time" => 3);
+            $redirect = array("action" => "index");
+            $this->redirect($redirect, $options);
+            return;
+        }
+
+        $modelCompound = Xoops::getModel('block_compound');
+        $where = array('compound = ?' => $id);
+        $order = array('order ASC');
+        $rows = $modelCompound->fetchAll($where, $order);
+        $elements = array();
+        foreach ($rows as $row) {
+            $elements[$row->block] = array(
+                'order' => $row->order,
+                //'title' => $row->title,
+            );
+        }
+        if (!empty($elements)) {
+            $rows = $model->fetchAll(array('id IN (?)' => array_keys($elements)));
+            foreach ($rows as $row) {
+                $elements[$row->id]['title'] = $row->title . ' [' . ($row->module ?: Xoops::_('Custom')) . ']';
+            }
+        }
+
+        $select = $model->select()->where('active = ?', 1);
+        if (!empty($elements)) {
+            $select->where('id NOT IN (?)', array_keys($elements));
+        }
+        if ('-' === $dirname) {
+            $select->order("module ASC")->order("id ASC");
+        } else {
+            $select->where("module = ?", $dirname)->order("id ASC");
+        }
+        $rowset = $model->fetchAll($select);
+        $blocks = array();
+        foreach ($rowset as $row) {
+            if ($row->id == $id) {
+                continue;
+            }
+            $blocks[$row->id] = array(
+                'title' => $row->title . ' [' . ($row->module ?: Xoops::_('Custom')) . ']',
+            );
+        }
+
+        $title = sprintf(XOOPS::_("Add blocks to compound %s"), $compound->title);
+        $action = $this->view->url(array("action" => "savecompound", "controller" => "block", "module" => $module));
+        $form = $this->getFormCompound("block_form_compound", array('elements' => $elements, 'blocks' => $blocks), $title, $action);
+        $form->addElement(new XoopsFormHidden('id', $id));
+        $form->assign($this->template);
+
+        $moduleList = $this->getModuleListOfBlock();
+        foreach ($moduleList as $dir =>& $item) {
+            $item = array(
+                'name'  => $item,
+                'url'   => $this->getFrontController()->getRouter()->assemble(
+                    array(
+                        "module"        => $module,
+                        "controller"    => "block",
+                        "action"        => "compound",
+                        "dirname"       => $dir,
+                        "id"            => $id,
+                    ),
+                    "admin"
+                )
+            );
+        }
+
+        $this->template->assign("modules", $moduleList);
+        $this->template->assign("dirname", $dirname);
     }
 
     public function editAction()
@@ -172,12 +266,12 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
 
         $model = XOOPS::getModel("block");
         $block = $model->findRow($id)->toArray();
+        $isCompound = ('C' == $block["type"]) ? true : false;
         $isCustom = empty($block["module"]) ? true : false;
         // Clone
         $cloneFrom = '';
         if ($clone) {
             $cloneFrom = $block['id'];
-            $cloneName =
             $block['name']  = empty($block['name']) ? '' : $block['name'] . uniqid();
             $block['title'] = $block['title'] . ' clone';
             $block['root']  = $isCustom ? '' : ($block['root'] ?: $block['id']);
@@ -188,13 +282,18 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
             'action'    => $action,
             'block'     => $block,
         );
-        // Module-generated block
-        if (!$isCustom) {
-            $form = new App_System_Form_BlockEdit($options);
+
+        // Block compound
+        if ($isCompound) {
+            $form = new App_System_Form_BlockCompound($options);
         // Custom block
-        } else {
+        } elseif ($isCustom) {
             $form = new App_System_Form_BlockCustom($options);
+        // Module-generated block
+        } else {
+            $form = new App_System_Form_BlockEdit($options);
         }
+
         $form->addElement('Hidden', 'dirname', $dirname);
         $form->addElement('Hidden', 'clone', $cloneFrom);
         $this->renderFormBlock($form);
@@ -473,11 +572,6 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
             );
             $modelLink->insert($data);
         }
-        /*
-        if (!empty($remove_all)) {
-            $modelLink->delete(array("block = ?", $block));
-        }
-        */
         $globalUpdate = false;
         if (empty($pageModule) && !is_null($position_all)) {
             $select = $modelLink->select()->where("block = ?", $block)->where("page = ?", 0);
@@ -547,18 +641,22 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $posts      = $this->getRequest()->getPost();
         $id         = $this->getRequest()->getPost("id", 0);
         $isCustom   = $this->getRequest()->getPost("custom", false);
+        $isCompound = $this->getRequest()->getPost("compound", false);
         $cloneFrom    = $this->getRequest()->getPost("clone", false);
         $action     = $this->view->url(array("action" => "save", "controller" => "block", "module" => $module));
         $options = array(
             'action'    => $action,
             'block'     => $posts,
         );
-        // Module-generated block
-        if (!$isCustom) {
-            $form = new App_System_Form_BlockEdit($options);
+        // Block compound
+        if ($isCompound) {
+            $form = new App_System_Form_BlockCompound($options);
         // Custom block
-        } else {
+        } elseif ($isCustom) {
             $form = new App_System_Form_BlockCustom($options);
+        // Module-generated block
+        } else {
+            $form = new App_System_Form_BlockEdit($options);
         }
 
         if (!$form->isValid($posts)) {
@@ -567,7 +665,17 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         }
         $data = array();
         $values = $form->getValues();
-        if ($isCustom) {
+        if ($isCompound) {
+            $keys = array("name", "title", "title_hidden", "style", "link", "cache_expire", "cache_level");
+            $renderClass = 'App\\System\\Block\\' . ucfirst($values['style']);
+            if (empty($id)) {
+                $data['options'] = serialize($renderClass::getOptions());
+            } else {
+                $data['options'] = serialize((array) $values['options']);
+            }
+            $data['template'] = $renderClass::getTemplate();
+            $data['type'] = 'C';
+        } elseif ($isCustom) {
             $keys = array("name", "title", "title_hidden", "style", "link", "cache_expire", "cache_level", "type", "content");
         } else {
             $keys = array("name", "title", "title_hidden", "style", "link", "cache_expire", 'root', 'module');
@@ -630,6 +738,56 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         $this->redirect($redirect, $options);
     }
 
+    // Save blocks on a compound
+    public function savecompoundAction()
+    {
+        $module = $this->getRequest()->getModuleName();
+        $orders_exist = $this->_getParam("orders_exist", array());
+        $orders = $this->_getParam("orders", array());
+        $id = $this->_getParam("id", 0);
+
+        $model = XOOPS::getModel('block');
+        $select = $model->select()->where("id = ?", $id);
+        if (!$compound = $model->fetchRow($select)) {
+            $message = XOOPS::_("The block is not found.");
+            $options = array("message" => $message, "time" => 3);
+            $redirect = array("action" => "index");
+            $this->redirect($redirect, $options);
+            return;
+        }
+
+        $modelCompound = Xoops::getModel('block_compound');
+        $where = array('compound = ?' => $id);
+        $order = array('order ASC');
+        $rows = $modelCompound->fetchAll($where, $order);
+        $elements = array();
+        foreach ($rows as $row) {
+            if (!isset($orders_exist[$row->block]) || $orders_exist[$row->block] <= 0) {
+                $row->delete();
+                continue;
+            }
+            if ($row->order != $orders_exist[$row->block]) {
+                $row->order = $orders_exist[$row->block];
+                $row->save();
+            }
+        }
+        foreach ($orders as $block => $order) {
+            if ($order <= 0) {
+                continue;
+            }
+            $data = array(
+                "compound"  => $id,
+                "block"     => $block,
+                "order"     => $order,
+            );
+            $modelCompound->insert($data);
+        }
+
+        $options = array("message" => Xoops::_("Compund is updated"), "time" => 3);
+        $redirect = array("action" => "compound", "id" => $id);
+        $this->redirect($redirect, $options);
+    }
+
     public function opAction()
     {
         $id = $this->_getParam("id", 0);
@@ -675,43 +833,24 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
 
     private function getFormList($name, $blocks, $title, $action)
     {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();
         $module = $this->getRequest()->getModuleName();
 
         $form = new XoopsThemeForm($title, $name, $action, 'post', true);
         foreach ($blocks as $key => $block) {
             $id = $block["id"];
-            $ele = new XoopsFormElementTray($block["title"], ' ');
+            $ele = new XoopsFormElementTray($block["title"], ' | ');
             $selectExpire = new XoopsFormSelect(XOOPS::_('Cache expire'), "cache_expires[{$id}]", $block['cache_expire']);
             $selectExpire->addOptionArray(static::getExpireOptions());
             $ele->addElement($selectExpire);
             unset($selectExpire);
 
             // Custom block
-            //if (!empty($block['type'])) {
             if (empty($block['module'])) {
                 $selectLevel = new XoopsFormSelect(XOOPS::_('Cache level'), "cache_levels[{$id}]", $block['cache_level']);
                 $selectLevel->addOptionArray(static::getLevelOptions());
                 $ele->addElement($selectLevel);
                 unset($selectLevel);
-
-                if ($block["active"]) {
-                    list($op, $operation) = array("deactivate", "Deactivate");
-                } else {
-                    list($op, $operation) = array("activate", "Activate");
-                }
-                $href = $this->view->url(array(
-                                            "op"            => $op,
-                                            "action"        => "op",
-                                            "controller"    => "block",
-                                            "module"        => $module,
-                                            "id"            => $id,
-                                            ), "admin");
-                $editLink = "<a href=\"" . $href. "\" title=\"". $block["title"] ."\">" . XOOPS::_($operation) . "</a>";
-                $label = new XoopsFormLabel("", $editLink);
-                $ele->addElement($label);
-                unset($label);
             }
 
             $href = $this->view->url(array(
@@ -737,6 +876,37 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
             $ele->addElement($label);
             unset($label);
 
+            $href = $this->view->url(array(
+                                        "action"        => "distribute",
+                                        "controller"    => "block",
+                                        "module"        => $module,
+                                        "block"         => $id,
+                                        ), "admin");
+            $editLink = "<a href=\"" . $href. "\" title=\"". $block["title"] ."\">" . XOOPS::_("Page") . "</a>";
+            $label = new XoopsFormLabel("", $editLink);
+            $ele->addElement($label);
+            unset($label);
+
+            // Custom block
+            if (empty($block['module'])) {
+                if ($block["active"]) {
+                    list($op, $operation) = array("deactivate", "Deactivate");
+                } else {
+                    list($op, $operation) = array("activate", "Activate");
+                }
+                $href = $this->view->url(array(
+                                            "op"            => $op,
+                                            "action"        => "op",
+                                            "controller"    => "block",
+                                            "module"        => $module,
+                                            "id"            => $id,
+                                            ), "admin");
+                $editLink = "<a href=\"" . $href. "\" title=\"". $block["title"] ."\">" . XOOPS::_($operation) . "</a>";
+                $label = new XoopsFormLabel("", $editLink);
+                $ele->addElement($label);
+                unset($label);
+            }
+
             // Custom or cloned block
             if (!empty($block['type']) || !empty($block['root'])) {
                 $href = $this->view->url(array(
@@ -752,16 +922,19 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
                 unset($label);
             }
 
-            $href = $this->view->url(array(
-                                        "action"        => "distribute",
-                                        "controller"    => "block",
-                                        "module"        => $module,
-                                        "block"         => $id,
-                                        ), "admin");
-            $editLink = "<a href=\"" . $href. "\" title=\"". $block["title"] ."\">" . XOOPS::_("Page") . "</a>";
-            $label = new XoopsFormLabel("", $editLink);
-            $ele->addElement($label);
-            unset($label);
+            // Block compound
+            if ('C' == $block['type']) {
+                $href = $this->view->url(array(
+                                            "action"        => "compound",
+                                            "controller"    => "block",
+                                            "module"        => $module,
+                                            "id"            => $id,
+                                            ), "admin");
+                $editLink = "<a href=\"" . $href. "\" title=\"". $block["title"] ."\">" . XOOPS::_("Blocks") . "</a>";
+                $label = new XoopsFormLabel("", $editLink);
+                $ele->addElement($label);
+                unset($label);
+            }
 
             $ele->setDescription($block['name']);
             $form->addElement($ele);
@@ -774,7 +947,6 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
     // pages form to distribute a block
     private function getFormDistribute($name, $pages, $title, $action)
     {
-        //include_once XOOPS::path('www') . '/class/xoopsformloader.php';
         Xoops_Legacy::autoload();
 
         $form = new XoopsThemeForm($title, $name, $action, 'post', true);
@@ -834,6 +1006,31 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
         return $form;
     }
 
+    // To add blocks to a compound
+    private function getFormCompound($name, $blocks, $title, $action)
+    {
+        Xoops_Legacy::autoload();
+
+        $form = new XoopsThemeForm($title, $name, $action, 'post', true);
+        if (!empty($blocks['elements'])) {
+            $form->addElement(new XoopsFormLabel(Xoops::_('Existent blocks')));
+            foreach ($blocks['elements'] as $id => $block) {
+                $form->addElement(new XoopsFormText($block['title'], "orders_exist[" . $id . "]", 10, 10, $block['order']));
+            }
+        }
+        if (!empty($blocks['blocks'])) {
+            $form->addElement(new XoopsFormLabel(Xoops::_('Add blocks')));
+            foreach ($blocks['blocks'] as $id => $block) {
+                $form->addElement(new XoopsFormText($block['title'], "orders[" . $id . "]", 10, 10, 0));
+            }
+        }
+
+        $form->addElement(new XoopsFormButton('', 'button', Xoops::_('Submit'), 'submit'));
+        $description = XOOPS::_("Set order value: positive - to display corresponding block; 0 or negative - to disable a block");
+        $form->setDescription($description);
+        return $form;
+    }
+
     protected static function getBlockPositions()
     {
         return array(
@@ -876,5 +1073,23 @@ class System_BlockController extends Xoops_Zend_Controller_Action_Admin
             "group"     => XOOPS::_('Group'),
             "user"      => XOOPS::_('User')
         );
+    }
+
+    protected function getModuleListOfBlock()
+    {
+        $modules = XOOPS::service("registry")->modulelist->read("active");
+        $modulesBlock = array();
+        foreach (array_keys($modules) as $dir) {
+            // skip if the module does not have blocks
+            $info = Xoops::service('module')->loadInfo($dir, 'block');
+            if (empty($info)) {
+                continue;
+            }
+            $modulesBlock[$dir] = $modules[$dir]["name"];
+        }
+        $modulesBlock[''] = XOOPS::_("Custom blocks");
+        $modulesBlock['-'] = XOOPS::_("All blocks");
+
+        return $modulesBlock;
     }
 }

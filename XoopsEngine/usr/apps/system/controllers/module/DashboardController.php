@@ -22,11 +22,31 @@ class Module_DashboardController extends Xoops_Zend_Controller_Action_Admin
 {
     public function indexAction()
     {
+        $module = $this->getRequest()->getModuleName();
         $this->setTemplate("system/admin/dashboard.html");
 
         $this->view->headTitle("Index");
         $this->view->headTitle("Dashboard");
         //$this->skipCache();
+
+        $modules = Xoops::service('registry')->module->read();
+        $monitors = Xoops::service('registry')->monitor->read();
+
+        $redirect = XOOPS::registry("frontController")->getRouter()->assemble(array('module' => $module, 'controller' => 'dashboard', 'action' => 'index'));
+        $redirect = urlencode($redirect);
+        $monitorList = array();
+        foreach ($modules as $key => $app) {
+            if (empty($app['active']) || !array_key_exists($key, $monitors)) continue;
+            list($class, $method) = explode('::', $monitors[$key]);
+            $data = $class::$method($key, $redirect);
+            if (empty($data)) continue;
+            $monitorList[$key] = array(
+                'title' => $app['name'],
+                'data'  => $data,
+            );
+        }
+        $this->template->assign('monitors', $monitorList);
+
         $model = $this->getModel('task', 'system');
         $tasks = $model->fetchAll($model->select()->from($model, array('memo'))->order('time_created DESC')->where("time_finished = 0"));
         $this->template->assign('tasks', $tasks->toArray());
@@ -34,6 +54,7 @@ class Module_DashboardController extends Xoops_Zend_Controller_Action_Admin
         $model = $this->getModel('shortcut', 'system');
         $shortcuts = $model->fetchAll($model->select()->from($model, array('link', 'title'))->order('order ASC'));
         $this->template->assign('shortcuts', $shortcuts->toArray());
+
     }
 
     public function sitemapAction()

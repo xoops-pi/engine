@@ -1,0 +1,24 @@
+
+<div>
+
+<{foreach item=blk name=blklist from=$block.content}>
+    <div style="width: <{$width_column}>%; float: left; padding: 5px;">
+            <div class="block-container<{if !empty($blk.style)}> <{$blk.style}><{/if}>">
+                <{if !empty($blk.title)}>
+                    <div class="block-title">
+                        <{if !empty($blk.link)}><a href="<{$blk.link}>" title="<{$blk.title}>"><{/if}>
+                            <{$blk.title}>
+                        <{if !empty($blk.link)}></a><{/if}>
+                    </div>
+                <{/if}>
+                <div class="block-content"><{$blk.content}></div>
+            </div>
+    </div>
+
+<{if $smarty.foreach.blklist.iteration % $blocks_per_row eq 0}>
+</div>
+<br style="clear:both;" />
+<div>
+<{/if}>
+
+<{/foreach}>

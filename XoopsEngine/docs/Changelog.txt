@@ -8,7 +8,9 @@ April 20th, 2011
 3 Built security handler and resource, added XSS filter, IP protection, super globals contamination, etc.
 4 Upgraded Zend Framework to 1.11.4
 5 Block is refactored with Xoops/Zend_Form, more controllable with style, title switch, link, etc.
-6 Formulated theme schema with global namespace
+6 Added block compound, suggested by ezsky/dongbeta etc.
+7 Formulated theme schema with global namespace
+
 
 January 10th, 2011
 =============================

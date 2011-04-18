@@ -178,18 +178,18 @@ CREATE TABLE `block` (
   `title`           varchar(255)    NOT NULL default '',
 
   `description`     text,                                           # Description
-  `type`            varchar(64)     NOT NULL default '',            # "" - generated; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
+  `type`            varchar(64)     NOT NULL default '',            # Content type: "" - generated; C - Compound; H - HTML style; P - PHP enabled; S - bbcode with smiley; T - bbcode without smiley
   `render`          varchar(64)     NOT NULL default '',            # for generated, render class::method
-  `options`         text,                                           # serialized options
+  `options`         text,                                           # serialized options. regular block: for content generating; block compound: display options for blocks
   `active`          tinyint(1)      unsigned NOT NULL default '1',  # for generated, updated by system on module activation
   `module`          varchar(64)     NOT NULL default '',            # module generating the block
   `content`         text,                                           # for custom
   `cache_expire`    int(10)         unsigned NOT NULL default '0',
-  `cache_level`     varchar(64)     NOT NULL default '',
+  `cache_level`     varchar(64)     NOT NULL default '',            # for custom
 
   `title_hidden`    tinyint(1)      unsigned NOT NULL default '0',  # Hide the title
   `link`            varchar(255)    NOT NULL default '',            # URL the title linked to
-  `style`           varchar(255)    NOT NULL default '',            # specified stylesheet class for display
+  `style`           varchar(255)    NOT NULL default '',            # regular block: specified stylesheet class for display; block compound: display style for blocks
 
   #@+ Legacy fields
   `func_file`       varchar(64)     NOT NULL default '',            # for generated
@@ -199,6 +199,16 @@ CREATE TABLE `block` (
   #@-
 
   PRIMARY KEY  (`id`)
+);
+
+CREATE TABLE `block_compound` (
+  `id`              int(8)    unsigned    NOT NULL auto_increment,
+  `compound`        int(8)    unsigned    NOT NULL    default '0',
+  `block`           int(8)    unsigned    NOT NULL    default '0',
+  `order`           int(8)    NOT NULL    default '0',
+
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `compound_block` (`compound`, `block`)
 );
 
 
