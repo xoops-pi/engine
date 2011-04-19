@@ -46,7 +46,7 @@ class Tile extends \App\System\Blockcompound
         // Number of blocks on one row
         $opt = array(
             'label'         => 'Blocks per row',
-            'value'         => $options['blocks_per_row'],
+            'value'         => $options['blocks_per_row'] ?: 1,
         );
         $form->addElement('Text', 'blocks_per_row', $opt);
 

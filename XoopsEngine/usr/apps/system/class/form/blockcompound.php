@@ -98,7 +98,13 @@ class App_System_Form_BlockCompound extends App_System_Form_BlockEdit
         if (!empty($block['style'])) {
             $optionForm = new Xoops_Zend_Form_SubForm();
             $renderClass = 'App\\System\\Block\\' . ucfirst($block['style']);
-            $blockOptions = isset($block['options']) ? unserialize($block['options']) : array();
+            if (!isset($block['options'])) {
+                $blockOptions = array();
+            } elseif (is_array($block['options'])) {
+                $blockOptions = $block['options'];
+            } else {
+                $blockOptions = unserialize($block['options']);
+            }
             $renderClass::setOptions($blockOptions);
             $renderClass::buildOptions($optionForm);
             $this->addSubForm($optionForm, 'options');

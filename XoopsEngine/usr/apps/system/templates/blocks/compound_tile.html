@@ -1,5 +1,5 @@
 
-<{assign var="width_column" value=95/$blocks_per_row|@floor}>  <{* calculate column width *}>
+<{assign var="width_column" value=95/$block.options.blocks_per_row|@floor}>  <{* calculate column width *}>
 
 
 <div>
@@ -24,7 +24,7 @@
     </div>
     <{/if}>
 
-<{if $smarty.foreach.blklist.iteration % $blocks_per_row eq 0}>
+<{if $smarty.foreach.blklist.iteration % $block.options.blocks_per_row eq 0}>
 </div>
 <br style="clear:both;" />
 <div>
