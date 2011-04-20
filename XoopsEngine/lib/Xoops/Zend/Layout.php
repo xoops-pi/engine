@@ -106,7 +106,7 @@ class Xoops_Zend_Layout extends Zend_Layout
     protected $_viewSuffix = 'html';
 
     protected $metaList = array(
-            "doctype"       => "__XOOPS_THEME_DOCTYPE__",
+            //"doctype"       => "__XOOPS_THEME_DOCTYPE__",
             "headTitle"     => "__XOOPS_THEME_HEAD_TITLE__",
             "headMeta"      => "__XOOPS_THEME_HEAD_META__",
             "headLink"      => "__XOOPS_THEME_HEAD_LINK__",
@@ -510,7 +510,7 @@ class Xoops_Zend_Layout extends Zend_Layout
     protected function initHead()
     {
         $view = $this->getView();
-        $view->doctype('XHTML1_TRANSITIONAL');
+        //$view->doctype('XHTML1_TRANSITIONAL');
 
         // Page meta tags
         $headMeta = array();
@@ -524,7 +524,7 @@ class Xoops_Zend_Layout extends Zend_Layout
                 //$this->assign("xoops_" . $key, $value);
             }
         }
-        $view->headMeta()->appendName("generator", "XOOPS");
+        $view->headMeta()->appendName("generator", "Xoops Engine");
         $view->headMeta()->appendHttpEquiv("content-language", XOOPS::config('language'));
         $view->headMeta()->appendHttpEquiv("content-type", "text/html; charset=" . XOOPS::config('charset'));
 

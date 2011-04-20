@@ -260,6 +260,7 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         } else {
             $model = XOOPS::getModel("theme");
             $model->delete(array("dirname = ?" => $dirname));
+            //$this->removeTheme($dirname);
             $message = sprintf(XOOPS::_("The theme '%s' is uninstalled."), $dirname);
             XOOPS::service('registry')->theme->flush();
             XOOPS::service('registry')->themelist->flush();
@@ -379,6 +380,29 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
 
         $status = (0 == count($stats["files"]["failed"]) + count($stats["folders"]["failed"])) ? true : false;
         return $status;
+    }
+
+    protected function removeTheme($theme)
+    {
+        $directory = Xoops::path('www') . '/themes/' . $theme . '/';
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory), RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($iterator as $fileinfo) {
+            $pathname = $fileinfo->getPathname();
+            if (!$fileinfo->isWritable()) {
+                @chmod($pathname, 0777);
+            }
+            if ($fileinfo->isDir()) {
+                rmdir($pathname);
+            } else {
+                unlink($pathname);
+            }
+        }
+        if (!is_writable($directory)) {
+            @chmod($directory, 0777);
+        }
+        rmdir($directory);
+
+        return true;
     }
 
     protected function getChildren($theme, $list, &$children)
