@@ -241,7 +241,7 @@ class Xoops_Zend_Application_Bootstrap_Bootstrap extends Zend_Application_Bootst
 
     public function loadOptions($resource)
     {
-        $options = Xoops::loadConfig('resource.' . $resource . '.ini');
+        $options = Xoops::loadConfig('resource.' . $resource . '.ini.php');
         return $options ?: array();
     }
 }

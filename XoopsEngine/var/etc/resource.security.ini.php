@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 ; Security options
 
 ; IP check: deny 'bad' IPs, approve 'good' IPs

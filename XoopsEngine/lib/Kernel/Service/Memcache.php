@@ -35,7 +35,7 @@ class Memcache extends ServiceAbstract
     protected function loadOptions($config)
     {
         if (is_string($config)) {
-            $config = \Xoops::loadConfig("memcache." . $config . ".ini");
+            $config = \Xoops::loadConfig("memcache." . $config . ".ini.php");
         }
 
         if (isset($config['host'])) {

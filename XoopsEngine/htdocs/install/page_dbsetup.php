@@ -95,7 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_NAME'])) {
         $dsn['charset'] = '"' . $vars["DB_CHARSET"] . '"';
         $dsn['driver_options.LOCAL_INFILE'] = true;
 
-        $content_dsn = ';DSN to database' . PHP_EOL;
+        $content_dsn = ';<?php __halt_compiler();' . PHP_EOL . PHP_EOL;
+        $content_dsn .= ';DSN to database' . PHP_EOL;
         foreach ($dsn as $key => $val) {
             $content_dsn .= $key . " = " . $val . PHP_EOL;
         }

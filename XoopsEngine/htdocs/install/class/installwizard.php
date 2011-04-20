@@ -122,7 +122,7 @@ class XoopsInstallWizard
             return false;
         }
         $this->persistentData['language'] = $this->language = $language;
-        //$localeFile =  "../language/{$language}/locale.ini";
+        //$localeFile =  "../language/{$language}/locale.ini.php";
         //$locale = parse_ini_file($localeFile);
         //$this->locale = array('lang' => $locale['lang'], 'charset' => empty($meta['charset']) ? 'UTF-8' : $meta['charset']);
 

@@ -81,12 +81,12 @@ class XOOPS
         if (!isset(self::$instances[$engine])) {
             // Set configs
             if (!isset($options["configs"])) {
-                $options["configs"] = __DIR__ . "/boot/engine." . $engine . ".ini";
+                $options["configs"] = __DIR__ . "/boot/engine." . $engine . ".ini.php";
             }
 
             // Set hosts
             if (!isset($options["hosts"])) {
-                $options["hosts"] = __DIR__ . "/boot/hosts." . $engine . ".ini";
+                $options["hosts"] = __DIR__ . "/boot/hosts." . $engine . ".ini.php";
             }
 
             // Namespaced class

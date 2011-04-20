@@ -45,11 +45,10 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
         $files = array("general" => array(
                 ".htaccess" => "htaccess",
                 "boot.php"  => "bootfile",
-                //"xoops.ini" => "system",
             ),
         );
         $iterator = new DirectoryIterator(XOOPS::path("lib/boot"));
-        $pattern = "/^(engine|hosts)[\.](.*)" . preg_quote(".ini") . "$/";
+        $pattern = "/^(engine|hosts)[\.](.*)" . preg_quote(".ini.php") . "$/";
         foreach ($iterator as $fileinfo) {
             if (!$fileinfo->isFile()) {
                 continue;
@@ -62,7 +61,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $files[$type][$fileName] = $matches[1] . '.' . $matches[2];
         }
         $iterator = new DirectoryIterator(XOOPS::path("var/etc"));
-        $pattern = "/^((bootstrap|service|resource|registry)[\.])?([^-]+)(.*)" . preg_quote(".ini") . "$/";
+        $pattern = "/^((bootstrap|service|resource|registry)[\.])?([^-]+)(.*)" . preg_quote(".ini.php") . "$/";
         foreach ($iterator as $fileinfo) {
             if (!$fileinfo->isFile()) {
                 continue;
@@ -171,7 +170,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "boot"));
             return;
         }
-        $file = XOOPS::path("lib") . "/boot/" . $item . ".ini";
+        $file = XOOPS::path("lib") . "/boot/" . $item . ".ini.php";
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -198,7 +197,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "bootstrap"));
             return;
         }
-        $file = XOOPS::path("etc/bootstrap.{$item}.ini");
+        $file = XOOPS::path("etc/bootstrap.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -226,7 +225,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "service"));
             return;
         }
-        $file = XOOPS::path("etc/service.{$item}.ini");
+        $file = XOOPS::path("etc/service.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -254,7 +253,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "resource"));
             return;
         }
-        $file = XOOPS::path("etc/resource.{$item}.ini");
+        $file = XOOPS::path("etc/resource.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -282,7 +281,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "registry"));
             return;
         }
-        $file = XOOPS::path("etc/registry.{$item}.ini");
+        $file = XOOPS::path("etc/registry.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -310,7 +309,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "misc"));
             return;
         }
-        $file = XOOPS::path("etc/{$item}.ini");
+        $file = XOOPS::path("etc/{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,

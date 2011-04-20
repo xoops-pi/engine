@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * Memcached supported session handler can be configured in var/etc/resources.session.ini:
+ * Memcached supported session handler can be configured in var/etc/resources.session.ini.php:
  *   save_handler = memcached
  *   save_path = "127.0.0.1:11211"
  * It is simple and does not need the custom session savehandler. However custom session expiration per user is not supported, see {@Xoops_Zend_Session::rememberMe}.

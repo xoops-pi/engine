@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 [production]
 ; php settings
 ;phpSettings.display_startup_errors = 0
@@ -9,21 +11,23 @@ phpSettings.date.timezone = "UTC"
 
 ; Resources
 
+; security
+resources.security.config = "security"
+
+; user
+resources.user = true
+
 ; front controller
 ; Do not change defaultModule, otherwise basic service won't work
 resources.frontController.throwExceptions = false
 resources.frontController.defaultModule = "default"
-resources.frontController.defaultControllerName = "widget"
+resources.frontController.defaultControllerName = "index"
 resources.frontController.defaultAction = "index"
-resources.frontController.section = "widget"
-resources.frontController.noViewRenderer = true
+resources.frontController.section = "front"
 
 ; router
-;resources.router.name = "widget"
-resources.router.route = "widget"
-
-; error
-resources.error = true
+resources.router.name = "application"
+resources.router.route = "root"
 
 ; cache
 resources.cache = true
@@ -42,15 +46,38 @@ resources.locale = true
 ; Translate
 ; system translate adapter
 resources.translate.adapter = legacy
-; system translate load apater for 'global'
-resources.translate.load.global.adapter = legacy
+; system translate preload data
+resources.translate.load.global = true
+
+; module
+resources.module = true
+
+; Modules
+;resources.modules = true
+
+; error
+resources.error = true
+
+; session
+resources.session.config = "session.admin"
+
+; authorization
+resources.auth.adapter = "root"
+resources.auth.storage = "session"
+; days
+resources.auth.rememberMe = 0
 
 ; view
-resources.view.enabled = true
+;resources.view.enabled = true
+;resources.view.section =
 ; layout
 ;resources.view.layout.enabled = true
-resources.view.layout.layout = empty
-resources.view.layout.initMvc = false
+;resources.view.layout.layout = layout
+;resources.view.layout.theme = default
+resources.view.layout.navigation = front
+resources.view.layout.plugin.register = true
+resources.view.layout.cache.frontend = core
+resources.view.layout.cache.backend = file
 
 
 [staging : production]

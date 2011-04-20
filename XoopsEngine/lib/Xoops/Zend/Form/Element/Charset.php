@@ -46,7 +46,7 @@ class Xoops_Zend_Form_Element_Charset extends Zend_Form_Element_Select
                 continue;
             }
 
-            $localeFile = $fileinfo->getPathname() . '/locale.ini';
+            $localeFile = $fileinfo->getPathname() . '/locale.ini.php';
             if (!file_exists($localeFile)) {
                 continue;
             }

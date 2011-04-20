@@ -37,10 +37,10 @@ class Xoops_Zend_Application_Resource_Locale extends Zend_Application_Resource_R
 
         $language = XOOPS::config('language') ?: 'english';
         /*
-        $metaPath = Xoops::path('www') . '/language/' . $language . '/meta.ini';
+        $metaPath = Xoops::path('www') . '/language/' . $language . '/meta.ini.php';
         if (!file_exists($metaPath)) {
             $language = 'english';
-            $metaPath = Xoops::path('www') . '/language/english/meta.ini';
+            $metaPath = Xoops::path('www') . '/language/english/meta.ini.php';
         }
         $meta = Xoops::loadConfig($metaPath);
         $meta = Xoops::config('locale');

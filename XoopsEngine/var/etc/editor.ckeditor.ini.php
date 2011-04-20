@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 ;CKeditor config
 ; Skin style
 skin        = v2

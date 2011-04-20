@@ -1,11 +1,11 @@
+;<?php __halt_compiler();
+
 [production]
 ; php settings
 ;phpSettings.display_startup_errors = 0
 ;phpSettings.display_errors = 0
-phpSettings.date.timezone = "UTC"
 
-; bootstrap
-;bootstrap.class = "Application"
+phpSettings.date.timezone = "UTC"
 
 ; Resources
 
@@ -21,61 +21,71 @@ resources.frontController.throwExceptions = false
 resources.frontController.defaultModule = "default"
 resources.frontController.defaultControllerName = "index"
 resources.frontController.defaultAction = "index"
-resources.frontController.section = "front"
+resources.frontController.section = "admin"
+;resources.frontController.noViewRenderer = true
+resources.frontController.noErrorHandler = true
 
 ; router
-resources.router.name = "application"
-resources.router.route = "root"
+resources.router.route = "raw"
 
 ; cache
 resources.cache = true
 
+
+; legacy
+resources.legacy = true
+
 ; database
-resources.db.adapter = "Pdo_Mysql"
 resources.db.config = "db"
 resources.db.profiler.enabled = false
 
 ; config
 resources.config = true
 
-; Locale
-resources.locale = true
+; module
+resources.module = true
+
+; session
+resources.session.config = "session.admin"
+
+; authorization
+resources.auth.adapter = "admin"
+resources.auth.storage = "session"
+; days
+resources.auth.rememberMe = 0
+
+; admin user
+resources.admin = true
+
+; ACL
+resources.acl.section = admin
 
 ; Translate
 ; system translate adapter
 resources.translate.adapter = legacy
 ; system translate preload data
 resources.translate.load.global = true
+resources.translate.load.admin = true
+; module translate preload data
+resources.translate.module.data = admin
 
-; module
-resources.module = true
-
-; Modules
-;resources.modules = true
-
-; error
-resources.error = true
-
-; session
-resources.session.config = "session.admin"
-
-; authorization
-resources.auth.adapter = "root"
-resources.auth.storage = "session"
-; days
-resources.auth.rememberMe = 0
 
 ; view
-;resources.view.enabled = true
-;resources.view.section =
+resources.view.class = Xoops_Zend_View
 ; layout
-;resources.view.layout.enabled = true
-;resources.view.layout.layout = layout
-;resources.view.layout.theme = default
-resources.view.layout.navigation = front
-resources.view.layout.plugin.register = true
-resources.view.layout.cache.frontend = core
-resources.view.layout.cache.backend = file
+resources.view.layout.class = Xoops_Zend_Layout
+resources.view.layout.block = false
+resources.view.layout.layout = admin
+resources.view.layout.navigation = admin
+; template
+resources.view.template.caching = false
+resources.view.template.caching = false
+resources.view.template.compile_check = false
+resources.view.template.debugging = false
+resources.view.template.force_compile = false
+resources.view.template.error_unassigned = false
+; renderer
+resources.view.viewRenderer.class = Xoops_Zend_Controller_Action_Helper_ViewRenderer
 
 
 [staging : production]

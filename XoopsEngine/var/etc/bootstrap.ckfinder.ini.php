@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 [production]
 
 ; session

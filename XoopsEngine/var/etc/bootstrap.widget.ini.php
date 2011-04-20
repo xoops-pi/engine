@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 [production]
 ; php settings
 ;phpSettings.display_startup_errors = 0
@@ -11,16 +13,19 @@ phpSettings.date.timezone = "UTC"
 
 ; front controller
 ; Do not change defaultModule, otherwise basic service won't work
+resources.frontController.throwExceptions = false
 resources.frontController.defaultModule = "default"
-resources.frontController.defaultControllerName = "index"
+resources.frontController.defaultControllerName = "widget"
 resources.frontController.defaultAction = "index"
-resources.frontController.section = "feed"
-resources.frontController.modulecontrollerdirectoryname = "controllers/feed"
+resources.frontController.section = "widget"
 resources.frontController.noViewRenderer = true
 
 ; router
-;resources.router.name = "feed"
-resources.router.route = "feed"
+;resources.router.name = "widget"
+resources.router.route = "widget"
+
+; error
+resources.error = true
 
 ; cache
 resources.cache = true
@@ -39,23 +44,16 @@ resources.locale = true
 ; Translate
 ; system translate adapter
 resources.translate.adapter = legacy
-; system translate preload data
-resources.translate.load.global = true
-; module translate preload data
-resources.translate.module.data = main
-
-; module
-resources.module = true
-
-; Modules
-resources.modules = true
-
-; error
-resources.error = true
+; system translate load apater for 'global'
+resources.translate.load.global.adapter = legacy
 
 ; view
+resources.view.enabled = true
 ; layout
-;resources.view = true
+;resources.view.layout.enabled = true
+resources.view.layout.layout = empty
+resources.view.layout.initMvc = false
+
 
 [staging : production]
 

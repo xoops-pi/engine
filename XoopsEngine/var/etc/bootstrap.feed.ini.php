@@ -1,30 +1,28 @@
+;<?php __halt_compiler();
+
 [production]
 ; php settings
 ;phpSettings.display_startup_errors = 0
 ;phpSettings.display_errors = 0
 phpSettings.date.timezone = "UTC"
 
-
 ; bootstrap
 ;bootstrap.class = "Application"
 
 ; Resources
-
-; user
-resources.user = true
 
 ; front controller
 ; Do not change defaultModule, otherwise basic service won't work
 resources.frontController.defaultModule = "default"
 resources.frontController.defaultControllerName = "index"
 resources.frontController.defaultAction = "index"
-resources.frontController.section = "front"
-
-; conroller plugins
-resources.frontController.plugins[] = "helper"
+resources.frontController.section = "feed"
+resources.frontController.modulecontrollerdirectoryname = "controllers/feed"
+resources.frontController.noViewRenderer = true
 
 ; router
-resources.router.name = "application"
+;resources.router.name = "feed"
+resources.router.route = "feed"
 
 ; cache
 resources.cache = true
@@ -47,11 +45,19 @@ resources.translate.adapter = legacy
 resources.translate.load.global = true
 ; module translate preload data
 resources.translate.module.data = main
-; module translate preload adapter, default as system adapter
-;resources.translate.module.adapter = gettext
 
 ; module
 resources.module = true
+
+; Modules
+resources.modules = true
+
+; error
+resources.error = true
+
+; view
+; layout
+;resources.view = true
 
 [staging : production]
 

@@ -28,7 +28,7 @@ class Memcached extends ServiceAbstract
     protected function loadOptions($config)
     {
         if (is_string($config)) {
-            $config = \Xoops::loadConfig("memcached." . $config . ".ini");
+            $config = \Xoops::loadConfig("memcached." . $config . ".ini.php");
         }
 
         $options = array();

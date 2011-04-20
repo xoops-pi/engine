@@ -25,7 +25,7 @@ class Xoops_Zend_Application_Resource_Autoload extends Zend_Application_Resource
     {
         $options = $this->getOptions();
 
-        // Register autoloader for system module classes in case system is not defined in modules.ini
+        // Register autoloader for system module classes in case system is not defined in modules.ini.php
         Xoops::autoloader()->registerCallback(array($this, 'loadSystem'));
     }
 

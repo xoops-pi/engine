@@ -1,3 +1,4 @@
+;<?php __halt_compiler();
 
 ; locale meta data
 

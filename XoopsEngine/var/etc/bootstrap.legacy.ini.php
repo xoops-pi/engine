@@ -1,11 +1,10 @@
+;<?php __halt_compiler();
+
 [production]
 ; php settings
 ;phpSettings.display_startup_errors = 0
 ;phpSettings.display_errors = 0
 phpSettings.date.timezone = "UTC"
-
-; bootstrap
-;bootstrap.class = "Application"
 
 ; Resources
 
@@ -17,69 +16,55 @@ resources.user = true
 
 ; front controller
 ; Do not change defaultModule, otherwise basic service won't work
+resources.frontController.throwExceptions = false
 resources.frontController.defaultModule = "default"
 resources.frontController.defaultControllerName = "index"
 resources.frontController.defaultAction = "index"
 resources.frontController.section = "front"
-
-; conroller plugins
-resources.frontController.plugins[] = "helper"
+;resources.frontController.noViewRenderer = true
+resources.frontController.noErrorHandler = true
 
 ; router
-resources.router.name = "application"
+resources.router.route = "raw"
 
 ; cache
 resources.cache = true
 
+; legacy
+resources.legacy = true
+
 ; database
-resources.db.adapter = "Pdo_Mysql"
 resources.db.config = "db"
 resources.db.profiler.enabled = false
 
 ; config
 resources.config = true
 
-; Locale
-resources.locale = true
-
-; Translate
-; system translate adapter
-resources.translate.adapter = legacy
-; folder name for translations
-resources.translate.folder = language
-; system translate preload data
-resources.translate.load.global = true
-; system translate load locale for 'global'
-;resources.translate.load.global.locale = null
-; system translate load options for 'global'
-;resources.translate.load.global.options.var1 = val1
-; module translate preload data
-resources.translate.module.data = main
-
 ; module
 resources.module = true
-
-; Modules
-resources.modules = true
-
-; error
-resources.error = true
 
 ; session
 resources.session.config = "session"
 
 ; authorization
-resources.auth.adapter = "application"
+resources.auth.adapter = "legacy"
 resources.auth.storage = "session"
 ; days
 resources.auth.rememberMe = 14
 
-; ACL
-;resources.acl = true
-
+; Translate
+; system translate adapter
+resources.translate.adapter = legacy
+; system translate preload data
+resources.translate.load.global = true
+; module translate preload data
+resources.translate.module.data = main
 
 ; view
+resources.view.class = Legacy_Zend_View
 ; layout
+resources.view.layout.class = Legacy_Zend_Layout
+resources.view.layout.theme = legacy
 resources.view.layout.navigation = front
 resources.view.layout.plugin.register = true
 resources.view.layout.cache.frontend = core
@@ -90,7 +75,8 @@ resources.view.template.compile_check = false
 resources.view.template.debugging = false
 resources.view.template.force_compile = false
 resources.view.template.error_unassigned = false
-
+; renderer
+resources.view.viewRenderer.class = Legacy_Zend_Controller_Action_Helper_ViewRenderer
 
 [staging : production]
 
@@ -99,20 +85,7 @@ resources.view.template.error_unassigned = false
 ;phpSettings.display_errors = 1
 resources.db.profiler.enabled = true
 
-; view
-; template
-resources.view.template.caching = false
-resources.view.template.compile_check = true
-resources.view.template.debugging = true
-resources.view.template.force_compile = true
-resources.view.template.error_unassigned = false
-
 [debug : production]
 ;phpSettings.display_startup_errors = 1
 ;phpSettings.display_errors = 1
 resources.db.profiler.enabled = true
-
-; view
-; template
-resources.view.template.caching = false
-resources.view.template.compile_check = true

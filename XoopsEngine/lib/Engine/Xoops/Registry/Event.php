@@ -27,7 +27,7 @@ class Event extends \Kernel\Registry
     /**
      * load event data from module config
      *
-     * A module event configuration file (events in apps/press/configs/event.ini):
+     * A module event configuration file (events in apps/press/configs/event.ini.php):
      * event[] = article_post
      * event[] = article_delete
      * event[] = article_rate
@@ -35,7 +35,7 @@ class Event extends \Kernel\Registry
      * Trigger in apps/press/controllers/ArticleController.php
      * \Xoops::service('event')->trigger('press_article_post', $articleObject);
      *
-     * Callback configurations in apps/user/configs/event.ini
+     * Callback configurations in apps/user/configs/event.ini.php
      * observer.press.article_post[] = stats::article
      *
      * Callback calss in apps/user/class/stats.php

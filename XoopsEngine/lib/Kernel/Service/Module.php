@@ -21,7 +21,7 @@ namespace Kernel\Service;
 
 class Module extends ServiceAbstract
 {
-    const FILE_META = "modules.ini";
+    const FILE_META = "modules.ini.php";
     protected $container = array(
         // modules
         // Associative array of: type, directory, active, path

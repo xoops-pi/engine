@@ -86,7 +86,7 @@ class Translate extends \Kernel\Registry
         if (!is_dir($realPath)) {
             return $localeList;
         }
-        $configLookup = \Xoops::loadConfig('registry.translate.ini');
+        $configLookup = \Xoops::loadConfig('registry.translate.ini.php');
         $iterator = new \DirectoryIterator($realPath);
         foreach ($iterator as $fileinfo) {
             if (!$fileinfo->isDir() || $fileinfo->isDot()) {

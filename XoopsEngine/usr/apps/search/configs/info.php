@@ -65,7 +65,7 @@ return array(
                     'edit'          => "text",
                     'filter'        => "number_int",
                     'default'       => 5))),
-        'route'     => "route.ini",
+        'route'     => "route.ini.php",
         'navigation'    => "navigation.php",
         'search'    => array("callback" => "demo::index"),
         'block'     => array(

@@ -22,7 +22,7 @@ namespace Editor\Ckeditor;
 
 class Handler extends \Xoops\Editor\AbstractEditor
 {
-    protected $configFile = 'editor.ckeditor.ini';
+    protected $configFile = 'editor.ckeditor.ini.php';
 
     /**
      * Renders editor contents

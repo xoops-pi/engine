@@ -10,6 +10,7 @@ April 20th, 2011
 5 Block is refactored with Xoops/Zend_Form, more controllable with style, title switch, link, etc.
 6 Added block compound, suggested by ezsky/dongbeta etc.
 7 Formulated theme schema with global namespace
+8 Changed .ini file to .ini.php for content protection, suggested by huzhenghui/ezsky/dongbeta, etc.
 
 
 January 10th, 2011

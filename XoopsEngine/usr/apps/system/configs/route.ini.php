@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 ; system application routes
 
 ; Legacy route

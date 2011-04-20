@@ -105,7 +105,7 @@ return array(
         'navigation'    => 'navigation.php',
         'notification'  => 'notification.php',
         'comment'   => 'comment.php',
-        'route'     => 'route.ini',
+        'route'     => 'route.ini.php',
         // Callback for stats and monitoring
         'monitor'   => array('callback' => 'monitor::index'),
         // Additional custom extension

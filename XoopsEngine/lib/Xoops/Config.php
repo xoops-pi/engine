@@ -21,6 +21,9 @@
 
 class Xoops_Config
 {
+    /**
+     * Get realpath of a file from its relative path
+     */
     public static function realPath(&$filename)
     {
         if (!file_exists($filename)) {
@@ -32,13 +35,29 @@ class Xoops_Config
         return true;
     }
 
+    /**
+     * Load a file's content by different method according to its suffix
+     *
+     * Note: php extension might be appended to protect from disclosure. In this case, the real suffix will be checked with an extra step, like 'config.ini.php'
+     */
     public static function load($filename, $section = null, $options = false)
     {
+        // Check if file exists
         if (!static::realPath($filename)) {
             trigger_error("Config file for '$filename' is not found ", E_USER_WARNING);
             return false;
         }
+        // Get suffix
         $suffix = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if ($suffix === 'dist') {
+            $suffix = strtolower(pathinfo(basename($filename, ".dist"), PATHINFO_EXTENSION));
+        } elseif ($suffix === 'php') {
+            $suffix_sub = strtolower(pathinfo(basename($filename, ".php"), PATHINFO_EXTENSION));
+            if (in_array($suffix_sub, array('ini', 'xml', 'json', 'yaml'))) {
+                $suffix = $suffix_sub;
+            }
+        }
+
         if ('php' == $suffix) {
             $config = include $filename;
             if (!empty($section)) {
@@ -54,11 +73,26 @@ class Xoops_Config
         return $config->toArray();
     }
 
+    /**
+     * Write config content into a file by writer according to its suffix
+     *
+     * Note: php extension might be appended to protect from disclosure. In this case, the real suffix will be checked with an extra step, like 'config.ini.php'
+     */
     public static function write($filename = null, $config = null, $exclusiveLock = null)
     {
+        // Get fullpath
         static::realPath($filename);
 
         $suffix = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if ($suffix === 'dist') {
+            $suffix = strtolower(pathinfo(basename($filename, ".dist"), PATHINFO_EXTENSION));
+        } elseif ($suffix === 'php') {
+            $suffix_sub = strtolower(pathinfo(basename($filename, ".php"), PATHINFO_EXTENSION));
+            if (in_array($suffix_sub, array('ini', 'xml', 'json', 'yaml'))) {
+                $suffix = $suffix_sub;
+            }
+        }
+
         $configClass = 'Zend_Config_Writer_' . ('php' == $suffix ? 'Array' : ucfirst($suffix));
         if (class_exists("Xoops_" . $configClass)) {
             $configClass = "Xoops_" . $configClass;

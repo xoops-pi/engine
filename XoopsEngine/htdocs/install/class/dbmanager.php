@@ -36,12 +36,12 @@ class db_manager
 
     public function __construct()
     {
-        $options = XOOPS::loadConfig("resource.db.ini");
+        $options = XOOPS::loadConfig("resource.db.ini.php");
         $this->db = new Xoops_Zend_Db_Legacy(XOOPS::registry('db'), $options);
         return;
 
         if (empty($GLOBALS['xoopsDB'])) {
-            $options = XOOPS::loadConfig("resource.db.ini");
+            $options = XOOPS::loadConfig("resource.db.ini.php");
 
             $db = Xoops_Zend_Db::factory($options['adapter'], $options);
             Zend_Db_Table_Abstract::setDefaultAdapter($db);

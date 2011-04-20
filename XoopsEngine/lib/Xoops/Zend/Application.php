@@ -52,7 +52,7 @@ class Xoops_Zend_Application extends Zend_Application
         $options = (array) $options;
         if (!empty($bootOption)) {
             if (is_string($bootOption)) {
-                $bootFile = XOOPS::path("var") . "/etc/bootstrap.{$bootOption}.ini";
+                $bootFile = XOOPS::path("var") . "/etc/bootstrap.{$bootOption}.ini.php";
                 $bootOption = $this->_loadConfig($bootFile);
             } elseif (is_array($bootOption)) {
                 $bootOption = $this->completeConfig($bootOption);
@@ -124,29 +124,6 @@ class Xoops_Zend_Application extends Zend_Application
         return parent::setOptions($options);
     }
 
-    /**
-     * Load bootstrap class
-     *
-     * @param  string   $name   Bootstrap name
-     * @return Zend_Application
-     */
-    public function ____loadBootstrap($name = null)
-    {
-        if (empty($name)) {
-            $class = 'Xoops_Zend_Application_Bootstrap_BootStrap';
-        } else {
-            $class = 'Xoops_Zend_Application_Bootstrap_' . $name;
-        }
-
-        $this->_bootstrap = new $class($this);
-
-        if (!$this->_bootstrap instanceof Zend_Application_Bootstrap_Bootstrapper) {
-            throw new Zend_Application_Exception('Bootstrap class does not implement Zend_Application_Bootstrap_Bootstrapper');
-        }
-
-        return $this;
-    }
-
     public function setAutoloader($autoloader)
     {
         $this->_autoloader = $autoloader;
@@ -176,20 +153,53 @@ class Xoops_Zend_Application extends Zend_Application
     {
         $persistKey = "config.bootstrap." . md5($file);
         if (!$config = XOOPS::persist()->load($persistKey)) {
-            $config = parent::_loadConfig($file);
-            $config = $this->completeConfig($config);
-            /*
-            if (!empty($config["resources"])) {
-                foreach ($config["resources"] as $key => &$cfg) {
-                    if (!is_array($cfg) || empty($cfg["config"])) {
-                        continue;
-                    }
-                    $opt = Xoops_Config::load(XOOPS::path("var") . "/etc/resource." . $cfg["config"] . ".ini");
-                    unset($cfg["config"]);
-                    $cfg = array_merge($cfg, $opt);
+
+            $environment = $this->getEnvironment();
+            $suffix      = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+            if ($suffix === 'dist') {
+                $suffix = strtolower(pathinfo(basename($file, ".dist"), PATHINFO_EXTENSION));
+            } elseif ($suffix === 'php') {
+                $suffix_sub = strtolower(pathinfo(basename($file, ".php"), PATHINFO_EXTENSION));
+                if (in_array($suffix_sub, array('ini', 'xml', 'json', 'yaml'))) {
+                    $suffix = $suffix_sub;
                 }
             }
-            */
+
+            switch (strtolower($suffix)) {
+                case 'ini':
+                    $config = new Zend_Config_Ini($file, $environment);
+                    $config = $config->toArray();
+                    break;
+
+                case 'xml':
+                    $config = new Zend_Config_Xml($file, $environment);
+                    $config = $config->toArray();
+                    break;
+
+                case 'json':
+                    $config = new Zend_Config_Json($file, $environment);
+                    $config = $config->toArray();
+                    break;
+
+                case 'yaml':
+                    $config = new Zend_Config_Yaml($file, $environment);
+                    $config = $config->toArray();
+                    break;
+
+                case 'php':
+                case 'inc':
+                    $config = include $file;
+                    if (!is_array($config)) {
+                        throw new Zend_Application_Exception('Invalid configuration file provided; PHP file does not return array value');
+                    }
+                    break;
+
+                default:
+                    throw new Zend_Application_Exception('Invalid configuration file provided; unknown config type');
+            }
+
+            //$config = parent::_loadConfig($file);
+            $config = $this->completeConfig($config);
             $status = XOOPS::persist()->save($config, $persistKey);
         }
         return $config;
@@ -208,7 +218,7 @@ class Xoops_Zend_Application extends Zend_Application
                 if (!is_array($cfg) || empty($cfg["config"])) {
                     continue;
                 }
-                $opt = Xoops_Config::load(XOOPS::path("var") . "/etc/resource." . $cfg["config"] . ".ini");
+                $opt = Xoops_Config::load(XOOPS::path("var") . "/etc/resource." . $cfg["config"] . ".ini.php");
                 unset($cfg["config"]);
                 $cfg = array_merge($cfg, $opt);
             }

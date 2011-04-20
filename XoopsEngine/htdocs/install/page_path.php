@@ -117,6 +117,7 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $baseUrl = substr($host["location"], $pos);
     }
     $content_hosts = array();
+    $content_hosts[] = ';<?php __halt_compiler();' . PHP_EOL . PHP_EOL;
     $content_hosts[] = ";Hosts definition file" . PHP_EOL;
     $content_hosts[] = $hostPathDesc['paths_desc'] . PHP_EOL;
     $content_hosts[] =  PHP_EOL . PHP_EOL;
@@ -139,6 +140,7 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     //System configurations
     $content_system = array();
+    $content_system[] = ';<?php __halt_compiler();' . PHP_EOL . PHP_EOL;
     $content_system[] = ";XOOPS engine configurations" . PHP_EOL . PHP_EOL;
     $content_system[] = ";Site specific identifier" . PHP_EOL;
     $content_system[] = "identifier = xoops";

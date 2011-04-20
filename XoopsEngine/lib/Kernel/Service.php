@@ -128,7 +128,7 @@ abstract class ServiceAbstract
         if (empty($options) || is_string($options)) {
             $config = $options ?: $this->configFile;
             if (!empty($config)) {
-                $options = \Xoops::loadConfig('service.' . $config . '.ini');
+                $options = \Xoops::loadConfig('service.' . $config . '.ini.php');
             }
         }
         if (is_array($options)) {

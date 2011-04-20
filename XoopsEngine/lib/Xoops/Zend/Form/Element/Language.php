@@ -46,7 +46,7 @@ class Xoops_Zend_Form_Element_Language extends Zend_Form_Element_Select
 
             $languageName = $fileinfo->getFilename();
             $languageTitle = $languageName;
-            $localeFile = $fileinfo->getPathname() . '/locale.ini';
+            $localeFile = $fileinfo->getPathname() . '/locale.ini.php';
             if (file_exists($localeFile)) {
                 $locale = parse_ini_file($localeFile);
                 if (!empty($locale['name'])) {

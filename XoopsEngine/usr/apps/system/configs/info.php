@@ -48,6 +48,6 @@ return array(
         'acl'           => "acl.php",
         'page'          => "page.php",
         'navigation'    => "navigation.php",
-        //'route'         => "route.ini",
+        //'route'         => "route.ini.php",
         )
 );

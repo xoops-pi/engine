@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 ; MIME content type lookup table
 ;finfo::file(FINFO_MIMETYPE) sometimes does not return desired information, like returns text/plain for css files
 

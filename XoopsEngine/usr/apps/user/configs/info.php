@@ -45,7 +45,7 @@ return array(
         ),
         'config'    => "config.php",
         'event'     => "event.php",
-        'route'     => "route.ini",
+        'route'     => "route.ini.php",
         'navigation'    => "navigation.php",
         'search'    => array("callback" => "search::index"),
         'user'      => "user.php",

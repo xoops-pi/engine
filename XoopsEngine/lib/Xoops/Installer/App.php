@@ -352,6 +352,7 @@ class Xoops_Installer_App
                 "active"    => $module["active"],
             );
         }
+
         //Xoops::persist()->clean();
         $configFile = Xoops::path('var') . '/etc/' . Xoops::service('module')->getMetaFile();
         clearstatcache();

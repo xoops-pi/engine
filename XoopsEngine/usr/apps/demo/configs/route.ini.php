@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 ; $Id$
 
 ; module application routes

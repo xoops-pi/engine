@@ -1,3 +1,5 @@
+;<?php __halt_compiler();
+
 [production]
 ; php settings
 ;phpSettings.display_startup_errors = 0
@@ -9,21 +11,24 @@ phpSettings.date.timezone = "UTC"
 
 ; Resources
 
+; security
+resources.security.config = "security"
+
 ; user
 resources.user = true
 
 ; front controller
 ; Do not change defaultModule, otherwise basic service won't work
-resources.frontController.throwExceptions = false
 resources.frontController.defaultModule = "default"
 resources.frontController.defaultControllerName = "index"
 resources.frontController.defaultAction = "index"
-resources.frontController.section = "api"
-resources.frontController.modulecontrollerdirectoryname = "controllers/api"
+resources.frontController.section = "front"
+
+; conroller plugins
+resources.frontController.plugins[] = "helper"
 
 ; router
-;resources.router.name = "api"
-resources.router.route = "api"
+resources.router.name = "application"
 
 ; cache
 resources.cache = true
@@ -42,16 +47,16 @@ resources.locale = true
 ; Translate
 ; system translate adapter
 resources.translate.adapter = legacy
-; system translate load apater for 'global'
-resources.translate.load.global.adapter = legacy
+; folder name for translations
+resources.translate.folder = language
+; system translate preload data
+resources.translate.load.global = true
 ; system translate load locale for 'global'
 ;resources.translate.load.global.locale = null
 ; system translate load options for 'global'
 ;resources.translate.load.global.options.var1 = val1
 ; module translate preload data
 resources.translate.module.data = main
-; module translate preload adapter, default as system adapter
-;resources.translate.module.adapter = gettext
 
 ; module
 resources.module = true
@@ -62,32 +67,54 @@ resources.modules = true
 ; error
 resources.error = true
 
+; session
+resources.session.config = "session"
+
+; authorization
+resources.auth.adapter = "application"
+resources.auth.storage = "session"
+; days
+resources.auth.rememberMe = 14
+
+; ACL
+;resources.acl = true
+
+
 ; view
-;resources.view.enabled = true
-;resources.view.section =
 ; layout
-;resources.view.layout.enabled = true
-resources.view.layout.layout = empty
-;resources.view.layout.theme = default
-;resources.view.layout.navigation = front
+resources.view.layout.navigation = front
 resources.view.layout.plugin.register = true
 resources.view.layout.cache.frontend = core
 resources.view.layout.cache.backend = file
+; template
+resources.view.template.caching = true
+resources.view.template.compile_check = false
+resources.view.template.debugging = false
+resources.view.template.force_compile = false
+resources.view.template.error_unassigned = false
 
 
 [staging : production]
-
-[testing : production]
-;phpSettings.display_startup_errors = 1
-;phpSettings.display_errors = 1
-resources.db.profiler.enabled = true
 
 [development : production]
 ;phpSettings.display_startup_errors = 1
 ;phpSettings.display_errors = 1
 resources.db.profiler.enabled = true
 
+; view
+; template
+resources.view.template.caching = false
+resources.view.template.compile_check = true
+resources.view.template.debugging = true
+resources.view.template.force_compile = true
+resources.view.template.error_unassigned = false
+
 [debug : production]
 ;phpSettings.display_startup_errors = 1
 ;phpSettings.display_errors = 1
 resources.db.profiler.enabled = true
+
+; view
+; template
+resources.view.template.caching = false
+resources.view.template.compile_check = true

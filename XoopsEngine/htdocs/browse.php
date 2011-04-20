@@ -49,7 +49,7 @@ if (empty($path) || !is_readable($path)) {
 
 $suffix = strtolower(pathinfo($path, PATHINFO_EXTENSION));
 $types = include XOOPS::path('var') . '/etc/mimetypes.php';
-//$types = parse_ini_file(XOOPS::path('var/etc/mimetypes.ini'));
+//$types = parse_ini_file(XOOPS::path('var/etc/mimetypes.ini.php'));
 $content_type = isset($types[$suffix]) ? $types[$suffix] : 'text/plain';
 if (in_array($suffix, array('css', 'js', 'gif', 'jpg', 'png'))) {
 } else {

@@ -64,7 +64,7 @@ $configs['paths'] = array(
 
 // Writable files and directories
 $configs['writable']['www'] = array('.htaccess', 'boot.php');
-$configs['writable']['lib'] = array("boot/engine.xoops.ini", "boot/hosts.xoops.ini");
+$configs['writable']['lib'] = array("boot/engine.xoops.ini.php", "boot/hosts.xoops.ini.php");
 $configs['writable']['var'] = array(
     'cache' => array(
         'system',
@@ -73,10 +73,10 @@ $configs['writable']['var'] = array(
         'themes',
     ),
     'etc'   => array(
-        "resource.db.ini",
+        "resource.db.ini.php",
         // see {@\kernel\Service\Module::FILE_META}
-        "modules.ini",
-        "plugins.ini"
+        "modules.ini.php",
+        "plugins.ini.php"
     ),
     'data'      => array()
 );

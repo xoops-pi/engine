@@ -58,9 +58,9 @@ class Config extends \Kernel\Registry
         /*
         if (empty($category)) {
             if (empty($module)) {
-                $config_ini = \Xoops::path("var") . '/etc/config.custom.ini';
+                $config_ini = \Xoops::path("var") . '/etc/config.custom.ini.php';
             } else {
-                $config_ini = \Xoops::service('module')->getPath($module). '/configs/config.custom.ini';
+                $config_ini = \Xoops::service('module')->getPath($module). '/configs/config.custom.ini.php';
             }
             if (file_exists($config_ini)) {
                 $customConfig = \Xoops::loadConfig($config_ini);

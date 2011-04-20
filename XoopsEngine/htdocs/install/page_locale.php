@@ -43,7 +43,7 @@ foreach ($iterator as $fileinfo) {
         continue;
     }
 
-    $localeFile = $fileinfo->getPathname() . '/locale.ini';
+    $localeFile = $fileinfo->getPathname() . '/locale.ini.php';
     if (!file_exists($localeFile)) {
         list($language, $charset) = array('', '');
     } else {
@@ -98,7 +98,7 @@ foreach ($iterator as $fileinfo) {
         continue;
     }
 
-    $localeFile = $fileinfo->getPathname() . '/locale.ini';
+    $localeFile = $fileinfo->getPathname() . '/locale.ini.php';
     if (!file_exists($localeFile)) {
         list($language, $charset) = array('', '');
     } else {
