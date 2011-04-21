@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
     $func_connect = empty($vars['DB_PCONNECT']) ? "mysql_connect" : "mysql_pconnect";
-    if (!$link = $func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true)) {
+    if (!$link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true)) {
         $error = ERR_NO_DBCONNECTION . ' ' . mysql_error();
     }
 

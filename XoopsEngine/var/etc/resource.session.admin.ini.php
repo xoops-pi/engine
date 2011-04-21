@@ -30,8 +30,8 @@ name = XOOPSSESSION
 ; remember_me_seconds = <integer seconds>
 ; strict = on|off
 
-savehandler = "Cookie"
-;savehandler = "Db"
+;savehandler = "Cookie"
+savehandler = "Db"
 ;savehandler.type = "Memcache"
 ;savehandler.options.memcache = "session"
 ;savehandler.type = "Memcached"

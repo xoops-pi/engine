@@ -407,7 +407,9 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
         }
 
         $error = false;
-        chmod($filePath, 0777);
+        if (!is_writable($filePath)) {
+            @chmod($filePath, 0777);
+        }
         if (!$file = fopen($filePath, "w")) {
             $error = true;
         } else {
@@ -416,7 +418,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             }
             fclose($file);
         }
-        chmod($filePath, 0444);
+        @chmod($filePath, 0444);
         if ($error) {
             $errorMessage = XOOPS::_("There is error occurred. Please resubmit the form or manually copy the following content to file '{$file}'.");
             $form->addError($errorMessage);

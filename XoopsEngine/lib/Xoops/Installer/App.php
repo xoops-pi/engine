@@ -359,10 +359,10 @@ class Xoops_Installer_App
         if (!file_exists($configFile)) {
             touch($configFile);
         } elseif (!is_writable($configFile)) {
-            chmod($configFile, intval('0777', 8));
+            @chmod($configFile, intval('0777', 8));
         }
         Xoops_Config::write($configFile, $moduleList);
-        chmod($configFile, intval('0444', 8));
+        @chmod($configFile, intval('0444', 8));
         clearstatcache();
         Xoops::service('module')->init(true);
         return true;

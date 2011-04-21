@@ -524,7 +524,9 @@ class System_ModuleController extends Xoops_Zend_Controller_Action_Admin
                         if ($targetHash == $sourceHash) {
                             continue;
                         }
-                        chmod($targetFile, 0777);
+                        if (!is_writable($targetFile)) {
+                            @chmod($targetFile, 0777);
+                        }
                     }
                     if (copy($filename, $targetFile)) {
                         $files["copied"]++;
@@ -539,7 +541,9 @@ class System_ModuleController extends Xoops_Zend_Controller_Action_Admin
                             $folders["failed"]++;
                         }
                     } else {
-                        chmod($targetFile, 0777);
+                        if (!is_writable($targetFile)) {
+                            @chmod($targetFile, 0777);
+                        }
                     }
                 }
             }
@@ -547,10 +551,13 @@ class System_ModuleController extends Xoops_Zend_Controller_Action_Admin
         $directory  = new RecursiveDirectoryIterator($target);
         $iterator   = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
         foreach ($iterator as $filename => $fileinfo) {
+            if ($fileinfo->isWritable()) {
+                continue;
+            }
             if ($fileinfo->isFile()) {
-                chmod($filename, 0666);
+                @chmod($filename, 0666);
             } elseif ($fileinfo->isDir()) {
-                chmod($filename, 0755);
+                @chmod($filename, 0755);
             }
         }
 

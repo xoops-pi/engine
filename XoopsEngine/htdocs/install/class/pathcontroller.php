@@ -345,7 +345,7 @@ class PathController
             }
         }
         if (!is_writable($path)) {
-            chmod($path, $mode);
+            @chmod($path, $mode);
         }
         clearstatcache();
         if (is_writable($path)) {
