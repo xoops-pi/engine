@@ -1,13 +1,16 @@
-;Xoops engine configurations
+;<?php __halt_compiler();
+
+;XOOPS engine configurations
 
 ;Site specific identifier
-identifier = lite
+identifier = xoops
 
 ;Salt for hashing
-salt = "xo799a5234258e96e74e237b248cdcf64f"
+salt = "xofc2a000453359a045f6c1feba34a9835"
 
 ;Run mode. Potential values: production - for production, debug - for users debugging, development - for developers
 environment = "debug"
+
 
 ;Services
 services[] = error
