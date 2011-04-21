@@ -75,6 +75,11 @@ class Themelist extends \Kernel\Registry
         foreach ($rowset as $row) {
             $dirname = $row->dirname;
             $themes[$dirname] = $row->toArray();
+            if (empty($themes[$dirname]["screenshot"])) {
+                $themes[$dirname]["screenshot"] = 'img/images/theme.png';
+            } else {
+                $themes[$dirname]["screenshot"] = 'theme/' . $dirname . '/' . $themes[$dirname]["screenshot"];
+            }
         }
 
         return $themes;

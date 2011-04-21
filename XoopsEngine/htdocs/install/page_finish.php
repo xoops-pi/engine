@@ -33,7 +33,7 @@ foreach ($wizard->configs['writable'] as $path => $data) {
         if (!is_string($key)) {
             if (false !== strpos($value, ".")) {
                 $file = XOOPS::path("{$path}/{$value}");
-                @chmod($file, 0444);
+                @chmod($file, 0644);
                 $writable_paths .= "<li class='files'>" . $file . "</li>";
             }
             continue;
@@ -41,7 +41,7 @@ foreach ($wizard->configs['writable'] as $path => $data) {
         foreach ($value as $key2 => $value2) {
             if (is_string($value2) && false !== strpos($value2, ".")) {
                 $file = XOOPS::path("{$path}/{$key}/{$value2}");
-                @chmod($file, 0444);
+                @chmod($file, 0644);
                 $writable_paths .= "<li class='files'>" . $file . "</li>";
             }
         }
