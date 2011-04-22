@@ -337,7 +337,7 @@ class PathController
      */
     private function makeWritable($path, $recurse = true, $create = true)
     {
-        $modeFolder = intval('0766', 8);
+        $modeFolder = intval('0777', 8);
         $modeFile = intval('0666', 8);
         $isNew = false;
         if (!file_exists($path)) {
