@@ -27,7 +27,6 @@ if (!defined('XOOPS_INSTALL')) { die('XOOPS Installation wizard die'); }
 register_shutdown_function(array($wizard, 'shutdown'));
 
 $writable_paths = "<ul class='confirmMsg'>";
-//$wizard->configs['writable']['www'][] = '.htaccess';
 //foreach ($wizard->configs['writable'] as $path => $data) {
 $protectionList = array(
     Xoops::path('www') . '/boot.php',
@@ -37,12 +36,11 @@ $protectionList = array(
 foreach ($protectionList as $file) {
     @chmod($file, 0644);
     $writable_paths .= "<li class='files'>" . $file . "</li>";
-    if (is_file($file)) {
-        continue;
-    }
-    $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($file), RecursiveIteratorIterator::CHILD_FIRST);
-    foreach ($objects as $object) {
-        @chmod($file, 0644);
+    if (is_dir($file)) {
+        $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($file), RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($objects as $object) {
+            @chmod($file, 0644);
+        }
     }
 }
 $writable_paths .= "</ul>";

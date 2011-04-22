@@ -69,15 +69,12 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // .htaccess
     $file_htaccess = $vars["www"]["path"] . '/.htaccess';
-    $file_htaccess_dist = $file_htaccess . '.dist';
-    /*
+    $file_htaccess_dist = __DIR__ . '/include/.htaccess.dist';
     if (!file_exists($file_htaccess_dist)) {
         die("not found $file_htaccess_dist");
     }
     $content_htaccess = file_get_contents($file_htaccess_dist);
     $configs[] = array("file" => $file_htaccess, "content" => $content_htaccess);
-    */
-    rename($file_htaccess_dist, $file_htaccess);
 
     // hosts
     $hostPathDesc = array();

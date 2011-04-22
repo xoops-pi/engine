@@ -63,7 +63,7 @@ $configs['paths'] = array(
 );
 
 // Writable files and directories
-$configs['writable']['www'] = array('.htaccess.dist', 'boot.php');
+$configs['writable']['www'] = array('.htaccess', 'boot.php');
 //$configs['writable']['lib'] = array("boot/engine.xoops.ini.php", "boot/hosts.xoops.ini.php");
 $configs['writable']['lib'] = array("boot");
 $configs['writable']['var'] = "";
