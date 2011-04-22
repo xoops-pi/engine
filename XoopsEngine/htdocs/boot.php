@@ -16,7 +16,5 @@
  */
 
 /* Redirect to installer */
-$host = $_SERVER['HTTP_HOST'];
-$uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), DIRECTORY_SEPARATOR) . "/install");
 exit;
