@@ -35,10 +35,12 @@ class App_Demo_Form_Element_Choose extends Zend_Form_Element_Select
 
     protected function setServiceOptions()
     {
-        $themes = XOOPS::service("registry")->theme->read();
+        // Get current module, nothing more than demonstrating the use of module dirname
+        $module = $this->getAttrib('module');
 
+        $themes = XOOPS::service("registry")->theme->read();
         foreach ($themes as $key => &$theme) {
-            $theme = $theme["name"] . " ({$key})";
+            $theme = $theme["name"] . " ({$key}) [{$module}]";
         }
         $this->setMultiOptions($themes);
     }

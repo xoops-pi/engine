@@ -127,7 +127,7 @@ class App_System_Form_BlockEdit extends Xoops_Zend_Form
         if (!empty($block['edit_func'])) {
             include_once $modulePath . '/blocks/' . $block['func_file'];
             //$options = explode('|', $block['options']);
-            $options['module'] = $module;
+            $blockOptions['module'] = $module;
             $func = $block['edit_func'];
             $content = $func($blockOptions);
             $options = array(
@@ -150,7 +150,7 @@ class App_System_Form_BlockEdit extends Xoops_Zend_Form
                     $options = array(
                         'label'         => $option->title,
                         'value'         => isset($blockOptions[$keyOption]) ? $blockOptions[$keyOption] : '',
-                        'module'        => $block['module'],
+                        'module'        => $module,
                     );
                     if ($multiOptions = $option->options) {
                         $options['multiOptions'] = $multiOptions;
