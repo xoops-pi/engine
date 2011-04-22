@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_NAME'])) {
         }
 
         $error_dsn = false;
-        $file_dsn_ini = XOOPS::path("var") . '/etc/' . $wizard->configs['writable']['var']['etc'][0];
+        $file_dsn_ini = XOOPS::path("var") . '/etc/resource.db.ini.php';
         if (!$file = fopen($file_dsn_ini, "w")) {
             $error_dsn = true;
         } else {

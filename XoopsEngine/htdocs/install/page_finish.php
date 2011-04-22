@@ -28,23 +28,21 @@ register_shutdown_function(array($wizard, 'shutdown'));
 
 $writable_paths = "<ul class='confirmMsg'>";
 //$wizard->configs['writable']['www'][] = '.htaccess';
-foreach ($wizard->configs['writable'] as $path => $data) {
-    foreach ($data as $key => $value) {
-        if (!is_string($key)) {
-            if (false !== strpos($value, ".")) {
-                $file = XOOPS::path("{$path}/{$value}");
-                @chmod($file, 0644);
-                $writable_paths .= "<li class='files'>" . $file . "</li>";
-            }
-            continue;
-        }
-        foreach ($value as $key2 => $value2) {
-            if (is_string($value2) && false !== strpos($value2, ".")) {
-                $file = XOOPS::path("{$path}/{$key}/{$value2}");
-                @chmod($file, 0644);
-                $writable_paths .= "<li class='files'>" . $file . "</li>";
-            }
-        }
+//foreach ($wizard->configs['writable'] as $path => $data) {
+$protectionList = array(
+    Xoops::path('www') . '/boot.php',
+    Xoops::path('www') . '/.htaccess',
+    Xoops::path('var') . '/etc',
+);
+foreach ($protectionList as $file) {
+    @chmod($file, 0644);
+    $writable_paths .= "<li class='files'>" . $file . "</li>";
+    if (is_file($file)) {
+        continue;
+    }
+    $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($file), RecursiveIteratorIterator::CHILD_FIRST);
+    foreach ($objects as $object) {
+        @chmod($file, 0644);
     }
 }
 $writable_paths .= "</ul>";
@@ -54,14 +52,12 @@ $content = sprintf(_INSTALL_FINISH_MESSAGE, $writable_paths);
 
 
 $path = XOOPS::path("var") . "/cache/";
-$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path),
-    RecursiveIteratorIterator::SELF_FIRST);
+$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
 foreach ($objects as $object) {
-    if ($object->isFile()) {
+    if ($object->isFile() && 'index.html' != $object->getFilename()) {
         unlink($object->getPathname());
     }
 }
 
 XOOPS::persist()->clean();
-
 include __DIR__ . '/include/install_tpl.php';

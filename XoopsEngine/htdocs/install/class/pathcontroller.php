@@ -332,32 +332,44 @@ class PathController
      * Write-enable the specified folder
      * @param string $path
      * @param bool $recurse
-     * @return false on failure, method (u-ser,g-roup,w-orld) on success
+     * @param bool $create
+     * @return bool
      */
-    private function makeWritable($path, $create = true)
+    private function makeWritable($path, $recurse = true, $create = true)
     {
-        $mode = intval('0777', 8);
+        $modeFolder = intval('0766', 8);
+        $modeFile = intval('0666', 8);
+        $isNew = false;
         if (!file_exists($path)) {
             if (!$create) {
                 return false;
             } else {
-                (false === strpos(basename($path), '.')) ? mkdir($path, $mode) : touch($path);
+                (false === strpos(basename($path), '.')) ? mkdir($path, $modeFolder) : touch($path);
+                $isNew = true;
             }
         }
         if (!is_writable($path)) {
-            @chmod($path, $mode);
+            @chmod($path, is_file($path) ? $modeFile : $modeFolder);
         }
         clearstatcache();
-        if (is_writable($path)) {
-            $info = stat($path);
-            if ($info['mode'] & 0002) {
-                return 'w';
-            } elseif ($info['mode'] & 0020) {
-                return 'g';
+        $status = is_writable($path) ? 1 : 0;
+        if (!$isNew && $status && $recurse && is_dir($path)) {
+            $iterator = new DirectoryIterator($path);
+            foreach ($iterator as $fileinfo) {
+                if ($fileinfo->isDot()) {
+                    continue;
+                }
+                if ($fileinfo->isWritable()) {
+                    continue;
+                }
+                $status = $status * $this->makeWritable($fileinfo->getPathname(), $recurse, $create);
+                if (!$status) {
+                    break;
+                }
             }
-            return 'u';
         }
-        return false;
+
+        return $status;
     }
 
     public function pathCheckHtml($path)

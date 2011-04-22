@@ -236,5 +236,15 @@ class XoopsInstallWizard
     public function shutdown()
     {
         $this->destroyPersist();
+
+        $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Xoops::path('www') . '/install'), RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($objects as $object) {
+            if ($object->isFile()) {
+                @unlink($object->getPathname());
+            } else {
+                @rmdir($object->getPathname());
+            }
+        }
+        @rmdir(Xoops::path('www') . '/install');
     }
 }

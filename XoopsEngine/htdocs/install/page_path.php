@@ -56,16 +56,32 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $configs = array();
 
     $vars = $wizard->persistentData['paths'];
-    $persist = strtolower($wizard->persistentData['persist'] ?: "");
-    $file_mainfile_dist = $wizard->configs["file_template"]["boot.php"];
-    $content_mainfile = file_get_contents($file_mainfile_dist);
-    $content_mainfile = preg_replace("/(define\()([\"'])(XOOPS_PATH)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_PATH', '" . $vars['lib']['path'] . "')", $content_mainfile);
-    $content_mainfile = preg_replace("/(define\()([\"'])(PERSIST_TYPE)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('PERSIST_TYPE', '" . $persist . "')", $content_mainfile);
-    $file_mainfile = $ctrl->paths['www']['path'] . '/boot.php';
-    $configs[] = array("file" => $file_mainfile, "content" => $content_mainfile);
 
+    // boot.php
+    $persist = strtolower($wizard->persistentData['persist'] ?: "");
+    $file_bootfile = $vars["www"]["path"] . '/boot.php';
+    $file_bootfile_dist = __DIR__ . '/include/boot.php.dist';
+    $content_bootfile = file_get_contents($file_bootfile_dist);
+    $content_bootfile = preg_replace("/(define\()([\"'])(XOOPS_PATH)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_PATH', '" . $vars['lib']['path'] . "')", $content_bootfile);
+    $content_bootfile = preg_replace("/(define\()([\"'])(PERSIST_TYPE)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('PERSIST_TYPE', '" . $persist . "')", $content_bootfile);
+    //rename($file_bootfile_dist, $file_bootfile);
+    $configs[] = array("file" => $file_bootfile, "content" => $content_bootfile);
+
+    // .htaccess
+    $file_htaccess = $vars["www"]["path"] . '/.htaccess';
+    $file_htaccess_dist = $file_htaccess . '.dist';
+    /*
+    if (!file_exists($file_htaccess_dist)) {
+        die("not found $file_htaccess_dist");
+    }
+    $content_htaccess = file_get_contents($file_htaccess_dist);
+    $configs[] = array("file" => $file_htaccess, "content" => $content_htaccess);
+    */
+    rename($file_htaccess_dist, $file_htaccess);
+
+    // hosts
     $hostPathDesc = array();
-    $hostPathDesc['paths_desc']     = ";Paths/URLs to system folders" . PHP_EOL .
+    $hostPathDesc['paths_desc'] = ";Paths/URLs to system folders" . PHP_EOL .
                                 ";URIs without a leading slash are considered relative to the current XOOPS host location" . PHP_EOL .
                                 ";URIs with a leading slash are considered semi-relative (you must setup proper rewriting rules in your server conf)" . PHP_EOL;
     $hostPathDesc['www'] = ';Document root';
@@ -106,7 +122,7 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $host['paths']['upload'][] = $vars["upload"]["path"];
     $host['paths']['upload'][] = $vars["upload"]["url"];
 
-    $file_host_ini = $ctrl->paths['lib']['path'] . '/' . $wizard->configs['writable']['lib'][1];
+    $file_host_ini = $vars["lib"]["path"] . '/boot/hosts.xoops.ini.php';
 
     $pos = strpos($host['location'], "/", 9);
     if ($pos === false) {
@@ -139,6 +155,7 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $configs[] = array("file" => $file_host_ini, "content" => $content_hosts);
 
     //System configurations
+    $file_system_ini = $vars["lib"]["path"] . '/boot/engine.xoops.ini.php';
     $content_system = array();
     $content_system[] = ';<?php __halt_compiler();' . PHP_EOL . PHP_EOL;
     $content_system[] = ";XOOPS engine configurations" . PHP_EOL . PHP_EOL;
@@ -156,16 +173,7 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $content_system[] = "services[] = logger" . PHP_EOL;
     $content_system[] = "services[] = profiler" . PHP_EOL;
     $content_system = implode("", $content_system);
-    $file_system_ini = $ctrl->paths['lib']['path'] . '/' . $wizard->configs['writable']['lib'][0];
     $configs[] = array("file" => $file_system_ini, "content" => $content_system);
-
-    $file_htaccess = $ctrl->paths['www']['path'] . '/.htaccess';
-    $file_htaccess_dist = $wizard->configs["file_template"][".htaccess"];
-    if (!file_exists($file_htaccess_dist)) {
-        die("not found $file_htaccess_dist");
-    }
-    $content_htaccess = file_get_contents($file_htaccess_dist);
-    $configs[] = array("file" => $file_htaccess, "content" => $content_htaccess);
 
     foreach ($configs as $config) {
         $error = false;

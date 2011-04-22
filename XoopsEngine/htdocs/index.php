@@ -20,16 +20,16 @@
 define('HOMEPAGE_LEGACY', false);
 
 if (HOMEPAGE_LEGACY) {
-/**#@+
- * Legacy mode
- */
-include "mainfile.php";
+    /**#@+
+     * Legacy mode
+     */
+    include "mainfile.php";
 
-$xoopsOption['template_main'] = "file:app/default/index.html";
-include "header.php";
-include "footer.php";
-return;
-/*#@-*/
+    $xoopsOption['template_main'] = "file:app/default/index.html";
+    include "header.php";
+    include "footer.php";
+    return;
+    /*#@-*/
 }
 
 /**#@+
