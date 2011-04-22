@@ -184,6 +184,23 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($errorsSave)) {
+        // Prepare for config files from dist files
+        $iterator = new DirectoryIterator($vars["var"]["path"] . '/etc');
+        foreach ($iterator as $fileinfo) {
+            if (!$fileinfo->isFile()) {
+                continue;
+            }
+            $filename = $fileinfo->getPathname();
+            $suffix = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            if ('dist' !== $suffix) {
+                continue;
+            }
+            $target = substr($filename, 0, -5);
+            copy($filename, $target);
+        }
+
+
+        // Clear caches
         $clearScript = $vars["www"]["path"] . '/clear.php';
         if (file_exists($clearScript)) {
             ob_start();

@@ -197,7 +197,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "bootstrap"));
             return;
         }
-        $file = XOOPS::path("etc/bootstrap.{$item}.ini.php");
+        $file = XOOPS::path("var/etc/bootstrap.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -225,7 +225,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "service"));
             return;
         }
-        $file = XOOPS::path("etc/service.{$item}.ini.php");
+        $file = XOOPS::path("var/etc/service.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -253,7 +253,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "resource"));
             return;
         }
-        $file = XOOPS::path("etc/resource.{$item}.ini.php");
+        $file = XOOPS::path("var/etc/resource.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -281,7 +281,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "registry"));
             return;
         }
-        $file = XOOPS::path("etc/registry.{$item}.ini.php");
+        $file = XOOPS::path("var/etc/registry.{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -309,7 +309,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             $this->forward("index", null, null, array("category" => "misc"));
             return;
         }
-        $file = XOOPS::path("etc/{$item}.ini.php");
+        $file = XOOPS::path("var/etc/{$item}.ini.php");
         $action = $this->getFrontController()->getRouter()->assemble(
             array(
                 "module"        => $module,
@@ -418,7 +418,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             }
             fclose($file);
         }
-        @chmod($filePath, 0444);
+        @chmod($filePath, 0644);
         if ($error) {
             $errorMessage = XOOPS::_("There is error occurred. Please resubmit the form or manually copy the following content to file '{$file}'.");
             $form->addError($errorMessage);
