@@ -56,34 +56,34 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
 
     private function systemLog()
     {
-        // Calculates memory consumption
+        $system = array();
+        $files_included = get_included_files();
+        $system['Included files'] = count ($files_included) . ' files';
+
         $memory = 0;
         if (function_exists('memory_get_usage')) {
             $memory = memory_get_usage() . ' bytes';
         } else {
-            $os = isset($_ENV['OS']) ? $_ENV['OS'] : $_SERVER['OS'];
             // Windows system
-            if (strpos(strtolower($os), 'windows') !== false) {
+            if (strpos(strtolower(PHP_OS), 'win') !== false) {
                 $out = array();
                 exec('tasklist /FI "PID eq ' . getmypid() . '" /FO LIST', $out);
                 $memory = substr($out[5], strpos($out[5], ':') + 1) . ' [Estimated]';
             }
         }
+        $system['Memory usage'] = $memory ?: 'Not detected';
 
-        $system = array();
-        $files_included = get_included_files();
-        $system['Included files'] = count ($files_included) . ' files';
-        if ($memory) {
-            $system['Memory usage'] = $memory;
-        }
-        $system['PHP Version'] = phpversion();
-        if (isset($GLOBALS['xoopsDB']) && method_exists($GLOBALS['xoopsDB']->conn, "getServerVersion")) {
+        $system['OS'] = PHP_OS ?: 'Not detected';
+        $system['Web Server'] = PHP_SAPI ?: 'Not detected';
+        $system['PHP Version'] = PHP_VERSION;
+        if (Xoops::registry('db') && method_exists(Xoops::registry('db'), "getServerVersion")) {
+            $system['MySQL Version'] = Xoops::registry('db')->getServerVersion();
+        } elseif (isset($GLOBALS['xoopsDB']) && method_exists($GLOBALS['xoopsDB']->conn, "getServerVersion")) {
             $system['MySQL Version'] = $GLOBALS['xoopsDB']->conn->getServerVersion();
         } else {
             //$system['MySQL Version'] = mysql_get_server_info();
             $system['MySQL Version'] = "Not detected";
         }
-        //defined('XOOPS_VERSION') OR include XOOPS::path('www/include/version.php');
         $system['Xoops Version'] = Xoops::version();
         $system['Zend Version'] = Zend_Version::VERSION;
         if (XOOPS::registry("module")) {
@@ -110,18 +110,18 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
         $this->systemLog();
 
         $log = '';
-        $log .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
+        $log .= "\n<div id=\"xoops-logger-output\">\n<div id='xoops-logger-tabs'>\n";
         foreach (array_keys($this->items) as $category) {
             $count = count($this->items[$category]);
-            $log .= "<span id='xo-logger-tab-{$category}'><a href='javascript:xoSwitchCategoryDisplay(\"{$category}\")'>{$category}({$count})</a></span> | \n";
+            $log .= "<span id='xoops-logger-tab-{$category}'><a href='javascript:xoSwitchCategoryDisplay(\"{$category}\")'>{$category}({$count})</a></span> | \n";
         }
-        $log .= "<span id='xo-logger-tab-all'><a href='javascript:xoSwitchCategoryDisplay(\"all\")'>all</a></span>\n";
+        $log .= "<span id='xoops-logger-tab-all'><a href='javascript:xoSwitchCategoryDisplay(\"all\")'>all</a></span>\n";
         $log .= "</div>\n";
 
-        $log .= "<div id='xo-logger-categories'>\n";
+        $log .= "<div id='xoops-logger-categories'>\n";
         foreach ($this->items as $category => $events) {
-            $log .= "<div id='xo-logger-category-{$category}' class=\"xo-events\">\n";
-            $log .= "<div class=\"xo-category\">{$category}</div>\n";
+            $log .= "<div id='xoops-logger-category-{$category}' class=\"xoops-events\">\n";
+            $log .= "<div class=\"xoops-category\">{$category}</div>\n";
             $log .= implode("", $events);
             $log .= "</div>\n";
         }
@@ -131,75 +131,75 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
         $scripts_css =
 <<<EOT
         <style type="text/css">
-            #xo-logger-output {
+            #xoops-logger-output {
                 font-family: monospace;
                 padding: 10px;
             }
 
-            #xo-logger-output #xo-logger-tabs {
+            #xoops-logger-output #xoops-logger-tabs {
                 border-top: 1px solid;
             }
 
-            #xo-logger-output #xo-logger-categories {
+            #xoops-logger-output #xoops-logger-categories {
                 display: block;
             }
 
-            #xo-logger-output a,
-            #xo-logger-output a:visited {
+            #xoops-logger-output a,
+            #xoops-logger-output a:visited {
                 font-weight: normal;
                 color: inherit;
             }
 
-            #xo-logger-output div.xo-events {
+            #xoops-logger-output div.xoops-events {
                 clear: both;
             }
 
-            #xo-logger-output div.xo-category {
+            #xoops-logger-output div.xoops-category {
                 font-weight: bold;
                 padding: 10px 0 5px 0;
             }
 
-            #xo-logger-output div.xo-event {
+            #xoops-logger-output div.xoops-event {
                 clear: both;
             }
 
-            #xo-logger-output div.xo-event .time {
+            #xoops-logger-output div.xoops-event .time {
                 font-weight: bold;
             }
 
-            #xo-logger-output div.xo-event .message {
+            #xoops-logger-output div.xoops-event .message {
                 margin-left: 50px;
                 font-weight: normal;
             }
 
-            #xo-logger-output #xo-logger-errors .xo-event .message {
+            #xoops-logger-output #xoops-logger-errors .xoops-event .message {
                 color: red;
             }
 
-            #xo-logger-output .xo-event .error,
-            #xo-logger-output .xo-event .err {
+            #xoops-logger-output .xoops-event .error,
+            #xoops-logger-output .xoops-event .err {
                 color: #FF0000;
                 font-weight: bold;
             }
 
-            #xo-logger-output .xo-event .exception {
+            #xoops-logger-output .xoops-event .exception {
                 color: #FF0000;
             }
 
-            #xo-logger-output .xo-event .warning,
-            #xo-logger-output .xo-event .warn {
+            #xoops-logger-output .xoops-event .warning,
+            #xoops-logger-output .xoops-event .warn {
                 color: #D2691E;
             }
 
-            #xo-logger-output .xo-event .notice {
+            #xoops-logger-output .xoops-event .notice {
                 color: #A0522D;
             }
 
-            #xo-logger-output .xo-event .message span {
+            #xoops-logger-output .xoops-event .message span {
                 padding-left: 5px;
             }
 
-            #xo-logger-output .xo-event .message .label {
+            #xoops-logger-output .xoops-event .message .label {
                 width: 150px;
                 text-align: right;
                 float: left;
@@ -207,7 +207,7 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
                 padding: 2px 5px;
             }
 
-            #xo-logger-output .xo-event .message .text {
+            #xoops-logger-output .xoops-event .message .text {
                 display: block;
                 float: left;
                 padding: 2px 5px;
@@ -248,10 +248,10 @@ EOT;
             }
 
             function xoSetCategoryDisplay(name, loggerview) {
-                var log = document.getElementById("xo-logger-categories");
+                var log = document.getElementById("xoops-logger-categories");
                 if (!log) return;
                 var old = xoLogReadCookie();
-                var oldElt = document.getElementById("xo-logger-tab-" + old[0]);
+                var oldElt = document.getElementById("xoops-logger-tab-" + old[0]);
                 if (oldElt) {
                     oldElt.style.textDecoration = "none";
                 }
@@ -260,13 +260,13 @@ EOT;
                     elt = log.childNodes[i];
                     if (!elt.tagName || elt.tagName.toLowerCase() != 'div' || !elt.id) continue;
                     var elestyle = elt.style;
-                    if (name == 'all' || elt.id == "xo-logger-category-" + name) {
+                    if (name == 'all' || elt.id == "xoops-logger-category-" + name) {
                         if (loggerview) {
                             elestyle.display = "block";
-                            document.getElementById("xo-logger-tab-" + name).style.textDecoration = "underline";
+                            document.getElementById("xoops-logger-tab-" + name).style.textDecoration = "underline";
                         } else {
                             elestyle.display = "none";
-                            document.getElementById("xo-logger-tab-" + name).style.textDecoration = "none";
+                            document.getElementById("xoops-logger-tab-" + name).style.textDecoration = "none";
                         }
                     } else {
                         elestyle.display = "none";

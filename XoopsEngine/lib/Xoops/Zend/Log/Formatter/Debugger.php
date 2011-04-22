@@ -26,7 +26,7 @@ class Xoops_Zend_Log_Formatter_Debugger implements Zend_Log_Formatter_Interface
     protected $_format;
 
     //const DEFAULT_FORMAT = '%timestamp% %priorityName% (%priority%): %message%';
-    const DEFAULT_FORMAT = "<div class=\"xo-event\">\n<div class=\"time\">%timestamp%</div>\n<div class=\"message %priorityName%\">%message%</div>\n</div>\n";
+    const DEFAULT_FORMAT = "<div class=\"xoops-event\">\n<div class=\"time\">%timestamp%</div>\n<div class=\"message %priorityName%\">%message%</div>\n</div>\n";
 
     const TIME_FORMAT = "H:i:s";
     /**
