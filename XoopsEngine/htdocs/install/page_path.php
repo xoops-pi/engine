@@ -58,12 +58,14 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $vars = $wizard->persistentData['paths'];
 
     // boot.php
-    $persist = strtolower($wizard->persistentData['persist'] ?: "");
+    $persist_type = strtolower($wizard->persistentData['persist'] ?: "");
+    $persist_prefix = 'x' . substr(md5($vars["www"]["url"]), 0, 4);
     $file_bootfile = $vars["www"]["path"] . '/boot.php';
     $file_bootfile_dist = __DIR__ . '/include/boot.php.dist';
     $content_bootfile = file_get_contents($file_bootfile_dist);
     $content_bootfile = preg_replace("/(define\()([\"'])(XOOPS_PATH)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_PATH', '" . $vars['lib']['path'] . "')", $content_bootfile);
-    $content_bootfile = preg_replace("/(define\()([\"'])(PERSIST_TYPE)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('PERSIST_TYPE', '" . $persist . "')", $content_bootfile);
+    $content_bootfile = preg_replace("/(define\()([\"'])(XOOPS_PERSIST_TYPE)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_PERSIST_TYPE', '" . $persist_type . "')", $content_bootfile);
+    $content_bootfile = preg_replace("/(define\()([\"'])(XOOPS_PERSIST_PREFIX)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_PERSIST_PREFIX', '" . $persist_prefix . "')", $content_bootfile);
     //rename($file_bootfile_dist, $file_bootfile);
     $configs[] = array("file" => $file_bootfile, "content" => $content_bootfile);
 
@@ -156,19 +158,21 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $content_system = array();
     $content_system[] = ';<?php __halt_compiler();' . PHP_EOL . PHP_EOL;
     $content_system[] = ";XOOPS engine configurations" . PHP_EOL . PHP_EOL;
-    $content_system[] = ";Site specific identifier" . PHP_EOL;
+    $content_system[] = "[engine]" . PHP_EOL . PHP_EOL;
+    $content_system[] = ";Site specific identifier, you should not change it after installation" . PHP_EOL;
     $content_system[] = "identifier = xoops";
     $content_system[] =  PHP_EOL . PHP_EOL;
     $content_system[] = ";Salt for hashing" . PHP_EOL;
-    $content_system[] = "salt = \"xo" . md5(uniqid(mt_rand(), true)) . "\"";
+    $content_system[] = "salt = xo" . md5(uniqid(mt_rand(), true));
     $content_system[] =  PHP_EOL . PHP_EOL;
-    $content_system[] = ";Run mode. Potential values: production - for production, debug - for users debugging, development - for developers" . PHP_EOL;
-    $content_system[] = "environment = \"debug\"" . PHP_EOL;
+    $content_system[] = ";Run mode. Potential values: production - for production, qa - for QA testing, debug - for users debugging, development - for developers" . PHP_EOL;
+    $content_system[] = "environment = debug" . PHP_EOL;
     $content_system[] =  PHP_EOL . PHP_EOL;
     $content_system[] = ';Services' . PHP_EOL;
-    $content_system[] = "services[] = error" . PHP_EOL;
-    $content_system[] = "services[] = logger" . PHP_EOL;
-    $content_system[] = "services[] = profiler" . PHP_EOL;
+    $content_system[] = "[services]" . PHP_EOL;
+    $content_system[] = "error = true" . PHP_EOL;
+    $content_system[] = "logger = true" . PHP_EOL;
+    $content_system[] = "profiler = true" . PHP_EOL;
     $content_system = implode("", $content_system);
     $configs[] = array("file" => $file_system_ini, "content" => $content_system);
 

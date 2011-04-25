@@ -46,7 +46,7 @@ class Engine implements \Kernel\EngineInterface
      *  Preview     - Informal release, "preview" or "preview" + {number}: preview5
      * A full version number looks like: 3.0.0rc2
      */
-    const VERSION = 'Xoops Engine 3.0 Preview';
+    const VERSION = 'Xoops Engine 3.0 alpha2';
 
     protected $container = array(
         // Registries
@@ -167,8 +167,8 @@ class Engine implements \Kernel\EngineInterface
         try {
             // Load prerequisite basic services
             $services = isset($this->configs['services']) ? $this->configs['services'] : array();
-            foreach ($services as $name) {
-                \Xoops::service()->load($name);
+            foreach ($services as $name => $options) {
+                \Xoops::service()->load($name, $options);
             }
         } catch (\Exception $e) {
             echo "Exception in basic service: <pre>" . $e->getMessage() . "</pre>";
@@ -216,11 +216,15 @@ class Engine implements \Kernel\EngineInterface
             $persistKey = "engine.config." . md5($configs);
             if (!$cfgs = \Xoops::persist()->load($persistKey)) {
                 $cfgs = parse_ini_file($configs, true);
+                if (isset($cfgs['services'])) {
+                    $cfgs['engine']['services'] = $cfgs['services'];
+                }
+                $cfgs = $cfgs['engine'];
                 \Xoops::persist()->save($cfgs, $persistKey);
             }
             $configs = $cfgs;
         }
-        $this->configs = array_merge($configs, $this->configs);
+        $this->configs = array_merge($this->configs, $configs);
     }
 
     /**

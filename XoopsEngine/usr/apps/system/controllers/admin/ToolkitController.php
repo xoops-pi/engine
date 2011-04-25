@@ -79,10 +79,9 @@ class System_ToolkitController extends Xoops_Zend_Controller_Action_Admin
                 case 'all':
                 default:
                     $path = XOOPS::path("var") . "/cache/";
-                    $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path),
-                        RecursiveIteratorIterator::SELF_FIRST);
+                    $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
                     foreach ($objects as $object) {
-                        if ($object->isFile()) {
+                        if ($object->isFile() && 'index.html' !== $object->getFilename()) {
                             unlink($object->getPathname());
                         }
                     }

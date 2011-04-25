@@ -130,3 +130,5 @@ resources.view.template.compile_check = true
 resources.view.template.debugging = true
 resources.view.template.force_compile = true
 resources.view.template.error_unassigned = false
+
+[qa : development]

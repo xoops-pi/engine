@@ -10,3 +10,5 @@ resources.session.config = "session"
 [development : production]
 
 [debug : production]
+
+[qa : development]

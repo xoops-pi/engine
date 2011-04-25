@@ -29,18 +29,18 @@ namespace Kernel\Service;
  */
 
 define('ERROR_REPORTING_PRODUCTION', 0);    // Production mode, no error display
-define('ERROR_REPORTING_DEVELOPMENT', -1); // E_ALL | E_STRICT); // Development mode, all possible
+define('ERROR_REPORTING_DEVELOPMENT', -1);  // Development mode, all possible
 define('ERROR_REPORTING_DEBUG', E_ALL & ~ (E_DEPRECATED | E_USER_DEPRECATED | E_NOTICE));   // Debug/test mode, all errors except deprecated/notice messages
 
 class Error extends ServiceAbstract
 {
     protected $options = array(
         // If this handler should catch errors or not
-        'catchErrors' => false,
+        'catchErrors'       => false,
         //If this handler should catch exceptions or not
-        'catchExceptions' => false,
+        'catchExceptions'   => false,
         //Which PHP errors are reported
-        'errorReporting' => false
+        'errorReporting'    => false
     );
 
     /**
@@ -72,6 +72,7 @@ class Error extends ServiceAbstract
 
     protected $epMap = array(
         "production"    => ERROR_REPORTING_PRODUCTION,
+        "qa"            => ERROR_REPORTING_DEVELOPMENT,
         "debug"         => ERROR_REPORTING_DEBUG,
         "development"   => ERROR_REPORTING_DEVELOPMENT
     );
@@ -87,7 +88,9 @@ class Error extends ServiceAbstract
     {
         parent::__construct($options);
         if (!isset($this->options["errorReporting"]) || $this->options["errorReporting"] === false) {
-            $this->options["errorReporting"] = isset($this->epMap[\XOOPS::config('environment')]) ? $this->epMap[\XOOPS::config('environment')] : $this->epMap['debug'];
+            $this->options["errorReporting"] = isset($this->epMap[\XOOPS::config('environment')])
+                                                ? $this->epMap[\XOOPS::config('environment')]
+                                                : $this->epMap['development'];
         }
         $this->activateErrorHandling();
         \XOOPS::registry("error", $this);

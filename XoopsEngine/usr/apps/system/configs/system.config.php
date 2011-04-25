@@ -282,7 +282,6 @@ $config['items'][$i]['options'] = array("_SYSTEM_AM_DEBUGMODE0" => 0,
                                         "_SYSTEM_AM_DEBUGMODE1" => 1,
                                         "_SYSTEM_AM_DEBUGMODE2" => 2);
 $config['items'][$i]['category'] = 'general';
-*/
 
 $i++;
 $config['items'][$i]['name'] = 'environment';
@@ -291,10 +290,12 @@ $config['items'][$i]['description'] = '_SYSTEM_AM_ENVIRONMENT_DESC';
 $config['items'][$i]['edit'] = 'select';
 $config['items'][$i]['filter'] = 'string';
 $config['items'][$i]['default'] = "debug";
-$config['items'][$i]['options'] = array("_SYSTEM_AM_ENVIRONMENT_PRODUCTION" => "production",
-                                        "_SYSTEM_AM_ENVIRONMENT_DEBUG" => "debug",
-                                        "_SYSTEM_AM_ENVIRONMENT_DEVELOPMENT" => "development");
+$config['items'][$i]['options'] = array("_SYSTEM_AM_ENVIRONMENT_PRODUCTION"     => "production",
+                                        "_SYSTEM_AM_ENVIRONMENT_QA"             => "qa",
+                                        "_SYSTEM_AM_ENVIRONMENT_DEBUG"          => "debug",
+                                        "_SYSTEM_AM_ENVIRONMENT_DEVELOPMENT"    => "development");
 $config['items'][$i]['category'] = 'general';
+*/
 
 /*
 $i++;

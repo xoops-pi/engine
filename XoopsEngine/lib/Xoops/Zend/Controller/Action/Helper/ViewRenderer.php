@@ -337,7 +337,7 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
         if (!$request->isDispatched()) {
             return;
         }
-        // Register variables to view template
+        // Register global variables to view template
         $layout->initView();
 
         /**#@+
@@ -356,6 +356,7 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
         }
         XOOPS::registry('profiler')->start("Action");
 
+        $this->contextSwitch();
         $cacheInfo = $layout->plugin->loadCacheInfo();
 
         if (!$this->renderCache($cacheInfo)) {
@@ -395,6 +396,7 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
         */
 
         if ($this->_shouldRender()) {
+            $this->contextSwitch();
             $template = $this->view->getEngine();
             $layout = $this->view->getHelper('layout')->getLayout();
 
@@ -455,5 +457,16 @@ class Xoops_Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_A
         $this->setNoRender();
 
         return true;
+    }
+
+    protected function contextSwitch()
+    {
+        $request = $this->getRequest();
+        // Set template to empty for AJAX response
+        if ($request->isXmlHttpRequest()
+            || $request->isFlashRequest()
+            ) {
+            $this->view->getHelper('layout')->getLayout()->setLayout("empty");
+        }
     }
 }

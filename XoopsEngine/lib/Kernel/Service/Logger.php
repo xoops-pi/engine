@@ -27,7 +27,11 @@ class Logger extends ServiceAbstract
 
     public function __construct($options = array())
     {
+        if ('qa' == \XOOPS::config('environment')) {
+            $this->configFile = 'logger';
+        }
         parent::__construct($options);
+
         \XOOPS::registry("logger", $this);
     }
 
@@ -41,10 +45,16 @@ class Logger extends ServiceAbstract
         if (null !== $flag) {
             $this->active = (bool) $flag;
         } elseif (null === $this->active) {
-            if (\XOOPS::config('environment') != "production") {
-                $this->active = true;
-            } else {
+            if (\XOOPS::config('environment') == "production") {
                 $this->active = false;
+            } elseif (\XOOPS::config('environment') == "qa") {
+                if (empty($this->options['ip'])) {
+                    $this->active = false;
+                } else {
+                    $this->active = \Xoops\Security::ip(array('good' => $this->options['ip'])) ? true : false;
+                }
+            } else {
+                $this->active = true;
             }
         }
         return $this->active;

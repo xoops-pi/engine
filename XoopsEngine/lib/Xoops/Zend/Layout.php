@@ -445,11 +445,19 @@ class Xoops_Zend_Layout extends Zend_Layout
         }
     }
 
+    /**
+     * Assemble contents from various sections for response
+     */
     public function assemble($request)
     {
+        /*
+        // Set template to empty for AJAX response
         if ($request->isXmlHttpRequest() || $request->isFlashRequest()) {
             $this->setLayout("empty");
-        } elseif (!$this->getLayout()) {
+        // Set default layout
+        } else
+        */
+        if (!$this->getLayout()) {
             $this->setLayout("layout");
         }
 

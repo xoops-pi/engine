@@ -27,7 +27,7 @@ if (!defined("XOOPS_BOOT_INCLUDED")) {
     // Backend support for persistent data, valid values: Apc, Memcached, Memcache, File
     defined("XOOPS_PERSIST_TYPE") OR define("XOOPS_PERSIST_TYPE", "");
 
-    // Prefix for persistent data key
+    // Prefix for persistent data key, should not be changed after installation
     defined("XOOPS_PERSIST_PREFIX") OR define("XOOPS_PERSIST_PREFIX", "xoops");
 
     include XOOPS_PATH . '/Xoops.php';

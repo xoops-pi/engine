@@ -282,9 +282,10 @@ define("_SYSTEM_AM_CAPTCHA_DESC", "");
 define("_SYSTEM_AM_ROOT_IPS", "Root user IPs");
 define("_SYSTEM_AM_ROOT_IPS_DESC", "Allowed IPs '1.1.1.*|2.2.2.3' or blocked IPs '-3.3.3.3|-4.5.6.*'");
 
-define("_SYSTEM_AM_ENVIRONMENT", "System application environment");
+define("_SYSTEM_AM_ENVIRONMENT", "Application environment");
 define("_SYSTEM_AM_ENVIRONMENT_DESC", "");
 define("_SYSTEM_AM_ENVIRONMENT_PRODUCTION", "Production");
+define("_SYSTEM_AM_ENVIRONMENT_QA", "QA");
 define("_SYSTEM_AM_ENVIRONMENT_DEBUG", "Debug");
 define("_SYSTEM_AM_ENVIRONMENT_DEVELOPMENT", "Development");
 

@@ -118,3 +118,5 @@ resources.db.profiler.enabled = true
 ; template
 resources.view.template.caching = false
 resources.view.template.compile_check = true
+
+[qa : development]

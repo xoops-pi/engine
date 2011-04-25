@@ -11,6 +11,7 @@ April 20th, 2011
 6 Added block compound, suggested by ezsky/dongbeta etc.
 7 Formulated theme schema with global namespace
 8 Changed .ini file to .ini.php for content protection, suggested by huzhenghui/ezsky/dongbeta, etc.
+9 Added QA mode: only display debug information to specified IPs, suggested by huzhenghui
 
 
 January 10th, 2011

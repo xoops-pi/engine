@@ -42,6 +42,7 @@ class Service
                     return static::$services[$key];
                 }
             }
+
             static::$services[$key] = new $class($options);
             if (!(static::$services[$key] instanceof Service\ServiceAbstract)) {
                 throw new \Exception("Invalid service instantiation '{$key}'!");
@@ -111,10 +112,6 @@ abstract class ServiceAbstract
      */
     public function __construct($options = array())
     {
-        if (array_key_exists('active', $options)) {
-            $this->active = $options['active'];
-            unset($options['active']);
-        }
         $this->setOptions($options);
     }
 
@@ -125,13 +122,21 @@ abstract class ServiceAbstract
      */
     public function setOptions($options = array())
     {
-        if (empty($options) || is_string($options)) {
-            $config = $options ?: $this->configFile;
-            if (!empty($config)) {
-                $options = \Xoops::loadConfig('service.' . $config . '.ini.php');
+        if (!is_array($options)) {
+            $configFile = (is_string($options) && !is_numeric($options)) ? $options : $this->configFile;
+            if (!empty($configFile)) {
+                $options = \Xoops::loadConfig('service.' . $configFile . '.ini.php');
+
+            } else {
+                $options = array();
             }
         }
-        if (is_array($options)) {
+
+        if (array_key_exists('active', $options)) {
+            $this->active = $options['active'];
+            unset($options['active']);
+        }
+        if (!empty($options)) {
             $this->options = array_merge($this->options, $options);
         }
     }

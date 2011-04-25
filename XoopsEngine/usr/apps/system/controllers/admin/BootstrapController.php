@@ -175,7 +175,8 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             array(
                 "module"        => $module,
                 "controller"    => "bootstrap",
-                "action"        => "boot"
+                "action"        => "boot",
+                "item"          => $item,
             ),
             "admin"
         );
@@ -354,6 +355,7 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
             "required"  => true,
             "value"     => file_get_contents($file),
             "description"   => $file,
+            "wrap"      => "off",
             "filters"       => array(
                 "trim"      => array(
                     "filter"    => "StringTrim",
@@ -369,11 +371,11 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
         );
         $form->addElement("submit", "save", $options);
 
-        $fileExtension = substr($file, strrpos($file, ".") + 1);
-        if ($fileExtension == "ini") {
+        //$fileExtension = substr($file, strrpos($file, ".") + 1);
+        if (substr($file, -8) == ".ini.php") {
             $description = XOOPS::_("For ini file syntax, please refer to http://www.php.net/manual/en/function.parse-ini-file.php");
             $form->setDescription($description);
-        } elseif ($fileExtension == "htaccess") {
+        } elseif (basename($file) == ".htaccess") {
             $description = XOOPS::_("For .htaccess tutorial, please refer to http://httpd.apache.org/docs/2.2/howto/htaccess.html");
             $form->setDescription($description);
         }
@@ -413,6 +415,9 @@ class System_BootstrapController extends Xoops_Zend_Controller_Action_Admin
         if (!$file = fopen($filePath, "w")) {
             $error = true;
         } else {
+            if (substr($filePath, -8) == ".ini.php" && !preg_match('/^;[\s]?<\?php[\s]+__halt_compiler[\s]?\([\s]?\)[\s]?;/i', $posts['content'])) {
+                $posts['content'] = ';<?php __halt_compiler();' . PHP_EOL . PHP_EOL . $posts['content'];
+            }
             if (fwrite($file, $posts['content']) === false) {
                 $error = true;
             }

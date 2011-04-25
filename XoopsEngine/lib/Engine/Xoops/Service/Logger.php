@@ -72,7 +72,6 @@ class Logger extends \Kernel\Service\Logger
                         $writer_class = "Xoops_" . $writer_class;
                         $this->logger->addWriter(new $writer_class);
                     } elseif (class_exists($writer_class)) {
-                        //$writer_class = $writer_class;
                         $this->logger->addWriter(new $writer_class);
                     }
                 }
