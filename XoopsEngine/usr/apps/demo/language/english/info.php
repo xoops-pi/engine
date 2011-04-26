@@ -1,8 +1,8 @@
 <?php
 // $Id$
-// _LANGCODE: en
-// _CHARSET : UTF-8
-// Translator: XOOPS Translation Team
+// language: en
+// charset: UTF-8
+// Translator: Xoops Engine i18n Team
 
 define("_DEMO_MI_NAME", "DEMO Sandbox");
 define("_DEMO_MI_DESC", "Examples and tests for developers.");

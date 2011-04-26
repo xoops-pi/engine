@@ -65,5 +65,9 @@ class Xoops_Zend_Application_Resource_Legacy extends Zend_Application_Resource_R
         $GLOBALS['member_handler'] = XOOPS::getHandler('member');
         $GLOBALS['xoopsLogger'] = XOOPS::service('logger');
         $GLOBALS['xoopsConfig'] = XOOPS::config();
+
+        // Legacy config items ...
+        $GLOBALS['xoopsConfig']['anonymous'] = 'Anonymous';
+        $GLOBALS['xoopsConfig']['theme_set_allowed'] = array();
     }
 }

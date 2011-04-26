@@ -95,7 +95,10 @@ class Xoops_Module_Info
         if (!file_exists($file)) {
             return false;
         }
+        global $xoopsConfig, $xoopsModule, $xoopsUser;
+
         XOOPS::registry('application')->getBootstrap()->bootstrap('legacy');
+        XOOPS::service('translate')->loadTranslation('global');
         XOOPS::service('translate')->loadTranslation('modinfo', $module);
         include $file;
         $config = $modversion;

@@ -27,6 +27,9 @@ class Xoops_Installer_Module_Database extends Xoops_Installer_Abstract
         $message = $this->message;
         $options = $this->config;
 
+        if (empty($options['sqlfile'])) {
+            return true;
+        }
         $sqlfile = $options['sqlfile'];
         if (!is_array($sqlfile) || empty($sqlfile['mysql'])) {
             return true;

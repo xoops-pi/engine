@@ -80,7 +80,7 @@ class Xoops_Installer_Module_Block extends Xoops_Installer_Abstract
         $dirname = $this->module->dirname;
         $message = $this->message;
         $blocks = $this->config;
-        $classPrefix = (('app' == Xoops::service('module')->getType($module)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $dirname);
+        $classPrefix = (('app' == Xoops::service('module')->getType($dirname)) ? 'app' : 'module') . '\\' . ($this->module->parent ?: $dirname);
         foreach ($blocks as $key => $block) {
             // break the loop if missing block config
             if (empty($block['render']) && (!isset($block['file']) || !isset($block['show_func']))) {
