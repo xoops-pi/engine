@@ -33,35 +33,35 @@ class XOOPS
 
     /**
      * Reference to default engine
-     * @var {@Xoops_Engine_Interface}
+     * @var {@Kernel\EngineInterface}
      * @access private
      */
     private static $engine;
 
     /**
      * Reference to persist handler
-     * @var {@Persist_Handler}
+     * @var {@Kernel\Persist\PersistInterface}
      * @access private
      */
     private static $persist;
 
     /**
      * Reference to service handler
-     * @var {@Xoops_Service}
+     * @var {@Kernel\Service}
      * @access private
      */
     private static $service;
 
     /**
      * Reference to autoloader handler
-     * @var {@Persist_Handler}
+     * @var {@Kernel\Loader\Autoloader}
      * @access private
      */
     private static $autoloader;
 
     /**
-     * Reference to the already instantiated objects
-     * @var array
+     * Reference to the already instantiated engines
+     * @var array of {@Kernel\EngineInterface}
      * @access private
      */
     private static $instances = array();
@@ -71,7 +71,7 @@ class XOOPS
      *
      * @param string    $engine engine name or identifier, default as "xoops"
      * @param array     $options
-     * @return {@Xoops_Engine}
+     * @return {@Kernel\EngineInterface}
      */
     public static function factory($engine = "xoops", $options = array())
     {
@@ -91,11 +91,6 @@ class XOOPS
 
             // Namespaced class
             $classEngine = "Engine\\" . ucfirst($engine) . '\\Engine';
-            if (!class_exists($classEngine)) {
-                // Non-namespace class
-                $classEngine =  "Engine_" . ucfirst($engine) . '_Engine';
-            }
-
             // Instatiate engine with loaded options
             $instance = new $classEngine($options);
             // Register to container
@@ -213,11 +208,6 @@ class XOOPS
     public static function persist()
     {
         if (!isset(self::$persist)) {
-            /*
-            if (!class_exists("Kernel\\Persist", false)) {
-                require self::ROOT . '/Kernel/Persist.php';
-            }
-            */
             $type = defined("XOOPS_PERSIST_TYPE") ? constant("XOOPS_PERSIST_TYPE") : null;
             self::$persist = new Kernel\Persist($type);
         }
@@ -231,7 +221,7 @@ class XOOPS
      *
      * @param string    $name
      * @param array     $options
-     * @return Kernel_Service|Kernel_Service_Abstract
+     * @return Kernel\Service|Kernel\Service\ServiceAbstract
      */
     public static function service($name = null, $options = array())
     {
@@ -254,6 +244,7 @@ class XOOPS
     /**
      * Loads autoloader handler
      *
+     * @return Kernel\Loader\Autoloader
      */
     public static function autoloader()
     {
@@ -268,7 +259,7 @@ class XOOPS
 
 
     /**#@+
-     * Global APIs, proxy to {@\Kernel\Engine}
+     * Global APIs, proxy to {@Kernel\Engine}
      */
 
     /**

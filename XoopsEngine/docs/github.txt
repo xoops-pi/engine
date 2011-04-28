@@ -1,0 +1,41 @@
+Git repo setup for http://github.com/xoops
+
+By Taiwen Jiang
+April 2011
+
+
+
+
+Global setup:
+
+ Download and install Git
+  git config --global user.name "[Taiwen Jiang]"
+  git config --global user.email [taiwenjiang@tsinghua.org.cn]
+
+
+Initialize a repo:
+
+  mkdir engine
+  cd engine
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin https://[taiwen]@github.com/xoops/[engine].git
+  git push -u origin master
+
+
+Pull a repo as developer:
+
+  git clone https://[taiwen]@github.com/xoops/[engine].git
+
+Pull a repo as Read-Only:
+
+  git clone git://github.com/xoops/[engine].git
+
+
+
+Note:
+Change the content in [] to your account/repo respectively
+
+

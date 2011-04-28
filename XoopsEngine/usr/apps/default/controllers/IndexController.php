@@ -31,12 +31,6 @@ class Default_IndexController extends \Application\Controller
         $this->setTemplate('index.html'/*, 'layout'*/);
         $this->template->assign("message", XOOPS::_('This the default homepage.'));
 
-        //$sqlFile = Xoops::service('module')->getPath('system') . '/sql/test.sql';
-        //Xoops_Zend_Db_File_Mysql::queryFile($sqlFile, $log);
-        //Debug::e($log);
-        //$sql = "CREATE VIEW " . Xoops::registry('db')->prefix('modules') . " AS SELECT * FROM " . Xoops::getModel('module')->info('name');
-        //Xoops::registry('db')->query($sql);
-
         return;
     }
 
