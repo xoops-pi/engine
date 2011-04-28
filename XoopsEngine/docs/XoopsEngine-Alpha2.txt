@@ -1,0 +1,39 @@
+
+Today we are proudly to present XOOPS community with Xoops Engine Alpha 2 release.
+Since the [url=http://www.xoops.org/modules/news/article.php?storyid=5782]Alpha 1 Release[/url] in January 2011, there have been many progresses in Xoops Engine development.
+
+XOOPS, or eXtensible Object Oriented Portal System, well known as a leading open source CMS and portal system, now becomes a development engine for web and mobile applications.
+XoopsEngine, as the new brand of the XOOPS Project, supports open and extensible engines backboned with its multi-engine architecture.
+By taking advantages of PHP frameworks like ZendFramework, template engine Smarty and AJAX libraries like jQuery, the Xoops Engine brings the Project to a new generation.
+Some selected features that are most wanted by community available in Xoops Engine:
+* Built-in cache mechanism for high performance
+* Clear M-V-C with AOP and event hook
+* Extensible URL rewrite for better SEO
+* App/module clone and theme inheritance for application extension
+* New model mechanism for easy development with less code
+* New layout/block/widget for flexible and better user experience
+
+After Alpha1 release many developers have started to contribute to Xoops Engine development, including well know developers from other open source projects.
+Some of the new progresses in Alpha 2:
+* Namespace for apps and modules
+* WYSIWYG editor factory with CKEditor and jQuery based ClEditor
+* Security handler and resource, added XSS filter, IP protection, super global contamination, etc.
+* Block and theme mechanism improvement
+* Protection for config files
+* First Xoops Engine themes by insraq and voltan
+Special thank goes to [url=http://xoops.org.cn]Xoops China Team[/url].
+
+For more details please check:
+Xoops Engine Development: http://www.xoopsengine.org
+Follow us on twitter: http://twitter.com/XoopsProject
+Discussion: http://xoops.org/modules/newbb/index.php?cat=11
+
+Don't forget to download Xoops Engine Alpha 2:
+* [url=https://github.com/xoops/releases/zipball/Alpha2]The full package[/url]
+* [url=https://github.com/xoops/engine/zipball/Alpha2]Only the new engine[/url]
+And report your issues to: https://github.com/xoops/engine/issues
+
+
+Taiwen Jiang (aka phppp)
+Xoops Engine Development Team
+April 30th, 2011
