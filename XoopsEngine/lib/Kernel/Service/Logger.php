@@ -72,7 +72,7 @@ class Logger extends ServiceAbstract
 
     public function shutdown()
     {
-        if (!$this->enabled() || !sef::getLogger()) {
+        if (!$this->enabled() || !$this->getLogger()) {
             return;
         }
 

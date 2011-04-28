@@ -35,8 +35,8 @@ class App_System_Installer extends Xoops_Installer_Abstract
         Xoops_Zend_Db_File_Mysql::reset();
         if (!empty($createdTables)) {
             $model = XOOPS::getModel("table");
-            foreach ($createdTables as $table) {
-                $model->insert(array("name" => $table, "module" => ""));
+            foreach ($createdTables as $table => $type) {
+                $model->insert(array("name" => $table, "module" => "", "type" => $type));
             }
         }
 

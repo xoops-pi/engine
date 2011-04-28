@@ -227,7 +227,10 @@ class XOOPS
     {
         // Singleton
         if (!isset(self::$service)) {
-            self::$service = new Kernel\Service();
+            // self::$engine -- Engine\Xoops\Engine
+            $engineNameSegs = explode('\\', get_class(self::$engine));
+            $engineName = $engineNameSegs[1];
+            self::$service = new Kernel\Service($engineName);
         }
         // Return service handler
         if (null === $name) {

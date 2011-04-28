@@ -22,9 +22,11 @@ namespace Kernel;
 class Service
 {
     protected static $services = array();
+    protected static $engine;
 
-    public function __construct()
+    public function __construct($engineName = 'xoops')
     {
+        static::$engine = ucfirst($engineName);
     }
 
     public function load($name, $options = array())
@@ -33,10 +35,10 @@ class Service
         if (!isset(static::$services[$key])) {
             static::$services[$key] = false;
             // Loads custom service
-            $class = "Engine\\" . ucfirst(\XOOPS::config("identifier")) . "\\Service\\" . ucfirst($key);
+            $class = "Engine\\" . static::$engine . "\\Service\\" . ucfirst($name);
             if (!class_exists($class)) {
                 // If custom service not defined, loads kernel service
-                $class = "Kernel\\Service\\" . ucfirst($key);
+                $class = "Kernel\\Service\\" . ucfirst($name);
                 if (!class_exists($class)) {
                     trigger_error("Service class \"{$class}\" was not loaded.", E_USER_ERROR);
                     return static::$services[$key];
@@ -45,7 +47,7 @@ class Service
 
             static::$services[$key] = new $class($options);
             if (!(static::$services[$key] instanceof Service\ServiceAbstract)) {
-                throw new \Exception("Invalid service instantiation '{$key}'!");
+                throw new \Exception("Invalid service instantiation '{$name}'!");
             }
             if ($log = $this->getService('logger')) {
                 $log->info("Service '{$name}' is loaded", "service");
