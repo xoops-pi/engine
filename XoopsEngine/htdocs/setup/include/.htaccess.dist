@@ -1,0 +1,54 @@
+# Set XOOPS application environment, valid values: production, debug, development
+#SetEnv XOOPS_ENV production
+
+# Enable runtime rewriting engine
+RewriteEngine On
+
+# Redirect homepage to a specified address inside the site
+#RewriteRule ^$ /%REDIRECT_URL% [R,L]
+
+# If is regular file, with size, OR
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+# Is symbolic link, OR
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+# Is directory, OR
+RewriteCond %{REQUEST_FILENAME} -d
+# Then skip the rewrite and go ahead
+RewriteRule ^.*$ - [NC,L]
+
+# Skip rewrite if the URI already parsed
+RewriteRule ^modules/([^/\.]+)/admin/.*\.php$ - [NC,L]
+RewriteRule ^modules/([^/\.]+)/.*\.php$ - [NC,L]
+# Otherwise, if admin area of a legacy module style URI, rewrite it from modules/modulename/admin/controllername/extra to modules/modulename/admin/controllername.php
+RewriteRule ^modules/([^/\.]+)/admin/([^/]+)/?.* modules/$1/admin/$2.php [NC,L]
+# Otherwise, if a legacy module style URI, rewrite it from modules/modulename/controllername/extra to modules/modulename/controllername.php
+RewriteRule ^modules/([^/\.]+)/([^/]+)/?.* modules/$1/$2.php [NC,L]
+
+# Transfer to API section for host api.domain.tld
+RewriteCond %{HTTP_HOST} ^api\..*
+# Then skip the rewrite and go ahead
+RewriteRule ^.*$ api.php [NC,L]
+
+# Transfer to feed section for host feed.domain.tld
+RewriteCond %{HTTP_HOST} ^feed\..*
+# Then skip the rewrite and go ahead
+RewriteRule ^.*$ feed.php [NC,L]
+
+
+# Application admin routes
+RewriteRule ^admin(/.*)?$ man.php [NC,L]
+
+# Admin root user routes
+RewriteRule ^root(/.*)?$ root.php [NC,L]
+
+# Application feed routes
+RewriteRule ^feed/[^/]+(/.*)?$ feed.php [NC,L]
+
+# API routes
+RewriteRule ^api/[^/]+(/.*)?$ api.php [NC,L]
+
+# Widget routes
+RewriteRule ^widget/[^/]+(/.*)?$ widget.php [NC,L]
+
+# Otherwise, go through application routes
+RewriteRule ^.*$ app.php [NC,L]
