@@ -23,11 +23,11 @@ if (HOMEPAGE_LEGACY) {
     /**#@+
      * Legacy mode
      */
-    include "mainfile.php";
+    include './mainfile.php';
 
-    $xoopsOption['template_main'] = "file:app/default/index.html";
-    include "header.php";
-    include "footer.php";
+    $xoopsOption['template_main'] = 'file:app/default/index.html';
+    include './header.php';
+    include './footer.php';
     return;
     /*#@-*/
 }
@@ -35,11 +35,11 @@ if (HOMEPAGE_LEGACY) {
 /**#@+
  * Application mode
  */
-if (!empty($_SERVER['REQUEST_URI']) && false !== ($pos = strpos($_SERVER['REQUEST_URI'], "index.php"))) {
+if (!empty($_SERVER['REQUEST_URI']) && false !== ($pos = strpos($_SERVER['REQUEST_URI'], 'index.php'))) {
     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 0, $pos);
 }
 
 define('XOOPS_BOOTSTRAP', 'application');
-include __DIR__ . "/boot.php";
+include './boot.php';
 exit();
 /*#@-*/
