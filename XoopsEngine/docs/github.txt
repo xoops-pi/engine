@@ -1,41 +1,42 @@
 Git repo setup for http://github.com/xoops
 
 By Taiwen Jiang
-April 2011
+July 2011
 
 
 
 
 Global setup:
 
- Download and install Git
-  git config --global user.name "[Taiwen Jiang]"
-  git config --global user.email [taiwenjiang@tsinghua.org.cn]
+ Download and install Git client:
+ 	Download client for Windows from: http://code.google.com/p/msysgit/
+ Configure (in git bash):
+  git config --global user.name "{Your Name}"
+  git config --global user.email {YourEmailAccountForGithub@yourhost.com}
 
 
-Initialize a repo:
+Pull a repo as developer (in git bash):
 
-  mkdir engine
-  cd engine
+  git clone https://{YouGithuabAccount}@github.com/xoops/{RepoName}
+
+Pull a repo as Read-Only (in git bash):
+
+  git clone git://github.com/xoops/{RepoName}
+
+
+Initialize a repo on github server as a developer (skip this step if your are not a developer for the repo):
+
+  mkdir {RepoName}
+  cd {RepoName}
   git init
   touch README
   git add README
-  git commit -m 'first commit'
-  git remote add origin https://[taiwen]@github.com/xoops/[engine].git
+  git commit -m '{Your commit message}'
+  git remote add origin https://{YouGithuabAccount}@github.com/xoops/{RepoName}
   git push -u origin master
 
 
-Pull a repo as developer:
-
-  git clone https://[taiwen]@github.com/xoops/[engine].git
-
-Pull a repo as Read-Only:
-
-  git clone git://github.com/xoops/[engine].git
-
-
-
 Note:
-Change the content in [] to your account/repo respectively
+Change the content in {} to your account/repo respectively
 
 
