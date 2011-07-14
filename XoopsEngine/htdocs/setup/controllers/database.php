@@ -56,7 +56,9 @@ class Database extends AbstractController
         if (!empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
             $func_connect = empty($vars['DB_PCONNECT']) ? "mysql_connect" : "mysql_pconnect";
             $pass = $vars['DB_PASS'] ?: null;
+            ob_start();
             $this->dbLink = $func_connect($vars['DB_HOST'], $vars['DB_USER'], $pass, true);
+            ob_end_clean();
         } else {
             $this->dbLink = false;
         }
@@ -66,10 +68,11 @@ class Database extends AbstractController
     {
         $this->connection();
         echo ($this->dbLink) ? 1 : 0;
+        /*
         if (!$this->dbLink) {
             echo ' pass:[' . $this->vars['DB_PASS'] . ']';
         }
-
+        */
     }
 
     public function charsetAction()
