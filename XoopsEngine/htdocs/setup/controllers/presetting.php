@@ -171,8 +171,13 @@ class Presetting extends AbstractController
     protected function loadRequirementForm()
     {
         $this->verifyRequirement();
-        $content = '
-            <h2> <span class="' . (($this->status < 0) ? 'failure' : 'success') . '">' . _INSTALL_SERVER_LEGEND . '</span> <a href="javascript:void(0);" id="advanced-label"><span>[+]</span><span style="display: none;">[-]</span></a></h2>
+        if ($this->status < 0) {
+        	$content = '<h2><span class="failure">' . _INSTALL_SERVER_LEGEND . '</span> <a href="javascript:void(0);" id="advanced-label"><span style="display: none;">[+]</span><span>[-]</span></a></h2>';
+        } else {
+        	$content = '<h2><span class="success">' . _INSTALL_SERVER_LEGEND . '</span> <a href="javascript:void(0);" id="advanced-label"><span>[+]</span><span style="display: none;">[-]</span></a></h2>';
+        }
+        //$content = '<h2> <span class="' . (($this->status < 0) ? 'failure' : 'success') . '">' . _INSTALL_SERVER_LEGEND . '</span> <a href="javascript:void(0);" id="advanced-label"><span>[+]</span><span style="display: none;">[-]</span></a></h2>';
+        $content .= '
             <p class="caption">' . _INSTALL_SERVER_DESC . '</p>
             <div class="install-form advanced-form" id="advanced-form">
                 <h3 class="section">' . _INSTALL_REQUIREMENT_SYSTEM . '</h3>
