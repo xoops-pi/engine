@@ -1,6 +1,15 @@
 Xoops Engine Changelog
 
 
+July 18th, 2011
+=============================
+1 Added new installer in '/setup'
+2 Added footScript section to layout
+3 Added Redis to system persist
+4 Added Markup component
+5 Added FTP
+
+
 April 20th, 2011
 =============================
 1 Added namespace for app (in /usr/apps/) as "App" and module (in www/modules) as "Module"
