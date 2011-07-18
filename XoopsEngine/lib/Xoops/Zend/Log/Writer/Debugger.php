@@ -62,26 +62,29 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
 
         $memory = 0;
         if (function_exists('memory_get_usage')) {
-            $memory = memory_get_usage() . ' bytes';
+            $memory = memory_get_usage();
+            if (function_exists('memory_get_peak_usage')) {
+                $memory .= ' -> ' . memory_get_peak_usage();
+            }
+            $memory .= ' bytes';
         } else {
             // Windows system
             if (strpos(strtolower(PHP_OS), 'win') !== false) {
                 $out = array();
                 exec('tasklist /FI "PID eq ' . getmypid() . '" /FO LIST', $out);
-                $memory = substr($out[5], strpos($out[5], ':') + 1) . ' [Estimated]';
+                $memory = substr($out[5], strpos($out[5], ':') + 1);
             }
         }
         $system['Memory usage'] = $memory ?: 'Not detected';
 
         $system['OS'] = PHP_OS ?: 'Not detected';
-        $system['Web Server'] = PHP_SAPI ?: 'Not detected';
+        $system['Web Server'] = $_SERVER['SERVER_SOFTWARE']; //PHP_SAPI ?: 'Not detected';
         $system['PHP Version'] = PHP_VERSION;
         if (Xoops::registry('db') && method_exists(Xoops::registry('db'), "getServerVersion")) {
             $system['MySQL Version'] = Xoops::registry('db')->getServerVersion();
         } elseif (isset($GLOBALS['xoopsDB']) && method_exists($GLOBALS['xoopsDB']->conn, "getServerVersion")) {
             $system['MySQL Version'] = $GLOBALS['xoopsDB']->conn->getServerVersion();
         } else {
-            //$system['MySQL Version'] = mysql_get_server_info();
             $system['MySQL Version'] = "Not detected";
         }
         $system['Xoops Version'] = Xoops::version();
@@ -92,6 +95,7 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
         if (XOOPS::registry("view")) {
             $system['Smarty Version'] = XOOPS::registry("view")->getEngine()->getVersion();
         }
+        $system['Persist Engine'] = Xoops::persist()->getType();
         $system['safe_mode'] = ini_get('safe_mode') ? "On" : "Off";
         $system['register_globals'] = ini_get('register_globals') ? "On" : "Off";
         //$system['xml'] = extension_loaded('xml') ? "On" : "Off";
@@ -109,24 +113,24 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
     {
         $this->systemLog();
 
-        $log = '';
-        $log .= "\n<div id=\"xoops-logger-output\">\n<div id='xoops-logger-tabs'>\n";
+        $log = PHP_EOL;
+        $log .= "<div id=\"xoops-logger-output\">" . PHP_EOL . "<div id='xoops-logger-tabs'>" . PHP_EOL;
         foreach (array_keys($this->items) as $category) {
             $count = count($this->items[$category]);
-            $log .= "<span id='xoops-logger-tab-{$category}'><a href='javascript:xoSwitchCategoryDisplay(\"{$category}\")'>{$category}({$count})</a></span> | \n";
+            $log .= "<span id='xoops-logger-tab-{$category}'><a href='javascript:xoSwitchCategoryDisplay(\"{$category}\")'>{$category}({$count})</a></span> | " . PHP_EOL;
         }
-        $log .= "<span id='xoops-logger-tab-all'><a href='javascript:xoSwitchCategoryDisplay(\"all\")'>all</a></span>\n";
-        $log .= "</div>\n";
+        $log .= "<span id='xoops-logger-tab-all'><a href='javascript:xoSwitchCategoryDisplay(\"all\")'>all</a></span>" . PHP_EOL;
+        $log .= "</div>" . PHP_EOL;
 
-        $log .= "<div id='xoops-logger-categories'>\n";
+        $log .= "<div id='xoops-logger-categories'>" . PHP_EOL;
         foreach ($this->items as $category => $events) {
-            $log .= "<div id='xoops-logger-category-{$category}' class=\"xoops-events\">\n";
-            $log .= "<div class=\"xoops-category\">{$category}</div>\n";
+            $log .= "<div id='xoops-logger-category-{$category}' class=\"xoops-events\">" . PHP_EOL;
+            $log .= "<div class=\"xoops-category\">{$category}</div>" . PHP_EOL;
             $log .= implode("", $events);
-            $log .= "</div>\n";
+            $log .= "</div>" . PHP_EOL;
         }
 
-        $log .= "</div>\n</div>\n";
+        $log .= "</div>" . PHP_EOL . "</div>" . PHP_EOL;
 
         $scripts_css =
 <<<EOT
@@ -215,7 +219,7 @@ class Xoops_Zend_Log_Writer_Debugger extends Zend_Log_Writer_Abstract
         </style>
 EOT;
 
-        $scripts_js = '<script type="text/javascript">var cookie_path = "' . (($baseUrl = XOOPS::host()->get('baseUrl')) ? rtrim($baseUrl, "/") . "/" : "/") . '";</script>' .
+        $scripts_js = '<script type="text/javascript">var cookie_path = "' . (($baseUrl = XOOPS::host()->get('baseUrl')) ? rtrim($baseUrl, "/") . "/" : "/") . '";</script>' . PHP_EOL .
 <<<EOT
         <script type="text/javascript">
             var cookieName = "XoopsLoggerView";
@@ -294,6 +298,6 @@ EOT;
 
 EOT;
 
-        echo $scripts_css . $log . $scripts_js;
+        echo PHP_EOL . preg_replace('!\s+!', ' ', $scripts_css . $log . $scripts_js);
     }
 }

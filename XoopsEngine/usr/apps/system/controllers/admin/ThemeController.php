@@ -93,11 +93,6 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         $this->template->assign("themes_install", $themes);
 
         $themes = XOOPS::service('registry')->themelist->read('deploy');
-        /*
-        foreach ($themes as $key => &$theme) {
-            $theme["upgrade"] = $this->checkUpgrade($key, $theme["version"]);
-        }
-        */
         $this->template->assign("themes_deploy", $themes);
 
         $this->setTemplate("theme_available.html");
@@ -260,7 +255,7 @@ class System_ThemeController extends Xoops_Zend_Controller_Action_Admin
         } else {
             $model = XOOPS::getModel("theme");
             $model->delete(array("dirname = ?" => $dirname));
-            //$this->removeTheme($dirname);
+            //$status = $this->removeTheme($dirname);
             $message = sprintf(XOOPS::_("The theme '%s' is uninstalled."), $dirname);
             XOOPS::service('registry')->theme->flush();
             XOOPS::service('registry')->themelist->flush();

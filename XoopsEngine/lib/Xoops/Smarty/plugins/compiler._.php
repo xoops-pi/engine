@@ -42,12 +42,13 @@ class Smarty_Compiler__  extends Smarty_Internal_CompileBase
     {
         $this->compiler = $compiler;
         $this->required_attributes = array("text");
-        //$this->optional_attributes = array();
+        //$this->optional_attributes = array("locale");
         $this->option_flags = array();
 
         // check and get attributes
         $_attr = $this->_get_attributes($args);
         $message = $_attr["text"];
+        //$locale = $_attr["locale"];
         $str = "XOOPS::_($message)";
         return "<?php echo {$str};?>";
     }

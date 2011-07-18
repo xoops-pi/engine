@@ -19,19 +19,45 @@
 
 namespace Kernel;
 
+/**
+ * Gateway for persist handlers
+ */
 class Persist
 {
+    /**
+     * Loaded persist handlers
+     */
     protected static $instances = array();
+
+    /**
+     * Currently active persist handler
+     */
     protected $handler;
+
+    /**
+     * Backend type of currently active persist handler, potential types: Apc, Memcached, Memcache, Redis, File, etc.
+     */
     protected $type;
+
+    /**
+     * Global prefix for keys to avoid conflicts among multiple Xoops Engine instances
+     */
     protected $prefix;
 
+    /**
+     * Identifier string for non-existent path, to be stored in backend
+     */
     const NOT_EXIST_INTERNAL    = '__NOT_EXIST';
+
+    /**
+     * Identifier string for non-existent path, to be used for input
+     */
     const NOT_EXIST_EXTERNAL    = '';
 
     /**
      * Constructor
      *
+     * @param string|null $type
      * @return void
      */
     public function __construct($type = null)
@@ -47,7 +73,7 @@ class Persist
             return;
         }
         // If type is not specified, loads a handler according to default priority
-        foreach (array("Apc", "Memcached", "Memcache", "File") as $type) {
+        foreach (array("Apc", "Redis", "Memcached", "Memcache", "File") as $type) {
             if ($this->handler = $this->loadHandler($type)) {
                 $this->type = $type;
                 break;
@@ -55,6 +81,12 @@ class Persist
         }
     }
 
+    /**
+     * Loads a backend handler
+     *
+     * @param string|null $type
+     * @return {@\Kernel\Persist\PersistInterface}|false
+     */
     public function loadHandler($type)
     {
         if (!isset(static::$instances[$type])) {
@@ -77,17 +109,34 @@ class Persist
         return static::$instances[$type];
     }
 
+    /**
+     * Gets currently active backend handler
+     *
+     * @return {@\Kernel\Persist\PersistInterface}|false
+     */
     public function getHandler()
     {
         return $this->handler;
     }
 
+    /**
+     * Sets global prefix
+     *
+     * @param string $prefix
+     * @return {@\Kernel\Persist}
+     */
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
         return $this;
     }
 
+    /**
+     * Gets prefixed key or just the global prefix if key is not set
+     *
+     * @param string|null $key
+     * @return string
+     */
     public function prefix($key = null)
     {
         if (null === $this->prefix) {
@@ -139,13 +188,23 @@ class Persist
     }
 
     /**
-     * Backend type
+     * Checks if there is valid backend available
      *
-     * @return string
+     * @return bool
      */
     public function isValid()
     {
         return (!empty($this->type) && $this->type != "File") ? true : false;
+    }
+
+    /**
+     * Gets backend type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
     /**#@-*/
 

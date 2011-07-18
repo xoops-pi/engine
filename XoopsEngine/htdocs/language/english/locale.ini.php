@@ -6,7 +6,7 @@
 lang = en
 
 ; character set, default as UTF-8
-charset = UTF-8
+charset = 'UTF-8'
 
 ; translator adapter, default as legacy
 adapter = 'legacy'

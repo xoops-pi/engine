@@ -140,13 +140,12 @@ class XOOPS
      * - Load primary services
      * - Application bootstrap
      *
-     * @param string|{@Xoops_Engine_Interface}    $engine     Engine name or object
+     * @param string|{@Kernel\EngineInterface}    $engine     Engine name or object
      * @param array|string     $options    options for the engine
      * @return boolean
      */
     public static function boot($engine = "xoops", $options = array())
     {
-        //static::autoloader();
         // Set bootstrap file
         if (is_string($options)) {
             // Bootstrap is specified directly
@@ -156,9 +155,6 @@ class XOOPS
             // Bootstrap set in options
             $bootstrap = $options["bootstrap"];
             unset($options["bootstrap"]);
-        //} elseif (isset($GLOBALS['xoopsOption']["bootstrap"])) {
-            // Bootstrap set in global options
-            //$bootstrap = $GLOBALS['xoopsOption']["bootstrap"];
         } elseif (defined('XOOPS_BOOTSTRAP')) {
             // Bootstrap set in global options
             $bootstrap = constant('XOOPS_BOOTSTRAP');

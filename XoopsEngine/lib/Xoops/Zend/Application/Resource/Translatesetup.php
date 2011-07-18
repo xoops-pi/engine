@@ -32,7 +32,7 @@ class Xoops_Zend_Application_Resource_Translatesetup extends Zend_Application_Re
             unset($options['load']);
         }
         if (!isset($options['language'])) {
-            $options['language'] = Xoops::config('language') ?: $GLOBALS['installWizard']->language;
+            $options['language'] = Xoops::config('language') ?: $GLOBALS['wizard']->getLanguage();
         }
 
         $translate = Xoops::service('translate', $options);
