@@ -39,9 +39,15 @@ if (extension_loaded('apc')) {
     $checked = false;
     $checkedString = 'disabled';
 }
-$content .= '<div><input type="radio" name="persist" value="apc" ' . $checkedString . ' />APC</div>';
-$content .= '<p>The Alternative PHP Cache (APC) is highly recommended for high-performance senario.</p>';
-$content .= '<p>Refer to <a href="http://www.php.net/manual/en/intro.apc.php" rel="external" title="APC introduction">APC introduction</a> for details.</p>';
+$content .= '<div><input type="radio" name="persist" value="apc" ' . $checkedString . ' />' . _INSTALL_EXTENSION_APC . '</div>';
+$content .= '<p>' . _INSTALL_EXTENSION_APC_PROMPT . '</p>';
+
+if (extension_loaded('redis')) {
+    $checked = true;
+    $checkedString = 'checked';
+    $content .= '<div><input type="radio" name="persist" value="redis" ' . $checkedString . ' />' . _INSTALL_EXTENSION_REDIS . '</div>';
+    $content .= '<p>' . _INSTALL_EXTENSION_REDIS_PROMPT . '</p>';
+}
 
 if (extension_loaded('memcached')) {
     $checkedString = $checked ? '' : ' checked';
@@ -49,9 +55,8 @@ if (extension_loaded('memcached')) {
 } else {
     $checkedString = ' disabled';
 }
-$content .= '<div><input type="radio" name="persist" value="memcached"' . $checkedString . ' />Memcached</div>';
-$content .= '<p>Memcached is highly recommended for high-performance yet robust distributed senario.</p>';
-$content .= '<p>Refer to <a href="http://www.php.net/manual/en/intro.memcached.php" rel="external" title="Memcached introduction">Memcached introduction</a> for details.</p>';
+$content .= '<div><input type="radio" name="persist" value="memcached" ' . $checkedString . ' />' . _INSTALL_EXTENSION_MEMCACHED . '</div>';
+$content .= '<p>' . _INSTALL_EXTENSION_MEMCACHED_PROMPT . '</p>';
 
 if (extension_loaded('memcache')) {
     $checkedString = $checked ? '' : ' checked';
@@ -59,16 +64,16 @@ if (extension_loaded('memcache')) {
 } else {
     $checkedString = ' disabled';
 }
-$content .= '<div><input type="radio" name="persist" value="memcache"' . $checkedString . ' />Memcache</div>';
-$content .= '<p><a href="http://www.php.net/manual/en/intro.memcache.php" rel="external" title="Memcache introduction">Memcache introduction</a></p>';
+$content .= '<div><input type="radio" name="persist" value="memcache" ' . $checkedString . ' />' . _INSTALL_EXTENSION_MEMCACHE . '</div>';
+$content .= '<p>' . _INSTALL_EXTENSION_MEMCACHE_PROMPT . '</p>';
 
 if ($checked) {
     $checkedString = '';
 } else {
     $checkedString = ' checked';
 }
-$content .= '<div><input type="radio" name="persist" value="file"' . $checkedString . ' />File</div>';
-$content .= '<p>Caching storage with files is not recommended. You are highly adviced to check above extensions to ensure they are configured correctly before you are able to choose them.</p>';
+$content .= '<div><input type="radio" name="persist" value="file"' . $checkedString . ' />' . _INSTALL_EXTENSION_FILE . '</div>';
+$content .= '<p>' . _INSTALL_EXTENSION_FILE_PROMPT . '</p>';
 
 $content .= '</div>';
 

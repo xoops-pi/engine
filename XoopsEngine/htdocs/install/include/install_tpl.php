@@ -19,9 +19,15 @@
  * @version         $Id$
  */
 
-if (!defined('XOOPS_INSTALL')) { die('XOOPS Installation wizard die'); }
+if (!defined('XOOPS_INSTALL')) {
+    die('Xoops Engine installation wizard exit.');
+}
 
-//include_once '../language/' . $wizard->language . '/global.php';
+if (!empty($pageProceed)) {
+    $wizard->redirectToPage('+1');
+    exit();
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $wizard->locale['lang']; ?>" lang="<?php echo $wizard->locale['lang']; ?>">
@@ -91,7 +97,7 @@ if (!defined('XOOPS_INSTALL')) { die('XOOPS Installation wizard die'); }
                                 $class = ' class="disabled"';
                             }
                             if (empty($class)) {
-                                $li = '<a href="' . $wizard->pageURI($page) . '">' . $wizard->pages[$page]['name'] . '</a>';
+                                $li = '<a href="' . $wizard->pageURI($page) . '?r=1">' . $wizard->pages[$page]['name'] . '</a>';
                             } else {
                                 $li = $wizard->pages[$page]['name'];
                             }
@@ -111,18 +117,28 @@ if (!defined('XOOPS_INSTALL')) { die('XOOPS Installation wizard die'); }
 
                         <div id="buttons">
                             <?php if ($wizard->pageIndex != 0) { ?>
-                                <button type="button" onclick="history.back()">
+                                <button type="button" accesskey="p" onclick="location.href='<?php echo $wizard->pageURI('-1') . '?r=1'; ?>'">
                                 <?php echo BUTTON_PREVIOUS; ?>
                                 </button>
                             <?php } ?>
 
-                            <?php if (!empty($pageHasForm)) { ?>
+                                <button type="button" accesskey="r" onclick="location.href='<?php echo $wizard->pageURI('+0'); ?>'">
+                                <?php echo BUTTON_RELOAD; ?>
+                                </button>
+
+                            <?php
+                            if (empty($pagePending)) {
+                                if (!empty($pageHasForm)) {
+                            ?>
                                 <button type="submit">
                             <?php } else { ?>
                                 <button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
                             <?php } ?>
                             <?php echo BUTTON_NEXT; ?>
                             </button>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </form>
                 </div>

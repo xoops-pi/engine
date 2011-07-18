@@ -23,7 +23,7 @@ class XoopsInstallWizard
     public $persistentData = array();
     private $persistentFile = 'xoops_install_persistent.php';
     public $support = array(
-        "url"   => "http://xoops.sf.net/",
+        "url"   => "http://www.xoopsengine.org",
         "title" => "Xoops Engine",
     );
 
@@ -144,12 +144,6 @@ class XoopsInstallWizard
             return false;
         }
 
-        /*
-        if ($this->pageIndex > 0 && !isset($_COOKIE['xo_install_lang'])) {
-            header('Location: index.php');
-        }
-        */
-
         return $this->pageIndex;
     }
 
@@ -246,5 +240,172 @@ class XoopsInstallWizard
             }
         }
         @rmdir(Xoops::path('www') . '/install');
+    }
+
+    public function checkExtension($item = null)
+    {
+        if (empty($item)) {
+            $result = array();
+            foreach ($this->configs['extension'] as $item => $title) {
+                $res = $this->checkExtension($item);
+                $res['title'] = defined($title) ? constant($title) : $title;
+                $result[$item] = $res;
+            }
+
+            return $result;
+        }
+
+        $status = 1;
+        $value = '';
+        $message = '';
+        if (!extension_loaded($item)) {
+            $status = 0;
+            if (defined('_INSTALL_EXTENSION_' . strtoupper($item). '_PROMPT')) {
+                $message = constant('_INSTALL_EXTENSION_' . strtoupper($item). '_PROMPT');
+            }
+        }
+        switch ($item) {
+            case 'gd':
+                if ($status) {
+                    $gdlib = gd_info();
+                    $value = $gdlib['GD Version'];
+                }
+                break;
+            default:
+                break;
+        }
+
+        $result = array(
+            'status'    => $status,
+            'value'     => $value,
+            'message'   => $message,
+        );
+        return $result;
+    }
+
+    public function checkSystem($item = null)
+    {
+        if (empty($item)) {
+            $result = array();
+            foreach ($this->configs['system'] as $item => $title) {
+                $res = $this->checkSystem($item);
+                $res['title'] = defined($title) ? constant($title) : $title;
+                $result[$item] = $res;
+            }
+
+            return $result;
+        }
+
+        $result = array(
+            'status'    => 0,
+            'value'     => _INSTALL_REQUIREMENT_UNKNOWN,
+            'message'   => '',
+        );
+        $method = 'checkSystem' . ucfirst($item);
+        if (!method_exists($this, $method)) {
+            return $result;
+        }
+        return $this->$method();
+    }
+
+
+    protected function checkSystemServer()
+    {
+        $status = 1;
+        $value = '';
+        $message = '';
+        if (stristr($_SERVER["SERVER_SOFTWARE"], 'nginx')) {
+            $value = 'nginx';
+            $status = 0;
+            $message = _INSTALL_REQUIREMENT_SERVER_NGINX;
+        } elseif (stristr($_SERVER["SERVER_SOFTWARE"], 'apache')) {
+            $value = 'Apache';
+            $modules = apache_get_modules();
+            if (!in_array('mod_rewrite', $modules)) {
+                $status = -1;
+                $message = _INSTALL_REQUIREMENT_SERVER_MOD_REWRITE;
+            }
+        } else {
+            $value = $_SERVER["SERVER_SOFTWARE"];
+            $status = -1;
+            $message = _INSTALL_REQUIREMENT_SERVER_NOT_SUPPORTED;
+        }
+
+        $result = array(
+            'status'    => $status,
+            'value'     => $value,
+            'message'   => $message,
+        );
+        return $result;
+    }
+
+    protected function checkSystemPhp()
+    {
+        $status = 1;
+        $value = PHP_VERSION;
+        $message = '';
+        if (version_compare($value, '5.3.0') < 0) {
+            $status = -1;
+            $message = sprintf(_INSTALL_REQUIREMENT_VERSION_REQUIRED, '5.3.0 or higher');
+        }
+
+        $result = array(
+            'status'    => $status,
+            'value'     => $value,
+            'message'   => $message,
+        );
+        return $result;
+    }
+
+    protected function checkSystemPdo()
+    {
+        $status = 1;
+        $value = '';
+        $message = '';
+        if (!extension_loaded('pdo')) {
+            $status = 0;
+        }
+        $drivers = PDO::getAvailableDrivers();
+        $value = implode(', ', $drivers);
+        if (empty($drivers) || !in_array('mysql', $drivers)) {
+            $status = 0;
+        }
+        if (!$status) {
+            $message = _INSTALL_REQUIREMENT_PDO_PROMPT;
+        }
+
+        $result = array(
+            'status'    => $status,
+            'value'     => $value,
+            'message'   => $message,
+        );
+        return $result;
+    }
+
+    protected function checkSystemPersist()
+    {
+        $status = 1;
+        $value = '';
+        $message = '';
+        $items = array();
+        $persistList = array('apc', 'redis', 'memcached', 'memcache');
+        foreach($persistList as $item) {
+            if (extension_loaded($item)) {
+                $items[] = $item;
+            }
+        }
+        if (!empty($items)) {
+            $value = implode(', ', $items);
+        } else {
+            $status = 0;
+            $message = sprintf(_INSTALL_REQUIREMENT_PERSIST_PROMPT, implode(', ', $persistList));
+        }
+
+        $result = array(
+            'status'    => $status,
+            'value'     => $value,
+            'message'   => $message,
+        );
+        return $result;
     }
 }

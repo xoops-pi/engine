@@ -10,10 +10,10 @@ $message = <<<'EOD'
 <h3>Support</h3>
 <p>Visit <a href='http://www.xoopsengine.org/' rel='external'>Xoops Engine Development</a></p>
 <h3>Security configuration</h3>
-<p>The installer will try to configure your site for security considerations. Please double check to make sure:
+<p>For security considerations you are strongly recommended to complete the following actions:
 <ul>
-    <li>The configuration files are set to readonly: %s.</li>
-    <li>Installation folder <strong>install</strong> is removed.</li>
+    <li>Set configuration directories and files to readonly: %s.</li>
+    <li>Remove the installation folder <strong>install</strong> from your server.</li>
 </ul>
 </p>
 EOD;

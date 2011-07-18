@@ -52,6 +52,7 @@ $isValid = $ctrl->validate();
 
 // Valid POST submission, store configs to config files
 $errorsSave = array();
+$errorsConfig = array();
 if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $configs = array();
 
@@ -205,18 +206,26 @@ if ($isValid && $_SERVER['REQUEST_METHOD'] == 'POST') {
                 continue;
             }
             $target = substr($filename, 0, -5);
-            copy($filename, $target);
+            if (file_exists($target) && !is_writable($target)) {
+                @chmod($target, 0777);
+            }
+            $status = @copy($filename, $target);
+            if (!$status || !is_readable($target)) {
+                $errorsConfig[] = $target;
+            }
         }
 
 
-        // Clear caches
-        $clearScript = $vars["www"]["path"] . '/clear.php';
-        if (file_exists($clearScript)) {
-            ob_start();
-            include $clearScript;
-            ob_end_clean();
+        if (empty($errorsConfig)) {
+            // Clear caches
+            $clearScript = $vars["www"]["path"] . '/clear.php';
+            if (file_exists($clearScript)) {
+                ob_start();
+                include $clearScript;
+                ob_end_clean();
+            }
+            $wizard->redirectToPage('+1');
         }
-        $wizard->redirectToPage('+1');
     }
 }
 
@@ -229,6 +238,20 @@ if (!empty($errorsSave)) {
 <textarea cols="50" rows="10"><?php echo $error['content'];?></textarea>
 <?php
     }
+// Display config file error messages
+} elseif (!empty($errorsConfig)) {
+?>
+<div class='x2-note errorMsg'><?php echo ERR_COPY_CONFIGFILES; ?></div>
+<ul>
+<?php
+    foreach ($errorsConfig as $file) {
+?>
+    <li><?php echo $file;?></li>
+<?php
+    }
+?>
+</ul>
+<?php
 // Display form
 } else {
 ?>

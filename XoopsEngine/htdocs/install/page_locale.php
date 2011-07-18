@@ -155,6 +155,7 @@ function setLocale(languageValue)
     </select>
 </fieldset>
 
+<!--
 <fieldset>
     <legend><?php echo LEGEND_LOCALE;?></legend>
     <label for='lang'><?php echo LOCALE_LANG_LABEL;?></label>
@@ -166,6 +167,7 @@ function setLocale(languageValue)
     <input type='text' name='charset' id='charset' value="<?php echo $wizard->locale['charset'];?>" disabled='disabled' />
     </label>
 </fieldset>
+-->
 
 <?php
 $content = ob_get_contents();

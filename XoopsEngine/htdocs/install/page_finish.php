@@ -24,7 +24,7 @@ $wizard->persistentData = array();
 //setcookie('xo_install_user', '', null, null, null);
 if (!defined('XOOPS_INSTALL')) { die('XOOPS Installation wizard die'); }
 
-register_shutdown_function(array($wizard, 'shutdown'));
+//register_shutdown_function(array($wizard, 'shutdown'));
 
 $writable_paths = "<ul class='confirmMsg'>";
 //foreach ($wizard->configs['writable'] as $path => $data) {

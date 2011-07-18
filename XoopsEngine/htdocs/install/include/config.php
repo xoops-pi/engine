@@ -16,6 +16,31 @@ if (!defined('XOOPS_INSTALL')) { die('XOOPS Custom Installation die'); }
 
 $configs = array();
 
+// Server settings
+$configs['system'] = array(
+    'server'    => '_INSTALL_REQUIREMENT_SERVER',
+    'php'       => '_INSTALL_REQUIREMENT_PHP',
+    'persist'   => '_INSTALL_REQUIREMENT_PERSIST',
+    'pdo'       => '_INSTALL_REQUIREMENT_PDO',
+);
+
+// PHP extensions
+$configs['extension'] = array(
+    'apc'       => '_INSTALL_EXTENSION_APC',
+    'redis'     => '_INSTALL_EXTENSION_REDIS',
+    'memcached' => '_INSTALL_EXTENSION_MEMCACHED',
+    'memcache'  => '_INSTALL_EXTENSION_MEMCACHE',
+    'mbstring'  => '_INSTALL_EXTENSION_MBSTRING',
+    //'gd'        => '_INSTALL_EXTENSION_GD',
+    //'iconv'     => '_INSTALL_EXTENSION_ICONV',
+    //'xml'       => '_INSTALL_EXTENSION_XML',
+    //'zlib'      => '_INSTALL_EXTENSION_ZLIB',
+    //'mcrypt'    => '_INSTALL_EXTENSION_MCRYPT',
+    //'fileinfo'  => '_INSTALL_EXTENSION_FILEINFO',
+    //'json'      => '_INSTALL_EXTENSION_JSON',
+    //'ftp'       => '_INSTALL_EXTENSION_FTP',
+);
+
 // setup config site info
 $configs['db_types']  = array('mysql');
 

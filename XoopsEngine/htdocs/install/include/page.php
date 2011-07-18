@@ -19,10 +19,10 @@ $pages = array(
     'introduction'      => array(
                         'name'  => _INSTALL_PAGE_INTRODUCTION,
                         'title' => _INSTALL_PAGE_INTRODUCTION_TITLE),
+                        */
     'requirement'       => array(
                         'name'  => _INSTALL_PAGE_REQUIREMENT,
                         'title' => _INSTALL_PAGE_REQUIREMENT_TITLE),
-                        */
     'persist'           => array(
                         'name'  => _INSTALL_PAGE_PERSIST,
                         'title' => _INSTALL_PAGE_PERSIST_TITLE),

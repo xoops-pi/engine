@@ -286,6 +286,9 @@ ul.diags li.failure, ul.log li.failure {
     font-weight:        bold;
     color:              #f66;
 }
+ul.diags li.warning, ul.log li.warning {
+    background-image:   url(../images/warning.png) !important;
+}
 
 /* ------------------------ Shadow effect ------------------------ */
 

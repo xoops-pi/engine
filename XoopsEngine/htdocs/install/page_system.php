@@ -44,6 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($ret) {
         $content = '<div class="x2-note successMsg">' . _INSTALL_SYSTEM_INSTALLED_SUCCESS . "</div>";
         //$wizard->redirectToPage('+1');
+        if (empty($_GET['r'])) {
+            $pageProceed = true;
+        }
     } else {
         $pageHasForm = true;
         $content = '<div class="x2-note errorMsg">' . _INSTALL_SYSTEM_INSTALLED_FAILED . "</div>" .

@@ -313,16 +313,15 @@ class PathController
 
     private function checkPermissions($path)
     {
-        $paths = $this->wizard->configs['writable'];
-
         if (!isset($this->paths[$path]['path'])) {
             return false;
         }
         if (!isset($this->permErrors[$path])) {
             return true;
         }
-        $this->setPermission($this->paths[$path]['path'], $paths[$path], $errors);
-        if (in_array(false, $errors)) {
+        $writablePaths = $this->wizard->configs['writable'];
+        $this->setPermission($this->paths[$path]['path'], $writablePaths[$path], $errors);
+        if (!empty($errors) && in_array(false, array_values($errors))) {
             $this->permErrors[$path] = $errors;
         }
         return true;
@@ -337,6 +336,7 @@ class PathController
      */
     private function makeWritable($path, $recurse = true, $create = true)
     {
+        clearstatcache();
         $modeFolder = intval('0777', 8);
         $modeFile = intval('0666', 8);
         $isNew = false;
@@ -351,7 +351,6 @@ class PathController
         if (!is_writable($path)) {
             @chmod($path, is_file($path) ? $modeFile : $modeFolder);
         }
-        clearstatcache();
         $status = is_writable($path) ? 1 : 0;
         if (!$isNew && $status && $recurse && is_dir($path)) {
             $iterator = new DirectoryIterator($path);
@@ -359,9 +358,11 @@ class PathController
                 if ($fileinfo->isDot()) {
                     continue;
                 }
+                /*
                 if ($fileinfo->isWritable()) {
                     continue;
                 }
+                */
                 $status = $status * $this->makeWritable($fileinfo->getPathname(), $recurse, $create);
                 if (!$status) {
                     break;

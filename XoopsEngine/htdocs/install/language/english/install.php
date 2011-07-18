@@ -106,9 +106,9 @@ define("ADMIN_CONFIRMPASS_LABEL", "Confirm password");
 // Buttons
 define("BUTTON_PREVIOUS", "Previous");
 define("BUTTON_NEXT", "Next");
+define("BUTTON_RELOAD", "Reload");
 
 // Messages
-//define("XOOPS_FOUND", "%s found");
 define("CHECKING_PERMISSIONS", "Checking file and directory permissions...");
 define("IS_NOT_WRITABLE", "%s is NOT writable.");
 define("IS_WRITABLE", "%s is writable.");
@@ -133,6 +133,8 @@ define("ERR_REQUIRED", "Information is required.");
 define("ERR_PASSWORD_MATCH", "The two passwords do not match");
 define("ERR_WRITE_CONFIGFILE", "The configuration file '%s' is not written correctly.");
 define("ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folders<br />(i.e. <strong>chmod 777 directory_name</strong> on a UNIX/LINUX server)<br />If they are not available or not created correctly, please create manually and set proper permissions.");
+define("ERR_COPY_CONFIGFILES", "The configuration files are not copied correctly or not readable, please create and/or set read permissions for the files manually.");
+
 define("ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details."); // L31
 define("ERR_NO_DBCONNECTION", "Could not connect to the database server.");
 define("ERR_MYSQL_STRICT_MODE", "MySQL is running in strict mode, you are advised to turn it off. For details, check <a href='http://dev.mysql.com/doc/refman/5.5/en/faqs-sql-modes.html' target='_blank'>MySQL manual</a>.");
@@ -163,6 +165,8 @@ define("_INSTALL_SYSTEM_INSTALLED_FAILED", 'System module installation is failed
 
 define("_INSTALL_PAGE_LOCALE", "Language selection");
 define("_INSTALL_PAGE_LOCALE_TITLE", "Choose system language and charset");
+define("_INSTALL_PAGE_REQUIREMENT", "System requirements");
+define("_INSTALL_PAGE_REQUIREMENT_TITLE", "Check server settings and extensions");
 define("_INSTALL_PAGE_PERSIST", "Persistent data container");
 define("_INSTALL_PAGE_PERSIST_TITLE", "Choose the proper backend container for persistent data");
 define("_INSTALL_PAGE_PATHS", "Paths settings");
@@ -177,3 +181,36 @@ define("_INSTALL_PAGE_ADMIN_ACCOUNT", "Administrator account");
 define("_INSTALL_PAGE_ADMIN_ACCOUNT_TITLE", "Administrator account creation");
 define("_INSTALL_PAGE_FINISH", "Finish");
 define("_INSTALL_PAGE_FINISH_TITLE", "Finish installation and take a tour of XOOPS website");
+
+define("_INSTALL_REQUIREMENT_SYSTEM", "System requirements");
+define("_INSTALL_REQUIREMENT_SYSTEM_HELP", "Server settings and system extensions required by Xoops Engine");
+define("_INSTALL_REQUIREMENT_VERSION_REQUIRED", "Version %s is required.");
+define("_INSTALL_REQUIREMENT_SERVER", "Web server");
+define("_INSTALL_REQUIREMENT_SERVER_NGINX", "Make sure you have adequate <a href='http://nginx.net' title='nginx' target='_blank'>nginx</a> knowledge, refer to <a href='http://dev.xoopsengine.org' title='Xoops Engine' target='_blank'>Xoops Engine Dev</a> for nginx settings.");
+define("_INSTALL_REQUIREMENT_SERVER_MOD_REWRITE", "Apache \"mod_rewrite\" module is required, check <a href='http://httpd.apache.org/docs/current/mod/mod_rewrite.html' title='mod_rewrite' target='_blank'>mod_rewrite</a> for details.");
+define("_INSTALL_REQUIREMENT_SERVER_NOT_SUPPORTED", "The webserver is currently not supported, please use <a href='http://nginx.net' title='nginx' target='_blank'>nginx</a> or <a href='http://www.php.net/manual/en/book.apache.php' target='_blank' title='Apache'>Apache</a>.");
+define("_INSTALL_REQUIREMENT_PHP", "PHP");
+define("_INSTALL_REQUIREMENT_PDO", "PDO drivers");
+define("_INSTALL_REQUIREMENT_PDO_PROMPT", "PHP Data Objects (PDO) extension with MySQL driver is required for regular Xoops Engine instances, check <a href='http://www.php.net/manual/en/book.pdo.php' title='PDO' target='_blank'>PDO manual</a> for details.");
+define("_INSTALL_REQUIREMENT_PERSIST", "Persist options");
+define("_INSTALL_REQUIREMENT_PERSIST_PROMPT", "There is no recommended persist engine available. One of the following extensions is recommended: %s");
+define("_INSTALL_REQUIREMENT_UNKNOWN", "Unknown");
+define("_INSTALL_REQUIREMENT_VALID", "Valid");
+define("_INSTALL_REQUIREMENT_INVALID", "Invalid");
+define("_INSTALL_REQUIREMENT_UPDATE", "Not desired");
+
+define("_INSTALL_REQUIREMENT_EXTENSION", "System extension recommendations");
+define("_INSTALL_REQUIREMENT_EXTENSION_HELP", "Extesions recommended for better functionality or performance");
+define("_INSTALL_EXTENSION_APC", "APC");
+define("_INSTALL_EXTENSION_APC_PROMPT", 'The Alternative PHP Cache (APC) is highly recommended for high-performance senario. Refer to <a href="http://www.php.net/manual/en/intro.apc.php" target="_blank" title="APC introduction">APC introduction</a> for details.');
+define("_INSTALL_EXTENSION_REDIS", "Redis");
+define("_INSTALL_EXTENSION_REDIS_PROMPT", 'The extension is highly recommended for performance senario and advanced data structure. Refer to <a href="http://redis.io" target="_blank" title="Redis">Redis page</a> for details.');
+define("_INSTALL_EXTENSION_MEMCACHED", "Memcached");
+define("_INSTALL_EXTENSION_MEMCACHED_PROMPT", 'Memcached is highly recommended for high-performance yet robust distributed senario. Refer to <a href="http://www.php.net/manual/en/intro.memcached.php" target="_blank" title="Memcached introduction">Memcached introduction</a> for details.');
+define("_INSTALL_EXTENSION_MEMCACHE", "Memcache");
+define("_INSTALL_EXTENSION_MEMCACHE_PROMPT", 'Memcache a widely used cache engine. Refer to <a href="http://www.php.net/manual/en/intro.memcache.php" target="_blank" title="Memcache introduction">Memcache introduction</a> for details.');
+define("_INSTALL_EXTENSION_FILE", 'File');
+define("_INSTALL_EXTENSION_FILE_PROMPT", 'Caching storage with files is not recommended. You are highly adviced to check recommended extensions to ensure they are installed and configured correctly.');
+
+define("_INSTALL_EXTENSION_MBSTRING", "mbstring");
+define("_INSTALL_EXTENSION_MBSTRING_PROMPT", "The extension is required for multibyte string processing, check <a href='http://www.php.net/manual/en/book.mbstring.php' title='Multibyte String' target='_blank'>Multibyte String</a> for details.");
