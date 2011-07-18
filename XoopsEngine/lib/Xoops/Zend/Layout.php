@@ -112,6 +112,7 @@ class Xoops_Zend_Layout extends Zend_Layout
             "headLink"      => "__XOOPS_THEME_HEAD_LINK__",
             "headScript"    => "__XOOPS_THEME_HEAD_SCRIPT__",
             "headStyle"     => "__XOOPS_THEME_HEAD_STYLE__",
+            "footScript"    => "__XOOPS_THEME_FOOT_SCRIPT__",
     );
 
     /**
@@ -560,12 +561,24 @@ class Xoops_Zend_Layout extends Zend_Layout
     public function loadHead($data, $complier, $template)
     {
         $view = $this->getView();
+        $missingList = array();
         foreach ($this->metaList as $func => $tag) {
             if (false === ($pos = strpos($data, $tag))) {
+                $missingList[$func] = 1;
                 continue;
             }
             $meta = $view->$func();
-            $data = substr($data, 0, $pos) . $meta . substr($data, $pos + strlen($tag));
+            if (!empty($meta)) {
+                $data = substr($data, 0, $pos) . $meta . substr($data, $pos + strlen($tag));
+            }
+        }
+
+        if (isset($missingList['footScript'])) {
+            $pos = strpos($data, '</body>');
+            $meta = $view->footscript();
+            if (!empty($meta)) {
+                $data = substr($data, 0, $pos) . PHP_EOL . $meta . PHP_EOL . substr($data, $pos);
+            }
         }
         return $data;
     }
