@@ -17,7 +17,7 @@
  * @subpackage Page
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mvc.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Mvc.php 24235 2011-07-13 18:13:45Z matthew $
  */
 
 /**
@@ -138,22 +138,35 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
 
             $myParams = $this->_params;
 
+            if ($this->_route) {
+                $route = $front->getRouter()->getRoute($this->_route);
+                if(method_exists($route, 'getDefaults')) {
+                    $myParams = array_merge($route->getDefaults(), $myParams);
+                }
+            }
+
             if (null !== $this->_module) {
                 $myParams['module'] = $this->_module;
-            } else {
+            } elseif(!array_key_exists('module', $myParams)) {
                 $myParams['module'] = $front->getDefaultModule();
             }
 
             if (null !== $this->_controller) {
                 $myParams['controller'] = $this->_controller;
-            } else {
+            } elseif(!array_key_exists('controller', $myParams)) {
                 $myParams['controller'] = $front->getDefaultControllerName();
             }
 
             if (null !== $this->_action) {
                 $myParams['action'] = $this->_action;
-            } else {
+            } elseif(!array_key_exists('action', $myParams)) {
                 $myParams['action'] = $front->getDefaultAction();
+            }
+
+            foreach($myParams as $key => $value) {
+                if($value == null) {
+                    unset($myParams[$key]);
+                }
             }
 
             if (count(array_intersect_assoc($reqParams, $myParams)) ==
