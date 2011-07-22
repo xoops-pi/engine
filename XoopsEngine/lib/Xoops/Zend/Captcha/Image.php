@@ -40,7 +40,14 @@ class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
      */
     protected $section = "";
 
-    protected $refreshUrl = "usr/captcha/image.php";
+    /**
+     * URL for accessing images
+     *
+     * @var string
+     */
+    protected $_imgUrl = "usr/captcha/image.php";
+
+    //protected $refreshUrl = "usr/captcha/image.php";
     //protected $callback;
 
     /**
@@ -75,7 +82,7 @@ class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
             'height'    => 50,
             "font"      => XOOPS::path('img/captcha/fonts/Vera.ttf'),
             "imgDir"    => XOOPS::path('upload/captcha'),
-            "imgUrl"    => XOOPS::url('upload/captcha'),
+            //"imgUrl"    => XOOPS::url('upload/captcha'),
         );
         $options = array_merge($options_default, $options);
         if (false === strpos($options["font"], "/")) {
@@ -115,21 +122,38 @@ class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
      */
     public function render(Zend_View_Interface $view = null, $element = null)
     {
-        //$captchaScript = "var captcha_id = '" . $element->getId() . "'; var callback = '" . $this->callback . "';";
-        //$view->headScript("script", $captchaScript);
-        //$view->jQuery("jquery.min.js");
-        //$view->headScript("file", 'img/captcha/scripts/captcha.js');
-
         $id = $this->getId();
-        //$id = $this->encodeId($id);
-        $imgId = is_string($element) ? $element : $element->getId();
+        $imageUrl = $this->getImageUrl(array('id' => $id));
+        /*
+        if ($element instanceof Zend_Form_Element) {
+        	$imgId = is_string($element) ? $element : $element->getId();
+        } elseif (is_string($element)) {
+	        $imgId = $element;
+        } else {
+	        $imgId = $id;
+        }
+        */
+        
+        $endTag = ' />';
+        if (($view instanceof Zend_View_Abstract) && !$view->doctype()->isXhtml()) {
+            $endTag = '>';
+        }
         return "<img width=\"" . $this->getWidth() . "\" height=\"" . $this->getHeight() . "\" alt=\"" . $this->getImgAlt() . "\"" .
-            //" src=\"" . $this->getImgUrl() . $this->getId() . $this->getSuffix() . "\"" .
-            " src=\"" . $this->getRefreshUrl(array('id' => $id)) . "\"" .
+            " src=\"" . $imageUrl . "\"" .
             " style='cursor: pointer; vertical-align: middle;'" .
-            " onclick=\"this.src='" . $this->getRefreshUrl(array('id' => $id)) . "&amp;refresh='+Math.random()\"  style='cursor: pointer; vertical-align: middle;'" .
-            " id=\"" . $imgId . "-image\"" .
-            " /><br />";
+            " onclick=\"this.src='" . $imageUrl . "&amp;refresh='+Math.random()\"  style='cursor: pointer; vertical-align: middle;'" .
+            //" id=\"" . $imgId . "-image\"" . 
+            $endTag;
+    }
+
+    /**
+     * Get captcha decorator
+     *
+     * @return string
+     */
+    public function getDecorator()
+    {
+        return "Captcha_Image";
     }
 
     /*
@@ -165,12 +189,12 @@ class Xoops_Zend_Captcha_Image extends Zend_Captcha_Image
         return $id;
     }
 
-    protected function getRefreshUrl($params = array())
+    protected function getImageUrl($params = array())
     {
         if ($this->section) {
             $params['section'] = $this->section;
         }
-        $url = Xoops::url('www') . '/' . $this->refreshUrl;
+        $url = Xoops::url('www') . '/' . $this->_imgUrl;
         if (!empty($params)) {
             $url .= '?' . http_build_query($params, '', '&amp;');
         }
