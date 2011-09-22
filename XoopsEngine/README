@@ -1,0 +1,23 @@
+Xoops Engine
+-- Application Development Engine For Web And Mobile
+
+
+What Is Xoops Engine
+Xoops Engine is the next generation of XOOPS, designed as an application development engine for web and mobile. XE is released under a New BSD License and the project is intended to promote a sustainable ecosystem that benefits all contributors and users in technology and business.
+Xoops Engine is actively developed by most active and talented XOOPS core developers led by Taiwen Jiang (a.k.a. phppp), who was Project Lead and Core Dev Lead for XOOPS from 2007 to 2011, core developer from 2005 to 2007.
+Xoops Engine development is fully encouraged by support from XOOPS founder Ono Kazumi: "I hope that you keep on going with the development of XE, since there is no bright future ahead with X2."
+
+Contribute To Xoops Engine
+Since August 2011 Xoops Engine development is hosted on http://www.xoopsengine.org. The developers are working intensively to make the new system ready for public as soon as possible.
+
+Before the new source code is published, updates and relevant information can be available at:
+Contact dev team: dev@xoopsengine.org
+Updates on Twitter: @XoopsProject
+Xoops Engine Site: http://www.xoopsengine.org
+Xoops Engine Blog: http://dev.xoopsengine.org
+Xoops Engine Trac: http://trac.xoopsengine.org
+Old Releases: http://github.com/xoops/engine
+
+XOOPS Brief History
+XOOPS is an open source CMS solution founded by Ono Kazumi, Goghs Cheng, etc. in 2001, released under GPL2 license. The most recent major releases were XOOPS 2.0 in 2003 led by Ono Kazumi and XOOPS 2.3 in 2008 led by Taiwen Jiang.
+Legacy XOOPS (e.g XOOPS 2) is currently maintained by community contributors on http:://www.xoops.org website. Meanwhile the Xoops Engine team will also provide long-term security and performance optimization support for legacy XOOPS.
